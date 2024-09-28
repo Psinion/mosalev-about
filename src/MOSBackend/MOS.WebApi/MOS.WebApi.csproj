@@ -6,7 +6,7 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <InvariantGlobalization>true</InvariantGlobalization>
         <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
-        <RootNamespace>MA.WebApi</RootNamespace>
+        <RootNamespace>MOS.WebApi</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
@@ -19,5 +19,6 @@
         <Link>.dockerignore</Link>
       </Content>
     </ItemGroup>
+
 
 </Project>

@@ -18,8 +18,11 @@ RUN dotnet publish -c "MOS.WebApi.csproj" $BUILD_CONFIGURATION -o /app/publish /
 # Serve Stage
 FROM mcr.microsoft.com/dotnet/aspnet:$VERSION AS base
 WORKDIR /app
-EXPOSE 80
-EXPOSE 443
+
+#ENV ASPNETCORE_URLS=https://+:8081;http://+:8080
+#ENV ASPNETCORE_HTTPS_PORT=8081
+EXPOSE 8080
+EXPOSE 8081
 
 FROM base AS final
 WORKDIR /app

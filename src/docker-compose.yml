@@ -10,7 +10,7 @@ services:
     image: postgres:16.4
     environment:
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: 123
+      POSTGRES_PASSWORD: 1234
       POSTGRES_DB: mos-db
     ports:
       - "5432:5432"
@@ -28,8 +28,12 @@ services:
     build:
       context: ./MOSBackend
       dockerfile: Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development #Production
+      - ASPNETCORE_HTTP_PORTS=8080
+      #- ASPNETCORE_HTTPS_PORTS=8081
     ports:
-      - "8080:80"
+      - "8080:8080"
     networks:
       - mos-network
     depends_on: 
