@@ -1,15 +1,17 @@
 ﻿using System.Text.Json.Serialization;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using MOS.Data.EF.Access.Contexts;
 
 namespace MOS.WebApi.StartupConfiguration;
 
 public class Startup
 {
-    private readonly IConfiguration _configuration;
+    private readonly IConfiguration configuration;
 
     public Startup(IConfiguration configuration)
     {
-        _configuration = configuration;
+        this.configuration = configuration;
     }
 
     public void ConfigureServices(IServiceCollection services)
@@ -26,9 +28,9 @@ public class Startup
             });
         });
         
-        /*services.AddDbContext<MainDbContext>(options =>
-            options.UseNpgsql(_configuration.GetConnectionString("DefaultConnection"))
-        );*/
+        services.AddDbContext<MainDbContext>(options =>
+            options.UseNpgsql(configuration.GetConnectionString("DefaultConnection"))
+        );
 
         services.AddControllersWithViews()
             .AddJsonOptions(options =>
@@ -37,6 +39,11 @@ public class Startup
                     .JsonSerializerOptions
                     .ReferenceHandler = ReferenceHandler.IgnoreCycles;
             });
+        
+        services
+            .AddConfigurations(configuration)
+            .AddRepositories()
+            .AddServices();
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

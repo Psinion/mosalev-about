@@ -11,7 +11,11 @@
 
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.0"/>
-        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0"/>
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.8">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.8.1" />
     </ItemGroup>
 
     <ItemGroup>
@@ -20,5 +24,10 @@
       </Content>
     </ItemGroup>
 
+
+
+    <ItemGroup>
+      <ProjectReference Include="..\MOS.Data.EF.Access\MOS.Data.EF.Access.csproj" />
+    </ItemGroup>
 
 </Project>
