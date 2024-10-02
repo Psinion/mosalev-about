@@ -30,4 +30,10 @@
       <ProjectReference Include="..\MOS.Data.EF.Access\MOS.Data.EF.Access.csproj" />
     </ItemGroup>
 
+
+
+
+
+
+
 </Project>
