@@ -40,6 +40,11 @@ public class Startup
                     .ReferenceHandler = ReferenceHandler.IgnoreCycles;
             });
         
+        services.AddHttpsRedirection(options =>
+        {
+            options.HttpsPort = 8081;
+        });
+        
         services
             .AddConfigurations(configuration)
             .AddRepositories()
