@@ -1,0 +1,13 @@
+.flat-layout {
+  & > header {
+    padding: 4px 0;
+    background: var(--background-header);
+  }
+
+  & > article {
+    max-width: 1200px;
+    min-height: calc(100vh - 56px);
+    margin: 0 auto;
+    background: var(--background-body);
+  }
+}

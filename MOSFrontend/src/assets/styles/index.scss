@@ -1,0 +1,19 @@
+@layer
+  reset,
+  frameworks.element-ui,
+  core,
+  typography,
+  themes,
+  utilities
+;
+
+@import 'element-plus/dist/index.css' layer(frameworks.element-ui);
+
+@layer reset {
+  @import "reset";
+}
+
+@layer core {
+  @import "variables";
+  @import 'element-plus';
+}
