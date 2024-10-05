@@ -8,7 +8,8 @@ export default defineConfig({
     ],
     resolve: {
         alias: {
-            "@": fileURLToPath(new URL("./src", import.meta.url))
+            "@": fileURLToPath(new URL("./src", import.meta.url)),
+            "@scss-mixins": fileURLToPath(new URL("./src/assets/styles/mixins/", import.meta.url))
         }
     }
 });

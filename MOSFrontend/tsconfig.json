@@ -25,6 +25,9 @@
       "@/*": [
         "./src/*"
       ],
+      "@scss-mixins/*": [
+        "./src/assets/styles/mixins/*"
+      ],
     }
   },
   "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue"],

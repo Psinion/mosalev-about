@@ -1,3 +1,5 @@
+@import '@scss-mixins/adaptive';
+
 .footer-link {
   width: 20px;
   transition: var(--default-transition);
@@ -13,5 +15,11 @@
 
     white-space: nowrap;
     overflow: hidden;
+  }
+
+  @include adaptive-mixin(s) {
+    & {
+      width: 8em;
+    }
   }
 }

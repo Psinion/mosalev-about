@@ -1,5 +1,13 @@
 <template>
-  <oh-vue-icon :name="icon" :scale="scale" />
+  <oh-vue-icon
+    :name="icon"
+    :scale="scale"
+    :fill="fill"
+    :flip="flip"
+    :animation="animation"
+  >
+    <slot/>
+  </oh-vue-icon>
 </template>
 
 <script setup lang="ts">
@@ -11,10 +19,6 @@ defineProps({
     icon: {
         type: String as PropType<TIcon>,
         required: true
-    },
-    title: {
-        type: String,
-        default: null
     },
     fill: {
         type: String,
@@ -40,14 +44,6 @@ defineProps({
         type: String,
         default: null
     },
-    label: {
-        type: String,
-        default: null
-    },
-    inverse: {
-        type: Boolean,
-        default: false
-    }
 });
 
 </script>

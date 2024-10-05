@@ -1,0 +1,26 @@
+$adaptiveMinWidth: 667px;
+$adaptiveMaxWidth: 1170px;
+
+$adaptiveMinWidthP: $adaptiveMinWidth + 1;
+$adaptiveMaxWidthP: $adaptiveMaxWidth + 1;
+
+$media_queries : (
+        's' : unquote('screen and (max-width: #{$adaptiveMinWidth})'),
+        'm' : unquote('screen and (min-width: #{$adaptiveMinWidthP}) and (max-width: #{$adaptiveMaxWidth})'),
+        'l' : unquote('screen and (min-width: #{$adaptiveMaxWidthP})'),
+);
+
+@mixin adaptive-mixin($modes) {
+  $conditions : ();
+  @each $mode in $modes {
+    $conditions: append(
+                    $conditions,
+                    #{inspect(map-get($media_queries, $mode))},
+                    comma
+    );
+  }
+
+  @media #{$conditions} {
+    @content;
+  }
+}

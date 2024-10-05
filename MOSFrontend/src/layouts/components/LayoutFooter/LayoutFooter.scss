@@ -1,10 +1,14 @@
+@import '@scss-mixins/adaptive';
+
 .layout-footer {
-  width: 100%;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.25);
-  padding: 20px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.25);
+  margin-top: 16px;
+  padding-top: 4px;
+  padding-bottom: 20px;
 
   .content {
-    max-width: 1200px;
+    padding: 4px;
+    max-width: 1000px;
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
@@ -13,6 +17,14 @@
     .links {
       display: flex;
       gap: 4px;
+    }
+
+    @include adaptive-mixin(s) {
+      .links {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
     }
   }
 }
