@@ -1,5 +1,7 @@
 .layout-header {
   width: 100%;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+  padding: 4px 0;
 
   .content {
     max-width: 1600px;
@@ -13,6 +15,7 @@
       text-decoration: none;
       font-family: Corbel;
       color: #8052F6;
+      width: 154px;
 
       & > img {
         height: 48px;

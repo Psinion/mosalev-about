@@ -1,38 +1,22 @@
 <template>
-  <FlatLayout>
-    <div class="login-page">
-      <el-form
-        :model="loginForm"
-        class="login-form"
-        label-position="top"
-      >
-        <el-form-item
-          label="Логин"
-          required
-        >
-          <el-input v-model="loginForm.login" />
-        </el-form-item>
-
-        <el-form-item
-          label="Пароль"
-          required
-        >
-          <el-input
-            v-model="loginForm.password"
-            type="password"
-            show-password
-          />
-        </el-form-item>
-
-        <el-form-item>
-          <el-button
-            type="primary"
-            @click="onSubmit"
-          >
-            Create
-          </el-button>
-        </el-form-item>
-      </el-form>
+  <FlatLayout class="login-page-layout">
+    <div
+      class="login-page"
+      @submit.prevent="onSubmit"
+    >
+      <form class="login-form">
+        <div class="input-block">
+          <label>Логин</label>
+          <input>
+        </div>
+        <div class="input-block">
+          <label>Пароль</label>
+          <input type="password">
+        </div>
+        <button class="submit-button">
+          Войти
+        </button>
+      </form>
     </div>
   </FlatLayout>
 </template>
@@ -51,4 +35,4 @@ function onSubmit() {
 };
 </script>
 
-<style scoped src="./LoginPage.scss" />
+<style src="./LoginPage.scss" />

@@ -1,5 +1,7 @@
 <template>
-  <FlatLayout />
+  <FlatLayout>
+    <div />
+  </FlatLayout>
 </template>
 
 <script setup lang="ts">
