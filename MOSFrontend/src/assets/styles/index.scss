@@ -12,4 +12,9 @@
 
 @layer core {
   @import "variables";
+  @import "fonts";
+}
+
+@layer typography {
+  @import "typography";
 }

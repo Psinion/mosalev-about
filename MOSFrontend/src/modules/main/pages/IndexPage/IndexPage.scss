@@ -1,0 +1,13 @@
+.index-page {
+  padding-top: 60px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  color: var(--font-color);
+
+  .welcome-text {
+    p {
+      text-align: justify;
+    }
+  }
+}

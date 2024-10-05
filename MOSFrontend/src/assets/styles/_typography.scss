@@ -1,0 +1,49 @@
+@mixin body() {
+  font-size: 16px;
+  line-height: 24px;
+  font-family: 'Open Sans', serif;
+}
+
+h1 {
+  font-family: 'Tech Special', sans-serif;
+  font-style: normal;
+  font-size: 32px;
+  font-weight: 500;
+  line-height: 48px;
+  letter-spacing: 0.64px;
+}
+
+h2 {
+  font-family: 'Tech Special', sans-serif;
+  font-style: normal;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 32px;
+  letter-spacing: 0.48px;
+}
+
+h3 {
+  font-family: 'Tech Special', sans-serif;
+  font-style: normal;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 24px;
+  letter-spacing: 0.18px;
+}
+
+.body-regular {
+  @include body;
+  font-weight: 400;
+}
+
+a {
+  color: var(--primary);
+
+  &:hover {
+    color: var(--primary-up);
+  }
+}
+
+.typography-block {
+
+}

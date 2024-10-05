@@ -9,7 +9,7 @@
           src="@/assets/images/logo.svg"
           alt="logo"
         >
-        Mosalev
+        <h1>Mosalev</h1>
       </a>
     </div>
   </section>
