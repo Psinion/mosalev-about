@@ -10,6 +10,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="Asp.Versioning.Mvc.ApiExplorer" Version="8.1.0" />
         <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.0"/>
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.8">
           <PrivateAssets>all</PrivateAssets>
@@ -28,7 +29,13 @@
 
     <ItemGroup>
       <ProjectReference Include="..\MOS.Data.EF.Access\MOS.Data.EF.Access.csproj" />
+
+
+
     </ItemGroup>
+
+
+
 
 
 

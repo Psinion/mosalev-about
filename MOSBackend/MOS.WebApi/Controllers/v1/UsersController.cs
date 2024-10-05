@@ -1,13 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Asp.Versioning;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using MOS.Application.Data.Users;
-using MOS.Data.EF.Access.Repositories.Users;
 
-namespace MOS.WebApi.Controllers;
+namespace MOS.WebApi.Controllers.v1;
 
-//[ApiVersion(1.0)]
-//[Route("api/v{version:apiVersion}/[controller]")]
-[Route("api/[controller]")]
+[ApiVersion(1.0)]
+[Route("api/v{version:apiVersion}/[controller]")]
 [ApiController]
 public class UsersController : ControllerBase
 {
