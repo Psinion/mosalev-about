@@ -4,9 +4,16 @@
   flex-direction: column;
   gap: 12px;
   color: var(--font-color);
+  max-width: 800px;
+  align-items: center;
 
   .welcome-text {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+
     p {
+      margin-top: 8px;
       text-align: justify;
     }
   }

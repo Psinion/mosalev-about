@@ -5,9 +5,11 @@
   }
 
   & > article {
+    padding: 0 8px;
     max-width: 1200px;
     min-height: calc(100vh - 65px);
     margin: 0 auto;
     background: var(--background-body);
+    display: flex;
   }
 }

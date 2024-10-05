@@ -1,5 +1,8 @@
 <template>
-  <FlatLayout class="login-page-layout">
+  <FlatLayout
+    align-horizontal="center"
+    align-vertical="center"
+  >
     <div
       class="login-page"
       @submit.prevent="onSubmit"
@@ -35,4 +38,4 @@ function onSubmit() {
 };
 </script>
 
-<style src="./LoginPage.scss" />
+<style scoped src="./LoginPage.scss" />

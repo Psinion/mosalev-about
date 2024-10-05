@@ -1,46 +1,38 @@
-.login-page-layout {
-  & > article {
+.login-page {
+  .login-form {
     display: flex;
-    justify-content: center;
-    align-items: center;
+    flex-direction: column;
+    gap: 16px;
+    color: var(--font-color);
 
-    .login-page {
-      .login-form {
-        display: flex;
-        flex-direction: column;
-        gap: 16px;
+    .input-block {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+
+      & > input {
+        padding: 2px 4px;
+        border-radius: 4px;
+        border: 2px solid var(--secondary);
+        background-color: var(--secondary-down);
         color: var(--font-color);
 
-        .input-block {
-          display: flex;
-          flex-direction: column;
-          gap: 4px;
-
-          & > input {
-            padding: 2px 4px;
-            border-radius: 4px;
-            border: 2px solid var(--secondary);
-            background-color: var(--secondary-down);
-            color: var(--font-color);
-
-            &:hover {
-              border-color: var(--secondary-up);
-            }
-          }
+        &:hover {
+          border-color: var(--secondary-up);
         }
+      }
+    }
 
-        .submit-button {
-          width: 100%;
-          padding: 4px 4px;
-          border-radius: 4px;
-          background-color: var(--tertiary);
-          color: var(--font-color);
-          cursor: pointer;
+    .submit-button {
+      width: 100%;
+      padding: 4px 4px;
+      border-radius: 4px;
+      background-color: var(--tertiary);
+      color: var(--font-color);
+      cursor: pointer;
 
-          &:hover {
-            background-color: var(--tertiary-up);
-          }
-        }
+      &:hover {
+        background-color: var(--tertiary-up);
       }
     }
   }
