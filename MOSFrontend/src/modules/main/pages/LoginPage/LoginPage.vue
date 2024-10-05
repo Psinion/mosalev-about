@@ -26,16 +26,10 @@
 
 <script setup lang="ts">
 import FlatLayout from "@/layouts/FlatLayout/FlatLayout.vue";
-import { reactive } from "vue";
-
-const loginForm = reactive({
-    login: "",
-    password: ""
-});
 
 function onSubmit() {
     console.log("submit!");
-};
+}
 </script>
 
 <style scoped src="./LoginPage.scss" />

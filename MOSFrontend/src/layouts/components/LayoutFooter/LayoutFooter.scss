@@ -1,0 +1,18 @@
+.layout-footer {
+  width: 100%;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+  padding: 20px 0;
+
+  .content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    color: var(--primary);
+
+    .links {
+      display: flex;
+      gap: 4px;
+    }
+  }
+}

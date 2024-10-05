@@ -1,0 +1,17 @@
+.footer-link {
+  width: 20px;
+  transition: var(--default-transition);
+
+  &:hover {
+    width: 8em;
+  }
+
+  & > a {
+    display: flex;
+    gap: 4px;
+    text-decoration: none;
+
+    white-space: nowrap;
+    overflow: hidden;
+  }
+}
