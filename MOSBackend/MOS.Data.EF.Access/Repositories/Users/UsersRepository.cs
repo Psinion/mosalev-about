@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MOS.Application.Data.Users;
+using MOS.Application.Data.Repositories.Users;
 using MOS.Data.EF.Access.Contexts;
 using MOS.Domain.Entities.Users;
 

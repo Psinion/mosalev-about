@@ -1,7 +1,9 @@
 ﻿using Asp.Versioning;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using MOS.Application.Data.Users;
+using MOS.Application.Data.Services.Users;
+using MOS.Application.DTOs.Users.Requests;
+using MOS.Application.DTOs.Users.Responses;
+using MOS.Application.OperationResults.Enums;
 
 namespace MOS.WebApi.Controllers.v1;
 
@@ -10,14 +12,14 @@ namespace MOS.WebApi.Controllers.v1;
 [ApiController]
 public class UsersController : ControllerBase
 {
-    //private readonly IUsersService usersService;
+    private readonly IUsersService usersService;
     
-    /*public UsersController(IUsersService usersService)
+    public UsersController(IUsersService usersService)
     {
         this.usersService = usersService;
     }
     
-    [HttpPost()]
+    [HttpPost]
     [Route("authenticate")]
     public async Task<ActionResult<AuthenticateResponseDto>> Authenticate(AuthenticateRequestDto request)
     {
@@ -25,24 +27,9 @@ public class UsersController : ControllerBase
 
         if (response.Error.ErrorType == ErrorType.Unauthorized)
         {
-            return Unauthorized(response.Error.Description);
+            return Unauthorized(response.Error);
         }
 
         return Ok(response.Value);
-    }*/
-
-    private readonly IUsersRepository usersRepository;
-
-    public UsersController(IUsersRepository usersRepository)
-    {
-        this.usersRepository = usersRepository;
-    }
-    
-    [HttpGet()]
-    [Route("get_all")]
-    public async Task<ActionResult> GetAll()
-    {
-        var response = await this.usersRepository.GetAll().ToListAsync();
-        return Ok(response);
     }
 }

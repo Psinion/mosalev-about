@@ -1,0 +1,68 @@
+﻿using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
+using MOS.Application.Data.Repositories.Users;
+using MOS.Application.Data.Services.Users;
+using MOS.Application.DTOs.Users.Requests;
+using MOS.Application.DTOs.Users.Responses;
+using MOS.Application.OperationResults;
+using MOS.Domain.Entities.Users;
+using MOS.Identity.Helpers;
+
+namespace MOS.Identity.Services;
+
+public class UsersService : IUsersService
+{
+    private readonly AuthSettings authSettings;
+    private readonly IUsersRepository usersRepository;
+    
+    public UsersService(IOptions<AuthSettings> authSettings, IUsersRepository usersRepository)
+    {
+        this.authSettings = authSettings.Value;
+        this.usersRepository = usersRepository;
+    }
+    
+    public async Task<OperationResult<AuthenticateResponseDto>> AuthenticateAsync(AuthenticateRequestDto authenticateRequest)
+    {
+        var user = await usersRepository.GetByCredentialsAsync(authenticateRequest.UserName, authenticateRequest.Password);
+
+        if (user == null)
+        {
+            return OperationError.Unauthorized("incorrect_data", "Username or password is incorrect");
+        }
+
+        var token = GenerateJwtToken(user);
+
+        return new AuthenticateResponseDto(user, token);
+    }
+    
+    public void Dispose()
+    {
+
+    }
+    
+    private string GenerateJwtToken(User user, int expireMinutes = 60)
+    {
+        var secretKey = Encoding.ASCII.GetBytes(authSettings.JwtSecretKey);
+        var symmetricKey = new SymmetricSecurityKey(secretKey);
+        var credentials = new SigningCredentials(symmetricKey, SecurityAlgorithms.HmacSha256Signature);
+
+        var tokenDescriptor = new SecurityTokenDescriptor
+        {
+            Subject = new ClaimsIdentity(new[]
+            {
+                new Claim(nameof(User.Id), user.Id.ToString()),
+            }),
+            Expires = DateTime.UtcNow.AddMinutes(expireMinutes),
+            SigningCredentials = credentials
+        };
+
+        var tokenHandler = new JwtSecurityTokenHandler();
+        var token = tokenHandler.CreateToken(tokenDescriptor);
+        var tokenString = tokenHandler.WriteToken(token);
+
+        return tokenString;
+    }
+}

@@ -1,7 +1,6 @@
-﻿using MOS.Application.Data.Repositories;
-using MOS.Domain.Entities.Users;
+﻿using MOS.Domain.Entities.Users;
 
-namespace MOS.Application.Data.Users;
+namespace MOS.Application.Data.Repositories.Users;
 
 public interface IUsersRepository : IGenericRepository<User>
 {

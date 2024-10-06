@@ -26,9 +26,18 @@
 
 <script setup lang="ts">
 import FlatLayout from "@/layouts/FlatLayout/FlatLayout.vue";
+import UsersServiceInstance from "@/shared/services/UsersService.ts";
 
-function onSubmit() {
-    console.log("submit!");
+async function onSubmit() {
+  try {
+    await UsersServiceInstance.authenticate({
+      userName: "kek",
+      password: "kek"
+    });
+  }
+  catch (error) {
+    console.log(error);
+  }
 }
 </script>
 

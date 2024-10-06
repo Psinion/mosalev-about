@@ -29,6 +29,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\MOS.Data.EF.Access\MOS.Data.EF.Access.csproj" />
+      <ProjectReference Include="..\MOS.Identity\MOS.Identity.csproj" />
 
 
 

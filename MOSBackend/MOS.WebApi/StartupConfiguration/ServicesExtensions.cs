@@ -1,5 +1,7 @@
-﻿using MOS.Application.Data.Users;
+﻿using MOS.Application.Data.Repositories.Users;
+using MOS.Application.Data.Services.Users;
 using MOS.Data.EF.Access.Repositories.Users;
+using MOS.Identity.Services;
 
 namespace MOS.WebApi.StartupConfiguration;
 
@@ -19,6 +21,8 @@ public static class ServicesExtensions
     
     public static IServiceCollection AddServices(this IServiceCollection services)
     {
+        services.AddScoped<IUsersService, UsersService>();
+        
         return services;
     }
 }

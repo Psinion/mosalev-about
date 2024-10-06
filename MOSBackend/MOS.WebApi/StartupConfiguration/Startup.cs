@@ -37,7 +37,6 @@ public class Startup
             });
 
         services.AddTransient<IConfigureOptions<SwaggerGenOptions>, ConfigureSwaggerOptions>();
-        
         services.AddSwaggerGen(options =>
         {
             options.OperationFilter<SwaggerDefaultValues>();
@@ -54,6 +53,18 @@ public class Startup
                     .JsonSerializerOptions
                     .ReferenceHandler = ReferenceHandler.IgnoreCycles;
             });
+        
+        services.AddCors(options =>
+        {
+            var origins = configuration.GetValue<string>("AllowedOrigins");
+            options.AddDefaultPolicy(builder =>
+            {
+                builder
+                    .WithOrigins(origins)
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+            });
+        });
         
         services.AddHttpsRedirection(options =>
         {
