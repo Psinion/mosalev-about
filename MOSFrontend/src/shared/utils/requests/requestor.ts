@@ -6,12 +6,17 @@ type TMethodType = "GET" | "POST" | "PUT" | "PATCH" | "DELETE" | "HEAD" | "OPTIO
 type TRequestQuery = IDictionary<string | number | boolean | null | Array<any>>;
 type TRequestBody = IDictionary<any> | Array<any> | string | Blob | FormData | null;
 
+export type TMiddlewareRequest = (request: IPreparedRequest) => Promise<IPreparedRequest>;
+
 export type TRequestHeaders = IDictionary<string>;
 
 export interface IRequestOptions {
   baseUrl: string;
   headers?: TRequestHeaders;
 
+  middleware?: {
+    request?: TMiddlewareRequest[];
+  };
   handleError?: IRequestErrorHandler;
 }
 
@@ -48,6 +53,12 @@ export class PsiRequestor {
   private _headers?: TRequestHeaders;
   private _baseUrl?: string;
 
+  private _middlewaresRequest: TMiddlewareRequest[] = [];
+
+  private get _hasMiddlewaresRequest(): boolean {
+    return this._middlewaresRequest.length > 0;
+  }
+
   private _handleError: IRequestErrorHandler = defaultHandleError;
 
   constructor(options?: IRequestOptions) {
@@ -57,6 +68,9 @@ export class PsiRequestor {
   public setOptions(options: IRequestOptions) {
     this._baseUrl = options?.baseUrl;
     this._headers = options?.headers ?? {};
+
+    this._middlewaresRequest = options?.middleware?.request ?? [];
+
     if (options.handleError) {
       this._handleError = options.handleError;
     }
@@ -110,7 +124,7 @@ export class PsiRequestor {
   }
 
   private prepareRequest(method: TMethodType, path: string, data?: IRequestData) {
-    const request: IPreparedRequest = {
+    let request: IPreparedRequest = {
       url: this.prepareUrl(path, data?.query),
       options: {
         method: method
@@ -125,7 +139,11 @@ export class PsiRequestor {
     request.options.body = this.prepareBody(data?.body ?? null);
     request.options.headers = preparedHeaders;
 
-    // TODO: DI
+    if (this._hasMiddlewaresRequest) {
+      this._middlewaresRequest.forEach(async (middlewareFn) => {
+        request = await middlewareFn(request);
+      });
+    }
 
     return request;
   }
@@ -221,7 +239,6 @@ export class PsiRequestor {
           throw error;
         });
     });
-    console.log(promise);
     return promise;
   }
 

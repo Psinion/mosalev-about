@@ -1,139 +1,59 @@
-import type { IUserAuthResponseDto } from "@/dtos/IUserAuthResponseDto";
-import type { IUserAuth } from "@/entities/IUserAuth";
 import { defineStore } from "pinia";
-import router from "@/router";
 import { computed, ref } from "vue";
-import { mainRequestor } from "../../utils/requestor";
-import type { UserPermissionDto } from "@/dtos/userPermissionDto";
-import { UserPermissions } from "./userPermissions";
-import type { User } from "@/models/user";
+import { TUser } from "@/shared/types";
+import UsersServiceInstance from "@/shared/services/UsersService.ts";
+import { RouteNames } from "@/router/routeNames.ts";
+import { useRouter } from "vue-router";
+
+const MOS_TOKEN_STORAGE_KEY = "token";
 
 export const useUserStore = defineStore("user", () => {
-  const user = ref<User | null>(
-    JSON.parse(localStorage.getItem("user") as string) as User
-  );
-  const token = ref<string | null>(localStorage.getItem("token"));
-  const returnUrl = ref<string | null>(null);
-  const userPermissions = ref<Record<string, boolean | undefined> | null>(null);
+  const router = useRouter();
 
-  const isAuthenticated = computed(() => token.value != null);
+  const user = ref<TUser | null>();
+  const authToken = ref<string | null>(localStorage.getItem(MOS_TOKEN_STORAGE_KEY));
+
+  const token = computed(() => authToken.value);
+  const isAuthenticated = computed(() => authToken.value != null);
 
   async function login(
     username: string,
-    password: string,
-    rememberMe: boolean
+    password: string
   ) {
-    const endpoint = "users/authenticate";
-
-    const requestData: IUserAuth = {
-      username: username,
-      password: password,
-      rememberMe: rememberMe
-    };
-
     try {
-      const response = await mainRequestor.post<IUserAuthResponseDto>(
-        `${endpoint}`,
-        "POST",
-        {
-          body: requestData
-        }
-      );
+      const response = await UsersServiceInstance.authenticate({
+        userName: username,
+        password: password
+      });
 
-      const rUser = response.user;
-      user.value = {
-        adAccount: rUser.adAccount,
-        firstName: rUser.firstName,
-        middleName: rUser.middleName,
-        lastName: rUser.lastName,
-        fio: rUser.fio
-      };
-      localStorage.setItem("user", JSON.stringify(user.value));
+      if (response.token) {
+        setToken(response.token);
+        user.value = response.user;
 
-      token.value = response.token;
-      localStorage.setItem("token", token.value);
-
-      router.push(returnUrl.value ?? { name: "Index" });
+        await router.push({ name: RouteNames.Index });
+      }
     }
     catch (error) {
       throw error;
     }
   }
 
-  const logout = () => {
-    user.value = null;
-    token.value = null;
-    localStorage.removeItem("user");
-    localStorage.removeItem("token");
-    router.push({ name: "Login" });
-  };
-
-  const fetchUserPermissions = async (): Promise<void> => {
-    if (userPermissions.value) {
-      return;
+  function setToken(token: string | null) {
+    if (token) {
+      localStorage.setItem(MOS_TOKEN_STORAGE_KEY, token);
+      authToken.value = token;
     }
-
-    if (isAuthenticated.value) {
-      const endpoint = "users/permissions";
-
-      try {
-        const response = await mainRequestor.post<UserPermissionDto>(
-          `${endpoint}`,
-          "POST",
-          {
-            needErrorHandle: false
-          }
-        );
-
-        // TODO: Написать юнит тест для проверки правильности прав на клиенте и сервере.
-        const permissions = response.permissions;
-
-        userPermissions.value = {};
-
-        for (const perm in UserPermissions) {
-          userPermissions.value[perm] = false;
-        }
-        userPermissions.value[UserPermissions.LoggedIn] = true;
-
-        for (const perm of permissions) {
-          userPermissions.value[perm] = true;
-        }
-      }
-      catch (error) {
-        console.log(error);
-      }
+    else {
+      localStorage.removeItem(MOS_TOKEN_STORAGE_KEY);
+      authToken.value = null;
     }
-  };
-
-  const checkPermission = (permission: UserPermissions | string): boolean => {
-    if (!userPermissions.value) {
-      return false;
-    }
-
-    return userPermissions.value[permission] ?? false;
-  };
-
-  const checkPermissions = (
-    permissions: UserPermissions[] | string[]
-  ): boolean => {
-    if (!userPermissions.value) {
-      return false;
-    }
-
-    return permissions.some(permission =>
-      userPermissions.value ? userPermissions.value[permission] : false
-    );
-  };
+  }
 
   return {
     user,
     token,
-    returnUrl,
     isAuthenticated,
-    login,
-    logout,
-    fetchUserPermissions,
-    checkPermission,
-    checkPermissions
+
+    login
   };
 });

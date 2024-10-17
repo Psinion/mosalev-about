@@ -10,11 +10,14 @@
       <form class="login-form">
         <div class="input-block">
           <label>Логин</label>
-          <input>
+          <input v-model="userName">
         </div>
         <div class="input-block">
           <label>Пароль</label>
-          <input type="password">
+          <input
+            v-model="password"
+            type="password"
+          >
         </div>
         <button class="submit-button">
           Войти
@@ -26,14 +29,21 @@
 
 <script setup lang="ts">
 import FlatLayout from "@/layouts/FlatLayout/FlatLayout.vue";
-import UsersServiceInstance from "@/shared/services/UsersService.ts";
+import { ref } from "vue";
+import { useUserStore } from "@/shared/stores/userStore.ts";
+
+const userStore = useUserStore();
+
+const userName = ref <string | null> (null);
+const password = ref <string | null> (null);
 
 async function onSubmit() {
+  if (!userName.value || !password.value) {
+    return;
+  }
+
   try {
-    await UsersServiceInstance.authenticate({
-      userName: "kek",
-      password: "kek"
-    });
+    await userStore.login(userName.value, password.value);
   }
   catch (error) {
     console.log(error);
