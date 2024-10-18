@@ -4,6 +4,7 @@ using Asp.Versioning.ApiExplorer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using MOS.Data.EF.Access.Contexts;
+using MOS.Identity.Middlewares;
 using MOS.WebApi.StartupConfiguration.Swagger;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
@@ -99,6 +100,8 @@ public class Startup
 
         app.UseCors();
 
+        app.UseMiddleware<JwtMiddleware>();
+        
         app.UseEndpoints(endpoints =>
             endpoints.MapControllers()
         );

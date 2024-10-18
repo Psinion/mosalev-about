@@ -1,6 +1,9 @@
 <template>
   <FlatLayout align-horizontal="center">
     <div class="index-page">
+      <div class="actions">
+        <PsiButton>Редактировать</PsiButton>
+      </div>
       <h2>Добро пожаловать!</h2>
       <div class="welcome-text body-regular">
         <div>
@@ -49,6 +52,7 @@
 <script setup lang="ts">
 
 import FlatLayout from "@/layouts/FlatLayout/FlatLayout.vue";
+import PsiButton from "@/shared/components/PsiButton/PsiButton.vue";
 </script>
 
-<style src="./IndexPage.scss"></style>
+<style src="IndexViewPage.scss"></style>

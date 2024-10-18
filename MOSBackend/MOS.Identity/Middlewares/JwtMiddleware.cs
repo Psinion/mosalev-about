@@ -5,8 +5,9 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using MOS.Application.Data.Repositories.Users;
 using MOS.Domain.Entities.Users;
+using MOS.Identity.Helpers;
 
-namespace MOS.Identity.Helpers;
+namespace MOS.Identity.Middlewares;
 
 public class JwtMiddleware
 {

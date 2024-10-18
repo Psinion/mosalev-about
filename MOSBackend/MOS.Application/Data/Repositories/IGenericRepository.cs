@@ -1,4 +1,4 @@
-﻿using MOS.Domain.Entities.Base;
+﻿using MOS.Domain.Entities;
 
 namespace MOS.Application.Data.Repositories;
 

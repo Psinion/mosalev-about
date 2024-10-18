@@ -1,6 +1,4 @@
-﻿using MOS.Domain.Entities.Base;
-
-namespace MOS.Domain.Entities.Users;
+﻿namespace MOS.Domain.Entities.Users;
 
 public class User : Entity
 {

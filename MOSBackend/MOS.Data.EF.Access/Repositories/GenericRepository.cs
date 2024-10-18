@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MOS.Application.Data.Repositories;
 using MOS.Data.EF.Access.Contexts;
-using MOS.Domain.Entities.Base;
+using MOS.Domain.Entities;
 
 namespace MOS.Data.EF.Access.Repositories;
 

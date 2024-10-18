@@ -1,4 +1,4 @@
-﻿namespace MOS.Domain.Entities.Base;
+﻿namespace MOS.Domain.Entities;
 
 public interface IEntity
 {

@@ -40,7 +40,7 @@ public class UsersService : IUsersService
     
     public void Dispose()
     {
-
+        usersRepository.Dispose();
     }
     
     private string GenerateJwtToken(User user, int expireMinutes = 60)
