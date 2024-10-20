@@ -46,11 +46,22 @@ services:
       context:  ./MOSFrontend
       dockerfile: Dockerfile
       args:
-        VUE_APP_API_URL: http://localhost:8080
+        VUE_APP_API_URL: http://localhost:8081
     ports:
       - "6981:80"
     depends_on: 
       - mos.backend
+
+  mos.proxy:
+    container_name: mos-proxy
+    restart: always
+    build:
+      context: ./Proxy
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    depends_on:
+      - mos.frontend
       
 volumes:
   mos-db-data:

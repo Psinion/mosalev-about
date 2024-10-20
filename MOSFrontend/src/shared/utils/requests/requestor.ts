@@ -13,7 +13,6 @@ export type TRequestHeaders = IDictionary<string>;
 export interface IRequestOptions {
   baseUrl: string;
   headers?: TRequestHeaders;
-
   middleware?: {
     request?: TMiddlewareRequest[];
   };
@@ -164,7 +163,7 @@ export class PsiRequestor {
     return totalUrl;
   }
 
-  private prepareBody(body: TRequestBody): TRequestBody {
+  private prepareBody(body: TRequestBody): BodyInit {
     return JSON.stringify(body);
   }
 
@@ -242,7 +241,7 @@ export class PsiRequestor {
     return promise;
   }
 
-  private async checkResponseErrors(
+  /* private async checkResponseErrors(
     response: Response | null
   ): Promise<Response> {
     if (response == null) {
@@ -264,7 +263,7 @@ export class PsiRequestor {
     }
 
     return response;
-  }
+  } */
 }
 
 const requestorInstance = new PsiRequestor();

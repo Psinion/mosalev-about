@@ -30,7 +30,7 @@ export const useUserStore = defineStore("user", () => {
         setToken(response.token);
         user.value = response.user;
 
-        await router.push({ name: RouteNames.Index });
+        await router.push({ name: RouteNames.IndexView });
       }
     }
     catch (error) {

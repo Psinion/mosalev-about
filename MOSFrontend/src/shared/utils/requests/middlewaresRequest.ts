@@ -1,11 +1,12 @@
 import { useUserStore } from "@/shared/stores/userStore.ts";
-import { IPreparedRequest } from "@/shared/utils/requests/requestor.ts";
+import { IPreparedRequest, TRequestHeaders } from "@/shared/utils/requests/requestor.ts";
 
-function authRequestMiddleware(request: IPreparedRequest) {
+async function authRequestMiddleware(request: IPreparedRequest): Promise<IPreparedRequest> {
   const userStore = useUserStore();
 
-  if (request.options.headers && userStore.token !== null) {
-    request.options.headers["Authorization"] = userStore.token;
+  if (request.options?.headers && userStore.token !== null) {
+    const headers = request.options?.headers as TRequestHeaders;
+    headers["Authorization"] = userStore.token;
   }
 
   return request;

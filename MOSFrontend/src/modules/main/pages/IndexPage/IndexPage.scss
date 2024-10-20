@@ -6,21 +6,4 @@
   color: var(--font-color);
   max-width: 800px;
   align-items: center;
-
-  .actions {
-    display: flex;
-    justify-content: flex-end;
-    width: 100%;
-  }
-
-  .welcome-text {
-    display: flex;
-    flex-direction: column;
-    gap: 24px;
-
-    p {
-      margin-top: 8px;
-      text-align: justify;
-    }
-  }
 }

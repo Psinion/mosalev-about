@@ -1,4 +1,6 @@
 export enum RouteNames {
-    Index = "index",
-    Login = "Login"
+  IndexView = "IndexView",
+  IndexEdit = "IndexEdit",
+
+  Login = "Login"
 }

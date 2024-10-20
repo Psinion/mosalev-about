@@ -1,0 +1,12 @@
+.psi-button {
+  padding: 4px 8px;
+  border-radius: 4px;
+  border: 2px solid var(--primary-down);
+  background-color: var(--primary);
+  color: var(--font-color);
+  cursor: pointer;
+
+  &:hover {
+    border-color: var(--primary-up);
+  }
+}
