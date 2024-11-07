@@ -8,6 +8,7 @@ import "@/assets/styles/index.scss";
 import { PsiRequestorPlugin } from "@/shared/utils/requests/requestor.ts";
 import { customErrorHandler } from "@/shared/utils/requests/errorHandlers.ts";
 import { requestMiddlewares } from "@/shared/utils/requests/middlewaresRequest.ts";
+import { mainConfig } from "@/main.config.ts";
 
 const app = createApp(App);
 
@@ -17,7 +18,7 @@ importIcons();
 
 app.use(createPinia());
 app.use(PsiRequestorPlugin, {
-  baseUrl: "https://localhost:8081/",
+  baseUrl: mainConfig.appUrl,
   handleError: customErrorHandler,
   middleware: {
     request: requestMiddlewares

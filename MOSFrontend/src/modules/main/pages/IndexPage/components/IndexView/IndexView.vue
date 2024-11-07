@@ -49,6 +49,14 @@
 
 <script setup lang="ts">
 import PsiButton from "@/shared/components/PsiButton/PsiButton.vue";
+import { useRouter } from "vue-router";
+import { onMounted } from "vue";
+import { RouteNames } from "@/router/routeNames.ts";
+
+const router = useRouter();
+onMounted(async () => {
+  router.replace({ name: RouteNames.Login });
+});
 </script>
 
 <style src="./IndexView.scss" />
