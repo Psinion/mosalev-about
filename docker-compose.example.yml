@@ -17,9 +17,6 @@ services:
     volumes:
       - mos-db-data:/var/lib/postgresql/data
     
-  #volumes:
-  #  postgres-data:
-    
   mos.backend:
     container_name: mos-backend
     restart: unless-stopped
@@ -31,7 +28,7 @@ services:
       - ASPNETCORE_HTTP_PORTS=8080
       #- ASPNETCORE_HTTPS_PORTS=8081
     ports:
-      - "8081:8081"
+      - "8080:8080"
     networks:
       - mos-network
     depends_on: 
@@ -47,6 +44,8 @@ services:
         VUE_APP_API_URL: http://localhost:8081
     ports:
       - "6981:80"
+    networks:
+      - mos-network
     depends_on: 
       - mos.backend
 
@@ -64,6 +63,8 @@ services:
       - ./Proxy/default.conf:/etc/nginx/conf.d/default.conf
       - cert-volume:/etc/letsencrypt/:ro
       - cert-www:/var/www/certbot:ro
+    networks:
+      - mos-network
     depends_on:
       - mos.frontend
       

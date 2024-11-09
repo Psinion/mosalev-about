@@ -67,10 +67,10 @@ public class Startup
             });
         });
         
-        services.AddHttpsRedirection(options =>
+        /*services.AddHttpsRedirection(options =>
         {
             options.HttpsPort = 8081;
-        });
+        });*/
         
         services
             .AddConfigurations(configuration)
