@@ -1,9 +1,6 @@
 <template>
   <FlatLayout align-horizontal="center">
     <div class="index-page">
-      <div class="actions">
-        <PsiButton>Редактировать</PsiButton>
-      </div>
       <h2>Добро пожаловать!</h2>
       <div class="welcome-text body-regular">
         <div>

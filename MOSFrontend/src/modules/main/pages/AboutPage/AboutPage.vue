@@ -1,10 +1,8 @@
 <template>
   <FlatLayout align-horizontal="center">
     <div class="about-page">
-      <div class="actions">
-        <PsiButton>Редактировать</PsiButton>
-      </div>
-      <div class="welcome-text body-regular">
+      <div class="actions" />
+      <div class="text body-regular">
         <div>
           <h3>Обо мне</h3>
           <p>
