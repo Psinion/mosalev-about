@@ -1,0 +1,13 @@
+.layout-header-button {
+  .title {
+    text-decoration: none;
+  }
+
+  &.disabled {
+    pointer-events: none;
+
+    .title {
+      color: var(--tertiary-down);
+    }
+  }
+}
