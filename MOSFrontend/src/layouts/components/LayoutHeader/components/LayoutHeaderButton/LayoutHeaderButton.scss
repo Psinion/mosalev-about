@@ -1,12 +1,12 @@
 .layout-header-button {
-  .title {
+  .link {
     text-decoration: none;
   }
 
   &.disabled {
     pointer-events: none;
 
-    .title {
+    .link {
       color: var(--tertiary-down);
     }
   }

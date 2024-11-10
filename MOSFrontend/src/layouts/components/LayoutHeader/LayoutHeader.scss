@@ -24,9 +24,12 @@
       }
     }
 
-    .actions {
-      display: flex;
-      gap: 8px;
+    .right-panel {
+
+      .map {
+        display: flex;
+        gap: 8px;
+      }
     }
   }
 }

@@ -4,7 +4,7 @@
     :class="{disabled: disabled}"
   >
     <RouterLink
-      class="title "
+      class="link"
       :to="route"
     >
       <h3>{{ title }}</h3>

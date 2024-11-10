@@ -11,15 +11,21 @@
         >
         <h1>Mosalev</h1>
       </RouterLink>
-      <div class="actions">
-        <LayoutHeaderActions
-          title="Обо мне"
-          :route="aboutRoute"
+      <div class="right-panel">
+        <LayoutHeaderUser
+          v-if="authorised"
+          class="user"
         />
-        <LayoutHeaderActions
-          title="Проекты"
-          disabled
-        />
+        <div class="map">
+          <LayoutHeaderActions
+            title="Обо мне"
+            :route="aboutRoute"
+          />
+          <LayoutHeaderActions
+            title="Проекты"
+            disabled
+          />
+        </div>
       </div>
     </div>
   </section>
@@ -30,6 +36,12 @@ import LayoutHeaderActions
   from "@/layouts/components/LayoutHeader/components/LayoutHeaderButton/LayoutHeaderButton.vue";
 import { computed } from "vue";
 import { RouteNames } from "@/router/routeNames.ts";
+import { useUserStore } from "@/shared/stores/userStore.ts";
+import LayoutHeaderUser from "@/layouts/components/LayoutHeader/components/LayoutHeaderUser/LayoutHeaderUser.vue";
+
+const userStore = useUserStore();
+
+const authorised = computed(() => userStore.user !== null);
 
 const indexRoute = computed(() => {
   return {
