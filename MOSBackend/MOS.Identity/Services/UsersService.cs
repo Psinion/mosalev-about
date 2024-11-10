@@ -1,5 +1,7 @@
 ﻿using System.IdentityModel.Tokens.Jwt;
+using System.Runtime.Intrinsics.Arm;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -26,7 +28,8 @@ public class UsersService : IUsersService
     
     public async Task<OperationResult<AuthenticateResponseDto>> AuthenticateAsync(AuthenticateRequestDto authenticateRequest)
     {
-        var user = await usersRepository.GetByCredentialsAsync(authenticateRequest.UserName, authenticateRequest.Password);
+        var hashedPassword = HashPassword(authenticateRequest.Password, authSettings.AuthSalt);
+        var user = await usersRepository.GetByCredentialsAsync(authenticateRequest.UserName, hashedPassword);
 
         if (user == null)
         {
@@ -41,6 +44,14 @@ public class UsersService : IUsersService
     public void Dispose()
     {
         usersRepository.Dispose();
+    }
+
+    private string HashPassword(string password, string salt)
+    {
+        using var sha256 = SHA256.Create();
+        var saltedPassword = string.Concat(password, salt);
+        var hashedBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(saltedPassword));
+        return BitConverter.ToString(hashedBytes).Replace("-", "").ToLower();
     }
     
     private string GenerateJwtToken(User user, int expireMinutes = 60)
