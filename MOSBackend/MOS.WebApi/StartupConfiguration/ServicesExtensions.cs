@@ -28,6 +28,7 @@ public static class ServicesExtensions
     
     public static IServiceCollection AddServices(this IServiceCollection services)
     {
+        services.AddScoped<ICredentialsService, CredentialsService>();
         services.AddScoped<IUsersService, UsersService>();
         services.AddScoped<IIndexService, IndexService>();
         

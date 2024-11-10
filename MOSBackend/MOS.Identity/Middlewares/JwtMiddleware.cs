@@ -20,19 +20,19 @@ public class JwtMiddleware
         this.authSettings = authSettings.Value;
     }
 
-    public async Task Invoke(HttpContext context, IUsersRepository usersRepository)
+    public async Task Invoke(HttpContext context)
     {
         var token = context.Request.Headers["AuthToken"].FirstOrDefault()?.Split(" ").Last();
 
         if (token != null)
         {
-            HandleToken(context, usersRepository, token);
+            HandleToken(context, token);
         }
 
         await next(context);
     }
 
-    private bool HandleToken(HttpContext context, IUsersRepository usersRepository, string token)
+    private bool HandleToken(HttpContext context, string token)
     {
         try
         {
@@ -54,9 +54,7 @@ public class JwtMiddleware
             var jwtToken = (JwtSecurityToken)validatedToken;
 
             var userId = int.Parse(jwtToken.Claims.First(x => x.Type == nameof(User.Id)).Value);
-
-            var user = usersRepository.GetByIdAsync(userId);
-            context.Items["User"] = user;
+            context.Items["UserId"] = userId;
         }
         catch(Exception ex)
         {

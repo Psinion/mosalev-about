@@ -1,18 +1,14 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Filters;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace MOS.Identity.Helpers;
 
 [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
-public class CustomAuthorizeAttribute : Attribute, IAuthorizationFilter
+public class CustomAuthorizeAttribute : TypeFilterAttribute
 {
-    public void OnAuthorization(AuthorizationFilterContext context)
+    private readonly string permission;
+    
+    public CustomAuthorizeAttribute(string permission) : base(typeof(CustomAuthorizeFilter))
     {
-        var user = context.HttpContext.Items["User"];
-        if (user == null)
-        {
-            context.Result = new JsonResult(new { message = "Unauthorized" }) { StatusCode = StatusCodes.Status401Unauthorized };
-        }
+        Arguments = new object[] { permission };
     }
 }
