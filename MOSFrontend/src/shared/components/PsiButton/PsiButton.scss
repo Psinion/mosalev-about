@@ -9,4 +9,9 @@
   &:hover {
     border-color: var(--primary-up);
   }
+
+  & > .link {
+    text-decoration: none;
+    color: inherit;
+  }
 }

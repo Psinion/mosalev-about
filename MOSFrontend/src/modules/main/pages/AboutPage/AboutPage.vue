@@ -1,8 +1,12 @@
 <template>
   <FlatLayout align-horizontal="center">
     <div class="about-page">
-      <div class="actions" />
-      <div class="text body-regular">
+      <div class="actions">
+        <PsiButton :route="resumeRoute">
+          Резюме
+        </PsiButton>
+      </div>
+      <div class="text typography-block body-regular">
         <div>
           <h3>Обо мне</h3>
           <p>
@@ -35,6 +39,14 @@
 <script setup lang="ts">
 import FlatLayout from "@/layouts/FlatLayout/FlatLayout.vue";
 import PsiButton from "@/shared/components/PsiButton/PsiButton.vue";
+import { computed } from "vue";
+import { RouteNames } from "@/router/routeNames.ts";
+
+const resumeRoute = computed(() => {
+  return {
+    name: RouteNames.ResumeView
+  };
+});
 </script>
 
 <style src="./AboutPage.scss" />

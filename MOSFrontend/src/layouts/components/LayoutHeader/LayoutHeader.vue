@@ -45,7 +45,7 @@ const authorised = computed(() => userStore.user !== null);
 
 const indexRoute = computed(() => {
   return {
-    name: RouteNames.IndexView
+    name: RouteNames.Index
   };
 });
 const aboutRoute = computed(() => {
