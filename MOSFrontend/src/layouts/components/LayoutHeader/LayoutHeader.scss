@@ -1,7 +1,9 @@
+@import '@scss-mixins/adaptive';
+
 .layout-header {
   width: 100%;
   border-bottom: 1px solid rgba(255, 255, 255, 0.25);
-  padding: 4px 0;
+  padding: 4px 4px;
 
   .content {
     max-width: 1000px;
@@ -10,6 +12,10 @@
     justify-content: space-between;
     align-items: flex-end;
 
+    @include adaptive-mixin(s) {
+      flex-wrap: wrap;
+    }
+
     .logo {
       display: flex;
       align-items: center;
@@ -17,7 +23,7 @@
       text-transform: uppercase;
       text-decoration: none;
       color: var(--primary);
-      width: 154px;
+      width: 100%;
 
       & > img {
         height: 48px;
@@ -25,10 +31,24 @@
     }
 
     .right-panel {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
 
-      .map {
-        display: flex;
-        gap: 8px;
+      .center-panel {
+
+        .map {
+          display: flex;
+          gap: 8px;
+        }
+      }
+
+      .language {
+        .language-toggle {
+          :deep(.label) {
+            width: 24px;
+          }
+        }
       }
     }
   }

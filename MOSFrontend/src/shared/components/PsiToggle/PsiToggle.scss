@@ -1,0 +1,75 @@
+.psi-toggle {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+
+  .toggle {
+    display: inline-block;
+    height: 20px;
+
+    .toggle-switch {
+      display: inline-block;
+      position: relative;
+      cursor: pointer;
+      width: 40px;
+      height: 20px;
+      background: var(--secondary);
+      border-radius: 8px;
+      transition: var(--default-transition);
+
+      &:after {
+        content: '';
+        position: absolute;
+        top: 2px;
+        left: 2px;
+        width: 16px;
+        height: 16px;
+        background: var(--tertiary);
+        border-radius: 6px;
+        transition: var(--default-transition);
+      }
+
+      &:hover {
+        &:after {
+          background: var(--tertiary-up);
+        }
+      }
+    }
+
+    & > input {
+      display: none;
+
+      &:checked {
+        .toggle-switch {
+          background: var(--primary-up);
+        }
+
+        &:not(:disabled) + .toggle-switch {
+          &:after {
+            background: var(--primary);
+          }
+
+          &:hover {
+            &:after {
+              background: var(--primary-up);
+            }
+          }
+        }
+
+        & + .toggle-switch:after {
+          left: calc(100% - 18px)
+        }
+      }
+    }
+  }
+
+  & > .label {
+    &.active {
+      color: var(--primary);
+    }
+
+    &.inactive {
+      color: var(--tertiary);
+    }
+  }
+}
