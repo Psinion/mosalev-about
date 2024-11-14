@@ -3,6 +3,10 @@
     "aboutMe": "About me",
     "projects": "Projects"
   },
+  "auth": {
+    "toasterTokenExpiredHeader": "The authorization token has expired",
+    "toasterTokenExpiredDescription": "Please log in again"
+  },
   "index": {
     "welcome": "Welcome!",
     "aboutWebsiteHeader": "About website",

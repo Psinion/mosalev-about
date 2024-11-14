@@ -4,17 +4,17 @@
       <div>© {{ copyRightYears }} Mosalev Daniel</div>
       <div class="links">
         <FooterLink
-          icon="fa-telegram"
+          icon="telegram"
           title="Telegram"
           href="https://t.me/mosalev_daniel"
         />
         <FooterLink
-          icon="fa-github"
+          icon="github"
           title="GitHub"
           href="https://github.com/Psinion"
         />
         <FooterLink
-          icon="fa-steam"
+          icon="steam"
           title="Steam"
           href="https://steamcommunity.com/id/psinion/"
         />
@@ -29,13 +29,13 @@ import { computed } from "vue";
 import FooterLink from "@/layouts/components/LayoutFooter/components/FooterLink/FooterLink.vue";
 
 const copyRightYears = computed(() => {
-    const publicDate = 2024;
-    const currentDate = new Date().getFullYear();
-    if (publicDate === currentDate) {
-        return publicDate;
-    }
+  const publicDate = 2024;
+  const currentDate = new Date().getFullYear();
+  if (publicDate === currentDate) {
+    return publicDate;
+  }
 
-    return `${publicDate} - ${currentDate}`;
+  return `${publicDate} - ${currentDate}`;
 });
 
 </script>

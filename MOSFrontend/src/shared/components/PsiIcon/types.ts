@@ -1,2 +1,2 @@
-export type TIcon = "fa-telegram" | "fa-steam" | "fa-github";
+export type TIcon = "telegram" | "steam" | "github" | "error" | "success";
 export type TIconFlip = "vertical " | "horizontal " | "both";

@@ -1,6 +1,7 @@
 <template>
   <oh-vue-icon
-    :name="icon"
+    class="psi-icon"
+    :name="iconCode"
     :scale="scale"
     :fill="fill"
     :flip="flip"
@@ -12,10 +13,10 @@
 
 <script setup lang="ts">
 import { OhVueIcon } from "oh-vue-icons";
-import { PropType } from "vue";
+import { computed, PropType } from "vue";
 import { TIcon, TIconFlip } from "@/shared/components/PsiIcon/types.ts";
 
-defineProps({
+const props = defineProps({
   icon: {
     type: String as PropType<TIcon>,
     required: true
@@ -45,6 +46,16 @@ defineProps({
     default: null
   }
 });
+
+const ICON_CODES = {
+  telegram: "fa-telegram",
+  steam: "fa-steam",
+  github: "fa-github",
+  error: "md-reportgmailerrorred",
+  success: "oi-check-circle"
+};
+
+const iconCode = computed(() => ICON_CODES[props.icon]);
 
 </script>
 

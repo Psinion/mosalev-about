@@ -1,0 +1,56 @@
+$rt-namespace: 'Toastify';
+
+:root {
+  //--toastify-color-dark: var(--base-strong);
+}
+
+.#{$rt-namespace}__toast-container {
+  min-width: 400px;
+
+  .#{$rt-namespace}__toast {
+    background-color: var(--secondary-down);
+    border: 1px solid var(--secondary);
+    border-radius: 4px;
+
+    .#{$rt-namespace}__close-button {
+      color: var(--primary);
+
+      &:hover {
+        color: var(--primary-up);
+      }
+    }
+  }
+}
+
+// Анимация появления/скрытия
+/*@keyframes #{$rt-namespace}__diShowIn {
+  from {
+    opacity: 0;
+    animation-timing-function: var(--di-base-transition-time);
+  }
+
+  to {
+    opacity: 1;
+    animation-timing-function: var(--di-base-transition-time);
+  }
+}
+
+@keyframes #{$rt-namespace}__diShowOut {
+  from {
+    opacity: 1;
+    animation-timing-function: var(--di-base-transition-time);
+  }
+
+  to {
+    opacity: 0;
+    animation-timing-function: var(--di-base-transition-time);
+  }
+}
+
+.#{$rt-namespace}__flip-enter {
+  animation-name: #{$rt-namespace}__diShowIn;
+}
+
+.#{$rt-namespace}__flip-exit {
+  animation-name: #{$rt-namespace}__diShowOut;
+}*/

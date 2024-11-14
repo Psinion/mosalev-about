@@ -8,15 +8,19 @@
 import { RouterView } from "vue-router";
 import { useUserStore } from "@/shared/stores/userStore.ts";
 import { onMounted } from "vue";
+import { useToaster } from "@/shared/utils/toaster.ts";
+import { useI18n } from "vue-i18n";
 
+const toaster = useToaster();
 const userStore = useUserStore();
+const { t } = useI18n();
 
-onMounted(() => {
+onMounted(async () => {
   try {
-    userStore.checkLogin();
+    await userStore.checkLogin();
   }
   catch (error) {
-    console.log(error);
+    toaster.error(t("auth.toasterTokenExpiredHeader"), t("auth.toasterTokenExpiredDescription"));
   }
 });
 

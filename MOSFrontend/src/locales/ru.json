@@ -3,6 +3,10 @@
     "aboutMe": "Обо мне",
     "projects": "Проекты"
   },
+  "auth": {
+    "toasterTokenExpiredHeader": "Токен авторизации просрочен",
+    "toasterTokenExpiredDescription": "Повторите, пожалуйста, авторизацию"
+  },
   "index": {
     "welcome": "Добро пожаловать!",
     "aboutWebsiteHeader": "О сайте",

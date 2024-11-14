@@ -1,0 +1,21 @@
+.psi-toast {
+	display: flex;
+	gap: 10px;
+
+	.content {
+		display: flex;
+		flex-direction: column;
+	}
+
+	&.critical {
+		& > .psi-icon {
+			color: var(--critical);
+		}
+	}
+
+	&.success {
+		& > .psi-icon {
+			color: var(--success);
+		}
+	}
+}

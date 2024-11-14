@@ -44,12 +44,14 @@
 <script setup lang="ts">
 import LayoutHeaderActions
   from "@/layouts/components/LayoutHeader/components/LayoutHeaderButton/LayoutHeaderButton.vue";
-import { computed, ref, watch } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 import { RouteNames } from "@/router/routeNames.ts";
 import { useUserStore } from "@/shared/stores/userStore.ts";
 import LayoutHeaderUser from "@/layouts/components/LayoutHeader/components/LayoutHeaderUser/LayoutHeaderUser.vue";
 import PsiToggle from "@/shared/components/PsiToggle/PsiToggle.vue";
 import { useI18n } from "vue-i18n";
+
+const MOS_LOCALE_KEY = "locale";
 
 const userStore = useUserStore();
 
@@ -57,7 +59,9 @@ const { locale, t } = useI18n();
 
 const isRuLanguage = ref(locale.value === "ru");
 watch(() => isRuLanguage.value, (value) => {
-  locale.value = value ? "ru" : "en";
+  const localeCode = value ? "ru" : "en";
+  locale.value = localeCode;
+  localStorage.setItem(MOS_LOCALE_KEY, localeCode);
 });
 
 const authorised = computed(() => userStore.user !== null);
@@ -71,6 +75,14 @@ const aboutRoute = computed(() => {
   return {
     name: RouteNames.AboutView
   };
+});
+
+onMounted(() => {
+  const localeCode = localStorage.getItem(MOS_LOCALE_KEY);
+  if (localeCode) {
+    locale.value = localeCode;
+    isRuLanguage.value = locale.value === "ru";
+  }
 });
 </script>
 
