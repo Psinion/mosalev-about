@@ -38,16 +38,16 @@ export const useUserStore = defineStore("user", () => {
     }
   }
 
+  async function logout() {
+    setToken(null);
+    user.value = null;
+    await router.push({ name: RouteNames.Login });
+  }
+
   async function checkLogin() {
     try {
       const response = await UsersServiceInstance.verify();
-
-      /* if (response) {
-        setToken(response.token);
-        user.value = response.user;
-
-        await router.push({ name: RouteNames.Index });
-      } */
+      user.value = response.user;
     }
     catch (error) {
       throw error;
@@ -71,6 +71,7 @@ export const useUserStore = defineStore("user", () => {
     isAuthenticated,
 
     login,
+    logout,
     checkLogin
   };
 });

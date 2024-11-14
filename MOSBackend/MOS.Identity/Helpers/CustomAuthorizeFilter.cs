@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using MOS.Application.Data.Services.Users;
+using MOS.Application.OperationResults;
 
 namespace MOS.Identity.Helpers;
 
@@ -28,6 +29,6 @@ public class CustomAuthorizeFilter : IAsyncAuthorizationFilter
             }
         }
         
-        context.Result = new JsonResult(new { message = "Unauthorized" }) { StatusCode = StatusCodes.Status403Forbidden };
+        context.Result = new JsonResult(OperationError.Unauthorized("Unauthorized", "")) { StatusCode = StatusCodes.Status403Forbidden };
     }
 }

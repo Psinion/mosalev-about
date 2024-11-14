@@ -14,5 +14,8 @@
     "aboutWebsiteContent2": "this",
     "aboutWebsiteContent3": " project is available on ",
     "aboutWebsiteContent4": "My pet projects are only in gamedev and I have no desire to show them yet. Therefore, I had the idea to create this website. It's simple and its static version could easily be created in notepad, but I had a goal of demonstrating my knowledge rather than the desire to create a practical product."
+  },
+  "toaster": {
+    "commonErrorHeader": "Server Error"
   }
 }

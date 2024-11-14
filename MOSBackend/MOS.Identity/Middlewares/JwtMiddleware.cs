@@ -53,7 +53,7 @@ public class JwtMiddleware
 
             var jwtToken = (JwtSecurityToken)validatedToken;
 
-            var userId = int.Parse(jwtToken.Claims.First(x => x.Type == nameof(User.Id)).Value);
+            var userId = long.Parse(jwtToken.Claims.First(x => x.Type == nameof(User.Id)).Value);
             context.Items["UserId"] = userId;
         }
         catch(Exception ex)

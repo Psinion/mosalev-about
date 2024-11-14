@@ -39,7 +39,7 @@ public class UsersController : ControllerBase
     [CustomAuthorize("users/verify")]
     [HttpGet]
     [Route("verify")]
-    public async Task<ActionResult<AuthenticateResponseDto>> Verify()
+    public ActionResult<VerifyResponseDto> Verify()
     {
         var user = credentialsService.CurrentUser;
 
@@ -48,6 +48,7 @@ public class UsersController : ControllerBase
             return Unauthorized("Incorrect verify");
         }
 
-        return Ok(user);
+        var result = new VerifyResponseDto(user);
+        return Ok(result);
     }
 }
