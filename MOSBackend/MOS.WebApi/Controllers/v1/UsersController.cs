@@ -4,6 +4,7 @@ using MOS.Application.Data.Services.Users;
 using MOS.Application.DTOs.Users.Requests;
 using MOS.Application.DTOs.Users.Responses;
 using MOS.Application.OperationResults.Enums;
+using MOS.Identity.Helpers;
 
 namespace MOS.WebApi.Controllers.v1;
 
@@ -13,10 +14,12 @@ namespace MOS.WebApi.Controllers.v1;
 public class UsersController : ControllerBase
 {
     private readonly IUsersService usersService;
+    private readonly ICredentialsService credentialsService;
     
-    public UsersController(IUsersService usersService)
+    public UsersController(IUsersService usersService, ICredentialsService credentialsService)
     {
         this.usersService = usersService;
+        this.credentialsService = credentialsService;
     }
     
     [HttpPost]
@@ -31,5 +34,20 @@ public class UsersController : ControllerBase
         }
 
         return Ok(response.Value);
+    }
+    
+    [CustomAuthorize("users/verify")]
+    [HttpGet]
+    [Route("verify")]
+    public async Task<ActionResult<AuthenticateResponseDto>> Verify()
+    {
+        var user = credentialsService.CurrentUser;
+
+        if (user == null)
+        {
+            return Unauthorized("Incorrect verify");
+        }
+
+        return Ok(user);
     }
 }

@@ -3,6 +3,7 @@ import { TUser } from "@/shared/types";
 
 export interface IUsersService extends IServiceBase {
   authenticate(params: TAuthenticateRequest): Promise<TAuthenticateResponse>;
+  verify(): Promise<TVerifyResponse>;
 }
 
 export type TAuthenticateRequest = {
@@ -13,4 +14,8 @@ export type TAuthenticateRequest = {
 export type TAuthenticateResponse = {
   user: TUser;
   token: string;
+};
+
+export type TVerifyResponse = {
+  user: TUser;
 };

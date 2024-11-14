@@ -19,11 +19,11 @@
           />
           <div class="map">
             <LayoutHeaderActions
-              title="Обо мне"
+              :title="t('layoutHeader.aboutMe')"
               :route="aboutRoute"
             />
             <LayoutHeaderActions
-              title="Проекты"
+              :title="t('layoutHeader.projects')"
               disabled
             />
           </div>
@@ -53,7 +53,7 @@ import { useI18n } from "vue-i18n";
 
 const userStore = useUserStore();
 
-const { locale } = useI18n();
+const { locale, t } = useI18n();
 
 const isRuLanguage = ref(locale.value === "ru");
 watch(() => isRuLanguage.value, (value) => {

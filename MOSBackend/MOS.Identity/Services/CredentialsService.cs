@@ -9,6 +9,9 @@ namespace MOS.Identity.Services;
 public class CredentialsService : ICredentialsService
 {
     private readonly IUsersRepository usersRepository;
+    private User? currentUser = null;
+
+    public User? CurrentUser => currentUser;
     
     public CredentialsService(IUsersRepository usersRepository)
     {
@@ -24,6 +27,19 @@ public class CredentialsService : ICredentialsService
             return OperationError.NotFound("not_found", "Such user not found");
         }
 
+        return user;
+    }
+    
+    public async Task<OperationResult<User>> InitUserAsync(long userId)
+    {
+        var user = await usersRepository.GetByIdAsync(userId);
+        
+        if (user == null)
+        {
+            return OperationError.NotFound("not_found", "Such user not found");
+        }
+
+        currentUser = user;
         return user;
     }
     

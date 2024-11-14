@@ -1,4 +1,8 @@
 {
+  "layoutHeader": {
+    "aboutMe": "About me",
+    "projects": "Projects"
+  },
   "index": {
     "welcome": "Welcome!",
     "aboutWebsiteHeader": "About website",

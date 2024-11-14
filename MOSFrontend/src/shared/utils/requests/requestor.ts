@@ -77,7 +77,7 @@ export class PsiRequestor {
 
   public async get(
     path: string,
-    query: TRequestQuery
+    query?: TRequestQuery
   ): Promise<TRequestBody> {
     try {
       return await this.request(
@@ -113,6 +113,7 @@ export class PsiRequestor {
     try {
       const request = this.prepareRequest(method, path, data);
 
+      console.log(request);
       const response = await this.sendRequest(request);
       console.log(response);
       return response;
@@ -135,7 +136,7 @@ export class PsiRequestor {
       preparedHeaders["Content-Type"] = "application/json";
     }
 
-    request.options.body = this.prepareBody(data?.body ?? null);
+    request.options.body = data?.body ? this.prepareBody(data.body) : undefined;
     request.options.headers = preparedHeaders;
 
     if (this._hasMiddlewaresRequest) {

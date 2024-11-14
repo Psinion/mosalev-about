@@ -1,4 +1,8 @@
 {
+  "layoutHeader": {
+    "aboutMe": "Обо мне",
+    "projects": "Проекты"
+  },
   "index": {
     "welcome": "Добро пожаловать!",
     "aboutWebsiteHeader": "О сайте",

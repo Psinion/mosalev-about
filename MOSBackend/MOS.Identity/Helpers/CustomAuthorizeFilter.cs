@@ -19,10 +19,9 @@ public class CustomAuthorizeFilter : IAsyncAuthorizationFilter
     public async Task OnAuthorizationAsync(AuthorizationFilterContext context)
     {
         var userId = context.HttpContext.Items["UserId"];
-        return;
         if (userId != null)
         {
-            var userResult = await credentialsService.GetUserByIdAsync((long)userId);
+            var userResult = await credentialsService.InitUserAsync((long)userId);
             if (userResult.IsSuccess)
             {
                 return;

@@ -13,3 +13,13 @@ public class AuthenticateResponseDto
         Token = token;
     }
 }
+
+public class VerifyResponseDto
+{
+    public UserResponseDto User { get; set; }
+    
+    public VerifyResponseDto(User user)
+    {
+        User = new UserResponseDto(user);
+    }
+}

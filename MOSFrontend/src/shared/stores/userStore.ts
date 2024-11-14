@@ -30,8 +30,24 @@ export const useUserStore = defineStore("user", () => {
         setToken(response.token);
         user.value = response.user;
 
-        await router.push({ name: RouteNames.IndexView });
+        await router.push({ name: RouteNames.Index });
       }
+    }
+    catch (error) {
+      throw error;
+    }
+  }
+
+  async function checkLogin() {
+    try {
+      const response = await UsersServiceInstance.verify();
+
+      /* if (response) {
+        setToken(response.token);
+        user.value = response.user;
+
+        await router.push({ name: RouteNames.Index });
+      } */
     }
     catch (error) {
       throw error;
@@ -54,6 +70,7 @@ export const useUserStore = defineStore("user", () => {
     token,
     isAuthenticated,
 
-    login
+    login,
+    checkLogin
   };
 });
