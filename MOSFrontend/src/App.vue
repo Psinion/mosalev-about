@@ -18,7 +18,9 @@ const { t } = useI18n();
 
 onMounted(async () => {
   try {
-    await userStore.checkLogin();
+    if (userStore.token) {
+      await userStore.checkLogin();
+    }
   }
   catch (error) {
     if (error instanceof ServerError) {

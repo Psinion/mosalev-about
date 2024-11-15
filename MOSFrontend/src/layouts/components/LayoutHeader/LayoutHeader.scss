@@ -34,19 +34,23 @@
       display: flex;
       justify-content: space-between;
       width: 100%;
+      align-items: flex-end;
 
       .center-panel {
-
         .map {
           display: flex;
           gap: 8px;
         }
       }
 
-      .language {
+      .admin-panel {
         .language-toggle {
+          margin-top: 4px;
+
           :deep(.label) {
             width: 24px;
+            font-family: "Tech Special", sans-serif;
+            font-style: normal;
           }
         }
       }

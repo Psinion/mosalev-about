@@ -1,5 +1,8 @@
 <template>
-  <button class="psi-button">
+  <button
+    class="psi-button"
+    :class="{'disabled': disabled}"
+  >
     <template v-if="!route">
       <slot />
     </template>
@@ -22,6 +25,10 @@ const props = defineProps({
   route: {
     type: Object as PropType<TRoute>,
     default: null
+  },
+  disabled: {
+    type: Boolean,
+    default: false
   }
 });
 

@@ -13,10 +13,6 @@
       </RouterLink>
       <div class="right-panel">
         <div class="center-panel">
-          <LayoutHeaderUser
-            v-if="authorised"
-            class="user"
-          />
           <div class="map">
             <LayoutHeaderActions
               :title="t('layoutHeader.aboutMe')"
@@ -28,7 +24,11 @@
             />
           </div>
         </div>
-        <div class="language">
+        <div class="admin-panel">
+          <LayoutHeaderUser
+            v-if="authorised"
+            class="user"
+          />
           <PsiToggle
             v-model="isRuLanguage"
             class="language-toggle"

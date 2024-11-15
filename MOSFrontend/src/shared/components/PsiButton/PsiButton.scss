@@ -10,6 +10,13 @@
     border-color: var(--primary-up);
   }
 
+  &.disabled {
+    background-color: var(--tertiary-down);
+    border-color: var(--tertiary);
+    color: var(--tertiary);
+    pointer-events: none;
+  }
+
   & > .link {
     text-decoration: none;
     color: inherit;
