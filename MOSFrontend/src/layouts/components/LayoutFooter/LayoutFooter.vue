@@ -2,6 +2,9 @@
   <section class="layout-footer">
     <div class="content hint-regular">
       <div>© {{ copyRightYears }} Mosalev Daniel</div>
+      <h4 class="version">
+        v{{ $mainConfig.version }}
+      </h4>
       <div class="links">
         <FooterLink
           icon="telegram"

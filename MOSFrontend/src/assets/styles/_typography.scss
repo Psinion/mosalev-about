@@ -43,6 +43,14 @@ h3 {
   letter-spacing: 0.18px;
 }
 
+h4 {
+  font-family: 'Tech Special', sans-serif;
+  font-style: normal;
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 24px;
+}
+
 .body-regular {
   @include body;
   font-weight: 400;
