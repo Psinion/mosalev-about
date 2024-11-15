@@ -10,7 +10,7 @@ export async function protectedPagesGuard(
   const userStore = useUserStore();
 
   if (userStore.token === null) {
-    next({ name: RouteNames.Login });
+    next({ name: RouteNames.Error404 });
     return;
   }
 

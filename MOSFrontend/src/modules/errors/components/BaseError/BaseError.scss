@@ -1,0 +1,44 @@
+.base-error {
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  width: 480px;
+
+  h1 {
+    font-size: 100px;
+    line-height: 120px;
+    text-align: center;
+    color: var(--primary-down);
+    user-select: none;
+  }
+
+  & > .psi-icon {
+    width: 64px;
+    height: 64px;
+    font-size: 64px;
+    color: var(--primary-down);
+  }
+
+  .error-placeholder {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    h2 {
+      font-size: 24px;
+      line-height: 32px;
+      letter-spacing: 0.02em;
+      text-align: center;
+      color: var(--primary-down);
+    }
+
+    .error-description {
+      display: flex;
+      align-items: center;
+      text-align: center;
+      color: var(--primary-down);
+    }
+  }
+}

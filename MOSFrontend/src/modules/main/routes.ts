@@ -11,9 +11,8 @@ export const publicMainRoutes: RouteRecordRaw[] = [{
   meta: {
     title: "Авторизация"
   }
-}];
-
-export const protectedMainRoutes: RouteRecordRaw[] = [{
+},
+{
   path: "",
   name: RouteNames.Index,
   component: IndexPage,
@@ -28,5 +27,7 @@ export const protectedMainRoutes: RouteRecordRaw[] = [{
   meta: {
     title: "Обо мне"
   }
-}
+}];
+
+export const protectedMainRoutes: RouteRecordRaw[] = [
 ];

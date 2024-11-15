@@ -24,6 +24,9 @@
     "content5": "It so happens that I have the most experience with web technologies, but I am interested in .NET: Microsoft has created a very successful ecosystem, which is a pleasure to be in. But this does not mean at all that I cannot solve problems using other tools. I'm good at diving into the depths of the obscurity, as it only encourage the desire for knowledge. I won't hide it, not everything works out. For example, I'm not doing well with Python, but this is just an exception.",
     "resumeButton": "Resume"
   },
+  "errors": {
+    "error404header": "Page not found"
+  },
   "toaster": {
     "commonErrorHeader": "Server Error"
   }
