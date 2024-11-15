@@ -15,7 +15,7 @@ export default [
       }
     },
     rules: {
-
+      // "no-unused-vars": "off"
     }
   },
   stylistic.configs["disable-legacy"],

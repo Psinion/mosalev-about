@@ -5,7 +5,7 @@
 </template>
 
 <script setup lang="ts">
-import { onBeforeRouteUpdate, RouterView, useRoute } from "vue-router";
+import { RouterView, useRoute } from "vue-router";
 import { useUserStore } from "@/shared/stores/userStore.ts";
 import { onMounted, watch } from "vue";
 import { useToaster } from "@/shared/utils/toaster.ts";
@@ -31,8 +31,8 @@ onMounted(async () => {
         await userStore.logout();
         return;
       }
+      toaster.error(t("toaster.commonErrorHeader"), error.message);
     }
-    toaster.error(t("toaster.commonErrorHeader"), error);
   }
 });
 
