@@ -29,5 +29,12 @@
   },
   "toaster": {
     "commonErrorHeader": "Server Error"
+  },
+  "pages": {
+    "login": "Login",
+    "index": "Main",
+    "about": "About",
+    "resume": "Resume",
+    "error404": "Page not found"
   }
 }

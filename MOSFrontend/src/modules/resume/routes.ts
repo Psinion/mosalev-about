@@ -9,6 +9,6 @@ export const resumeRoutes: RouteRecordRaw[] = [{
   component: ResumeViewPage,
   beforeEnter: protectedPagesGuard,
   meta: {
-    title: "Резюме"
+    titleCode: "pages.resume"
   }
 }];

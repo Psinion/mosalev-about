@@ -50,10 +50,13 @@ import { useUserStore } from "@/shared/stores/userStore.ts";
 import LayoutHeaderUser from "@/layouts/components/LayoutHeader/components/LayoutHeaderUser/LayoutHeaderUser.vue";
 import PsiToggle from "@/shared/components/PsiToggle/PsiToggle.vue";
 import { useI18n } from "vue-i18n";
+import { useRoute, useRouter } from "vue-router";
+import { setPageTitle } from "@/shared/utils/helpers.ts";
 
 const MOS_LOCALE_KEY = "locale";
 
 const userStore = useUserStore();
+const route = useRoute();
 
 const { locale, t } = useI18n();
 
@@ -62,6 +65,9 @@ watch(() => isRuLanguage.value, (value) => {
   const localeCode = value ? "ru" : "en";
   locale.value = localeCode;
   localStorage.setItem(MOS_LOCALE_KEY, localeCode);
+
+  const titleCode = route.meta["titleCode"] as string;
+  setPageTitle(t(titleCode));
 });
 
 const authorised = computed(() => userStore.user !== null);

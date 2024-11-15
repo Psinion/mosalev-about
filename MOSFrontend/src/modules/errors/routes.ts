@@ -13,7 +13,7 @@ export const errorRoutes: RouteRecordRaw[] = [{
     name: RouteNames.Error404,
     component: Error404Page,
     meta: {
-      title: "Страница не найдена"
+      titleCode: "pages.error404"
     }
   }]
 }];

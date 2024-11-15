@@ -9,7 +9,7 @@ export const publicMainRoutes: RouteRecordRaw[] = [{
   name: RouteNames.Login,
   component: LoginPage,
   meta: {
-    title: "Авторизация"
+    titleCode: "pages.login"
   }
 },
 {
@@ -17,7 +17,7 @@ export const publicMainRoutes: RouteRecordRaw[] = [{
   name: RouteNames.Index,
   component: IndexPage,
   meta: {
-    title: "Главная"
+    titleCode: "pages.index"
   }
 },
 {
@@ -25,7 +25,7 @@ export const publicMainRoutes: RouteRecordRaw[] = [{
   name: RouteNames.AboutView,
   component: AboutPage,
   meta: {
-    title: "Обо мне"
+    titleCode: "pages.about"
   }
 }];
 
