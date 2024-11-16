@@ -8,7 +8,10 @@
         <div>
           <h3>{{ t('index.aboutWebsiteHeader') }}</h3>
           <p>
-            {{ t('index.aboutWebsiteContent1') }} <strong>{{ t('index.aboutWebsiteContent2') }}</strong> {{ t('index.aboutWebsiteContent3') }} <a href="https://github.com/Psinion/mosalev-about">GitHub</a>.
+            {{ t('index.aboutWebsiteContent1') }} <strong>{{ t('index.aboutWebsiteContent2') }}</strong> {{ t('index.aboutWebsiteContent3') }} <a
+              target="_blank"
+              href="https://github.com/Psinion/mosalev-about"
+            >GitHub</a>.
           </p>
           <p>
             {{ t('index.aboutWebsiteContent4') }}
