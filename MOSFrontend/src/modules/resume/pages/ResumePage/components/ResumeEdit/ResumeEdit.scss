@@ -1,0 +1,18 @@
+.resume-edit {
+  .actions {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+  }
+
+  .text {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+
+    p {
+      margin-top: 8px;
+      text-align: justify;
+    }
+  }
+}

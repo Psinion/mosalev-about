@@ -38,8 +38,12 @@ onMounted(async () => {
 
 watch(route, (value) => {
   const titleCode = value.meta["titleCode"] as string;
-  console.log(titleCode);
-  setPageTitle(t(titleCode));
+  if (titleCode) {
+    setPageTitle(t(titleCode));
+    return;
+  }
+
+  setPageTitle("Mosalev");
 });
 
 </script>

@@ -3,6 +3,8 @@ export enum RouteNames {
   AboutView = "AboutView",
 
   ResumeView = "ResumeView",
+  ResumeList = "ResumeList",
+  ResumeEdit = "ResumeEdit",
 
   Login = "Login",
 
