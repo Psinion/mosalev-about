@@ -19,7 +19,7 @@ const app = createApp(App);
 const i18n = createI18n({
   legacy: false,
   locale: "ru",
-  fallbackLocale: "en",
+  fallbackLocale: "ru",
   messages: {
     en: en,
     ru: ru

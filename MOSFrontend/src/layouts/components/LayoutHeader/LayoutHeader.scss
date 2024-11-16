@@ -16,17 +16,21 @@
       flex-wrap: wrap;
     }
 
-    .logo {
-      display: flex;
-      align-items: center;
-      font-size: 24px;
-      text-transform: uppercase;
-      text-decoration: none;
-      color: var(--primary);
+    .left-panel {
       width: 100%;
+      display: flex;
 
-      & > img {
-        height: 48px;
+      .logo {
+        display: flex;
+        align-items: center;
+        font-size: 24px;
+        text-transform: uppercase;
+        text-decoration: none;
+        color: var(--primary);
+
+        & > img {
+          height: 48px;
+        }
       }
     }
 
@@ -48,7 +52,7 @@
           margin-top: 4px;
 
           :deep(.label) {
-            width: 24px;
+            width: 28px;
             font-family: "Tech Special", sans-serif;
             font-style: normal;
           }

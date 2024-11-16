@@ -1,16 +1,18 @@
 <template>
   <section class="layout-header">
     <div class="content">
-      <RouterLink
-        class="logo"
-        :to="indexRoute"
-      >
-        <img
-          src="@/assets/images/logo.svg"
-          alt="logo"
+      <div class="left-panel">
+        <RouterLink
+          class="logo"
+          :to="indexRoute"
         >
-        <h1>Mosalev</h1>
-      </RouterLink>
+          <img
+            src="@/assets/images/logo.svg"
+            alt="logo"
+          >
+          <h1>Mosalev</h1>
+        </RouterLink>
+      </div>
       <div class="right-panel">
         <div class="center-panel">
           <div class="map">
@@ -50,7 +52,7 @@ import { useUserStore } from "@/shared/stores/userStore.ts";
 import LayoutHeaderUser from "@/layouts/components/LayoutHeader/components/LayoutHeaderUser/LayoutHeaderUser.vue";
 import PsiToggle from "@/shared/components/PsiToggle/PsiToggle.vue";
 import { useI18n } from "vue-i18n";
-import { useRoute, useRouter } from "vue-router";
+import { useRoute } from "vue-router";
 import { setPageTitle } from "@/shared/utils/helpers.ts";
 
 const MOS_LOCALE_KEY = "locale";
