@@ -8,20 +8,20 @@
       @submit.prevent="onSubmit"
     >
       <form class="login-form">
-        <div class="input-block">
-          <label>Логин</label>
-          <input v-model="userName">
-        </div>
-        <div class="input-block">
-          <label>Пароль</label>
-          <input
-            v-model="password"
-            type="password"
-          >
-        </div>
-        <button class="submit-button">
-          Войти
-        </button>
+        <PsiInput
+          v-model="userName"
+          :label="t('login.formLoginLabel')"
+        />
+        <PsiInput
+          v-model="password"
+          :label="t('login.formPasswordLabel')"
+          type="password"
+        />
+        <PsiButton
+          type="submit"
+        >
+          {{ t('login.formSubmitButton') }}
+        </PsiButton>
       </form>
     </div>
   </FlatLayout>
@@ -31,7 +31,14 @@
 import FlatLayout from "@/layouts/FlatLayout/FlatLayout.vue";
 import { ref } from "vue";
 import { useUserStore } from "@/shared/stores/userStore.ts";
+import PsiInput from "@/shared/components/PsiInput/PsiInput.vue";
+import PsiButton from "@/shared/components/PsiButton/PsiButton.vue";
+import { useToaster } from "@/shared/utils/toaster.ts";
+import { useI18n } from "vue-i18n";
+import { ServerError } from "@/shared/utils/requests/errorHandlers.ts";
 
+const toaster = useToaster();
+const { t } = useI18n();
 const userStore = useUserStore();
 
 const userName = ref <string | null> (null);
@@ -46,7 +53,14 @@ async function onSubmit() {
     await userStore.login(userName.value, password.value);
   }
   catch (error) {
-    console.log(error);
+    if (error instanceof ServerError) {
+      if (error.code === "incorrect_data") {
+        toaster.error(t("login.toasterIncorrectDataHeader"));
+      }
+      else {
+        toaster.error(t("toaster.commonErrorHeader"), error.message);
+      }
+    }
   }
 }
 </script>

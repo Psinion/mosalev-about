@@ -15,6 +15,12 @@
     "aboutWebsiteContent3": " project is available on ",
     "aboutWebsiteContent4": "My pet projects are only in gamedev and I have no desire to show them yet. Therefore, I had the idea to create this website. It's simple and its static version could easily be created in notepad, but I had a goal of demonstrating my knowledge rather than the desire to create a practical product."
   },
+  "login": {
+    "formLoginLabel": "Login",
+    "formPasswordLabel": "Password",
+    "formSubmitButton": "Enter",
+    "toasterIncorrectDataHeader": "Incorrect login or password"
+  },
   "about": {
     "header": "About",
     "content1": "My name is Mosalev Daniel and I am .NET developer. I started learning C# in the 2010s when I wanted to make a game in Unity. But as a result, classical development seemed more practical to me in commercial, and now I am working with ordinary client-server applications. Successfully completed the Bachelor's degree program of ",

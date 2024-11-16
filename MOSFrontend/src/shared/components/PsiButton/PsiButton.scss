@@ -21,4 +21,17 @@
     text-decoration: none;
     color: inherit;
   }
+
+  .submit-button {
+    width: 100%;
+    padding: 4px 4px;
+    border-radius: 4px;
+    background-color: var(--tertiary);
+    color: var(--font-color);
+    cursor: pointer;
+
+    &:hover {
+      background-color: var(--tertiary-up);
+    }
+  }
 }

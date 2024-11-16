@@ -35,7 +35,7 @@ public class UsersService : IUsersService
             return OperationError.Unauthorized("incorrect_data", "Username or password is incorrect");
         }
 
-        var token = GenerateJwtToken(user);
+        var token = GenerateJwtToken(user, authSettings.TokenDurationMinutes);
 
         return new AuthenticateResponseDto(user, token);
     }
