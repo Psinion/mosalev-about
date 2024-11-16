@@ -22,7 +22,7 @@
     "content3": "in 2021, since the same year I have been working in it on the remote education system Dispace.",
     "content4": "For me, remoteness is a symbol of modern IT and one of the pillars that keep my desire to be a developer. I want to develop applications that will help people solve problems remotely, without having to go to any organizations with any documents, and devote the free time to their hobbies. \"Gosuslugi\" - the standard of a service that solves boring tasks. Of course, I also want to work remotely, as it is incredibly comfortable.",
     "content5": "It so happens that I have the most experience with web technologies, but I am interested in .NET: Microsoft has created a very successful ecosystem, which is a pleasure to be in. But this does not mean at all that I cannot solve problems using other tools. I'm good at diving into the depths of the obscurity, as it only encourage the desire for knowledge. I won't hide it, not everything works out. For example, I'm not doing well with Python, but this is just an exception.",
-    "resumeButton": "Resume"
+    "resumeButton": "CV"
   },
   "errors": {
     "error404header": "Page not found"
@@ -34,7 +34,7 @@
     "login": "Login",
     "index": "Main",
     "about": "About",
-    "resume": "Resume",
+    "resume": "CV",
     "error404": "Page not found"
   }
 }

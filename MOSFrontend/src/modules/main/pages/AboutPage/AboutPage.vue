@@ -3,6 +3,7 @@
     <div class="about-page">
       <div class="actions">
         <PsiButton
+          class="resume-button"
           :route="resumeRoute"
           disabled
         >
