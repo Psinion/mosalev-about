@@ -36,12 +36,6 @@
       "listButton": "CV list"
     }
   },
-  "errors": {
-    "error404header": "Page not found"
-  },
-  "toaster": {
-    "commonErrorHeader": "Server Error"
-  },
   "pages": {
     "login": "Login",
     "index": "Main",
@@ -50,5 +44,14 @@
     "resumeEdit": "Edit CV",
     "resumeList": "CV list",
     "error404": "Page not found"
+  },
+  "errors": {
+    "error404header": "Page not found"
+  },
+  "toaster": {
+    "commonErrorHeader": "Server Error"
+  },
+  "psiUi": {
+    "requiredErrorMessage": "Field is required"
   }
 }

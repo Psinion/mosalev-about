@@ -1,6 +1,6 @@
 import { toast, ToastContainerOptions } from "vue3-toastify";
 import { h } from "vue";
-import PsiToast from "@/shared/components/PsiToast/PsiToast.vue";
+import PsiToast from "@/shared/PsiUI/components/PsiToast/PsiToast.vue";
 
 export interface IToaster {
   clear: () => void;

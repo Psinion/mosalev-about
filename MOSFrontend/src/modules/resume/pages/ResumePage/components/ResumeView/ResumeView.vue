@@ -23,10 +23,10 @@
 </template>
 
 <script setup lang="ts">
-import PsiButton from "@/shared/components/PsiButton/PsiButton.vue";
 import { useI18n } from "vue-i18n";
 import { computed } from "vue";
 import { RouteNames } from "@/router/routeNames.ts";
+import PsiButton from "@/shared/PsiUI/components/PsiButton/PsiButton.vue";
 
 const { t } = useI18n();
 

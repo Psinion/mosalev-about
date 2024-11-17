@@ -11,11 +11,13 @@
         <PsiInput
           v-model="userName"
           :label="t('login.formLoginLabel')"
+          required
         />
         <PsiInput
           v-model="password"
           :label="t('login.formPasswordLabel')"
           type="password"
+          required
         />
         <PsiButton
           type="submit"
@@ -31,21 +33,26 @@
 import FlatLayout from "@/layouts/FlatLayout/FlatLayout.vue";
 import { ref } from "vue";
 import { useUserStore } from "@/shared/stores/userStore.ts";
-import PsiInput from "@/shared/components/PsiInput/PsiInput.vue";
-import PsiButton from "@/shared/components/PsiButton/PsiButton.vue";
-import { useToaster } from "@/shared/utils/toaster.ts";
+import { useToaster } from "@/shared/PsiUI/utils/toaster.ts";
 import { useI18n } from "vue-i18n";
 import { ServerError } from "@/shared/utils/requests/errorHandlers.ts";
+import PsiInput from "@/shared/PsiUI/components/PsiInput/PsiInput.vue";
+import PsiButton from "@/shared/PsiUI/components/PsiButton/PsiButton.vue";
+import { useForm, useIsFormValid } from "vee-validate";
 
 const toaster = useToaster();
 const { t } = useI18n();
 const userStore = useUserStore();
 
+const form = useForm();
+const isValid = useIsFormValid();
+
 const userName = ref <string | null> (null);
 const password = ref <string | null> (null);
 
 async function onSubmit() {
-  if (!userName.value || !password.value) {
+  await form.validate();
+  if (!isValid.value) {
     return;
   }
 

@@ -50,10 +50,10 @@ import { computed, onMounted, ref, watch } from "vue";
 import { RouteNames } from "@/router/routeNames.ts";
 import { useUserStore } from "@/shared/stores/userStore.ts";
 import LayoutHeaderUser from "@/layouts/components/LayoutHeader/components/LayoutHeaderUser/LayoutHeaderUser.vue";
-import PsiToggle from "@/shared/components/PsiToggle/PsiToggle.vue";
 import { useI18n } from "vue-i18n";
 import { useRoute } from "vue-router";
 import { setPageTitle } from "@/shared/utils/helpers.ts";
+import PsiToggle from "@/shared/PsiUI/components/PsiToggle/PsiToggle.vue";
 
 const MOS_LOCALE_KEY = "locale";
 

@@ -1,4 +1,4 @@
-import { IResponseData } from "@/shared/utils/requests/requestor.ts";
+import { IResponseData } from "@/shared/PsiUI/utils/requests/requestor.ts";
 
 type TServerError = {
   statusCode: number;

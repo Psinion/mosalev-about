@@ -1,5 +1,5 @@
 import { IUsersService, TAuthenticateRequest, TAuthenticateResponse, TVerifyResponse } from "@/shared/services/base";
-import { useRequestor } from "@/shared/utils/requests/requestor.ts";
+import { useRequestor } from "@/shared/PsiUI/utils/requests/requestor.ts";
 
 class UsersService implements IUsersService {
   private requestor = useRequestor();

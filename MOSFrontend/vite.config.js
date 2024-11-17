@@ -10,5 +10,10 @@ export default defineConfig({
             "@": fileURLToPath(new URL("./src", import.meta.url)),
             "@scss-mixins": fileURLToPath(new URL("./src/assets/styles/mixins/", import.meta.url))
         }
+    },
+    css: {
+        preprocessorOptions: {
+            scss: { api: "modern-compiler" }
+        }
     }
 });

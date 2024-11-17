@@ -13,9 +13,10 @@
           label="Email"
         />
         <div class="salary-input">
-          <PsiInput
+          <PsiInputNumeric
             v-model="salary"
             label="Зарплата"
+            :min="0"
           />
           <PsiToggle
             v-model="currencyType"
@@ -34,12 +35,13 @@
 </template>
 
 <script setup lang="ts">
-import PsiButton from "@/shared/components/PsiButton/PsiButton.vue";
-import PsiInput from "@/shared/components/PsiInput/PsiInput.vue";
-import PsiToggle from "@/shared/components/PsiToggle/PsiToggle.vue";
 import ResumesServiceInstance from "@/shared/services/ResumesService.ts";
 import { ref } from "vue";
-import { TCreateResumeRequest } from "@/shared/services/base/IResumesService.ts";
+import { TCreateResumeRequest } from "@/shared/services/base";
+import PsiInput from "@/shared/PsiUI/components/PsiInput/PsiInput.vue";
+import PsiToggle from "@/shared/PsiUI/components/PsiToggle/PsiToggle.vue";
+import PsiInputNumeric from "@/shared/PsiUI/components/PsiInputNumeric/PsiInputNumeric.vue";
+import PsiButton from "@/shared/PsiUI/components/PsiButton/PsiButton.vue";
 
 const resumesService = ResumesServiceInstance;
 

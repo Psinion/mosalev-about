@@ -36,12 +36,6 @@
       "listButton": "Список резюме"
     }
   },
-  "errors": {
-    "error404header": "Страница не найдена"
-  },
-  "toaster": {
-    "commonErrorHeader": "Серверная ошибка"
-  },
   "pages": {
     "login": "Авторизация",
     "index": "Главная",
@@ -50,5 +44,14 @@
     "resumeEdit": "Редактирование резюме",
     "resumeList": "Список резюме",
     "error404": "Страница не найдена"
+  },
+  "errors": {
+    "error404header": "Страница не найдена"
+  },
+  "toaster": {
+    "commonErrorHeader": "Серверная ошибка"
+  },
+  "psiUi": {
+    "requiredErrorMessage": "Обязательное поле"
   }
 }

@@ -21,8 +21,7 @@
 
 <script setup lang="ts">
 import { type PropType } from "vue";
-import PsiIcon from "@/shared/components/PsiIcon/PsiIcon.vue";
-import { TIcon } from "@/shared/components/PsiIcon/types.ts";
+import { TPsiIcon } from "@/shared/PsiUI/components/PsiIcon/types.ts";
 
 const props = defineProps({
   statusCode: {
@@ -30,7 +29,7 @@ const props = defineProps({
     default: null
   },
   icon: {
-    type: String as PropType<TIcon>,
+    type: String as PropType<TPsiIcon>,
     default: null
   },
   header: {

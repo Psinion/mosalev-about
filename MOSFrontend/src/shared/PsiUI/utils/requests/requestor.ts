@@ -112,10 +112,7 @@ export class PsiRequestor {
   private async request(method: TMethodType, path: string, data?: IRequestData): Promise<TRequestBody> {
     try {
       const request = this.prepareRequest(method, path, data);
-
-      console.log(request);
       const response = await this.sendRequest(request);
-      console.log(response);
       return response;
     }
     catch (error) {

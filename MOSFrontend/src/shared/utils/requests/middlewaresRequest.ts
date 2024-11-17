@@ -1,5 +1,5 @@
 import { useUserStore } from "@/shared/stores/userStore.ts";
-import { IPreparedRequest, TRequestHeaders } from "@/shared/utils/requests/requestor.ts";
+import { IPreparedRequest, TRequestHeaders } from "@/shared/PsiUI/utils/requests/requestor.ts";
 
 async function authRequestMiddleware(request: IPreparedRequest): Promise<IPreparedRequest> {
   const userStore = useUserStore();

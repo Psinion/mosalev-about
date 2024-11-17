@@ -16,9 +16,9 @@
 
 <script setup lang="ts">
 import type { PropType } from "vue";
-import type { TPsiToasterTheme } from "@/shared/components/PsiToast/types";
-import PsiIcon from "@/shared/components/PsiIcon/PsiIcon.vue";
-import { TIcon } from "@/shared/components/PsiIcon/types.ts";
+import PsiIcon from "@/shared/PsiUI/components/PsiIcon/PsiIcon.vue";
+import { TPsiIcon } from "@/shared/PsiUI/components/PsiIcon/types.ts";
+import { TPsiToasterTheme } from "@/shared/PsiUI/components/PsiToast/types.ts";
 
 const props = defineProps({
   header: {
@@ -30,7 +30,7 @@ const props = defineProps({
     default: null
   },
   icon: {
-    type: String as PropType<TIcon>,
+    type: String as PropType<TPsiIcon>,
     default: null
   },
   theme: {
