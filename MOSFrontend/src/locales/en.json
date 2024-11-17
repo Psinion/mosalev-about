@@ -48,6 +48,7 @@
     "about": "About",
     "resumeView": "CV",
     "resumeEdit": "Edit CV",
+    "resumeList": "CV list",
     "error404": "Page not found"
   }
 }

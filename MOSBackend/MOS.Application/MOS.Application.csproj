@@ -9,6 +9,8 @@
 
     <ItemGroup>
       <ProjectReference Include="..\MOS.Domain\MOS.Domain.csproj" />
+
+
     </ItemGroup>
 
 
