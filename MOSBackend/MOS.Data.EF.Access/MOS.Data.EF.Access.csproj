@@ -14,7 +14,11 @@
     <ItemGroup>
       <ProjectReference Include="..\MOS.Application\MOS.Application.csproj" />
       <ProjectReference Include="..\MOS.Domain\MOS.Domain.csproj" />
+
+
     </ItemGroup>
+
+
 
 
 
