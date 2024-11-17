@@ -14,6 +14,7 @@
 
     @include adaptive-mixin(s) {
       flex-wrap: wrap;
+      gap: 8px;
     }
 
     .left-panel {
@@ -48,11 +49,15 @@
       }
 
       .admin-panel {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+
         .language-toggle {
           margin-top: 4px;
 
           :deep(.label) {
-            width: 28px;
+            width: 20px;
             font-family: "Tech Special", sans-serif;
             font-style: normal;
           }

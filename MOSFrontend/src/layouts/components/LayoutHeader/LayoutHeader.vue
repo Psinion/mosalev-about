@@ -34,7 +34,7 @@
           <PsiToggle
             v-model="isRuLanguage"
             class="language-toggle"
-            inactive-label="eng"
+            inactive-label="en"
             active-label="ru"
           />
         </div>

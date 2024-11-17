@@ -1,20 +1,22 @@
 <template>
   <section class="psi-toggle">
     <label class="toggle">
-      <input
-        type="checkbox"
-        :checked="modelValue"
-        @change="onChange(($event.target as HTMLInputElement).checked)"
+      <div class="toggle-mech">
+        <input
+          type="checkbox"
+          :checked="modelValue"
+          @change="onChange(($event.target as HTMLInputElement).checked)"
+        >
+        <span class="toggle-switch" />
+      </div>
+      <span
+        v-if="label"
+        class="label font-color caption-regular"
+        :class="{'active': props.modelValue, 'inactive': !props.modelValue}"
       >
-      <span class="toggle-switch" />
+        {{ label }}
+      </span>
     </label>
-    <span
-      v-if="label"
-      class="label font-color caption-regular"
-      :class="{'active': props.modelValue, 'inactive': !props.modelValue}"
-    >
-      {{ label }}
-    </span>
   </section>
 </template>
 
