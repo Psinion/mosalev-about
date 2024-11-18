@@ -3,5 +3,11 @@ export type TResume = {
   title: string;
   email: string;
   salary: number;
-  currencyType: number;
+  currencyType: CurrencyType;
 };
+
+export enum CurrencyType {
+  Ruble = 1,
+  Dollar,
+  Euro
+}

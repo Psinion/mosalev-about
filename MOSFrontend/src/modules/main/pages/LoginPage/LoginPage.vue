@@ -7,11 +7,12 @@
       class="login-page"
     >
       <PsiForm
+        v-slot="{valid}"
         class="login-form"
         @submit="onSubmit"
       >
         <PsiInput
-          v-model="userName"
+          v-model.trim="userName"
           :label="t('login.formLoginLabel')"
           required
         />
@@ -23,6 +24,7 @@
         />
         <PsiButton
           type="submit"
+          :disabled="!valid"
         >
           {{ t('login.formSubmitButton') }}
         </PsiButton>
@@ -51,7 +53,7 @@ const password = ref <string | null> (null);
 
 async function onSubmit() {
   try {
-    await userStore.login(userName.value, password.value);
+    await userStore.login(userName.value!, password.value!);
   }
   catch (error) {
     if (error instanceof ServerError) {

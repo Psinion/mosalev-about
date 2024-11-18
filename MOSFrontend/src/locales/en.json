@@ -34,6 +34,10 @@
     "view": {
       "editButton": "Edit",
       "listButton": "CV list"
+    },
+    "edit": {
+      "viewButton": "View",
+      "listButton": "CV list"
     }
   },
   "pages": {

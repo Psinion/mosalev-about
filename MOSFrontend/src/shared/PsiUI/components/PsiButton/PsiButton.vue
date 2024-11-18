@@ -21,7 +21,7 @@
 
 import { PropType } from "vue";
 import { TRoute } from "@/shared/types";
-import { TPsiButtonType } from "@/shared/components/PsiButton/types.ts";
+import { TPsiButtonType } from "@/shared/PsiUI/components/PsiButton/types.ts";
 
 const props = defineProps({
   type: {

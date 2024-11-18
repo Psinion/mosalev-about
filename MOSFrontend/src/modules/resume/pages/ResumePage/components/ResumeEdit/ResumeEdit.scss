@@ -1,6 +1,18 @@
 .resume-edit {
   width: 100%;
 
+  .actions {
+    margin-bottom: 8px;
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    width: 100%;
+
+    .action-button {
+      width: 140px;
+    }
+  }
+
   .content {
     & > h2 {
       margin-bottom: 12px;

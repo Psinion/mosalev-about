@@ -6,7 +6,7 @@
     <label>
       <span class="caption-regular">{{ label }}</span>
       <input
-        :value="modelValue"
+        :value="inputValue"
         type="number"
         step="any"
         :min="min"
@@ -14,12 +14,21 @@
         @input="onInput($event.target as HTMLInputElement)"
       >
     </label>
+    <div
+      v-if="errorMessage"
+      class="error-text hint-regular"
+    >
+      {{ errorMessage }}
+    </div>
   </section>
 </template>
 
 <script setup lang="ts">
 
-import { PropType } from "vue";
+import { computed, PropType } from "vue";
+import { useComponentId } from "@/shared/PsiUI/utils/componentId.ts";
+import { GenericValidateFunction, useField } from "vee-validate";
+import useValidationRules from "@/shared/PsiUI/utils/validationRules.ts";
 
 const props = defineProps({
   modelValue: {
@@ -38,6 +47,10 @@ const props = defineProps({
     type: String,
     default: null
   },
+  required: {
+    type: Boolean,
+    default: false
+  },
   disabled: {
     type: Boolean,
     default: false
@@ -48,8 +61,29 @@ const emit = defineEmits({
   "update:modelValue": (value: number | null) => true
 });
 
+const componentId = useComponentId("PsiInputNumeric");
+
+const validateRules = computed(() => {
+  const validateFunctions: GenericValidateFunction<string | number | null>[] = [];
+
+  const rules = useValidationRules();
+
+  if (props.required) {
+    validateFunctions.push(rules.required);
+  }
+
+  return validateFunctions;
+});
+const {
+  value: inputValue,
+  errorMessage
+} = useField<string | number | null>(componentId, validateRules.value, {
+  initialValue: props.modelValue,
+  syncVModel: true
+});
+
 function onInput(target: HTMLInputElement) {
-  emit("update:modelValue", target?.value ? target.value : null);
+  emit("update:modelValue", target?.value ? Number(target.value) : null);
 }
 
 </script>

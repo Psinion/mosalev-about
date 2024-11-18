@@ -8,6 +8,7 @@
       <input
         :value="inputValue"
         :type="type"
+        autocomplete="off"
         @input="onInput($event.target as HTMLInputElement)"
       >
     </label>
