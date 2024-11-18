@@ -10,8 +10,13 @@
         :type="type"
         @input="onInput($event.target as HTMLInputElement)"
       >
-      {{ errorMessage }}
     </label>
+    <div
+      v-if="errorMessage"
+      class="error-text hint-regular"
+    >
+      {{ errorMessage }}
+    </div>
   </section>
 </template>
 

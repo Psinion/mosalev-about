@@ -5,9 +5,11 @@
   >
     <div
       class="login-page"
-      @submit.prevent="onSubmit"
     >
-      <form class="login-form">
+      <PsiForm
+        class="login-form"
+        @submit="onSubmit"
+      >
         <PsiInput
           v-model="userName"
           :label="t('login.formLoginLabel')"
@@ -24,7 +26,7 @@
         >
           {{ t('login.formSubmitButton') }}
         </PsiButton>
-      </form>
+      </PsiForm>
     </div>
   </FlatLayout>
 </template>
@@ -38,24 +40,16 @@ import { useI18n } from "vue-i18n";
 import { ServerError } from "@/shared/utils/requests/errorHandlers.ts";
 import PsiInput from "@/shared/PsiUI/components/PsiInput/PsiInput.vue";
 import PsiButton from "@/shared/PsiUI/components/PsiButton/PsiButton.vue";
-import { useForm, useIsFormValid } from "vee-validate";
+import PsiForm from "@/shared/PsiUI/components/PsiForm/PsiForm.vue";
 
 const toaster = useToaster();
 const { t } = useI18n();
 const userStore = useUserStore();
 
-const form = useForm();
-const isValid = useIsFormValid();
-
 const userName = ref <string | null> (null);
 const password = ref <string | null> (null);
 
 async function onSubmit() {
-  await form.validate();
-  if (!isValid.value) {
-    return;
-  }
-
   try {
     await userStore.login(userName.value, password.value);
   }
