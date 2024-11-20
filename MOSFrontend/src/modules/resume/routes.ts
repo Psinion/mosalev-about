@@ -12,9 +12,10 @@ export const resumeRoutes: RouteRecordRaw[] = [{
   beforeEnter: protectedPagesGuard,
   children: [
     {
-      path: "",
+      path: ":resumeId?",
       name: RouteNames.ResumeView,
       component: ResumeView,
+      props: route => ({ resumeId: +route.params.resumeId }),
       meta: {
         titleCode: "pages.resumeView"
       }

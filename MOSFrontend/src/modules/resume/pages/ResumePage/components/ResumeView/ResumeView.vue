@@ -28,6 +28,13 @@ import { computed } from "vue";
 import { RouteNames } from "@/router/routeNames.ts";
 import PsiButton from "@/shared/PsiUI/components/PsiButton/PsiButton.vue";
 
+const props = defineProps({
+  resumeId: {
+    type: Number,
+    default: null
+  }
+});
+
 const { t } = useI18n();
 
 const resumeListRoute = computed(() => {

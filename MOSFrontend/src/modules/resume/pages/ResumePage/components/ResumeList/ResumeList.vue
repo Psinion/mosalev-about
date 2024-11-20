@@ -5,9 +5,14 @@
         Создать
       </PsiButton>
     </div>
-    <div class="text body-regular">
-      <div>
-        <h2>Список резюме</h2>
+    <div class="content">
+      <h2>Список резюме</h2>
+      <div class="resumes">
+        <ResumeCard
+          v-for="resume in resumesList"
+          :key="resume.id"
+          :resume="resume"
+        />
       </div>
     </div>
   </article>
@@ -15,17 +20,39 @@
 
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
-import { computed } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { RouteNames } from "@/router/routeNames.ts";
 import PsiButton from "@/shared/PsiUI/components/PsiButton/PsiButton.vue";
+import ResumesServiceInstance from "@/shared/services/ResumesService.ts";
+import { ServerError } from "@/shared/utils/requests/errorHandlers.ts";
+import { TResumeCompact } from "@/shared/types/resume.ts";
+import { useToaster } from "@/shared/PsiUI/utils/toaster.ts";
+import ResumeCard from "@/modules/resume/pages/ResumePage/components/ResumeList/ResumeCard/ResumeCard.vue";
 
+const resumesService = ResumesServiceInstance;
+const toaster = useToaster();
 const { t } = useI18n();
+
+const resumesList = ref<TResumeCompact[]>([]);
 
 const resumeEditRoute = computed(() => {
   return {
     name: RouteNames.ResumeEdit
   };
 });
+
+onMounted(async () => refresh());
+
+async function refresh() {
+  try {
+    resumesList.value = await resumesService.getResumes();
+  }
+  catch (error) {
+    if (error instanceof ServerError) {
+      toaster.error(t("toaster.commonErrorHeader"), error.message);
+    }
+  }
+}
 
 </script>
 

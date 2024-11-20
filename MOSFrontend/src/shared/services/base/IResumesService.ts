@@ -1,8 +1,9 @@
 import { IServiceBase } from "@/shared/services/base/IServiceBase.ts";
-import { TResume } from "@/shared/types/resume.ts";
+import { TResume, TResumeCompact } from "@/shared/types/resume.ts";
 
 export interface IResumesService extends IServiceBase {
   createResume(params: TCreateResumeRequest): Promise<TResume>;
+  getResumes(): Promise<TResumeCompact[]>;
 }
 
 export type TCreateResumeRequest = {

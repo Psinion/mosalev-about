@@ -6,6 +6,11 @@ export type TResume = {
   currencyType: CurrencyType;
 };
 
+export type TResumeCompact = {
+  id: number;
+  title: string;
+};
+
 export enum CurrencyType {
   Ruble = 1,
   Dollar,
