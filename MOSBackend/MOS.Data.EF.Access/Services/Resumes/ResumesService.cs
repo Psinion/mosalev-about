@@ -1,10 +1,11 @@
-﻿using MOS.Application.Data.Repositories.Index;
+﻿using Microsoft.EntityFrameworkCore;
+using MOS.Application.Data.Repositories.Index;
 using MOS.Application.Data.Repositories.Resumes;
 using MOS.Application.Data.Services.IIndexService;
 using MOS.Application.Data.Services.Resumes;
 using MOS.Application.DTOs.Resumes.Requests;
 using MOS.Application.DTOs.Resumes.Responses;
-using MOS.Application.DTOs.Users.Responses;
+using MOS.Application.Mappings.Resumes;
 using MOS.Application.OperationResults;
 using MOS.Domain.Entities.Resumes;
 
@@ -31,7 +32,18 @@ public class ResumesService : IResumesService
 
         var createdEntity = await resumesRepository.CreateAsync(resume);
 
-        return new ResumeResponseDto(createdEntity);
+        return createdEntity.ToDto();
+    }
+
+    public async Task<OperationResult<List<ResumeResponseCompactDto>>> GetCompactResumesListAsync()
+    {
+        var resumes = await resumesRepository.GetAll().Select(x => new Resume()
+        {
+            Id = x.Id,
+            Title = x.Title
+        }).ToListAsync();
+
+        return resumes.ToCompactDtoList();
     }
 
     public void Dispose()

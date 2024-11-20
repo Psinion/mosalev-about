@@ -7,4 +7,6 @@ namespace MOS.Application.Data.Services.Resumes;
 public interface IResumesService : IDisposable
 {
     Task<OperationResult<ResumeResponseDto>> CreateResumeAsync(ResumeCreateRequestDto resumeRequest);
+    
+    Task<OperationResult<List<ResumeResponseCompactDto>>> GetCompactResumesListAsync();
 }

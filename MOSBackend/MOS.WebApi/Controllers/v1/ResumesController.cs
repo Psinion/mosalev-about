@@ -1,11 +1,8 @@
 ﻿using Asp.Versioning;
 using Microsoft.AspNetCore.Mvc;
-using MOS.Application.Data.Services.IIndexService;
 using MOS.Application.Data.Services.Resumes;
 using MOS.Application.DTOs.Resumes.Requests;
 using MOS.Application.DTOs.Resumes.Responses;
-using MOS.Application.DTOs.Users.Responses;
-using MOS.Application.OperationResults.Enums;
 
 namespace MOS.WebApi.Controllers.v1;
 
@@ -26,6 +23,14 @@ public class ResumesController : ControllerBase
     public async Task<ActionResult<ResumeResponseDto>> CreateResume(ResumeCreateRequestDto request)
     {
         var response = await resumesService.CreateResumeAsync(request);
+        return Ok(response.Value);
+    }
+    
+    [HttpGet]
+    [Route("resume/list")]
+    public async Task<ActionResult<ResumeResponseCompactDto>> GetCompactResumeList()
+    {
+        var response = await resumesService.GetCompactResumesListAsync();
         return Ok(response.Value);
     }
 }

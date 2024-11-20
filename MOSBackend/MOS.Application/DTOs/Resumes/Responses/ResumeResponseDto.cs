@@ -10,12 +10,4 @@ public class ResumeResponseDto
     public string Email { get; set; }
     public int Salary { get; set; }
     public CurrencyType CurrencyType { get; set; }
-
-    public ResumeResponseDto(Resume resume)
-    {
-        Id = resume.Id;
-        Title = resume.Title;
-        Email = resume.Email;
-        Salary = resume.Salary;
-    }
 }
