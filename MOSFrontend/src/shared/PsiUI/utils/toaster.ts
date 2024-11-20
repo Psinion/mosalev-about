@@ -11,7 +11,7 @@ export interface IToaster {
 
 export const toasterDefaultGlobalOptions = {
   transition: toast.TRANSITIONS.SLIDE,
-  autoClose: 3000,
+  autoClose: 5000,
   hideProgressBar: true,
   clearOnUrlChange: false,
   position: toast.POSITION.TOP_RIGHT,

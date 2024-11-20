@@ -7,6 +7,7 @@ type TRequestQuery = IDictionary<string | number | boolean | null | Array<any>>;
 type TRequestBody = IDictionary<any> | Array<any> | string | Blob | FormData | null;
 
 export type TMiddlewareRequest = (request: IPreparedRequest) => Promise<IPreparedRequest>;
+export type TMiddlewareResponse = (response: IResponseData) => Promise<IResponseData>;
 
 export type TRequestHeaders = IDictionary<string>;
 
@@ -15,6 +16,7 @@ export interface IRequestOptions {
   headers?: TRequestHeaders;
   middleware?: {
     request?: TMiddlewareRequest[];
+    response?: TMiddlewareResponse[];
   };
   handleError?: IRequestErrorHandler;
 }
@@ -52,10 +54,15 @@ export class PsiRequestor {
   private _headers?: TRequestHeaders;
   private _baseUrl?: string;
 
-  private _middlewaresRequest: TMiddlewareRequest[] = [];
+  private _middlewaresRequests: TMiddlewareRequest[] = [];
+  private _middlewaresResponses: TMiddlewareResponse[] = [];
 
   private get _hasMiddlewaresRequest(): boolean {
-    return this._middlewaresRequest.length > 0;
+    return this._middlewaresRequests.length > 0;
+  }
+
+  private get _hasMiddlewaresResponse(): boolean {
+    return this._middlewaresResponses.length > 0;
   }
 
   private _handleError: IRequestErrorHandler = defaultHandleError;
@@ -68,7 +75,8 @@ export class PsiRequestor {
     this._baseUrl = options?.baseUrl;
     this._headers = options?.headers ?? {};
 
-    this._middlewaresRequest = options?.middleware?.request ?? [];
+    this._middlewaresRequests = options?.middleware?.request ?? [];
+    this._middlewaresResponses = options?.middleware?.response ?? [];
 
     if (options.handleError) {
       this._handleError = options.handleError;
@@ -137,7 +145,7 @@ export class PsiRequestor {
     request.options.headers = preparedHeaders;
 
     if (this._hasMiddlewaresRequest) {
-      this._middlewaresRequest.forEach(async (middlewareFn) => {
+      this._middlewaresRequests.forEach(async (middlewareFn) => {
         request = await middlewareFn(request);
       });
     }
@@ -166,7 +174,7 @@ export class PsiRequestor {
   }
 
   private async prepareResponse(raw: Response): Promise<IResponseData> {
-    const response: IResponseData = {
+    let response: IResponseData = {
       raw,
       data: null,
       error: null
@@ -179,7 +187,11 @@ export class PsiRequestor {
       response.error = await this._handleError(response);
     }
 
-    // TODO: DI
+    if (this._hasMiddlewaresResponse) {
+      this._middlewaresResponses.forEach(async (middlewareFn) => {
+        response = await middlewareFn(response);
+      });
+    }
 
     return response;
   }
@@ -238,30 +250,6 @@ export class PsiRequestor {
     });
     return promise;
   }
-
-  /* private async checkResponseErrors(
-    response: Response | null
-  ): Promise<Response> {
-    if (response == null) {
-      throw new Error();
-    }
-
-    if (!response.ok) {
-      if (response.status == 401) {
-        // const authStore = useAuthStore();
-        // authStore.logout();
-      }
-      else if (response.status == 400) {
-        const msg = await response.text();
-        throw new Error(msg);
-      }
-      else if (response.status == 500) {
-        throw new Error("Ошибка сервера.");
-      }
-    }
-
-    return response;
-  } */
 }
 
 const requestorInstance = new PsiRequestor();

@@ -7,7 +7,7 @@ public class CustomAuthorizeAttribute : TypeFilterAttribute
 {
     private readonly string permission;
     
-    public CustomAuthorizeAttribute(string permission) : base(typeof(CustomAuthorizeFilter))
+    public CustomAuthorizeAttribute(string permission = "") : base(typeof(CustomAuthorizeFilter))
     {
         Arguments = new object[] { permission };
     }

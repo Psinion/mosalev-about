@@ -53,7 +53,9 @@
     "error404header": "Page not found"
   },
   "toaster": {
-    "commonErrorHeader": "Server Error"
+    "commonErrorHeader": "Server Error",
+    "noPermissionsHeader": "You don't have permissions",
+    "noPermissionsDescription": "Please, contact the owner of this resource XD"
   },
   "psiUi": {
     "requiredErrorMessage": "Field is required"

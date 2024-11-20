@@ -9,22 +9,12 @@ import { PsiRequestorPlugin } from "@/shared/PsiUI/utils/requests/requestor.ts";
 import { customErrorHandler } from "@/shared/utils/requests/errorHandlers.ts";
 import { requestMiddlewares } from "@/shared/utils/requests/middlewaresRequest.ts";
 import { mainConfig, MainConfigPlugin } from "@/main.config.ts";
-import { createI18n } from "vue-i18n";
-import { en, ru } from "@/locales/locales.ts";
 import Vue3Toastify from "vue3-toastify";
 import { toasterDefaultGlobalOptions } from "@/shared/PsiUI/utils/toaster.ts";
+import { responseMiddlewares } from "@/shared/utils/requests/MiddlewaresResponse.ts";
+import i18n from "@/shared/utils/i18n.ts";
 
 const app = createApp(App);
-
-const i18n = createI18n({
-  legacy: false,
-  locale: "ru",
-  fallbackLocale: "ru",
-  messages: {
-    en: en,
-    ru: ru
-  }
-});
 
 app.component("VIcon", OhVueIcon);
 
@@ -36,7 +26,8 @@ app.use(PsiRequestorPlugin, {
   baseUrl: mainConfig.appUrl,
   handleError: customErrorHandler,
   middleware: {
-    request: requestMiddlewares
+    request: requestMiddlewares,
+    response: responseMiddlewares
   }
 });
 app.use(router);

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using MOS.Application.Data.Services.Resumes;
 using MOS.Application.DTOs.Resumes.Requests;
 using MOS.Application.DTOs.Resumes.Responses;
+using MOS.Identity.Helpers;
 
 namespace MOS.WebApi.Controllers.v1;
 
@@ -19,6 +20,7 @@ public class ResumesController : ControllerBase
     }
     
     [HttpPost]
+    [CustomAuthorize]
     [Route("resume")]
     public async Task<ActionResult<ResumeResponseDto>> CreateResume(ResumeCreateRequestDto request)
     {
@@ -27,6 +29,7 @@ public class ResumesController : ControllerBase
     }
     
     [HttpGet]
+    [CustomAuthorize]
     [Route("resume/list")]
     public async Task<ActionResult<ResumeResponseCompactDto>> GetCompactResumeList()
     {

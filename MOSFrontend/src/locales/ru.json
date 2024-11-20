@@ -53,7 +53,9 @@
     "error404header": "Страница не найдена"
   },
   "toaster": {
-    "commonErrorHeader": "Серверная ошибка"
+    "commonErrorHeader": "Серверная ошибка",
+    "noPermissionsHeader": "У вас недостаточно прав",
+    "noPermissionsDescription": "Обратитесь, пожалуйста, к владельцу ресурса XD"
   },
   "psiUi": {
     "requiredErrorMessage": "Обязательное поле"

@@ -19,7 +19,6 @@
 </template>
 
 <script setup lang="ts">
-import { useI18n } from "vue-i18n";
 import { computed, onMounted, ref } from "vue";
 import { RouteNames } from "@/router/routeNames.ts";
 import PsiButton from "@/shared/PsiUI/components/PsiButton/PsiButton.vue";
@@ -31,7 +30,6 @@ import ResumeCard from "@/modules/resume/pages/ResumePage/components/ResumeList/
 
 const resumesService = ResumesServiceInstance;
 const toaster = useToaster();
-const { t } = useI18n();
 
 const resumesList = ref<TResumeCompact[]>([]);
 
@@ -49,7 +47,7 @@ async function refresh() {
   }
   catch (error) {
     if (error instanceof ServerError) {
-      toaster.error(t("toaster.commonErrorHeader"), error.message);
+      toaster.error(error.header, error.message);
     }
   }
 }
