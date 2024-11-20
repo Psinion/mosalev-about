@@ -7,12 +7,12 @@ public sealed record OperationError(string Code, string Description, ErrorType E
 {
     public static readonly OperationError None = new(string.Empty, string.Empty, ErrorType.Failure);
     
-    public static OperationError Failure(string code, string description) =>
+    public static OperationError Failure(string code = "fail", string description = "") =>
         new(code, description, ErrorType.Failure);
     
-    public static OperationError NotFound(string code, string description) =>
+    public static OperationError NotFound(string code = "not_found", string description = "") =>
         new(code, description, ErrorType.NotFound);    
     
-    public static OperationError Unauthorized(string code, string description) =>
+    public static OperationError Unauthorized(string code = "unauthorized", string description = "") =>
         new(code, description, ErrorType.Unauthorized);
 }

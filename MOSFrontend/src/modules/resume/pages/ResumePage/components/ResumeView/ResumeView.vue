@@ -8,6 +8,7 @@
         {{ t('resume.view.listButton') }}
       </PsiButton>
       <PsiButton
+        v-if="resumeId"
         class="action-button"
         :route="resumeEditRoute"
       >
@@ -17,6 +18,8 @@
     <div class="text body-regular">
       <div>
         <h2>Резюме</h2>
+        email: {{ resume?.email }}
+        Зарплата: {{ resume?.salary }}{{ resume?.currencyType }}
       </div>
     </div>
   </article>
@@ -24,9 +27,11 @@
 
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
-import { computed } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { RouteNames } from "@/router/routeNames.ts";
 import PsiButton from "@/shared/PsiUI/components/PsiButton/PsiButton.vue";
+import ResumesServiceInstance from "@/shared/services/ResumesService.ts";
+import { TResume } from "@/shared/types/resume.ts";
 
 const props = defineProps({
   resumeId: {
@@ -36,6 +41,9 @@ const props = defineProps({
 });
 
 const { t } = useI18n();
+const resumesService = ResumesServiceInstance;
+
+const resume = ref<TResume | null>(null);
 
 const resumeListRoute = computed(() => {
   return {
@@ -44,9 +52,20 @@ const resumeListRoute = computed(() => {
 });
 const resumeEditRoute = computed(() => {
   return {
-    name: RouteNames.ResumeEdit
+    name: RouteNames.ResumeEdit,
+    params: { resumeId: props.resumeId }
   };
 });
+
+onMounted(async () => refresh());
+
+async function refresh() {
+  if (!props.resumeId) {
+    return;
+  }
+
+  resume.value = await resumesService.getResume(props.resumeId);
+}
 
 </script>
 

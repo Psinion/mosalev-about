@@ -29,6 +29,6 @@ public class CustomAuthorizeFilter : IAsyncAuthorizationFilter
             }
         }
         
-        context.Result = new JsonResult(OperationError.Unauthorized("Unauthorized", "")) { StatusCode = StatusCodes.Status403Forbidden };
+        context.Result = new JsonResult(OperationError.Unauthorized()) { StatusCode = StatusCodes.Status403Forbidden };
     }
 }

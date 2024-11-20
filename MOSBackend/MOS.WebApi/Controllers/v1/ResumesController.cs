@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using MOS.Application.Data.Services.Resumes;
 using MOS.Application.DTOs.Resumes.Requests;
 using MOS.Application.DTOs.Resumes.Responses;
+using MOS.Application.OperationResults.Enums;
 using MOS.Identity.Helpers;
 
 namespace MOS.WebApi.Controllers.v1;
@@ -19,21 +20,35 @@ public class ResumesController : ControllerBase
         this.resumesService = resumesService;
     }
     
-    [HttpPost]
+    [HttpGet]
     [CustomAuthorize]
-    [Route("resume")]
-    public async Task<ActionResult<ResumeResponseDto>> CreateResume(ResumeCreateRequestDto request)
+    [Route("list")]
+    public async Task<ActionResult<ResumeResponseCompactDto>> GetCompactResumeList()
     {
-        var response = await resumesService.CreateResumeAsync(request);
+        var response = await resumesService.GetCompactResumesListAsync();
         return Ok(response.Value);
     }
     
     [HttpGet]
     [CustomAuthorize]
-    [Route("resume/list")]
-    public async Task<ActionResult<ResumeResponseCompactDto>> GetCompactResumeList()
+    [Route("{resumeId}")]
+    public async Task<ActionResult<ResumeResponseCompactDto>> GetResume(long resumeId)
     {
-        var response = await resumesService.GetCompactResumesListAsync();
+        var response = await resumesService.GetResumeAsync(resumeId);
+
+        if (response.Error.ErrorType == ErrorType.NotFound)
+        {
+            return NotFound(response.Error);
+        }
+        
+        return Ok(response.Value);
+    }
+    
+    [HttpPost]
+    [CustomAuthorize]
+    public async Task<ActionResult<ResumeResponseDto>> CreateResume(ResumeCreateRequestDto request)
+    {
+        var response = await resumesService.CreateResumeAsync(request);
         return Ok(response.Value);
     }
 }

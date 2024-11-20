@@ -20,6 +20,18 @@ public class ResumesService : IResumesService
         this.resumesRepository = resumesRepository;
     }
 
+    public async Task<OperationResult<ResumeResponseDto>> GetResumeAsync(long resumeId)
+    {
+        var resume = await resumesRepository.GetByIdAsync(resumeId);
+
+        if (resume == null)
+        {
+            return OperationError.NotFound("Not found");
+        }
+
+        return resume.ToDto();
+    }
+
     public async Task<OperationResult<ResumeResponseDto>> CreateResumeAsync(ResumeCreateRequestDto resumeRequest)
     {
         var resume = new Resume()

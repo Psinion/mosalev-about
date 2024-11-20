@@ -59,7 +59,7 @@
 
 <script setup lang="ts">
 import ResumesServiceInstance from "@/shared/services/ResumesService.ts";
-import { computed, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { TCreateResumeRequest } from "@/shared/services/base";
 import PsiInput from "@/shared/PsiUI/components/PsiInput/PsiInput.vue";
 import PsiToggle from "@/shared/PsiUI/components/PsiToggle/PsiToggle.vue";
@@ -71,6 +71,13 @@ import { ServerError } from "@/shared/utils/requests/errorHandlers.ts";
 import { useToaster } from "@/shared/PsiUI/utils/toaster.ts";
 import { useI18n } from "vue-i18n";
 import { RouteNames } from "@/router/routeNames.ts";
+
+const props = defineProps({
+  resumeId: {
+    type: Number,
+    default: null
+  }
+});
 
 const { t } = useI18n();
 const toaster = useToaster();
@@ -88,9 +95,25 @@ const resumeListRoute = computed(() => {
 });
 const resumeViewRoute = computed(() => {
   return {
-    name: RouteNames.ResumeView
+    name: RouteNames.ResumeView,
+    params: { resumeId: props.resumeId }
   };
 });
+
+onMounted(async () => refresh());
+
+async function refresh() {
+  if (!props.resumeId) {
+    return;
+  }
+
+  const resume = await resumesService.getResume(props.resumeId);
+
+  title.value = resume.title;
+  email.value = resume.email;
+  salary.value = resume.salary;
+  currencyType.value = resume.currencyType === CurrencyType.Ruble;
+}
 
 async function onSave() {
   const resumeToSave: TCreateResumeRequest = {

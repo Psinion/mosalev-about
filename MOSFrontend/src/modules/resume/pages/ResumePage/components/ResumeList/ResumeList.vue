@@ -43,7 +43,7 @@ onMounted(async () => refresh());
 
 async function refresh() {
   try {
-    resumesList.value = await resumesService.getResumes();
+    resumesList.value = await resumesService.getResumesList();
   }
   catch (error) {
     if (error instanceof ServerError) {

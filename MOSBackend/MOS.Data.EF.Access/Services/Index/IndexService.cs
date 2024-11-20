@@ -24,7 +24,7 @@ public class IndexService : IIndexService
         var indexContent = await indexContentsRepository.GetActualIndexContentAsync();
         if (indexContent == null)
         {
-            return OperationError.NotFound("Not found", "Not found");
+            return OperationError.NotFound("Not found");
         }
 
         return new IndexContentResponseDto(indexContent.Content);

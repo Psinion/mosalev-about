@@ -24,7 +24,7 @@ public class CredentialsService : ICredentialsService
         
         if (user == null)
         {
-            return OperationError.NotFound("not_found", "Such user not found");
+            return OperationError.NotFound("Such user not found");
         }
 
         return user;
@@ -36,7 +36,7 @@ public class CredentialsService : ICredentialsService
         
         if (user == null)
         {
-            return OperationError.NotFound("not_found", "Such user not found");
+            return OperationError.NotFound("Such user not found");
         }
 
         currentUser = user;

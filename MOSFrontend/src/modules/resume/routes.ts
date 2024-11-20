@@ -29,8 +29,9 @@ export const resumeRoutes: RouteRecordRaw[] = [{
       }
     },
     {
-      path: "edit",
+      path: "edit/:resumeId?",
       name: RouteNames.ResumeEdit,
+      props: route => ({ resumeId: +route.params.resumeId }),
       component: ResumeEdit,
       meta: {
         titleCode: "pages.resumeEdit"

@@ -6,18 +6,27 @@ import { TCreateResumeRequest } from "@/shared/services/base/IResumesService.ts"
 class ResumesService implements IResumesService {
   private requestor = useRequestor();
 
-  async createResume(params: TCreateResumeRequest): Promise<TResume> {
+  async getResumesList(): Promise<TResumeCompact[]> {
     try {
-      return await this.requestor.post("api/v1/resumes/resume", params) as TResume;
+      return await this.requestor.get("api/v1/resumes/list") as TResumeCompact[];
     }
     catch (error) {
       throw error;
     }
   }
 
-  async getResumes(): Promise<TResumeCompact[]> {
+  async getResume(resumeId: number): Promise<TResume> {
     try {
-      return await this.requestor.get("api/v1/resumes/resume/list") as TResumeCompact[];
+      return await this.requestor.get(`api/v1/resumes/${resumeId}`) as TResume;
+    }
+    catch (error) {
+      throw error;
+    }
+  }
+
+  async createResume(params: TCreateResumeRequest): Promise<TResume> {
+    try {
+      return await this.requestor.post("api/v1/resumes", params) as TResume;
     }
     catch (error) {
       throw error;

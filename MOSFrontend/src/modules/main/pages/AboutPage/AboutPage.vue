@@ -5,7 +5,6 @@
         <PsiButton
           class="resume-button"
           :route="resumeRoute"
-          disabled
         >
           {{ t('about.resumeButton') }}
         </PsiButton>

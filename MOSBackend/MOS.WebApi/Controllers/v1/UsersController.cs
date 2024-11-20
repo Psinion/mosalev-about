@@ -45,7 +45,7 @@ public class UsersController : ControllerBase
 
         if (user == null)
         {
-            return Unauthorized("Incorrect verify");
+            return Unauthorized("incorrect_verify");
         }
 
         var result = new VerifyResponseDto(user);
