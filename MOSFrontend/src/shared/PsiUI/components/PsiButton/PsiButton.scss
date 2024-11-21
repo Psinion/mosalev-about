@@ -7,6 +7,7 @@
   cursor: pointer;
   text-decoration: none;
   transition: var(--default-transition);
+  text-align: center;
 
   &:hover {
     border-color: var(--primary-up);

@@ -51,4 +51,13 @@ public class ResumesController : ControllerBase
         var response = await resumesService.CreateResumeAsync(request);
         return Ok(response.Value);
     }
+    
+    [HttpPut]
+    [CustomAuthorize]
+    [Route("{resumeId}")]
+    public async Task<ActionResult<ResumeResponseDto>> PinResume(long resumeId, ResumePinRequestDto request)
+    {
+        var response = await resumesService.PinResumeAsync(resumeId, request.Locale);
+        return Ok(response.Value);
+    }
 }

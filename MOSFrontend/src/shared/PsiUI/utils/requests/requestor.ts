@@ -117,6 +117,23 @@ export class PsiRequestor {
     }
   }
 
+  async put(
+    path: string,
+    body: TRequestBody
+  ): Promise<TRequestBody> {
+    try {
+      return await this.request(
+        "PUT",
+        path, {
+          body
+        }
+      );
+    }
+    catch (error) {
+      throw error;
+    }
+  }
+
   private async request(method: TMethodType, path: string, data?: IRequestData): Promise<TRequestBody> {
     try {
       const request = this.prepareRequest(method, path, data);

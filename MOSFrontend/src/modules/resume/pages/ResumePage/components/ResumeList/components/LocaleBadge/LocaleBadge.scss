@@ -1,0 +1,14 @@
+.locale-badge {
+  padding: 0 8px;
+  border: 1px solid var(--tertiary-down);
+  border-radius: 4px;
+  line-height: 20px;
+
+  &.ru {
+    background-color: var(--primary-down);
+  }
+
+  &.eng {
+    background-color: var(--tertiary-down);
+  }
+}

@@ -28,8 +28,8 @@ import ResumesServiceInstance from "@/shared/services/ResumesService.ts";
 import { ServerError } from "@/shared/utils/requests/errorHandlers.ts";
 import { TResumeCompact } from "@/shared/types/resume.ts";
 import { useToaster } from "@/shared/PsiUI/utils/toaster.ts";
-import ResumeCard from "@/modules/resume/pages/ResumePage/components/ResumeList/ResumeCard/ResumeCard.vue";
 import PsiButton from "@/shared/PsiUI/components/PsiButton/PsiButton.vue";
+import ResumeCard from "@/modules/resume/pages/ResumePage/components/ResumeList/components/ResumeCard/ResumeCard.vue";
 
 const resumesService = ResumesServiceInstance;
 const toaster = useToaster();

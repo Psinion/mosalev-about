@@ -1,5 +1,12 @@
 import { addIcons } from "oh-vue-icons";
-import { FaTelegram, FaSteam, FaGithub, MdReportgmailerrorred, OiCheckCircle } from "oh-vue-icons/icons";
+import {
+  FaTelegram,
+  FaSteam,
+  FaGithub,
+  MdReportgmailerrorred,
+  OiCheckCircle,
+  BiPinAngleFill
+} from "oh-vue-icons/icons";
 
 export default function importIcons() {
   addIcons(FaTelegram);
@@ -7,4 +14,5 @@ export default function importIcons() {
   addIcons(FaGithub);
   addIcons(MdReportgmailerrorred);
   addIcons(OiCheckCircle);
+  addIcons(BiPinAngleFill);
 }

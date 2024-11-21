@@ -48,6 +48,7 @@ const props = defineProps({
 });
 
 const ICON_CODES = {
+  pin: "bi-pin-angle-fill",
   telegram: "fa-telegram",
   steam: "fa-steam",
   github: "fa-github",

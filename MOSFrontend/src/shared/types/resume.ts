@@ -1,3 +1,5 @@
+import { AppLocale } from "@/shared/enums/common.ts";
+
 export type TResume = {
   id: number;
   title: string;
@@ -9,6 +11,7 @@ export type TResume = {
 export type TResumeCompact = {
   id: number;
   title: string;
+  pinnedToLocale: AppLocale;
 };
 
 export enum CurrencyType {

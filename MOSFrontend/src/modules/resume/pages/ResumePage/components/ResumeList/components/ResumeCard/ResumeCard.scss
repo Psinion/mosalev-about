@@ -1,0 +1,36 @@
+.resume-card {
+  padding: 4px 8px;
+  border: 1px solid var(--tertiary);
+  border-radius: 4px;
+  transition: var(--default-transition);
+
+  &:hover {
+    border-color: var(--tertiary-up);
+
+    .actions {
+      opacity: 1;
+    }
+  }
+
+  & > a {
+    text-decoration: none;
+    color: var(--font-color);
+
+    & > header {
+      display: flex;
+      justify-content: space-between;
+
+      .title-block {
+        display: flex;
+        gap: 8px;
+        align-items: center;
+      }
+
+      .actions {
+        display: flex;
+        opacity: 0;
+        transition: var(--default-transition);
+      }
+    }
+  }
+}

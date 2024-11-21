@@ -8,6 +8,7 @@ using MOS.Application.DTOs.Resumes.Responses;
 using MOS.Application.Mappings.Resumes;
 using MOS.Application.OperationResults;
 using MOS.Domain.Entities.Resumes;
+using MOS.Domain.Enums;
 
 namespace MOS.Data.EF.Access.Services.Resumes;
 
@@ -47,12 +48,20 @@ public class ResumesService : IResumesService
         return createdEntity.ToDto();
     }
 
+    public async Task<OperationResult<bool>> PinResumeAsync(long resumeId, Locale locale)
+    {
+        await resumesRepository.PinResumeAsync(resumeId, locale);
+
+        return true;
+    }
+    
     public async Task<OperationResult<List<ResumeResponseCompactDto>>> GetCompactResumesListAsync()
     {
         var resumes = await resumesRepository.GetAll().Select(x => new Resume()
         {
             Id = x.Id,
-            Title = x.Title
+            Title = x.Title,
+            PinnedToLocale = x.PinnedToLocale
         }).ToListAsync();
 
         return resumes.ToCompactDtoList();

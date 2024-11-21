@@ -23,6 +23,7 @@ public static class ResumeMappings
         {
             Id = entity.Id,
             Title = entity.Title,
+            PinnedToLocale = entity.PinnedToLocale
         };
     }
 
