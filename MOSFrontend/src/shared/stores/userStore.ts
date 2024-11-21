@@ -3,16 +3,26 @@ import { computed, ref } from "vue";
 import { TUser } from "@/shared/types";
 import UsersServiceInstance from "@/shared/services/UsersService.ts";
 import { RouteNames } from "@/router/routeNames.ts";
-import { useRouter } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
+import { AppLocale } from "@/shared/enums/common.ts";
+import { setPageTitle } from "@/shared/utils/helpers.ts";
+import { useI18n } from "vue-i18n";
 
 const MOS_TOKEN_STORAGE_KEY = "token";
+const MOS_LOCALE_STORAGE_KEY = "locale";
 
 export const useUserStore = defineStore("user", () => {
+  const route = useRoute();
   const router = useRouter();
+  const { locale: i18nLocale, t } = useI18n();
 
   const user = ref<TUser | null>();
   const authToken = ref<string | null>(localStorage.getItem(MOS_TOKEN_STORAGE_KEY));
+  const localeInternal = ref<AppLocale>(initializeLocale());
 
+  const locale = computed<AppLocale>(() => {
+    return localeInternal.value;
+  });
   const token = computed(() => authToken.value);
   const isAuthenticated = computed(() => authToken.value != null);
 
@@ -65,13 +75,37 @@ export const useUserStore = defineStore("user", () => {
     }
   }
 
+  function setLocale(locale: AppLocale) {
+    localeInternal.value = locale;
+    i18nLocale.value = locale === AppLocale.ru ? "ru" : "en";
+    localStorage.setItem(MOS_LOCALE_STORAGE_KEY, locale.toString());
+
+    const titleCode = route.meta["titleCode"] as string;
+    setPageTitle(t(titleCode));
+  }
+
+  function initializeLocale(): AppLocale {
+    const locale = localStorage.getItem(MOS_LOCALE_STORAGE_KEY);
+    if (locale) {
+      const localeNumber = Number(locale);
+      if (localeNumber <= AppLocale.en) {
+        i18nLocale.value = localeNumber === AppLocale.ru ? "ru" : "en";
+        return localeNumber;
+      }
+    }
+
+    return AppLocale.ru;
+  }
+
   return {
     user,
     token,
     isAuthenticated,
+    locale,
 
     login,
     logout,
-    checkLogin
+    checkLogin,
+    setLocale
   };
 });

@@ -46,30 +46,21 @@
 <script setup lang="ts">
 import LayoutHeaderActions
   from "@/layouts/components/LayoutHeader/components/LayoutHeaderButton/LayoutHeaderButton.vue";
-import { computed, onMounted, ref, watch } from "vue";
+import { computed, ref, watch } from "vue";
 import { RouteNames } from "@/router/routeNames.ts";
 import { useUserStore } from "@/shared/stores/userStore.ts";
 import LayoutHeaderUser from "@/layouts/components/LayoutHeader/components/LayoutHeaderUser/LayoutHeaderUser.vue";
 import { useI18n } from "vue-i18n";
-import { useRoute } from "vue-router";
-import { setPageTitle } from "@/shared/utils/helpers.ts";
 import PsiToggle from "@/shared/PsiUI/components/PsiToggle/PsiToggle.vue";
-
-const MOS_LOCALE_KEY = "locale";
+import { AppLocale } from "@/shared/enums/common.ts";
 
 const userStore = useUserStore();
-const route = useRoute();
 
-const { locale, t } = useI18n();
+const { t } = useI18n();
 
-const isRuLanguage = ref(locale.value === "ru");
+const isRuLanguage = ref(userStore.locale === AppLocale.ru);
 watch(() => isRuLanguage.value, (value) => {
-  const localeCode = value ? "ru" : "en";
-  locale.value = localeCode;
-  localStorage.setItem(MOS_LOCALE_KEY, localeCode);
-
-  const titleCode = route.meta["titleCode"] as string;
-  setPageTitle(t(titleCode));
+  userStore.setLocale(value ? AppLocale.ru : AppLocale.en);
 });
 
 const authorised = computed(() => userStore.user !== null);
@@ -83,14 +74,6 @@ const aboutRoute = computed(() => {
   return {
     name: RouteNames.AboutView
   };
-});
-
-onMounted(() => {
-  const localeCode = localStorage.getItem(MOS_LOCALE_KEY);
-  if (localeCode) {
-    locale.value = localeCode;
-    isRuLanguage.value = locale.value === "ru";
-  }
 });
 </script>
 
