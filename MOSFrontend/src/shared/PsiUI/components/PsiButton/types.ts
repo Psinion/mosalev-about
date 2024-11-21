@@ -1,1 +1,2 @@
-export type TPsiButtonType = "submit" | "button" | "reset";
+export type TPsiButtonNativeType = "submit" | "button" | "reset";
+export type TPsiButtonTag = "a" | "button" | "RouterLink";

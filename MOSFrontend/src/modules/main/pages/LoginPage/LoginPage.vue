@@ -23,7 +23,7 @@
           required
         />
         <PsiButton
-          type="submit"
+          native-type="submit"
           :disabled="!valid"
         >
           {{ t('login.formSubmitButton') }}

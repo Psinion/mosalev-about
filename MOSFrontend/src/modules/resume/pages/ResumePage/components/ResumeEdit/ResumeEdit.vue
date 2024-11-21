@@ -2,14 +2,16 @@
   <article class="resume-edit">
     <div class="actions">
       <PsiButton
+        tag="RouterLink"
         class="action-button"
-        :route="resumeListRoute"
+        :to="resumeListRoute"
       >
         {{ t('resume.edit.listButton') }}
       </PsiButton>
       <PsiButton
+        tag="RouterLink"
         class="action-button"
-        :route="resumeViewRoute"
+        :to="resumeViewRoute"
       >
         {{ t('resume.edit.viewButton') }}
       </PsiButton>
@@ -46,7 +48,7 @@
         </div>
         <div class="actions">
           <PsiButton
-            type="submit"
+            native-type="submit"
             :disabled="!valid"
           >
             Сохранить
@@ -135,4 +137,4 @@ async function onSave() {
 }
 </script>
 
-<style src="./ResumeEdit.scss" />
+<style scoped src="./ResumeEdit.scss" />

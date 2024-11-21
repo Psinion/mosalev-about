@@ -5,6 +5,8 @@
   background-color: var(--primary);
   color: var(--font-color);
   cursor: pointer;
+  text-decoration: none;
+  transition: var(--default-transition);
 
   &:hover {
     border-color: var(--primary-up);
@@ -17,9 +19,14 @@
     pointer-events: none;
   }
 
-  & > .link {
-    text-decoration: none;
-    color: inherit;
+  &.flat {
+    border: none;
+    background-color: transparent;
+    padding: 0;
+
+    &:hover {
+      color: var(--primary-up);
+    }
   }
 
   .submit-button {

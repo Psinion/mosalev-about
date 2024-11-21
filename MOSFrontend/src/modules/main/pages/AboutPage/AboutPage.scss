@@ -10,6 +10,11 @@
     display: flex;
     justify-content: flex-end;
     width: 100%;
+    gap: 8px;
+
+    .resume-list-button {
+      width: 140px;
+    }
 
     .resume-button {
       width: 80px;

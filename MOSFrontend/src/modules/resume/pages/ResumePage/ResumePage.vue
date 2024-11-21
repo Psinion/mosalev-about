@@ -10,4 +10,4 @@
 import FlatLayout from "@/layouts/FlatLayout/FlatLayout.vue";
 </script>
 
-<style src="./ResumePage.scss" />
+<style scoped src="./ResumePage.scss" />

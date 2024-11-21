@@ -3,8 +3,15 @@
     <div class="about-page">
       <div class="actions">
         <PsiButton
+          tag="RouterLink"
+          class="resume-list-button"
+          :to="resumeListRoute"
+        >
+          {{ t('pages.resumeList') }}
+        </PsiButton>
+        <PsiButton
           class="resume-button"
-          :route="resumeRoute"
+          :to="resumeRoute"
         >
           {{ t('about.resumeButton') }}
         </PsiButton>
@@ -30,6 +37,11 @@ import PsiButton from "@/shared/PsiUI/components/PsiButton/PsiButton.vue";
 
 const { t } = useI18n();
 
+const resumeListRoute = computed(() => {
+  return {
+    name: RouteNames.ResumeList
+  };
+});
 const resumeRoute = computed(() => {
   return {
     name: RouteNames.ResumeView

@@ -2,15 +2,17 @@
   <article class="resume-view">
     <div class="actions">
       <PsiButton
+        tag="RouterLink"
         class="action-button"
-        :route="resumeListRoute"
+        :to="resumeListRoute"
       >
         {{ t('resume.view.listButton') }}
       </PsiButton>
       <PsiButton
         v-if="resumeId"
+        tag="RouterLink"
         class="action-button"
-        :route="resumeEditRoute"
+        :to="resumeEditRoute"
       >
         {{ t('resume.view.editButton') }}
       </PsiButton>
@@ -29,9 +31,9 @@
 import { useI18n } from "vue-i18n";
 import { computed, onMounted, ref } from "vue";
 import { RouteNames } from "@/router/routeNames.ts";
-import PsiButton from "@/shared/PsiUI/components/PsiButton/PsiButton.vue";
 import ResumesServiceInstance from "@/shared/services/ResumesService.ts";
 import { TResume } from "@/shared/types/resume.ts";
+import PsiButton from "@/shared/PsiUI/components/PsiButton/PsiButton.vue";
 
 const props = defineProps({
   resumeId: {
@@ -69,4 +71,4 @@ async function refresh() {
 
 </script>
 
-<style src="./ResumeView.scss" />
+<style scoped src="./ResumeView.scss" />
