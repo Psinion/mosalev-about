@@ -14,11 +14,11 @@
 <script setup lang="ts">
 import { OhVueIcon } from "oh-vue-icons";
 import { computed, PropType } from "vue";
-import { TIcon, TIconFlip } from "@/shared/components/PsiIcon/types.ts";
+import { TPsiIcon, TPsiIconFlip } from "@/shared/PsiUI/components/PsiIcon/types.ts";
 
 const props = defineProps({
   icon: {
-    type: String as PropType<TIcon>,
+    type: String as PropType<TPsiIcon>,
     required: true
   },
   fill: {
@@ -38,7 +38,7 @@ const props = defineProps({
     default: false
   },
   flip: {
-    type: String as PropType<TIconFlip>,
+    type: String as PropType<TPsiIconFlip>,
     default: null
   },
   speed: {
@@ -51,6 +51,7 @@ const ICON_CODES = {
   "pin": "bi-pin-angle",
   "pin-filled": "bi-pin-angle-fill",
   "telegram": "fa-telegram",
+  "email": "md-email-round",
   "steam": "fa-steam",
   "github": "fa-github",
   "error": "md-reportgmailerrorred",

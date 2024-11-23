@@ -28,6 +28,18 @@
           label="Название"
           required
         />
+        <div class="fio-input">
+          <PsiInput
+            v-model="lastName"
+            label="Фамилия"
+            required
+          />
+          <PsiInput
+            v-model="firstName"
+            label="Имя"
+            required
+          />
+        </div>
         <PsiInput
           v-model="email"
           label="Email"
@@ -38,7 +50,6 @@
             v-model="salary"
             label="Зарплата"
             :min="0"
-            required
           />
           <PsiToggle
             v-model="currencyType"
@@ -61,7 +72,7 @@
 
 <script setup lang="ts">
 import ResumesServiceInstance from "@/shared/services/ResumesService.ts";
-import { computed, onMounted, PropType, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { TCreateResumeRequest } from "@/shared/services/base";
 import PsiInput from "@/shared/PsiUI/components/PsiInput/PsiInput.vue";
 import PsiToggle from "@/shared/PsiUI/components/PsiToggle/PsiToggle.vue";
@@ -86,6 +97,8 @@ const toaster = useToaster();
 const resumesService = ResumesServiceInstance;
 
 const title = ref<string | null>();
+const firstName = ref<string | null>();
+const lastName = ref<string | null>();
 const email = ref<string | null>();
 const salary = ref<number | null>();
 const currencyType = ref<boolean>(false);
@@ -114,6 +127,8 @@ async function refresh() {
   const resume = await resumesService.getResume(props.resumeId);
 
   title.value = resume.title;
+  firstName.value = resume.firstName;
+  lastName.value = resume.lastName;
   email.value = resume.email;
   salary.value = resume.salary;
   currencyType.value = resume.currencyType === CurrencyType.Ruble;
@@ -122,8 +137,10 @@ async function refresh() {
 async function onSave() {
   const resumeToSave: TCreateResumeRequest = {
     title: title.value!,
+    firstName: firstName.value!,
+    lastName: lastName.value!,
     email: email.value!,
-    salary: salary.value!,
+    salary: salary.value ?? 0,
     currencyType: currencyType.value ? CurrencyType.Ruble : CurrencyType.Dollar
   };
 

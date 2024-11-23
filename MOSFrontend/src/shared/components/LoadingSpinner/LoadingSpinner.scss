@@ -1,0 +1,91 @@
+.loading-spinner {
+  z-index: 100;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  position: fixed;
+  justify-content: center;
+  pointer-events: none;
+
+  .central-box {
+    position: relative;
+    top: 50%;
+    left: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60px;
+    height: 60px;
+
+    .celestial-object {
+      position: absolute;
+    }
+
+    .star {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      animation: star-glow 3s linear infinite;
+    }
+
+    .orbit-1 {
+      width: 60px;
+      height: 60px;
+      border: 1px solid var(--primary-up);
+      border-radius: 50%;
+      animation: orbit-spin-3d 10s linear infinite;
+    }
+
+    .orbit-2 {
+      width: 90px;
+      height: 90px;
+      border: 1px solid var(--secondary-up);
+      border-radius: 50%;
+      animation: orbit-spin-3d 8s linear infinite;
+    }
+
+    .orbit-3 {
+      width: 120px;
+      height: 120px;
+      border: 2px solid var(--tertiary-down);
+      border-radius: 50%;
+      animation: orbit-spin-3d 6s linear infinite;
+    }
+  }
+}
+
+.loading-spinner-enter-active,
+.loading-spinner-leave-active{
+  transition: var(--default-transition);
+  opacity: 1;
+}
+
+.loading-spinner-enter-from,
+.loading-spinner-leave-to {
+  opacity: 0;
+}
+
+@keyframes orbit-spin-3d {
+  from {
+    transform: rotate3d(1, 1, 0.3, 360deg);
+  }
+
+  to {
+    transform: rotate3d(0, 0, 0, 0deg);
+  }
+}
+
+@keyframes star-glow {
+  0%, 33% {
+    background-color: var(--primary-up);
+  }
+
+  65% {
+    background-color: var(--primary);
+  }
+
+  100% {
+    background-color: var(--primary-up);
+  }
+}

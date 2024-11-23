@@ -6,7 +6,8 @@ import {
   MdReportgmailerrorred,
   OiCheckCircle,
   BiPinAngle,
-  BiPinAngleFill
+  BiPinAngleFill,
+  MdEmailRound
 } from "oh-vue-icons/icons";
 
 export default function importIcons() {
@@ -17,4 +18,5 @@ export default function importIcons() {
   addIcons(OiCheckCircle);
   addIcons(BiPinAngle);
   addIcons(BiPinAngleFill);
+  addIcons(MdEmailRound);
 }

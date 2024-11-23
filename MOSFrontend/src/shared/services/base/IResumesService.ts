@@ -15,6 +15,8 @@ export interface IResumesService extends IServiceBase {
 
 export type TCreateResumeRequest = {
   title: string;
+  firstName: string;
+  lastName: string;
   email: string;
   salary: number;
   currencyType: number;
@@ -22,6 +24,8 @@ export type TCreateResumeRequest = {
 
 export type TUpdateResumeRequest = {
   title: string;
+  firstName: string;
+  lastName: string;
   email: string;
   salary: number;
   currencyType: number;

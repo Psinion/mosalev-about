@@ -57,6 +57,8 @@ public class ResumesService : IResumesService
         }
 
         resume.Title = resumeRequest.Title;
+        resume.FirstName = resumeRequest.FirstName;
+        resume.LastName = resumeRequest.LastName;
         resume.Email = resumeRequest.Email;
         resume.Salary = resumeRequest.Salary;
         resume.CurrencyType = resumeRequest.CurrencyType;

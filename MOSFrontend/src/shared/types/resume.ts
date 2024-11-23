@@ -3,6 +3,8 @@ import { AppLocale } from "@/shared/enums/common.ts";
 export type TResume = {
   id: number;
   title: string;
+  firstName: string;
+  lastName: string;
   email: string;
   salary: number;
   currencyType: CurrencyType;
