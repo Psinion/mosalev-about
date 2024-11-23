@@ -4,10 +4,11 @@ import { IPreparedRequest, TRequestHeaders } from "@/shared/PsiUI/utils/requests
 async function authRequestMiddleware(request: IPreparedRequest): Promise<IPreparedRequest> {
   const userStore = useUserStore();
 
-  if (request.options?.headers && userStore.token !== null) {
-    const headers = request.options?.headers as TRequestHeaders;
+  const headers = (request.options?.headers ?? {}) as TRequestHeaders;
+  headers["Locale"] = userStore.locale.toString();
+
+  if (userStore.token !== null) {
     headers["AuthToken"] = userStore.token;
-    headers["Locale"] = userStore.locale.toString();
   }
 
   return request;

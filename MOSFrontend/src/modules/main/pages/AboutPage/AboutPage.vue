@@ -12,9 +12,10 @@
           </PsiButton>
         </PermissionChecker>
         <PsiButton
-          v-if="hasPinnedResume"
           class="resume-button"
+          tag="RouterLink"
           :to="resumeRoute"
+          :disabled="!hasPinnedResume"
         >
           {{ t('about.resumeButton') }}
         </PsiButton>

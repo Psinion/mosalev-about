@@ -68,7 +68,19 @@ public class ResumesService : IResumesService
     
     public async Task<OperationResult<bool>> HasPinnedResumeAsync()
     {
-        return await resumesRepository.HasPinnedResumeAsync(credentialsService.CurrentLocale);;
+        return await resumesRepository.GetPinnedResumeAsync(credentialsService.CurrentLocale) != null;
+    }
+
+    public async Task<OperationResult<ResumeResponseDto>> GetPinnedResumeAsync()
+    {
+        var resume = await resumesRepository.GetPinnedResumeAsync(credentialsService.CurrentLocale);
+
+        if (resume == null)
+        {
+            return OperationError.NotFound(); 
+        }
+
+        return resume.ToDto();
     }
 
     public async Task<OperationResult<bool>> PinResumeAsync(long resumeId, bool pinning)

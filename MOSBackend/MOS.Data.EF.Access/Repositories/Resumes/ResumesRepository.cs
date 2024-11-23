@@ -17,10 +17,10 @@ public class ResumesRepository : GenericRepository<Resume>, IResumesRepository
         throw new NotImplementedException();
     }
 
-    public async Task<bool> HasPinnedResumeAsync(Locale locale)
+    public async Task<Resume?> GetPinnedResumeAsync(Locale locale)
     {
         return await LocalSet
-            .FirstOrDefaultAsync(x => x.PinnedToLocale == locale) != null;
+            .FirstOrDefaultAsync(x => x.PinnedToLocale == locale);
     }
 
     public async Task PinResumeAsync(long resumeId, Locale? locale)

@@ -63,6 +63,7 @@ onMounted(async () => refresh());
 
 async function refresh() {
   if (!props.resumeId) {
+    resume.value = await resumesService.getPinnedResume();
     return;
   }
 

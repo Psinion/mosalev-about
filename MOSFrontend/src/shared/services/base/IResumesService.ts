@@ -8,6 +8,7 @@ export interface IResumesService extends IServiceBase {
   createResume(params: TCreateResumeRequest): Promise<TResume>;
   updateResume(resumeId: number, params: TUpdateResumeRequest): Promise<TResume>;
   hasPinnedResume(): Promise<boolean>;
+  getPinnedResume(): Promise<TResume>;
   pinResume(resumeId: number): Promise<void>;
   unpinResume(resumeId: number): Promise<void>;
 }

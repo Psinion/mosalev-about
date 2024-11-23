@@ -81,6 +81,20 @@ public class ResumesController : ControllerBase
         return Ok();
     }
     
+    [HttpGet]
+    [Route("pin")]
+    public async Task<ActionResult<ResumeResponseDto>> GetPinnedResume()
+    {
+        var response = await resumesService.GetPinnedResumeAsync();
+
+        if (response.Error.ErrorType == ErrorType.NotFound)
+        {
+            return NotFound();
+        }
+        
+        return Ok(response.Value);
+    }
+    
     [HttpPut]
     [CustomAuthorize]
     [Route("{resumeId}/pin")]

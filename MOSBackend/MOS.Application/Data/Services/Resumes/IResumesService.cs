@@ -14,6 +14,8 @@ public interface IResumesService : IDisposable
 
     Task<OperationResult<bool>> HasPinnedResumeAsync();
     
+    Task<OperationResult<ResumeResponseDto>> GetPinnedResumeAsync();
+    
     Task<OperationResult<bool>> PinResumeAsync(long resumeId, bool pinning);
     
     Task<OperationResult<List<ResumeResponseCompactDto>>> GetCompactResumesListAsync();
