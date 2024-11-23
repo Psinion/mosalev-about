@@ -1,4 +1,10 @@
+@import '@scss-mixins/adaptive';
+
 .flat-layout {
+  @include adaptive-mixin(m l) {
+    margin-left: 16px;
+  }
+
   & > header {
     padding: 4px 0;
     background: var(--background-header);
