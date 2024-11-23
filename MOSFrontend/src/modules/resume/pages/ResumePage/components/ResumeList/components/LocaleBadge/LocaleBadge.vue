@@ -19,8 +19,8 @@ const props = defineProps({
   }
 });
 
-const localeText = computed(() => props.locale === AppLocale.ru ? "ru" : "eng");
-const localeClass = computed(() => props.locale === AppLocale.ru ? "ru" : "eng");
+const localeText = computed(() => props.locale === AppLocale.ru ? "ru" : "en");
+const localeClass = computed(() => props.locale === AppLocale.ru ? "ru" : "en");
 
 </script>
 

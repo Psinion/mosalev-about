@@ -76,8 +76,8 @@ import { RouteNames } from "@/router/routeNames.ts";
 
 const props = defineProps({
   resumeId: {
-    type: Number as PropType<number | null>,
-    default: null
+    type: Number,
+    default: 0
   }
 });
 
@@ -90,7 +90,7 @@ const email = ref<string | null>();
 const salary = ref<number | null>();
 const currencyType = ref<boolean>(false);
 
-const createMode = computed(() => props.resumeId === null);
+const createMode = computed(() => props.resumeId === 0);
 
 const resumeListRoute = computed(() => {
   return {

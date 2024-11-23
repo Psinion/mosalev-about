@@ -3,6 +3,7 @@ using MOS.Application.Data.Repositories.Index;
 using MOS.Application.Data.Repositories.Resumes;
 using MOS.Application.Data.Services.IIndexService;
 using MOS.Application.Data.Services.Resumes;
+using MOS.Application.Data.Services.Users;
 using MOS.Application.DTOs.Resumes.Requests;
 using MOS.Application.DTOs.Resumes.Responses;
 using MOS.Application.Mappings.Resumes;
@@ -14,10 +15,12 @@ namespace MOS.Data.EF.Access.Services.Resumes;
 
 public class ResumesService : IResumesService
 {
+    private readonly ICredentialsService credentialsService;
     private readonly IResumesRepository resumesRepository;
     
-    public ResumesService(IResumesRepository resumesRepository)
+    public ResumesService(ICredentialsService credentialsService, IResumesRepository resumesRepository)
     {
+        this.credentialsService = credentialsService;
         this.resumesRepository = resumesRepository;
     }
 
@@ -66,9 +69,9 @@ public class ResumesService : IResumesService
         return resume.ToDto();
     }
 
-    public async Task<OperationResult<bool>> PinResumeAsync(long resumeId, Locale locale)
+    public async Task<OperationResult<bool>> PinResumeAsync(long resumeId)
     {
-        await resumesRepository.PinResumeAsync(resumeId, locale);
+        await resumesRepository.PinResumeAsync(resumeId, credentialsService.CurrentLocale);
 
         return true;
     }

@@ -93,14 +93,12 @@ public class Startup
                 options.RoutePrefix = string.Empty;
             });
         }
-
-        app.UseHttpsRedirection();
-
+        
         app.UseRouting();
 
         app.UseCors();
 
-        app.UseMiddleware<JwtMiddleware>();
+        app.UseMiddleware<UserMiddleware>();
         
         app.UseEndpoints(endpoints =>
             endpoints.MapControllers()

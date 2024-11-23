@@ -15,7 +15,7 @@ export const resumeRoutes: RouteRecordRaw[] = [{
       path: ":resumeId?",
       name: RouteNames.ResumeView,
       component: ResumeView,
-      props: route => ({ resumeId: +route.params.resumeId }),
+      props: route => ({ resumeId: Number(route.params.resumeId) }),
       meta: {
         titleCode: "pages.resumeView"
       }
@@ -31,7 +31,7 @@ export const resumeRoutes: RouteRecordRaw[] = [{
     {
       path: "edit/:resumeId?",
       name: RouteNames.ResumeEdit,
-      props: route => ({ resumeId: +route.params.resumeId }),
+      props: route => ({ resumeId: Number(route.params.resumeId) }),
       component: ResumeEdit,
       meta: {
         titleCode: "pages.resumeEdit"

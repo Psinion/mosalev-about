@@ -70,9 +70,9 @@ public class ResumesController : ControllerBase
     [HttpPut]
     [CustomAuthorize]
     [Route("{resumeId}/pin")]
-    public async Task<ActionResult<ResumeResponseDto>> PinResume(long resumeId, ResumePinRequestDto request)
+    public async Task<ActionResult<ResumeResponseDto>> PinResume(long resumeId)
     {
-        var response = await resumesService.PinResumeAsync(resumeId, request.Locale);
+        var response = await resumesService.PinResumeAsync(resumeId);
         return Ok(response.Value);
     }
 }

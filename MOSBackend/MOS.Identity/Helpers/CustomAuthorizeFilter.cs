@@ -6,7 +6,7 @@ using MOS.Application.OperationResults;
 
 namespace MOS.Identity.Helpers;
 
-public class CustomAuthorizeFilter : IAsyncAuthorizationFilter
+public class CustomAuthorizeFilter : IAuthorizationFilter
 {
     private ICredentialsService credentialsService;
     private string permission;
@@ -16,17 +16,12 @@ public class CustomAuthorizeFilter : IAsyncAuthorizationFilter
         this.credentialsService = credentialsService;
         this.permission = permission;
     }
-    
-    public async Task OnAuthorizationAsync(AuthorizationFilterContext context)
+
+    public void OnAuthorization(AuthorizationFilterContext context)
     {
-        var userId = context.HttpContext.Items["UserId"];
-        if (userId != null)
+        if (credentialsService.CurrentUser != null)
         {
-            var userResult = await credentialsService.InitUserAsync((long)userId);
-            if (userResult.IsSuccess)
-            {
-                return;
-            }
+            return;
         }
         
         context.Result = new JsonResult(OperationError.Unauthorized()) { StatusCode = StatusCodes.Status403Forbidden };
