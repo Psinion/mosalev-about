@@ -16,6 +16,7 @@ public static class ResumeMappings
             LastName = entity.LastName,
             Email = entity.Email,
             Salary = entity.Salary,
+            About = entity.About,
         };
     }
     

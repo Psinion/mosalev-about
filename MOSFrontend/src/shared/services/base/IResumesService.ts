@@ -20,6 +20,7 @@ export type TCreateResumeRequest = {
   email: string;
   salary: number;
   currencyType: number;
+  about: string | null;
 };
 
 export type TUpdateResumeRequest = {
@@ -29,6 +30,7 @@ export type TUpdateResumeRequest = {
   email: string;
   salary: number;
   currencyType: number;
+  about: string | null;
 };
 
 export type TPinResumeRequest = {

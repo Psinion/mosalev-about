@@ -23,6 +23,7 @@
         v-slot="{ valid }"
         @submit="onSave"
       >
+        <h3>Профиль</h3>
         <PsiInput
           v-model="title"
           label="Название"
@@ -57,6 +58,11 @@
             active-label="$"
           />
         </div>
+        <PsiTextarea
+          v-model="about"
+          label="О себе"
+          resizable="vertical"
+        />
         <div class="actions">
           <PsiButton
             native-type="submit"
@@ -84,6 +90,7 @@ import { ServerError } from "@/shared/utils/requests/errorHandlers.ts";
 import { useToaster } from "@/shared/PsiUI/utils/toaster.ts";
 import { useI18n } from "vue-i18n";
 import { RouteNames } from "@/router/routeNames.ts";
+import PsiTextarea from "@/shared/PsiUI/components/PsiTextarea/PsiTextarea.vue";
 
 const props = defineProps({
   resumeId: {
@@ -102,6 +109,7 @@ const lastName = ref<string | null>();
 const email = ref<string | null>();
 const salary = ref<number | null>();
 const currencyType = ref<boolean>(false);
+const about = ref<string | null>();
 
 const createMode = computed(() => props.resumeId === 0);
 
@@ -132,6 +140,7 @@ async function refresh() {
   email.value = resume.email;
   salary.value = resume.salary;
   currencyType.value = resume.currencyType === CurrencyType.Ruble;
+  about.value = resume.about;
 }
 
 async function onSave() {
@@ -141,7 +150,8 @@ async function onSave() {
     lastName: lastName.value!,
     email: email.value!,
     salary: salary.value ?? 0,
-    currencyType: currencyType.value ? CurrencyType.Ruble : CurrencyType.Dollar
+    currencyType: currencyType.value ? CurrencyType.Ruble : CurrencyType.Dollar,
+    about: about.value ?? null
   };
 
   try {

@@ -24,4 +24,6 @@ public class ResumeCreateRequestDto
     public int Salary { get; set; }
 
     public CurrencyType CurrencyType { get; set; } = CurrencyType.Ruble;
+    
+    public string? About { get; set; }
 }

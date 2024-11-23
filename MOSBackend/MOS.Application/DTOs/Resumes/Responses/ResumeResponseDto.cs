@@ -15,5 +15,8 @@ public class ResumeResponseDto
     public string Email { get; set; }
     
     public int Salary { get; set; }
+    
     public CurrencyType CurrencyType { get; set; }
+    
+    public string? About { get; set; }
 }

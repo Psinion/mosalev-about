@@ -7,6 +7,7 @@ export type TResume = {
   lastName: string;
   email: string;
   salary: number;
+  about: string | null;
   currencyType: CurrencyType;
 };
 

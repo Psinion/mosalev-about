@@ -82,6 +82,10 @@
             </div>
           </div>
         </div>
+
+        <div class="about typography-block">
+          {{ resume?.about }}
+        </div>
       </div>
     </div>
   </article>
