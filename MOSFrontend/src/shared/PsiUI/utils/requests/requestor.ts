@@ -100,6 +100,23 @@ export class PsiRequestor {
     }
   }
 
+  public async head(
+    path: string,
+    query?: TRequestQuery
+  ): Promise<TRequestBody> {
+    try {
+      return await this.request(
+        "HEAD",
+        path, {
+          query
+        }
+      );
+    }
+    catch (error) {
+      throw error;
+    }
+  }
+
   async post(
     path: string,
     body: TRequestBody
@@ -119,7 +136,7 @@ export class PsiRequestor {
 
   async put(
     path: string,
-    body: TRequestBody
+    body?: TRequestBody
   ): Promise<TRequestBody> {
     try {
       return await this.request(
@@ -198,7 +215,10 @@ export class PsiRequestor {
     };
 
     if (raw.ok) {
-      response.data = await raw.json();
+      const contentType = raw.headers.get("Content-Type");
+      if (contentType != null && contentType.indexOf("application/json") >= 0) {
+        response.data = await raw.json();
+      }
     }
     else {
       response.error = await this._handleError(response);

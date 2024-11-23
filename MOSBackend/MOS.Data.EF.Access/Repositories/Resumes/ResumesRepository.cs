@@ -17,12 +17,13 @@ public class ResumesRepository : GenericRepository<Resume>, IResumesRepository
         throw new NotImplementedException();
     }
 
-    public Task UnpinResumeAsync(long resumeId, Locale locale)
+    public async Task<bool> HasPinnedResumeAsync(Locale locale)
     {
-        throw new NotImplementedException();
+        return await LocalSet
+            .FirstOrDefaultAsync(x => x.PinnedToLocale == locale) != null;
     }
 
-    public async Task PinResumeAsync(long resumeId, Locale locale)
+    public async Task PinResumeAsync(long resumeId, Locale? locale)
     {
         await LocalSet
             .Where(x => x.Id == resumeId)

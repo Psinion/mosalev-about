@@ -42,9 +42,28 @@ class ResumesService implements IResumesService {
     }
   }
 
-  async pinResume(resumeId: number, params: TPinResumeRequest): Promise<void> {
+  async hasPinnedResume(): Promise<boolean> {
     try {
-      await this.requestor.put(`api/v1/resumes/${resumeId}/pin`, params);
+      await this.requestor.head(`api/v1/resumes/pin`);
+      return true;
+    }
+    catch {
+      return false;
+    }
+  }
+
+  async pinResume(resumeId: number): Promise<void> {
+    try {
+      await this.requestor.put(`api/v1/resumes/${resumeId}/pin`);
+    }
+    catch (error) {
+      throw error;
+    }
+  }
+
+  async unpinResume(resumeId: number): Promise<void> {
+    try {
+      await this.requestor.put(`api/v1/resumes/${resumeId}/unpin`);
     }
     catch (error) {
       throw error;

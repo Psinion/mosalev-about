@@ -12,6 +12,7 @@
           </PsiButton>
         </PermissionChecker>
         <PsiButton
+          v-if="hasPinnedResume"
           class="resume-button"
           :to="resumeRoute"
         >
@@ -32,13 +33,19 @@
 
 <script setup lang="ts">
 import FlatLayout from "@/layouts/FlatLayout/FlatLayout.vue";
-import { computed } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 import { RouteNames } from "@/router/routeNames.ts";
 import { useI18n } from "vue-i18n";
 import PsiButton from "@/shared/PsiUI/components/PsiButton/PsiButton.vue";
 import PermissionChecker from "@/shared/components/PermissionChecker/PermissionChecker.vue";
+import ResumesServiceInstance from "@/shared/services/ResumesService.ts";
+import { useUserStore } from "@/shared/stores/userStore.ts";
 
+const userStore = useUserStore();
+const resumesService = ResumesServiceInstance;
 const { t } = useI18n();
+
+const hasPinnedResume = ref(false);
 
 const resumeListRoute = computed(() => {
   return {
@@ -50,6 +57,14 @@ const resumeRoute = computed(() => {
     name: RouteNames.ResumeView
   };
 });
+
+onMounted(async () => refresh());
+
+async function refresh() {
+  hasPinnedResume.value = await resumesService.hasPinnedResume();
+}
+
+watch(() => userStore.locale, () => refresh());
 </script>
 
 <style src="./AboutPage.scss" />

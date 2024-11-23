@@ -67,12 +67,47 @@ public class ResumesController : ControllerBase
         return Ok(response.Value);
     }
     
+    [HttpHead]
+    [Route("pin")]
+    public async Task<ActionResult> HasPinnedResume()
+    {
+        var response = await resumesService.HasPinnedResumeAsync();
+
+        if (!response.Value)
+        {
+            return NotFound();
+        }
+        
+        return Ok();
+    }
+    
     [HttpPut]
     [CustomAuthorize]
     [Route("{resumeId}/pin")]
-    public async Task<ActionResult<ResumeResponseDto>> PinResume(long resumeId)
+    public async Task<ActionResult> PinResume(long resumeId)
     {
-        var response = await resumesService.PinResumeAsync(resumeId);
-        return Ok(response.Value);
+        var response = await resumesService.PinResumeAsync(resumeId, true);
+
+        if (response.Error.ErrorType == ErrorType.NotFound)
+        {
+            return NotFound();
+        }
+        
+        return Ok();
+    }
+    
+    [HttpPut]
+    [CustomAuthorize]
+    [Route("{resumeId}/unpin")]
+    public async Task<ActionResult> UnpinResume(long resumeId)
+    {
+        var response = await resumesService.PinResumeAsync(resumeId, false);
+        
+        if (response.Error.ErrorType == ErrorType.NotFound)
+        {
+            return NotFound();
+        }
+        
+        return Ok();
     }
 }

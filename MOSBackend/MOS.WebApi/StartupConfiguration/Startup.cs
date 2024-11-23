@@ -44,7 +44,14 @@ public class Startup
         });
         
         services.AddDbContext<MainDbContext>(options =>
-            options.UseNpgsql(configuration.GetConnectionString("DefaultConnection"))
+            options.UseNpgsql(configuration.GetConnectionString("DefaultConnection"), action =>
+            {
+                action.CommandTimeout(30);
+            })
+#if DEBUG
+                .EnableDetailedErrors()
+                .EnableSensitiveDataLogging()
+#endif
         );
 
         services.AddControllersWithViews()

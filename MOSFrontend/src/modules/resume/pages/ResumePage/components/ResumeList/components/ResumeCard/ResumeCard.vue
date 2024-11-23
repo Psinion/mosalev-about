@@ -55,21 +55,20 @@ const resumeViewRoute = computed(() => {
 });
 
 async function pinResume() {
-  if (resumePinned.value) {
-
-  }
-  else {
-    try {
-      const locale = userStore.locale;
-      await resumesService.pinResume(props.resume!.id, {
-        locale: locale
-      });
-      toaster.success(`Резюме закреплено к локали "${locale}"`);
+  try {
+    if (resumePinned.value) {
+      await resumesService.unpinResume(props.resume!.id);
+      toaster.success("Резюме откреплено");
     }
-    catch (error) {
-      if (error instanceof ServerError) {
-        toaster.error(error.header, error.message);
-      }
+    else {
+      const locale = userStore.locale;
+      await resumesService.pinResume(props.resume!.id);
+      toaster.success(`Резюме закреплено в локали "${locale}"`);
+    }
+  }
+  catch (error) {
+    if (error instanceof ServerError) {
+      toaster.error(error.header, error.message);
     }
   }
 }

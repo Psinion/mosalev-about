@@ -1,7 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using MOS.Application.Data.Repositories.Index;
 using MOS.Application.Data.Repositories.Resumes;
-using MOS.Application.Data.Services.IIndexService;
 using MOS.Application.Data.Services.Resumes;
 using MOS.Application.Data.Services.Users;
 using MOS.Application.DTOs.Resumes.Requests;
@@ -9,7 +7,6 @@ using MOS.Application.DTOs.Resumes.Responses;
 using MOS.Application.Mappings.Resumes;
 using MOS.Application.OperationResults;
 using MOS.Domain.Entities.Resumes;
-using MOS.Domain.Enums;
 
 namespace MOS.Data.EF.Access.Services.Resumes;
 
@@ -68,10 +65,20 @@ public class ResumesService : IResumesService
         
         return resume.ToDto();
     }
-
-    public async Task<OperationResult<bool>> PinResumeAsync(long resumeId)
+    
+    public async Task<OperationResult<bool>> HasPinnedResumeAsync()
     {
-        await resumesRepository.PinResumeAsync(resumeId, credentialsService.CurrentLocale);
+        return await resumesRepository.HasPinnedResumeAsync(credentialsService.CurrentLocale);;
+    }
+
+    public async Task<OperationResult<bool>> PinResumeAsync(long resumeId, bool pinning)
+    {
+        if (!resumesRepository.ExistsAsync(resumeId).Result)
+        {
+            return OperationError.NotFound();
+        }
+
+        await resumesRepository.PinResumeAsync(resumeId, pinning ? credentialsService.CurrentLocale : null);
 
         return true;
     }
