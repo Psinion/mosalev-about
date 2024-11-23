@@ -11,7 +11,7 @@ export type TResume = {
 export type TResumeCompact = {
   id: number;
   title: string;
-  pinnedToLocale: AppLocale;
+  pinnedToLocale: AppLocale | null;
 };
 
 export enum CurrencyType {

@@ -48,6 +48,24 @@ public class ResumesService : IResumesService
         return createdEntity.ToDto();
     }
 
+    public async Task<OperationResult<ResumeResponseDto>> UpdateResumeAsync(long resumeId, ResumeUpdateRequestDto resumeRequest)
+    {
+        var resume = await resumesRepository.GetByIdAsync(resumeId);
+        if (resume == null)
+        {
+            return OperationError.NotFound();
+        }
+
+        resume.Title = resumeRequest.Title;
+        resume.Email = resumeRequest.Email;
+        resume.Salary = resumeRequest.Salary;
+        resume.CurrencyType = resumeRequest.CurrencyType;
+
+        await resumesRepository.UpdateAsync(resume);
+        
+        return resume.ToDto();
+    }
+
     public async Task<OperationResult<bool>> PinResumeAsync(long resumeId, Locale locale)
     {
         await resumesRepository.PinResumeAsync(resumeId, locale);

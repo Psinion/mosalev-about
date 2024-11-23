@@ -1,4 +1,4 @@
-import { type IResumesService, TPinResumeRequest } from "@/shared/services/base";
+import { type IResumesService, TPinResumeRequest, TUpdateResumeRequest } from "@/shared/services/base";
 import { useRequestor } from "@/shared/PsiUI/utils/requests/requestor.ts";
 import { TResume, TResumeCompact } from "@/shared/types/resume.ts";
 import { TCreateResumeRequest } from "@/shared/services/base/IResumesService.ts";
@@ -33,9 +33,18 @@ class ResumesService implements IResumesService {
     }
   }
 
+  async updateResume(resumeId: number, params: TUpdateResumeRequest): Promise<TResume> {
+    try {
+      return await this.requestor.put(`api/v1/resumes/${resumeId}`, params) as TResume;
+    }
+    catch (error) {
+      throw error;
+    }
+  }
+
   async pinResume(resumeId: number, params: TPinResumeRequest): Promise<void> {
     try {
-      await this.requestor.put(`api/v1/resumes/${resumeId}`, params);
+      await this.requestor.put(`api/v1/resumes/${resumeId}/pin`, params);
     }
     catch (error) {
       throw error;

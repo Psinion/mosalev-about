@@ -32,7 +32,7 @@
       gap: 8px;
 
       & > .psi-input {
-        max-width: 200px;
+        width: 240px;
         align-self: center;
       }
 
@@ -40,7 +40,10 @@
         display: flex;
         align-items: flex-end;
         gap: 8px;
-        max-width: 200px;
+
+        & > .psi-input-numeric {
+          width: 180px;
+        }
       }
 
       .actions {

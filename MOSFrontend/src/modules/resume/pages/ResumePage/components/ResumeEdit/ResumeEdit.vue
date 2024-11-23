@@ -17,7 +17,7 @@
       </PsiButton>
     </div>
     <div class="content">
-      <h2>Создание резюме</h2>
+      <h2>{{ createMode ? t('resume.edit.headerCreate') : t('resume.edit.headerEdit') }}</h2>
       <div class="actions" />
       <PsiForm
         v-slot="{ valid }"
@@ -61,7 +61,7 @@
 
 <script setup lang="ts">
 import ResumesServiceInstance from "@/shared/services/ResumesService.ts";
-import { computed, onMounted, ref } from "vue";
+import { computed, onMounted, PropType, ref } from "vue";
 import { TCreateResumeRequest } from "@/shared/services/base";
 import PsiInput from "@/shared/PsiUI/components/PsiInput/PsiInput.vue";
 import PsiToggle from "@/shared/PsiUI/components/PsiToggle/PsiToggle.vue";
@@ -76,7 +76,7 @@ import { RouteNames } from "@/router/routeNames.ts";
 
 const props = defineProps({
   resumeId: {
-    type: Number,
+    type: Number as PropType<number | null>,
     default: null
   }
 });
@@ -89,6 +89,8 @@ const title = ref<string | null>();
 const email = ref<string | null>();
 const salary = ref<number | null>();
 const currencyType = ref<boolean>(false);
+
+const createMode = computed(() => props.resumeId === null);
 
 const resumeListRoute = computed(() => {
   return {
@@ -126,12 +128,18 @@ async function onSave() {
   };
 
   try {
-    await resumesService.createResume(resumeToSave);
-    toaster.success("Резюме создано");
+    if (createMode.value) {
+      await resumesService.createResume(resumeToSave);
+      toaster.success(t("resume.edit.toasterResumeCreateHeader"));
+    }
+    else {
+      await resumesService.updateResume(props.resumeId!, resumeToSave);
+      toaster.success(t("resume.edit.toasterResumeUpdateHeader"));
+    }
   }
   catch (error) {
     if (error instanceof ServerError) {
-      toaster.error(t("toaster.commonErrorHeader"), error.message);
+      toaster.error(error.header, error.message);
     }
   }
 }

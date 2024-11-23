@@ -1,13 +1,10 @@
 @import '@scss-mixins/adaptive';
 
 .resume-list {
-  width: 100%;
-
   .actions {
     margin-bottom: 8px;
     display: flex;
     justify-content: flex-end;
-    width: 100%;
 
     .edit-button {
       width: 128px;
@@ -15,8 +12,6 @@
   }
 
   .content {
-    width: 100%;
-
     & > h2 {
       text-align: center;
       margin-bottom: 12px;
@@ -28,7 +23,7 @@
       gap: 8px;
 
       @include adaptive-mixin(s) {
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1fr;
       }
     }
   }

@@ -48,12 +48,13 @@ const props = defineProps({
 });
 
 const ICON_CODES = {
-  pin: "bi-pin-angle-fill",
-  telegram: "fa-telegram",
-  steam: "fa-steam",
-  github: "fa-github",
-  error: "md-reportgmailerrorred",
-  success: "oi-check-circle"
+  "pin": "bi-pin-angle",
+  "pin-filled": "bi-pin-angle-fill",
+  "telegram": "fa-telegram",
+  "steam": "fa-steam",
+  "github": "fa-github",
+  "error": "md-reportgmailerrorred",
+  "success": "oi-check-circle"
 };
 
 const iconCode = computed(() => ICON_CODES[props.icon]);

@@ -11,6 +11,8 @@ public interface IResumesService : IDisposable
     
     Task<OperationResult<ResumeResponseDto>> CreateResumeAsync(ResumeCreateRequestDto resumeRequest);
     
+    Task<OperationResult<ResumeResponseDto>> UpdateResumeAsync(long resumeId, ResumeUpdateRequestDto resumeRequest);
+    
     Task<OperationResult<bool>> PinResumeAsync(long resumeId, Locale locale);
     
     Task<OperationResult<List<ResumeResponseCompactDto>>> GetCompactResumesListAsync();

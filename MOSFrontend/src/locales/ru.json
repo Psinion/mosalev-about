@@ -37,7 +37,11 @@
     },
     "edit": {
       "viewButton": "Просмотреть",
-      "listButton": "Список резюме"
+      "listButton": "Список резюме",
+      "headerCreate": "Создание резюме",
+      "headerEdit": "Редактирование резюме",
+      "toasterResumeCreateHeader": "Резюме создано",
+      "toasterResumeUpdateHeader": "Резюме обновлено"
     }
   },
   "pages": {

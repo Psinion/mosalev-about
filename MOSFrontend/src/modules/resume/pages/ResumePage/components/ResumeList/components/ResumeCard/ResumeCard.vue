@@ -5,13 +5,13 @@
         <div class="title-block">
           <h3>{{ resume.title }}</h3>
           <LocaleBadge
-            v-if="resume.pinnedToLocale !== null"
-            :locale="resume.pinnedToLocale"
+            v-if="resumePinned"
+            :locale="resume.pinnedToLocale!"
           />
         </div>
         <div class="actions">
           <PsiButton
-            icon="pin"
+            :icon="resumePinned ? 'pin' : 'pin-filled'"
             flat
             @click.prevent="pinResume"
           />
@@ -31,6 +31,8 @@ import ResumesServiceInstance from "@/shared/services/ResumesService.ts";
 import { useUserStore } from "@/shared/stores/userStore.ts";
 import LocaleBadge
   from "@/modules/resume/pages/ResumePage/components/ResumeList/components/LocaleBadge/LocaleBadge.vue";
+import { useToaster } from "@/shared/PsiUI/utils/toaster.ts";
+import { ServerError } from "@/shared/utils/requests/errorHandlers.ts";
 
 const props = defineProps({
   resume: {
@@ -39,8 +41,11 @@ const props = defineProps({
   }
 });
 
+const toaster = useToaster();
 const userStore = useUserStore();
 const resumesService = ResumesServiceInstance;
+
+const resumePinned = computed(() => props.resume.pinnedToLocale !== null);
 
 const resumeViewRoute = computed(() => {
   return {
@@ -50,13 +55,22 @@ const resumeViewRoute = computed(() => {
 });
 
 async function pinResume() {
-  try {
-    await resumesService.pinResume(props.resume!.id, {
-      locale: userStore.locale
-    });
-  }
-  catch (error) {
+  if (resumePinned.value) {
 
+  }
+  else {
+    try {
+      const locale = userStore.locale;
+      await resumesService.pinResume(props.resume!.id, {
+        locale: locale
+      });
+      toaster.success(`Резюме закреплено к локали "${locale}"`);
+    }
+    catch (error) {
+      if (error instanceof ServerError) {
+        toaster.error(error.header, error.message);
+      }
+    }
   }
 }
 

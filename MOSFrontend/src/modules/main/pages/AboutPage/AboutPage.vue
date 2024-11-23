@@ -2,13 +2,15 @@
   <FlatLayout align-horizontal="center">
     <div class="about-page">
       <div class="actions">
-        <PsiButton
-          tag="RouterLink"
-          class="resume-list-button"
-          :to="resumeListRoute"
-        >
-          {{ t('pages.resumeList') }}
-        </PsiButton>
+        <PermissionChecker>
+          <PsiButton
+            tag="RouterLink"
+            class="resume-list-button"
+            :to="resumeListRoute"
+          >
+            {{ t('pages.resumeList') }}
+          </PsiButton>
+        </PermissionChecker>
         <PsiButton
           class="resume-button"
           :to="resumeRoute"
@@ -34,6 +36,7 @@ import { computed } from "vue";
 import { RouteNames } from "@/router/routeNames.ts";
 import { useI18n } from "vue-i18n";
 import PsiButton from "@/shared/PsiUI/components/PsiButton/PsiButton.vue";
+import PermissionChecker from "@/shared/components/PermissionChecker/PermissionChecker.vue";
 
 const { t } = useI18n();
 

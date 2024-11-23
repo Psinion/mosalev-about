@@ -6,10 +6,18 @@ export interface IResumesService extends IServiceBase {
   getResumesList(): Promise<TResumeCompact[]>;
   getResume(resumeId: number): Promise<TResume>;
   createResume(params: TCreateResumeRequest): Promise<TResume>;
+  updateResume(resumeId: number, params: TUpdateResumeRequest): Promise<TResume>;
   pinResume(resumeId: number, params: TPinResumeRequest): Promise<void>;
 }
 
 export type TCreateResumeRequest = {
+  title: string;
+  email: string;
+  salary: number;
+  currencyType: number;
+};
+
+export type TUpdateResumeRequest = {
   title: string;
   email: string;
   salary: number;

@@ -5,6 +5,7 @@ import {
   FaGithub,
   MdReportgmailerrorred,
   OiCheckCircle,
+  BiPinAngle,
   BiPinAngleFill
 } from "oh-vue-icons/icons";
 
@@ -14,5 +15,6 @@ export default function importIcons() {
   addIcons(FaGithub);
   addIcons(MdReportgmailerrorred);
   addIcons(OiCheckCircle);
+  addIcons(BiPinAngle);
   addIcons(BiPinAngleFill);
 }

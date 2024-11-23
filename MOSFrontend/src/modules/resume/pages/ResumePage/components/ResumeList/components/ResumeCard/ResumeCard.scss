@@ -1,3 +1,5 @@
+@import '@scss-mixins/adaptive';
+
 .resume-card {
   padding: 4px 8px;
   border: 1px solid var(--tertiary);
@@ -19,17 +21,30 @@
     & > header {
       display: flex;
       justify-content: space-between;
+      gap: 8px;
 
       .title-block {
         display: flex;
         gap: 8px;
         align-items: center;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        text-wrap: nowrap;
+
+        & > h3 {
+          flex: 1;
+          min-width: 0;
+        }
       }
 
       .actions {
         display: flex;
         opacity: 0;
         transition: var(--default-transition);
+
+        @include adaptive-mixin(s) {
+          opacity: 0.5;
+        }
       }
     }
   }

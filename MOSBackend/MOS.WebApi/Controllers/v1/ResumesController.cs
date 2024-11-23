@@ -55,6 +55,21 @@ public class ResumesController : ControllerBase
     [HttpPut]
     [CustomAuthorize]
     [Route("{resumeId}")]
+    public async Task<ActionResult<ResumeResponseDto>> UpdateResume(long resumeId, ResumeUpdateRequestDto request)
+    {
+        var response = await resumesService.UpdateResumeAsync(resumeId, request);
+
+        if (response.Error.ErrorType == ErrorType.NotFound)
+        {
+            return NotFound(response.Error); 
+        }
+        
+        return Ok(response.Value);
+    }
+    
+    [HttpPut]
+    [CustomAuthorize]
+    [Route("{resumeId}/pin")]
     public async Task<ActionResult<ResumeResponseDto>> PinResume(long resumeId, ResumePinRequestDto request)
     {
         var response = await resumesService.PinResumeAsync(resumeId, request.Locale);

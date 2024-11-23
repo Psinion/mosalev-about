@@ -37,7 +37,11 @@
     },
     "edit": {
       "viewButton": "View",
-      "listButton": "CV list"
+      "listButton": "CV list",
+      "headerCreate": "CV creating",
+      "headerEdit": "CV editing",
+      "toasterResumeCreateHeader": "CV has been created",
+      "toasterResumeUpdateHeader": "CV has been updated"
     }
   },
   "pages": {
