@@ -3,7 +3,7 @@ using MOS.Domain.Enums;
 
 namespace MOS.Application.Data.Repositories.Resumes;
 
-public interface IResumesRepository : IGenericRepository<Resume>
+public interface IResumesRepository : ILoggedRepository<Resume>
 {
     Task UnpinAllByLocaleAsync(Locale locale);
     

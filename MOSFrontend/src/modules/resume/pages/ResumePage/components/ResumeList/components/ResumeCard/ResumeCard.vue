@@ -17,6 +17,12 @@
           />
         </div>
       </header>
+      <div>
+        <span
+          v-if="dateUpdate"
+          class="hint-regular"
+        >{{ dateUpdate }}</span>
+      </div>
     </RouterLink>
   </section>
 </template>
@@ -34,6 +40,7 @@ import LocaleBadge
 import { useToaster } from "@/shared/PsiUI/utils/toaster.ts";
 import { ServerError } from "@/shared/utils/requests/errorHandlers.ts";
 import { AppLocale } from "@/shared/enums/common.ts";
+import { formatDate } from "@/shared/utils/dateHelpers.ts";
 
 const props = defineProps({
   resume: {
@@ -51,6 +58,14 @@ const userStore = useUserStore();
 const resumesService = ResumesServiceInstance;
 
 const resumePinned = computed(() => props.resume.pinnedToLocale !== null);
+const dateUpdate = computed(() => {
+  const resume = props.resume;
+  if (resume?.dateUpdate) {
+    return `Дата изменения: ${formatDate(resume.dateUpdate, "DD.MM.YYYY HH:mm")}`;
+  }
+
+  return null;
+});
 
 const resumeViewRoute = computed(() => {
   return {

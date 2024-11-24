@@ -7,6 +7,7 @@ using MOS.Application.DTOs.Resumes.Responses;
 using MOS.Application.Mappings.Resumes;
 using MOS.Application.OperationResults;
 using MOS.Domain.Entities.Resumes;
+using MOS.Domain.Entities.Users;
 
 namespace MOS.Data.EF.Access.Services.Resumes;
 
@@ -104,11 +105,32 @@ public class ResumesService : IResumesService
     
     public async Task<OperationResult<List<ResumeResponseCompactDto>>> GetCompactResumesListAsync()
     {
-        var resumes = await resumesRepository.GetAll().Select(x => new Resume()
+        var resumes = await resumesRepository.GetAll()
+            .Where(x => x.DateDelete == null)
+            .OrderByDescending(x => x.DateUpdate)
+            .Select(x => new Resume()
         {
             Id = x.Id,
             Title = x.Title,
-            PinnedToLocale = x.PinnedToLocale
+            PinnedToLocale = x.PinnedToLocale,
+            DateCreate = x.DateCreate,
+            UserCreate = x.UserCreate != null ? new User()
+            {
+                Id = x.UserCreate.Id,
+                FirstName = x.UserCreate.FirstName,
+                LastName = x.UserCreate.LastName,
+                Patronymic = x.UserCreate.Patronymic,
+                UserName = x.UserCreate.UserName,
+            } : null,
+            DateUpdate = x.DateUpdate,
+            UserUpdate = x.UserUpdate != null ? new User()
+            {
+                Id = x.UserUpdate.Id,
+                FirstName = x.UserUpdate.FirstName,
+                LastName = x.UserUpdate.LastName,
+                Patronymic = x.UserUpdate.Patronymic,
+                UserName = x.UserUpdate.UserName,
+            } : null,
         }).ToListAsync();
 
         return resumes.ToCompactDtoList();

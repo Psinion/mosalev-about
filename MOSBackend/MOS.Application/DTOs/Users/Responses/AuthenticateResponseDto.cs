@@ -1,4 +1,5 @@
-﻿using MOS.Domain.Entities.Users;
+﻿using MOS.Application.Mappings.Resumes;
+using MOS.Domain.Entities.Users;
 
 namespace MOS.Application.DTOs.Users.Responses;
 
@@ -9,7 +10,7 @@ public class AuthenticateResponseDto
     
     public AuthenticateResponseDto(User user, string token)
     {
-        User = new UserResponseDto(user);
+        User = user.ToDto();
         Token = token;
     }
 }
@@ -20,6 +21,6 @@ public class VerifyResponseDto
     
     public VerifyResponseDto(User user)
     {
-        User = new UserResponseDto(user);
+        User = user.ToDto();
     }
 }

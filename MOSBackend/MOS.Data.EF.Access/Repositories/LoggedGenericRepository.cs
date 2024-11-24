@@ -1,21 +1,24 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MOS.Application.Data.Repositories;
+using MOS.Application.Data.Services.Users;
 using MOS.Data.EF.Access.Contexts;
 using MOS.Domain.Entities;
 
 namespace MOS.Data.EF.Access.Repositories;
 
-public class GenericRepository<TEntity> : IGenericRepository<TEntity> 
-    where TEntity : class, IEntity, new()
+public class LoggedGenericRepository<TEntity> : ILoggedRepository<TEntity> 
+    where TEntity : class, ILoggedEntity, new()
 {
     protected readonly MainDbContext LocalContext;
     protected readonly DbSet<TEntity> LocalSet;
+    protected readonly ICredentialsService CredentialsService;
 
-    public GenericRepository(MainDbContext dbLocalContext) {
+    public LoggedGenericRepository(MainDbContext dbLocalContext, ICredentialsService credentialsService) {
         LocalContext = dbLocalContext;
         LocalSet = dbLocalContext.Set<TEntity>();
+        CredentialsService = credentialsService;
     }
-
+    
     public virtual IQueryable<TEntity> GetAll() => LocalSet.AsQueryable();
     
     public virtual async Task<bool> ExistsAsync(long id, CancellationToken cancellationToken = default) 
@@ -26,6 +29,11 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity>
 
     public virtual async Task<TEntity> CreateAsync(TEntity item, CancellationToken cancellationToken = default)
     {
+        item.UserCreate = CredentialsService.CurrentUser;
+        item.DateCreate = DateTime.UtcNow;
+        item.UserUpdate = CredentialsService.CurrentUser;
+        item.DateUpdate = DateTime.UtcNow;
+        
         await LocalContext.AddAsync(item, cancellationToken);
         await LocalContext.SaveChangesAsync(cancellationToken);
 
@@ -34,8 +42,22 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity>
 
     public virtual async Task<TEntity> CreateOrUpdateAsync(TEntity item, CancellationToken cancellationToken = default)
     {
-        LocalContext.Entry(item).State = item.Id == 0 
-            ? EntityState.Added : EntityState.Modified;
+        var state = item.Id == 0 ? EntityState.Added : EntityState.Modified;
+
+        if (state == EntityState.Added)
+        {
+            item.UserCreate = CredentialsService.CurrentUser;
+            item.DateCreate = DateTime.UtcNow;
+            item.UserUpdate = CredentialsService.CurrentUser;
+            item.DateUpdate = DateTime.UtcNow;
+        }
+        else
+        {
+            item.UserUpdate = CredentialsService.CurrentUser;
+            item.DateUpdate = DateTime.UtcNow;
+        }
+        
+        LocalContext.Entry(item).State = state;
 
         await LocalContext.SaveChangesAsync(cancellationToken);
 
@@ -44,13 +66,19 @@ public class GenericRepository<TEntity> : IGenericRepository<TEntity>
 
     public virtual async Task UpdateAsync(TEntity item, CancellationToken cancellationToken = default)
     {
+        item.UserUpdate = CredentialsService.CurrentUser;
+        item.DateUpdate = DateTime.UtcNow;
+        
         LocalContext.Update(item);
         await LocalContext.SaveChangesAsync(cancellationToken);
     }
-
-    public virtual async Task DeleteAsync(long id, CancellationToken cancellationToken = default)
+    
+    public virtual async Task DeleteAsync(TEntity item, CancellationToken cancellationToken = default)
     {
-        LocalContext.Remove(new TEntity { Id = id });
+        item.UserDelete = CredentialsService.CurrentUser;
+        item.DateDelete = DateTime.UtcNow;
+        
+        LocalContext.Update(item);
         await LocalContext.SaveChangesAsync(cancellationToken);
     }
 

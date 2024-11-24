@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "dayjs": "^1.11.13",
     "oh-vue-icons": "^1.0.0-rc3",
     "pinia": "^2.2.2",
     "vee-validate": "^4.14.7",

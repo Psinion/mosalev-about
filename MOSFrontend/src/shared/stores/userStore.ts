@@ -7,6 +7,7 @@ import { useRoute, useRouter } from "vue-router";
 import { AppLocale } from "@/shared/enums/common.ts";
 import { setPageTitle } from "@/shared/utils/helpers.ts";
 import { useI18n } from "vue-i18n";
+import dayjs from "dayjs";
 
 const MOS_TOKEN_STORAGE_KEY = "token";
 const MOS_LOCALE_STORAGE_KEY = "locale";
@@ -77,7 +78,9 @@ export const useUserStore = defineStore("user", () => {
 
   function setLocale(locale: AppLocale) {
     localeInternal.value = locale;
-    i18nLocale.value = locale === AppLocale.ru ? "ru" : "en";
+    const localeString = locale === AppLocale.ru ? "ru" : "en";
+    i18nLocale.value = localeString;
+    dayjs.locale(localeString);
     localStorage.setItem(MOS_LOCALE_STORAGE_KEY, locale.toString());
 
     const titleCode = route.meta["titleCode"] as string;

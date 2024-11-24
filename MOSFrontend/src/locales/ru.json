@@ -42,6 +42,9 @@
       "headerEdit": "Редактирование резюме",
       "toasterResumeCreateHeader": "Резюме создано",
       "toasterResumeUpdateHeader": "Резюме обновлено"
+    },
+    "list": {
+
     }
   },
   "pages": {

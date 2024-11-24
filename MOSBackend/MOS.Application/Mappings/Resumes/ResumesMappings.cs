@@ -4,7 +4,7 @@ using MOS.Domain.Entities.Resumes;
 namespace MOS.Application.Mappings.Resumes;
 
 
-public static class ResumeMappings
+public static class ResumesMappings
 {
     public static ResumeResponseDto ToDto(this Resume entity)
     {
@@ -26,7 +26,11 @@ public static class ResumeMappings
         {
             Id = entity.Id,
             Title = entity.Title,
-            PinnedToLocale = entity.PinnedToLocale
+            PinnedToLocale = entity.PinnedToLocale,
+            DateCreate = entity.DateCreate,
+            UserCreate = entity.UserCreate?.ToDto(),
+            DateUpdate = entity.DateUpdate,
+            UserUpdate = entity.UserUpdate?.ToDto()
         };
     }
 

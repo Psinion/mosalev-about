@@ -1,14 +1,16 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using MOS.Application.Data.Repositories.Resumes;
+using MOS.Application.Data.Services.Users;
 using MOS.Data.EF.Access.Contexts;
 using MOS.Domain.Entities.Resumes;
 using MOS.Domain.Enums;
 
 namespace MOS.Data.EF.Access.Repositories.Resumes;
 
-public class ResumesRepository : GenericRepository<Resume>, IResumesRepository
+public class ResumesRepository : LoggedGenericRepository<Resume>, IResumesRepository
 {
-    public ResumesRepository(MainDbContext dbLocalContext) : base(dbLocalContext)
+    public ResumesRepository(MainDbContext dbLocalContext, ICredentialsService credentialsService) 
+        : base(dbLocalContext, credentialsService)
     {
     }
 

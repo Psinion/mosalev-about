@@ -16,12 +16,12 @@
 <script setup lang="ts">
 
 import { PropType } from "vue";
-import { TIcon } from "@/shared/components/PsiIcon/types.ts";
 import PsiIcon from "@/shared/PsiUI/components/PsiIcon/PsiIcon.vue";
+import { TPsiIcon } from "@/shared/PsiUI/components/PsiIcon/types.ts";
 
 defineProps({
   icon: {
-    type: String as PropType<TIcon>,
+    type: String as PropType<TPsiIcon>,
     required: true
   },
   href: {

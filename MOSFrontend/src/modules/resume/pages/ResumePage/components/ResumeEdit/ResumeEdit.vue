@@ -63,7 +63,7 @@
         <PsiTextarea
           v-model="about"
           label="О себе"
-          rows="7"
+          :rows="7"
           resizable="vertical"
         />
         <div class="actions">
@@ -88,14 +88,13 @@ import PsiToggle from "@/shared/PsiUI/components/PsiToggle/PsiToggle.vue";
 import PsiInputNumeric from "@/shared/PsiUI/components/PsiInputNumeric/PsiInputNumeric.vue";
 import PsiButton from "@/shared/PsiUI/components/PsiButton/PsiButton.vue";
 import PsiForm from "@/shared/PsiUI/components/PsiForm/PsiForm.vue";
-import { CurrencyType } from "@/shared/types/resume.ts";
+import { CurrencyType, TResume } from "@/shared/types/resume.ts";
 import { ServerError } from "@/shared/utils/requests/errorHandlers.ts";
 import { useToaster } from "@/shared/PsiUI/utils/toaster.ts";
 import { useI18n } from "vue-i18n";
 import { RouteNames } from "@/router/routeNames.ts";
 import PsiTextarea from "@/shared/PsiUI/components/PsiTextarea/PsiTextarea.vue";
 import LoadingSpinner from "@/shared/components/LoadingSpinner/LoadingSpinner.vue";
-import instance from "@/shared/utils/i18n.ts";
 
 const props = defineProps({
   resumeId: {
@@ -109,6 +108,8 @@ const toaster = useToaster();
 const resumesService = ResumesServiceInstance;
 
 const loading = ref(false);
+
+const currentResume = ref<TResume | null>(null);
 
 const title = ref<string | null>();
 const firstName = ref<string | null>();
@@ -142,6 +143,8 @@ async function refresh() {
   try {
     loading.value = true;
     const resume = await resumesService.getResume(props.resumeId);
+
+    currentResume.value = resume;
 
     title.value = resume.title;
     firstName.value = resume.firstName;
