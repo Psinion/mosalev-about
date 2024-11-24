@@ -14,12 +14,12 @@ export class ServerError extends Error {
   code: string;
   errorType: number;
 
-  constructor(title: string, statusCode: number, error: TServerError) {
-    super(error.description);
+  constructor(title: string, statusCode: number, error?: TServerError) {
+    super(error?.description ?? "");
     this.header = title;
     this.statusCode = statusCode;
-    this.code = error.code;
-    this.errorType = error.errorType;
+    this.code = error?.code ?? "";
+    this.errorType = error?.errorType ?? -1;
   }
 }
 
@@ -43,5 +43,5 @@ export async function customErrorHandler(response: IResponseData): Promise<Error
     });
   }
 
-  return new Error(response.raw.statusText);
+  return new ServerError(i18n.t("toaster.commonErrorHeader"), response.raw.status);
 }

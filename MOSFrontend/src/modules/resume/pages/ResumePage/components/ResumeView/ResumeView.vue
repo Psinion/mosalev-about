@@ -107,6 +107,7 @@ import PermissionChecker from "@/shared/components/PermissionChecker/PermissionC
 import PsiIcon from "@/shared/PsiUI/components/PsiIcon/PsiIcon.vue";
 import { formatDate } from "@/shared/utils/dateHelpers.ts";
 import { useUserStore } from "@/shared/stores/userStore.ts";
+import { useRouter } from "vue-router";
 
 const props = defineProps({
   resumeId: {
@@ -115,6 +116,7 @@ const props = defineProps({
   }
 });
 
+const router = useRouter();
 const toaster = useToaster();
 const { t } = useI18n();
 const userStore = useUserStore();
@@ -144,26 +146,30 @@ const resumeEditRoute = computed(() => {
   };
 });
 
-onMounted(async () => {
+onMounted(async () => refresh());
+
+async function refresh() {
   try {
     loading.value = true;
-    await refresh();
-    loading.value = false;
+    if (!props.resumeId) {
+      currentResume.value = await resumesService.getPinnedResume();
+    }
+    else {
+      currentResume.value = await resumesService.getResume(props.resumeId);
+    }
   }
   catch (error) {
     if (error instanceof ServerError) {
+      if (error.statusCode === 404) {
+        await router.push({ name: RouteNames.Error404 });
+        return;
+      }
       toaster.error(error.header, error.message);
     }
   }
-});
-
-async function refresh() {
-  if (!props.resumeId) {
-    currentResume.value = await resumesService.getPinnedResume();
-    return;
+  finally {
+    loading.value = false;
   }
-
-  currentResume.value = await resumesService.getResume(props.resumeId);
 }
 
 watch(() => userStore.locale, () => refresh());
