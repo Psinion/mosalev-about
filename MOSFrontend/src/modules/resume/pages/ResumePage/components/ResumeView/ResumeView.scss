@@ -52,9 +52,13 @@
 
     .about {
       margin-top: 20px;
-      max-width: 600px;
       text-align: justify;
       white-space: pre-wrap;
+    }
+
+    & > footer {
+      margin-top: 20px;
+      text-align: right;
     }
   }
 }

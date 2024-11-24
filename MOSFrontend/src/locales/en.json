@@ -33,7 +33,8 @@
   "resume": {
     "view": {
       "editButton": "Edit",
-      "listButton": "Resume list"
+      "listButton": "Resume list",
+      "footerDateUpdate": "Updated:"
     },
     "edit": {
       "viewButton": "View",

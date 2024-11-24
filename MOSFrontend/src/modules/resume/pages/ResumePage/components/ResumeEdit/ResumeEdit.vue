@@ -19,7 +19,6 @@
     <div class="content">
       <h2>{{ createMode ? t('resume.edit.headerCreate') : t('resume.edit.headerEdit') }}</h2>
       <div class="actions" />
-      <loading-spinner v-show="loading" />
       <PsiForm
         v-if="!loading"
         v-slot="{ valid }"
@@ -94,7 +93,6 @@ import { useToaster } from "@/shared/PsiUI/utils/toaster.ts";
 import { useI18n } from "vue-i18n";
 import { RouteNames } from "@/router/routeNames.ts";
 import PsiTextarea from "@/shared/PsiUI/components/PsiTextarea/PsiTextarea.vue";
-import LoadingSpinner from "@/shared/components/LoadingSpinner/LoadingSpinner.vue";
 
 const props = defineProps({
   resumeId: {

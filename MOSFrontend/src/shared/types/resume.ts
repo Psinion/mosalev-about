@@ -10,6 +10,8 @@ export type TResume = {
   salary: number;
   about: string | null;
   currencyType: CurrencyType;
+  dateCreate: string | null;
+  dateUpdate: string | null;
 };
 
 export type TResumeCompact = {

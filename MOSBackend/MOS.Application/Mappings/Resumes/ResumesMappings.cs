@@ -17,6 +17,8 @@ public static class ResumesMappings
             Email = entity.Email,
             Salary = entity.Salary,
             About = entity.About,
+            DateCreate = entity.DateCreate,
+            DateUpdate = entity.DateUpdate
         };
     }
     

@@ -2,13 +2,7 @@
   <section class="resume-card">
     <RouterLink :to="resumeViewRoute">
       <header>
-        <div class="title-block">
-          <h3>{{ resume.title }}</h3>
-          <LocaleBadge
-            v-if="resumePinned"
-            :locale="resume.pinnedToLocale!"
-          />
-        </div>
+        <h3>{{ resume.title }}</h3>
         <div class="actions">
           <PsiButton
             :icon="resumePinned ? 'pin' : 'pin-filled'"
@@ -17,7 +11,13 @@
           />
         </div>
       </header>
-      <div>
+      <div class="content">
+        <div>
+          <LocaleBadge
+            v-if="resumePinned"
+            :locale="resume.pinnedToLocale!"
+          />
+        </div>
         <span
           v-if="dateUpdate"
           class="hint-regular"
@@ -61,7 +61,7 @@ const resumePinned = computed(() => props.resume.pinnedToLocale !== null);
 const dateUpdate = computed(() => {
   const resume = props.resume;
   if (resume?.dateUpdate) {
-    return `Дата изменения: ${formatDate(resume.dateUpdate, "DD.MM.YYYY HH:mm")}`;
+    return formatDate(resume.dateUpdate, "DD.MM.YYYY HH:mm");
   }
 
   return null;

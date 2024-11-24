@@ -5,6 +5,7 @@
   border: 1px solid var(--tertiary);
   border-radius: 4px;
   transition: var(--default-transition);
+  height: 64px;
 
   &:hover {
     border-color: var(--tertiary-up);
@@ -23,18 +24,10 @@
       justify-content: space-between;
       gap: 8px;
 
-      .title-block {
-        display: flex;
-        gap: 8px;
-        align-items: center;
+      & > h3 {
         overflow: hidden;
         text-overflow: ellipsis;
         text-wrap: nowrap;
-
-        & > h3 {
-          flex: 1;
-          min-width: 0;
-        }
       }
 
       .actions {
@@ -46,6 +39,12 @@
           opacity: 0.5;
         }
       }
+    }
+
+    .content {
+      margin-top: 8px;
+      display: flex;
+      justify-content: space-between;
     }
   }
 }

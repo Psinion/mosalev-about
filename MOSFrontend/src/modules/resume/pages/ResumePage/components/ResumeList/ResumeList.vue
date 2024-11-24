@@ -10,7 +10,6 @@
     </div>
     <div class="content">
       <h2>{{ t('pages.resumeList') }}</h2>
-      <loading-spinner v-show="loading" />
       <div
         v-if="!loading"
         class="resumes"
@@ -36,7 +35,6 @@ import { useToaster } from "@/shared/PsiUI/utils/toaster.ts";
 import PsiButton from "@/shared/PsiUI/components/PsiButton/PsiButton.vue";
 import ResumeCard from "@/modules/resume/pages/ResumePage/components/ResumeList/components/ResumeCard/ResumeCard.vue";
 import { useI18n } from "vue-i18n";
-import LoadingSpinner from "@/shared/components/LoadingSpinner/LoadingSpinner.vue";
 
 const resumesService = ResumesServiceInstance;
 const toaster = useToaster();

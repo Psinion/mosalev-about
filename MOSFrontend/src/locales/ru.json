@@ -33,7 +33,8 @@
   "resume": {
     "view": {
       "editButton": "Редактировать",
-      "listButton": "Список резюме"
+      "listButton": "Список резюме",
+      "footerDateUpdate": "Обновлено:"
     },
     "edit": {
       "viewButton": "Просмотреть",

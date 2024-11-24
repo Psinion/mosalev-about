@@ -1,13 +1,13 @@
 <template>
-  <FlatLayout align-horizontal="center">
+  <ContentLayout>
     <div class="resume-page">
       <RouterView />
     </div>
-  </FlatLayout>
+  </ContentLayout>
 </template>
 
 <script setup lang="ts">
-import FlatLayout from "@/layouts/FlatLayout/FlatLayout.vue";
+import ContentLayout from "@/layouts/ContentLayout/ContentLayout.vue";
 </script>
 
 <style scoped src="./ResumePage.scss" />

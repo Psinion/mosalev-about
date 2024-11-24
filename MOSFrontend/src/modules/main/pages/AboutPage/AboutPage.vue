@@ -1,5 +1,5 @@
 <template>
-  <FlatLayout align-horizontal="center">
+  <ContentLayout>
     <div class="about-page">
       <div class="actions">
         <PermissionChecker>
@@ -29,11 +29,10 @@
         </div>
       </div>
     </div>
-  </FlatLayout>
+  </ContentLayout>
 </template>
 
 <script setup lang="ts">
-import FlatLayout from "@/layouts/FlatLayout/FlatLayout.vue";
 import { computed, onMounted, ref, watch } from "vue";
 import { RouteNames } from "@/router/routeNames.ts";
 import { useI18n } from "vue-i18n";
@@ -41,6 +40,7 @@ import PsiButton from "@/shared/PsiUI/components/PsiButton/PsiButton.vue";
 import PermissionChecker from "@/shared/components/PermissionChecker/PermissionChecker.vue";
 import ResumesServiceInstance from "@/shared/services/ResumesService.ts";
 import { useUserStore } from "@/shared/stores/userStore.ts";
+import ContentLayout from "@/layouts/ContentLayout/ContentLayout.vue";
 
 const userStore = useUserStore();
 const resumesService = ResumesServiceInstance;

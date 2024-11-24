@@ -1,5 +1,7 @@
 <template>
-  <Transition name="loading-spinner">
+  <Transition
+    name="loading-spinner"
+  >
     <section
       v-show="visible"
       class="loading-spinner"

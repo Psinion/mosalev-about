@@ -1,7 +1,7 @@
 <template>
   <article class="resume-view">
-    <PermissionChecker>
-      <div class="actions">
+    <div class="actions">
+      <PermissionChecker>
         <PsiButton
           tag="RouterLink"
           class="action-button"
@@ -12,24 +12,23 @@
         <PsiButton
           tag="RouterLink"
           class="action-button"
-          :disabled="!resume?.id"
+          :disabled="!currentResume?.id"
           :to="resumeEditRoute"
         >
           {{ t('resume.view.editButton') }}
         </PsiButton>
-      </div>
-    </PermissionChecker>
+      </PermissionChecker>
+    </div>
     <div class="content body-regular">
-      <LoadingSpinner v-show="loading" />
       <div
         v-if="!loading"
         class="content"
       >
         <div class="profile">
           <div class="fio">
-            <h3>{{ resume?.lastName }} {{ resume?.firstName }}</h3>
-            <span>{{ resume?.title }}</span>
-            <span v-if="resume?.salary">{{ resume.salary }} {{ resume.currencyType ? '$' : '₽' }}</span>
+            <h3>{{ currentResume?.lastName }} {{ currentResume?.firstName }}</h3>
+            <span>{{ currentResume?.title }}</span>
+            <span v-if="currentResume?.salary">{{ currentResume.salary }} {{ currentResume.currencyType ? '$' : '₽' }}</span>
           </div>
           <div class="contacts">
             <div class="contact-item">
@@ -48,12 +47,12 @@
             <div class="contact-item">
               <a
                 class="contact-item hint-regular"
-                :href="`mailto:${resume?.email}`"
+                :href="`mailto:${currentResume?.email}`"
               >
                 <PsiIcon
                   :scale="0.9"
                   icon="email"
-                />{{ resume?.email }}
+                />{{ currentResume?.email }}
               </a>
             </div>
             <div class="contact-item">
@@ -84,8 +83,12 @@
         </div>
 
         <div class="about typography-block">
-          {{ resume?.about }}
+          {{ currentResume?.about }}
         </div>
+
+        <footer class="hint-regular">
+          {{ dateUpdate }}
+        </footer>
       </div>
     </div>
   </article>
@@ -93,16 +96,17 @@
 
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
-import { computed, onMounted, ref } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 import { RouteNames } from "@/router/routeNames.ts";
 import ResumesServiceInstance from "@/shared/services/ResumesService.ts";
 import { TResume } from "@/shared/types/resume.ts";
 import PsiButton from "@/shared/PsiUI/components/PsiButton/PsiButton.vue";
 import { useToaster } from "@/shared/PsiUI/utils/toaster.ts";
 import { ServerError } from "@/shared/utils/requests/errorHandlers.ts";
-import LoadingSpinner from "@/shared/components/LoadingSpinner/LoadingSpinner.vue";
 import PermissionChecker from "@/shared/components/PermissionChecker/PermissionChecker.vue";
 import PsiIcon from "@/shared/PsiUI/components/PsiIcon/PsiIcon.vue";
+import { formatDate } from "@/shared/utils/dateHelpers.ts";
+import { useUserStore } from "@/shared/stores/userStore.ts";
 
 const props = defineProps({
   resumeId: {
@@ -113,10 +117,20 @@ const props = defineProps({
 
 const toaster = useToaster();
 const { t } = useI18n();
+const userStore = useUserStore();
 const resumesService = ResumesServiceInstance;
 
-const resume = ref<TResume | null>(null);
-const loading = ref(false);
+const currentResume = ref<TResume | null>(null);
+const loading = ref(true);
+
+const dateUpdate = computed(() => {
+  const resume = currentResume.value;
+  if (resume?.dateUpdate) {
+    return `${t("resume.view.footerDateUpdate")} ${formatDate(resume.dateUpdate, "DD.MM.YYYY HH:mm")}`;
+  }
+
+  return null;
+});
 
 const resumeListRoute = computed(() => {
   return {
@@ -126,7 +140,7 @@ const resumeListRoute = computed(() => {
 const resumeEditRoute = computed(() => {
   return {
     name: RouteNames.ResumeEdit,
-    params: { resumeId: resume.value?.id }
+    params: { resumeId: currentResume.value?.id }
   };
 });
 
@@ -145,13 +159,14 @@ onMounted(async () => {
 
 async function refresh() {
   if (!props.resumeId) {
-    resume.value = await resumesService.getPinnedResume();
+    currentResume.value = await resumesService.getPinnedResume();
     return;
   }
 
-  resume.value = await resumesService.getResume(props.resumeId);
+  currentResume.value = await resumesService.getResume(props.resumeId);
 }
 
+watch(() => userStore.locale, () => refresh());
 </script>
 
 <style scoped src="./ResumeView.scss" />

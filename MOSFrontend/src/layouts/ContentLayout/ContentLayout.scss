@@ -1,6 +1,6 @@
 @import '@scss-mixins/adaptive';
 
-.flat-layout {
+.content-layout {
   @include adaptive-mixin(m l) {
     margin-left: 16px;
   }
@@ -16,6 +16,5 @@
     max-width: 900px;
     min-height: calc(100vh - 138px);
     margin: 0 auto;
-    display: flex;
   }
 }

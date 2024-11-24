@@ -19,4 +19,8 @@ public class ResumeResponseDto
     public CurrencyType CurrencyType { get; set; }
     
     public string? About { get; set; }
+    
+    public DateTime? DateCreate { get; set; }
+    
+    public DateTime? DateUpdate { get; set; }
 }

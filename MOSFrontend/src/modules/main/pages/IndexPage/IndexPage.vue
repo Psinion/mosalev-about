@@ -1,5 +1,5 @@
 <template>
-  <FlatLayout align-horizontal="center">
+  <ContentLayout>
     <div class="index-page">
       <h2 class="font-color">
         {{ t('index.welcome') }}
@@ -19,12 +19,12 @@
         </div>
       </div>
     </div>
-  </FlatLayout>
+  </ContentLayout>
 </template>
 
 <script setup lang="ts">
-import FlatLayout from "@/layouts/FlatLayout/FlatLayout.vue";
 import { useI18n } from "vue-i18n";
+import ContentLayout from "@/layouts/ContentLayout/ContentLayout.vue";
 
 const { t } = useI18n();
 

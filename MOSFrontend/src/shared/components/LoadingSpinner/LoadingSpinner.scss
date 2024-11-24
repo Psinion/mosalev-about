@@ -1,12 +1,12 @@
 .loading-spinner {
+  position: fixed;
   z-index: 100;
   top: 0;
-  right: 0;
-  bottom: 0;
   left: 0;
-  position: fixed;
   justify-content: center;
   pointer-events: none;
+  width: calc(100% - 160px);
+  height: calc(100% - 80px);
 
   .central-box {
     position: relative;
@@ -15,8 +15,11 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 60px;
-    height: 60px;
+    width: 160px;
+    height: 160px;
+
+    background-color: rgba(57, 58, 90, 0.9);
+    border-radius: 50%;
 
     .celestial-object {
       position: absolute;
@@ -40,7 +43,7 @@
     .orbit-2 {
       width: 90px;
       height: 90px;
-      border: 1px solid var(--secondary-up);
+      border: 1px solid var(--primary);
       border-radius: 50%;
       animation: orbit-spin-3d 8s linear infinite;
     }
@@ -48,7 +51,7 @@
     .orbit-3 {
       width: 120px;
       height: 120px;
-      border: 2px solid var(--tertiary-down);
+      border: 2px solid var(--primary-down);
       border-radius: 50%;
       animation: orbit-spin-3d 6s linear infinite;
     }
