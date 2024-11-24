@@ -9,12 +9,17 @@
       </PsiButton>
     </div>
     <div class="content">
-      <h2>Список резюме</h2>
-      <div class="resumes">
+      <h2>{{ t('pages.resumeList') }}</h2>
+      <loading-spinner v-show="loading" />
+      <div
+        v-if="!loading"
+        class="resumes"
+      >
         <ResumeCard
           v-for="resume in resumesList"
           :key="resume.id"
           :resume="resume"
+          @pin="refresh"
         />
       </div>
     </div>
@@ -30,10 +35,14 @@ import { TResumeCompact } from "@/shared/types/resume.ts";
 import { useToaster } from "@/shared/PsiUI/utils/toaster.ts";
 import PsiButton from "@/shared/PsiUI/components/PsiButton/PsiButton.vue";
 import ResumeCard from "@/modules/resume/pages/ResumePage/components/ResumeList/components/ResumeCard/ResumeCard.vue";
+import { useI18n } from "vue-i18n";
+import LoadingSpinner from "@/shared/components/LoadingSpinner/LoadingSpinner.vue";
 
 const resumesService = ResumesServiceInstance;
 const toaster = useToaster();
+const { t } = useI18n();
 
+const loading = ref(false);
 const resumesList = ref<TResumeCompact[]>([]);
 
 const resumeEditRoute = computed(() => {
@@ -46,12 +55,16 @@ onMounted(async () => refresh());
 
 async function refresh() {
   try {
+    loading.value = true;
     resumesList.value = await resumesService.getResumesList();
   }
   catch (error) {
     if (error instanceof ServerError) {
       toaster.error(error.header, error.message);
     }
+  }
+  finally {
+    loading.value = false;
   }
 }
 

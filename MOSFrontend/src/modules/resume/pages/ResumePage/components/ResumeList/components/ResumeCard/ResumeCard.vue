@@ -33,12 +33,17 @@ import LocaleBadge
   from "@/modules/resume/pages/ResumePage/components/ResumeList/components/LocaleBadge/LocaleBadge.vue";
 import { useToaster } from "@/shared/PsiUI/utils/toaster.ts";
 import { ServerError } from "@/shared/utils/requests/errorHandlers.ts";
+import { AppLocale } from "@/shared/enums/common.ts";
 
 const props = defineProps({
   resume: {
     type: Object as PropType<TResumeCompact>,
     required: true
   }
+});
+
+const emit = defineEmits({
+  pin: () => true
 });
 
 const toaster = useToaster();
@@ -63,8 +68,9 @@ async function pinResume() {
     else {
       const locale = userStore.locale;
       await resumesService.pinResume(props.resume!.id);
-      toaster.success(`Резюме закреплено в локали "${locale}"`);
+      toaster.success(`Резюме закреплено в локали "${AppLocale[locale]}"`);
     }
+    emit("pin");
   }
   catch (error) {
     if (error instanceof ServerError) {

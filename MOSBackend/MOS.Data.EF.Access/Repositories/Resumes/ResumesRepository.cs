@@ -12,9 +12,12 @@ public class ResumesRepository : GenericRepository<Resume>, IResumesRepository
     {
     }
 
-    public Task UnpinAllByLocaleAsync(Locale locale)
+    public async Task UnpinAllByLocaleAsync(Locale locale)
     {
-        throw new NotImplementedException();
+        await LocalSet
+            .Where(x => x.PinnedToLocale == locale)
+            .ExecuteUpdateAsync(resume => 
+                resume.SetProperty(x => x.PinnedToLocale, (Locale?)null));
     }
 
     public async Task<Resume?> GetPinnedResumeAsync(Locale locale)

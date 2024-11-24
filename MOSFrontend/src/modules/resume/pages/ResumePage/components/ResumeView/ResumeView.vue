@@ -126,7 +126,7 @@ const resumeListRoute = computed(() => {
 const resumeEditRoute = computed(() => {
   return {
     name: RouteNames.ResumeEdit,
-    params: { resumeId: props.resumeId }
+    params: { resumeId: resume.value?.id }
   };
 });
 

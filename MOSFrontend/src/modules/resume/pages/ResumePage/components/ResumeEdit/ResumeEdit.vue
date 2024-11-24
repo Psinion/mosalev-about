@@ -19,7 +19,9 @@
     <div class="content">
       <h2>{{ createMode ? t('resume.edit.headerCreate') : t('resume.edit.headerEdit') }}</h2>
       <div class="actions" />
+      <loading-spinner v-show="loading" />
       <PsiForm
+        v-if="!loading"
         v-slot="{ valid }"
         @submit="onSave"
       >
@@ -61,6 +63,7 @@
         <PsiTextarea
           v-model="about"
           label="О себе"
+          rows="7"
           resizable="vertical"
         />
         <div class="actions">
@@ -91,6 +94,8 @@ import { useToaster } from "@/shared/PsiUI/utils/toaster.ts";
 import { useI18n } from "vue-i18n";
 import { RouteNames } from "@/router/routeNames.ts";
 import PsiTextarea from "@/shared/PsiUI/components/PsiTextarea/PsiTextarea.vue";
+import LoadingSpinner from "@/shared/components/LoadingSpinner/LoadingSpinner.vue";
+import instance from "@/shared/utils/i18n.ts";
 
 const props = defineProps({
   resumeId: {
@@ -102,6 +107,8 @@ const props = defineProps({
 const { t } = useI18n();
 const toaster = useToaster();
 const resumesService = ResumesServiceInstance;
+
+const loading = ref(false);
 
 const title = ref<string | null>();
 const firstName = ref<string | null>();
@@ -132,15 +139,26 @@ async function refresh() {
     return;
   }
 
-  const resume = await resumesService.getResume(props.resumeId);
+  try {
+    loading.value = true;
+    const resume = await resumesService.getResume(props.resumeId);
 
-  title.value = resume.title;
-  firstName.value = resume.firstName;
-  lastName.value = resume.lastName;
-  email.value = resume.email;
-  salary.value = resume.salary;
-  currencyType.value = resume.currencyType === CurrencyType.Ruble;
-  about.value = resume.about;
+    title.value = resume.title;
+    firstName.value = resume.firstName;
+    lastName.value = resume.lastName;
+    email.value = resume.email;
+    salary.value = resume.salary;
+    currencyType.value = resume.currencyType === CurrencyType.Ruble;
+    about.value = resume.about;
+  }
+  catch (error) {
+    if (error instanceof ServerError) {
+      toaster.error(error.header, error.message);
+    }
+  }
+  finally {
+    loading.value = false;
+  }
 }
 
 async function onSave() {
@@ -155,6 +173,7 @@ async function onSave() {
   };
 
   try {
+    loading.value = true;
     if (createMode.value) {
       await resumesService.createResume(resumeToSave);
       toaster.success(t("resume.edit.toasterResumeCreateHeader"));
@@ -168,6 +187,9 @@ async function onSave() {
     if (error instanceof ServerError) {
       toaster.error(error.header, error.message);
     }
+  }
+  finally {
+    loading.value = false;
   }
 }
 </script>

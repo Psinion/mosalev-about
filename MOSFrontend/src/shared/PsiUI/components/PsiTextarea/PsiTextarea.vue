@@ -9,6 +9,7 @@
         class="caption-regular"
         :style="{resize: resizable}"
         :value="inputValue"
+        :rows="rows"
         autocomplete="off"
         @input="onInput($event.target as HTMLInputElement)"
       />
@@ -46,6 +47,10 @@ const props = defineProps({
   resizable: {
     type: String as PropType<TPsiTextareaResizable>,
     default: "both"
+  },
+  rows: {
+    type: Number,
+    default: 3
   },
   disabled: {
     type: Boolean,

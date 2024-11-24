@@ -96,6 +96,7 @@ public class ResumesService : IResumesService
             return OperationError.NotFound();
         }
 
+        await resumesRepository.UnpinAllByLocaleAsync(credentialsService.CurrentLocale);
         await resumesRepository.PinResumeAsync(resumeId, pinning ? credentialsService.CurrentLocale : null);
 
         return true;
