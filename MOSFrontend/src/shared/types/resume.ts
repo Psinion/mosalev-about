@@ -12,6 +12,8 @@ export type TResume = {
   currencyType: CurrencyType;
   dateCreate: string | null;
   dateUpdate: string | null;
+
+  companyEntries: TResumeCompanyEntry[];
 };
 
 export type TResumeCompact = {
@@ -29,3 +31,10 @@ export enum CurrencyType {
   Dollar,
   Euro
 }
+
+export type TResumeCompanyEntry = {
+  id: number;
+  company: string;
+  webSiteUrl: string | null;
+  description: string | null;
+};

@@ -13,7 +13,6 @@ public class MainDbContext : DbContext
     
     public DbSet<Resume> Resumes { get; set; }
     public DbSet<ResumeCompanyEntry> ResumeCompanyEntries { get; set; }
-    public DbSet<Company> Companies { get; set; }
     public DbSet<ResumeCourse> ResumeCourses { get; set; }
     public DbSet<ResumeEducation> ResumeEducations { get; set; }
     public DbSet<ResumePost> ResumePosts { get; set; }

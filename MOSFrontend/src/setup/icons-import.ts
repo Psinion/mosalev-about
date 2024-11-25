@@ -7,7 +7,9 @@ import {
   OiCheckCircle,
   BiPinAngle,
   BiPinAngleFill,
-  MdEmailRound
+  MdEmailRound,
+  MdDeleteforever,
+  MdClose
 } from "oh-vue-icons/icons";
 
 export default function importIcons() {
@@ -19,4 +21,6 @@ export default function importIcons() {
   addIcons(BiPinAngle);
   addIcons(BiPinAngleFill);
   addIcons(MdEmailRound);
+  addIcons(MdDeleteforever);
+  addIcons(MdClose);
 }

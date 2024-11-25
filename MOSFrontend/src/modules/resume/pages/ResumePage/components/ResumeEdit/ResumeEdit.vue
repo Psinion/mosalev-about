@@ -65,6 +65,7 @@
           :rows="7"
           resizable="vertical"
         />
+        <ResumeEditCompaniesList v-model="companyEntries" />
         <div class="actions">
           <PsiButton
             native-type="submit"
@@ -87,12 +88,14 @@ import PsiToggle from "@/shared/PsiUI/components/PsiToggle/PsiToggle.vue";
 import PsiInputNumeric from "@/shared/PsiUI/components/PsiInputNumeric/PsiInputNumeric.vue";
 import PsiButton from "@/shared/PsiUI/components/PsiButton/PsiButton.vue";
 import PsiForm from "@/shared/PsiUI/components/PsiForm/PsiForm.vue";
-import { CurrencyType, TResume } from "@/shared/types/resume.ts";
+import { CurrencyType, TResume, TResumeCompanyEntry } from "@/shared/types/resume.ts";
 import { ServerError } from "@/shared/utils/requests/errorHandlers.ts";
 import { useToaster } from "@/shared/PsiUI/utils/toaster.ts";
 import { useI18n } from "vue-i18n";
 import { RouteNames } from "@/router/routeNames.ts";
 import PsiTextarea from "@/shared/PsiUI/components/PsiTextarea/PsiTextarea.vue";
+import ResumeEditCompaniesList
+  from "@/modules/resume/pages/ResumePage/components/ResumeEdit/components/ResumeEditCompaniesList/ResumeEditCompaniesList.vue";
 
 const props = defineProps({
   resumeId: {
@@ -116,6 +119,7 @@ const email = ref<string | null>();
 const salary = ref<number | null>();
 const currencyType = ref<boolean>(false);
 const about = ref<string | null>();
+const companyEntries = ref<TResumeCompanyEntry[]>([]);
 
 const createMode = computed(() => props.resumeId === 0);
 

@@ -15,6 +15,7 @@
 import { OhVueIcon } from "oh-vue-icons";
 import { computed, PropType } from "vue";
 import { TPsiIcon, TPsiIconFlip } from "@/shared/PsiUI/components/PsiIcon/types.ts";
+import { MdDeleteforever } from "oh-vue-icons/icons";
 
 const props = defineProps({
   icon: {
@@ -50,6 +51,8 @@ const props = defineProps({
 const ICON_CODES = {
   "pin": "bi-pin-angle",
   "pin-filled": "bi-pin-angle-fill",
+  "trash-box": "md-deleteforever",
+  "close": "md-close",
   "telegram": "fa-telegram",
   "email": "md-email-round",
   "steam": "fa-steam",
