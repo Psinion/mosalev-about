@@ -6,6 +6,7 @@
   border-radius: 4px;
   transition: var(--default-transition);
   height: 64px;
+  text-decoration: none;
 
   &:hover {
     border-color: var(--tertiary-up);
@@ -15,8 +16,7 @@
     }
   }
 
-  & > a {
-    text-decoration: none;
+  & > section {
     color: var(--font-color);
 
     & > header {

@@ -1,6 +1,9 @@
 <template>
-  <section class="resume-card">
-    <RouterLink :to="resumeViewRoute">
+  <RouterLink
+    class="resume-card"
+    :to="resumeViewRoute"
+  >
+    <section>
       <header>
         <h3>{{ resume.title }}</h3>
         <div class="actions">
@@ -23,8 +26,8 @@
           class="hint-regular"
         >{{ dateUpdate }}</span>
       </div>
-    </RouterLink>
-  </section>
+    </section>
+  </RouterLink>
 </template>
 
 <script setup lang="ts">
