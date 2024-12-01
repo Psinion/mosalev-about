@@ -1,22 +1,33 @@
 <template>
   <article class="resume-edit-companies-list">
     <h3>Опыт работы</h3>
-    <div
-      v-for="companyEntry in modelValue"
-      :key="companyEntry.id"
-      class="company-block"
-    >
-      <div class="company-input">
-        <PsiInput label="Организация" />
-        <PsiButton
-          flat
-          icon="close"
-          @click="removeCompany(companyEntry)"
+    <section class="companies">
+      <div
+        v-for="companyEntry in modelValue"
+        :key="companyEntry.id"
+        class="company-block"
+      >
+        <section class="company">
+          <div class="company-input">
+            <PsiInput label="Организация" />
+            <PsiButton
+              flat
+              icon="close"
+              @click="removeCompany(companyEntry)"
+            />
+          </div>
+          <PsiInput label="Сайт" />
+          <PsiTextarea
+            label="Описание"
+            resizable="vertical"
+          />
+        </section>
+        <ResumeEditPostsList
+          v-model="companyEntry.resumePosts"
+          class="posts-list"
         />
       </div>
-      <PsiInput label="Сайт" />
-      <PsiTextarea label="Описание" />
-    </div>
+    </section>
     <div class="company-actions">
       <PsiButton @click="addCompany">
         Добавить компанию
@@ -33,6 +44,8 @@ import PsiTextarea from "@/shared/PsiUI/components/PsiTextarea/PsiTextarea.vue";
 import { PropType, toRef } from "vue";
 import { TResumeCompanyEntry } from "@/shared/types/resume.ts";
 import PsiButton from "@/shared/PsiUI/components/PsiButton/PsiButton.vue";
+import ResumeEditPostsList
+  from "@/modules/resume/pages/ResumePage/components/ResumeEdit/components/ResumeEditPostsList/ResumeEditPostsList.vue";
 
 const props = defineProps({
   modelValue: {
@@ -54,9 +67,15 @@ function addCompany() {
   const companies = companyEntries.value;
   companies.push({
     id: 0,
+    resumeId: 0,
     company: "",
     description: null,
-    webSiteUrl: null
+    webSiteUrl: null,
+    resumePosts: [{
+      id: 0,
+      companyId: 0,
+      name: ""
+    }]
   });
   emit("update:modelValue", companies);
 }

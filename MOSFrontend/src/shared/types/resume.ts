@@ -34,7 +34,18 @@ export enum CurrencyType {
 
 export type TResumeCompanyEntry = {
   id: number;
+  resumeId: number;
   company: string;
   webSiteUrl: string | null;
   description: string | null;
+  resumePosts: TResumeCompanyEntryPost[];
+};
+
+export type TResumeCompanyEntryPost = {
+  id: number;
+  companyId: number;
+  name: string;
+  description?: string | null;
+  dateStart?: string | Date;
+  dateEnd?: string | Date | null;
 };

@@ -7,7 +7,7 @@
       <span class="caption-regular">{{ label }}</span>
       <input
         :value="inputValue"
-        :type="type"
+        :type="password ? 'password' : 'text'"
         autocomplete="off"
         @input="onInput($event.target as HTMLInputElement)"
       >
@@ -24,7 +24,6 @@
 <script setup lang="ts">
 
 import { computed, PropType } from "vue";
-import { type TPsiInputType } from "./types.ts";
 import { GenericValidateFunction, useField } from "vee-validate";
 import { useComponentId } from "@/shared/PsiUI/utils/componentId.ts";
 import useValidationRules from "@/shared/PsiUI/utils/validationRules.ts";
@@ -33,10 +32,6 @@ const props = defineProps({
   modelValue: {
     type: String as PropType<string | null>,
     default: null
-  },
-  type: {
-    type: String as PropType<TPsiInputType>,
-    default: "text"
   },
   label: {
     type: String,
@@ -47,6 +42,10 @@ const props = defineProps({
     default: false
   },
   disabled: {
+    type: Boolean,
+    default: false
+  },
+  password: {
     type: Boolean,
     default: false
   }

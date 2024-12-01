@@ -16,6 +16,7 @@
         {{ t('resume.edit.viewButton') }}
       </PsiButton>
     </div>
+
     <div class="content">
       <h2>{{ createMode ? t('resume.edit.headerCreate') : t('resume.edit.headerEdit') }}</h2>
       <div class="actions" />
@@ -30,6 +31,7 @@
           label="Название"
           required
         />
+
         <div class="fio-input">
           <PsiInput
             v-model="lastName"
@@ -42,6 +44,7 @@
             required
           />
         </div>
+
         <PsiInput
           v-model="email"
           label="Email"
@@ -65,7 +68,9 @@
           :rows="7"
           resizable="vertical"
         />
+
         <ResumeEditCompaniesList v-model="companyEntries" />
+
         <div class="actions">
           <PsiButton
             native-type="submit"
