@@ -45,9 +45,9 @@ const props = defineProps({
     type: Boolean,
     default: false
   },
-  format: {
+  mask: {
     type: String,
-    default: "yyyy-MM-dd"
+    default: "YYYY-MM-DD"
   }
 });
 
@@ -57,7 +57,8 @@ const emit = defineEmits({
 
 const componentId = useComponentId("PsiInputDate");
 
-const format = toRef(props, "format");
+const mask = toRef(props, "mask");
+const maskPattern = computed(() => getRegExpPattern(mask.value));
 
 const validateRules = computed(() => {
   const validateFunctions: GenericValidateFunction<string | Date | null>[] = [isValidDate];
@@ -73,7 +74,7 @@ const {
   value: inputValue,
   errorMessage
 } = useField(componentId, validateRules.value, {
-  initialValue: props.modelValue ? formatDate(new Date(props.modelValue), format.value) : null,
+  initialValue: props.modelValue ? formatDate(new Date(props.modelValue), mask.value) : null,
   syncVModel: true
 });
 
@@ -82,13 +83,13 @@ function formatDate(date: Date, format: string) {
 
   const templates = {
     "M+": date.getMonth() + 1,
-    "d+": date.getDate(),
-    "h+": date.getHours(),
+    "D+": date.getDate(),
+    "H+": date.getHours(),
     "m+": date.getMinutes(),
     "s+": date.getSeconds()
   };
 
-  const yearMatches = formattedDate.match(/(y+)/);
+  const yearMatches = formattedDate.match(/(Y+)/);
   if (yearMatches) {
     const match = yearMatches[0];
     const year = date.getFullYear();
@@ -117,7 +118,7 @@ function isValidDate(value: string | Date | null) {
     return true;
   }
 
-  const dateRegExp = new RegExp("[0-9]{2}.[0-9]{2}.[0-9]{4}");
+  const dateRegExp = new RegExp(maskPattern.value);
   if (value.match(dateRegExp)) {
     return true;
   }
@@ -125,8 +126,31 @@ function isValidDate(value: string | Date | null) {
   return "Не корректная дата";
 }
 
+function getRegExpPattern(mask: string) {
+  const templates = [
+    {
+      mask: "YYYY",
+      regExp: "[0-9]{4}"
+    },
+    {
+      mask: "MM",
+      regExp: "[0-9]{2}"
+    },
+    {
+      mask: "DD",
+      regExp: "[0-9]{2}"
+    }
+  ];
+
+  let pattern = mask;
+  templates.forEach(x => pattern = pattern.replace(x.mask, x.regExp));
+
+  return pattern;
+}
+
 function onInput(target: HTMLInputElement) {
-  emit("update:modelValue", target?.value ? target.value : null);
+  const value = target?.value.replace(/[^0-9-]/g, "");
+  emit("update:modelValue", value ? value : null);
 }
 
 </script>
