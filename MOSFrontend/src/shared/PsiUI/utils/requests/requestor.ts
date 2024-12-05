@@ -1,15 +1,15 @@
 import { App } from "vue";
-import { IDictionary } from "@/shared/types";
+import { PsiDictionary } from "@/shared/PsiUI/types/base.ts";
 
 type TMethodType = "GET" | "POST" | "PUT" | "PATCH" | "DELETE" | "HEAD" | "OPTIONS";
 
-type TRequestQuery = IDictionary<string | number | boolean | null | Array<any>>;
-type TRequestBody = IDictionary<any> | Array<any> | string | Blob | FormData | null;
+type TRequestQuery = PsiDictionary<string | number | boolean | null | Array<any>>;
+type TRequestBody = PsiDictionary<any> | Array<any> | string | Blob | FormData | null;
 
 export type TMiddlewareRequest = (request: IPreparedRequest) => Promise<IPreparedRequest>;
 export type TMiddlewareResponse = (response: IResponseData) => Promise<IResponseData>;
 
-export type TRequestHeaders = IDictionary<string>;
+export type TRequestHeaders = PsiDictionary<string>;
 
 export interface IRequestOptions {
   baseUrl: string;

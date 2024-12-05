@@ -23,10 +23,11 @@
 
 <script setup lang="ts">
 
-import { computed, PropType, toRef } from "vue";
+import { computed, PropType, ref, toRef, watch } from "vue";
 import { GenericValidateFunction, useField } from "vee-validate";
 import { useComponentId } from "@/shared/PsiUI/utils/componentId.ts";
 import useValidationRules from "@/shared/PsiUI/utils/validationRules.ts";
+import { PsiDictionary } from "@/shared/PsiUI/types/base.ts";
 
 const props = defineProps({
   modelValue: {
@@ -52,12 +53,13 @@ const props = defineProps({
 });
 
 const emit = defineEmits({
-  "update:modelValue": (value: string | null) => true
+  "update:modelValue": (value: string | Date | null) => true
 });
 
 const componentId = useComponentId("PsiInputDate");
 
 const mask = toRef(props, "mask");
+
 const maskPattern = computed(() => getRegExpPattern(mask.value));
 
 const validateRules = computed(() => {
@@ -72,27 +74,40 @@ const validateRules = computed(() => {
 });
 const {
   value: inputValue,
+  handleChange,
   errorMessage
 } = useField(componentId, validateRules.value, {
-  initialValue: props.modelValue ? formatDate(new Date(props.modelValue), mask.value) : null,
-  syncVModel: true
+  initialValue: props.modelValue ? formatDate(props.modelValue, mask.value) : null
 });
 
-function formatDate(date: Date, format: string) {
+watch(() => props.modelValue, value => handleChange(value ? formatDate(value, mask.value) : null));
+
+function formatDate(date: string | Date, format: string) {
   let formattedDate = format;
 
+  let dateToFormat: Date | null;
+  if (!(date instanceof Date)) {
+    dateToFormat = createDate(date);
+    if (dateToFormat === null) {
+      return date;
+    }
+  }
+  else {
+    dateToFormat = date;
+  }
+
   const templates = {
-    "M+": date.getMonth() + 1,
-    "D+": date.getDate(),
-    "H+": date.getHours(),
-    "m+": date.getMinutes(),
-    "s+": date.getSeconds()
+    "M+": dateToFormat.getMonth() + 1,
+    "D+": dateToFormat.getDate(),
+    "H+": dateToFormat.getHours(),
+    "m+": dateToFormat.getMinutes(),
+    "s+": dateToFormat.getSeconds()
   };
 
   const yearMatches = formattedDate.match(/(Y+)/);
   if (yearMatches) {
     const match = yearMatches[0];
-    const year = date.getFullYear();
+    const year = dateToFormat.getFullYear();
 
     formattedDate = formattedDate.replace(match, year.toString());
   }
@@ -113,13 +128,17 @@ function formatDate(date: Date, format: string) {
   return formattedDate;
 }
 
-function isValidDate(value: string | Date | null) {
-  if (value === null || value instanceof Date) {
-    return true;
-  }
+function checkDate(value: string | Date | null) {
+  return value === null || value instanceof Date;
+}
 
-  const dateRegExp = new RegExp(maskPattern.value);
-  if (value.match(dateRegExp)) {
+function getDateMatches(value: string) {
+  const dateRegExp = new RegExp(maskPattern.value.pattern);
+  return value.match(dateRegExp);
+}
+
+function isValidDate(value: string | Date | null) {
+  if (checkDate(value) || getDateMatches(value)) {
     return true;
   }
 
@@ -130,27 +149,61 @@ function getRegExpPattern(mask: string) {
   const templates = [
     {
       mask: "YYYY",
-      regExp: "[0-9]{4}"
+      regExp: "([0-9]{4})"
     },
     {
       mask: "MM",
-      regExp: "[0-9]{2}"
+      regExp: "([0-9]{2})"
     },
     {
       mask: "DD",
-      regExp: "[0-9]{2}"
+      regExp: "([0-9]{2})"
     }
   ];
 
   let pattern = mask;
-  templates.forEach(x => pattern = pattern.replace(x.mask, x.regExp));
+  let indexMap: PsiDictionary<number> = {};
+  for (let i = 0; i < templates.length; i++) {
+    const template = templates[i];
+    pattern = pattern.replace(template.mask, template.regExp);
+    indexMap[template.mask] = i;
+  }
 
-  return pattern;
+  return {
+    pattern,
+    indexMap
+  };
+}
+
+function createDate(dateString: string) {
+  const matches = getDateMatches(dateString);
+  if (matches) {
+    const indexMap = maskPattern.value.indexMap;
+    const date = new Date();
+
+    if (indexMap["YYYY"] != undefined) {
+      const year = parseInt(matches[indexMap["YYYY"] + 1]);
+      date.setFullYear(year);
+    }
+    if (indexMap["MM"] != undefined) {
+      const month = parseInt(matches[indexMap["MM"] + 1]);
+      date.setMonth(month - 1);
+    }
+    if (indexMap["DD"] != undefined) {
+      const day = parseInt(matches[indexMap["DD"] + 1]);
+      date.setDate(day);
+    }
+
+    return date;
+  }
+
+  return null;
 }
 
 function onInput(target: HTMLInputElement) {
   const value = target?.value.replace(/[^0-9-]/g, "");
-  emit("update:modelValue", value ? value : null);
+  const date = createDate(value);
+  emit("update:modelValue", date ?? value);
 }
 
 </script>
