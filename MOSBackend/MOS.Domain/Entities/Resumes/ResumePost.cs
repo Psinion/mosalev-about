@@ -5,6 +5,6 @@ public class ResumePost : Entity
     public string Name { get; set; } = "";
     public string? Description { get; set; }
     
-    public DateTime DateStart { get; set; }
-    public DateTime? DateEnd { get; set; }
+    public DateOnly DateStart { get; set; }
+    public DateOnly? DateEnd { get; set; }
 }

@@ -10,7 +10,7 @@ public interface IResumesService : IDisposable
     
     Task<OperationResult<ResumeResponseDto>> CreateResumeAsync(ResumeCreateRequestDto resumeRequest);
     
-    Task<OperationResult<ResumeResponseDto>> UpdateResumeAsync(long resumeId, ResumeUpdateRequestDto resumeRequest);
+    Task<OperationResult<ResumeResponseDto>> UpdateResumeAsync(ResumeUpdateRequestDto resumeRequest);
 
     Task<OperationResult<bool>> HasPinnedResumeAsync();
     

@@ -8,7 +8,10 @@
         class="post"
       >
         <div class="post-input">
-          <PsiInput label="Название" />
+          <PsiInput
+            v-model="post.name"
+            label="Название"
+          />
           <PsiButton
             flat
             icon="close"
@@ -28,6 +31,7 @@
           />
         </div>
         <PsiTextarea
+          v-model="post.description"
           label="Описание"
           resizable="vertical"
         />

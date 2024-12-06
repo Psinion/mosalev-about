@@ -33,9 +33,9 @@ class ResumesService implements IResumesService {
     }
   }
 
-  async updateResume(resumeId: number, params: TUpdateResumeRequest): Promise<TResume> {
+  async updateResume(params: TUpdateResumeRequest): Promise<TResume> {
     try {
-      return await this.requestor.put(`api/v1/resumes/${resumeId}`, params) as TResume;
+      return await this.requestor.put("api/v1/resumes", params) as TResume;
     }
     catch (error) {
       throw error;

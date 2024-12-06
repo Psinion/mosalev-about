@@ -6,6 +6,9 @@ namespace MOS.Application.DTOs.Resumes.Requests;
 public class ResumeUpdateRequestDto
 {
     [Required]
+    public long Id { get; set; }
+    
+    [Required]
     [StringLength(30)] 
     public string Title { get; set; } = "";
 
@@ -26,4 +29,6 @@ public class ResumeUpdateRequestDto
     public CurrencyType CurrencyType { get; set; } = CurrencyType.Ruble;
     
     public string? About { get; set; }
+
+    public List<ResumeCompanyEntryUpdateRequestDto> CompanyEntries { get; set; } = new();
 }

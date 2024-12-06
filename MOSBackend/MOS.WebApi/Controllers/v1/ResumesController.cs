@@ -54,10 +54,9 @@ public class ResumesController : ControllerBase
     
     [HttpPut]
     [CustomAuthorize]
-    [Route("{resumeId}")]
-    public async Task<ActionResult<ResumeResponseDto>> UpdateResume(long resumeId, ResumeUpdateRequestDto request)
+    public async Task<ActionResult<ResumeResponseDto>> UpdateResume(ResumeUpdateRequestDto request)
     {
-        var response = await resumesService.UpdateResumeAsync(resumeId, request);
+        var response = await resumesService.UpdateResumeAsync(request);
 
         if (response.Error.ErrorType == ErrorType.NotFound)
         {

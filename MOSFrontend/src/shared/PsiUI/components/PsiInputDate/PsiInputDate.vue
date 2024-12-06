@@ -23,7 +23,7 @@
 
 <script setup lang="ts">
 
-import { computed, PropType, ref, toRef, watch } from "vue";
+import { computed, PropType, toRef, watch } from "vue";
 import { GenericValidateFunction, useField } from "vee-validate";
 import { useComponentId } from "@/shared/PsiUI/utils/componentId.ts";
 import useValidationRules from "@/shared/PsiUI/utils/validationRules.ts";
@@ -203,7 +203,13 @@ function createDate(dateString: string) {
 function onInput(target: HTMLInputElement) {
   const value = target?.value.replace(/[^0-9-]/g, "");
   const date = createDate(value);
-  emit("update:modelValue", date ?? value);
+  if (date) {
+    const dateText = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+    emit("update:modelValue", dateText);
+  }
+  else {
+    emit("update:modelValue", value);
+  }
 }
 
 </script>

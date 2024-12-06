@@ -9,15 +9,22 @@
       >
         <section class="company">
           <div class="company-input">
-            <PsiInput label="Организация" />
+            <PsiInput
+              v-model="companyEntry.company"
+              label="Организация"
+            />
             <PsiButton
               flat
               icon="close"
               @click="removeCompany(companyEntry)"
             />
           </div>
-          <PsiInput label="Сайт" />
+          <PsiInput
+            v-model="companyEntry.webSiteUrl"
+            label="Сайт"
+          />
           <PsiTextarea
+            v-model="companyEntry.description"
             label="Описание"
             resizable="vertical"
           />

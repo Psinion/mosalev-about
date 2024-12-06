@@ -87,7 +87,7 @@
 <script setup lang="ts">
 import ResumesServiceInstance from "@/shared/services/ResumesService.ts";
 import { computed, onMounted, ref } from "vue";
-import { TCreateResumeRequest } from "@/shared/services/base";
+import { TCreateResumeRequest, TUpdateResumeRequest } from "@/shared/services/base";
 import PsiInput from "@/shared/PsiUI/components/PsiInput/PsiInput.vue";
 import PsiToggle from "@/shared/PsiUI/components/PsiToggle/PsiToggle.vue";
 import PsiInputNumeric from "@/shared/PsiUI/components/PsiInputNumeric/PsiInputNumeric.vue";
@@ -172,24 +172,37 @@ async function refresh() {
 }
 
 async function onSave() {
-  const resumeToSave: TCreateResumeRequest = {
-    title: title.value!,
-    firstName: firstName.value!,
-    lastName: lastName.value!,
-    email: email.value!,
-    salary: salary.value ?? 0,
-    currencyType: currencyType.value ? CurrencyType.Ruble : CurrencyType.Dollar,
-    about: about.value ?? null
-  };
-
   try {
     loading.value = true;
     if (createMode.value) {
+      const resumeToSave: TCreateResumeRequest = {
+        title: title.value!,
+        firstName: firstName.value!,
+        lastName: lastName.value!,
+        email: email.value!,
+        salary: salary.value ?? 0,
+        currencyType: currencyType.value ? CurrencyType.Ruble : CurrencyType.Dollar,
+        about: about.value ?? null,
+        companyEntries: companyEntries.value
+      };
+
       await resumesService.createResume(resumeToSave);
       toaster.success(t("resume.edit.toasterResumeCreateHeader"));
     }
     else {
-      await resumesService.updateResume(props.resumeId!, resumeToSave);
+      const resumeToSave: TUpdateResumeRequest = {
+        id: props.resumeId!,
+        title: title.value!,
+        firstName: firstName.value!,
+        lastName: lastName.value!,
+        email: email.value!,
+        salary: salary.value ?? 0,
+        currencyType: currencyType.value ? CurrencyType.Ruble : CurrencyType.Dollar,
+        about: about.value ?? null,
+        companyEntries: companyEntries.value
+      };
+
+      await resumesService.updateResume(resumeToSave);
       toaster.success(t("resume.edit.toasterResumeUpdateHeader"));
     }
   }

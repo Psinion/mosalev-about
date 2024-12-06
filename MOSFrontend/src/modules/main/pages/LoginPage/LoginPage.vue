@@ -19,7 +19,7 @@
         <PsiInput
           v-model="password"
           :label="t('login.formPasswordLabel')"
-          type="password"
+          password
           required
         />
         <PsiButton

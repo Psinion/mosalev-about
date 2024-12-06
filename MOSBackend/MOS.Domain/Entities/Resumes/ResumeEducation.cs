@@ -6,5 +6,5 @@ public class ResumeEducation : Entity
     public string OrganisationName { get; set; } = "";
     public string FacultyName { get; set; } = "";
     public string SpecializationName { get; set; } = "";
-    public DateTime DateEnd { get; set; }
+    public DateOnly DateEnd { get; set; }
 }

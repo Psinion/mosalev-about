@@ -52,9 +52,9 @@ public class ResumesService : IResumesService
         return createdEntity.ToDto();
     }
 
-    public async Task<OperationResult<ResumeResponseDto>> UpdateResumeAsync(long resumeId, ResumeUpdateRequestDto resumeRequest)
+    public async Task<OperationResult<ResumeResponseDto>> UpdateResumeAsync(ResumeUpdateRequestDto resumeRequest)
     {
-        var resume = await resumesRepository.GetByIdAsync(resumeId);
+        var resume = await resumesRepository.GetByIdAsync(resumeRequest.Id);
         if (resume == null)
         {
             return OperationError.NotFound();
