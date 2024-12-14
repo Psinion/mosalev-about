@@ -1,0 +1,33 @@
+.resume-edit-work-exp-tab {
+  width: 100%;
+
+  .actions {
+    margin-bottom: 16px;
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    width: 100%;
+
+    .action-button {
+      width: 140px;
+    }
+  }
+
+  .content {
+    & > form {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+
+      .resume-edit-companies-list {
+        margin-top: 20px;
+      }
+
+      .actions {
+        display: flex;
+        justify-content: center;
+        margin-top: 8px;
+      }
+    }
+  }
+}

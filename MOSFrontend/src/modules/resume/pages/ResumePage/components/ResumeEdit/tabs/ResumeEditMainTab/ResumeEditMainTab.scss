@@ -1,4 +1,4 @@
-.resume-edit {
+.resume-edit-main-tab {
   width: 100%;
 
   .actions {
@@ -13,29 +13,7 @@
     }
   }
 
-  & > h2 {
-    margin-bottom: 12px;
-    text-align: center;
-  }
-
-  .tabs {
-    margin-bottom: 16px;
-    display: flex;
-    gap: 8px;
-    width: 100%;
-
-    .tab-button {
-      width: 140px;
-    }
-  }
-
   .content {
-    & > .actions {
-      display: flex;
-      justify-content: flex-end;
-      width: 100%;
-    }
-
     & > form {
       display: flex;
       flex-direction: column;
@@ -67,10 +45,6 @@
         & > .psi-input-numeric {
           width: 240px;
         }
-      }
-
-      .resume-edit-companies-list {
-        margin-top: 20px;
       }
 
       .actions {

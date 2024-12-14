@@ -41,6 +41,8 @@
       "listButton": "Resume list",
       "headerCreate": "Resume creating",
       "headerEdit": "Resume editing",
+      "tabMain": "Main",
+      "tabWorkExp": "Experience",
       "toasterResumeCreateHeader": "Resume has been created",
       "toasterResumeUpdateHeader": "Resume has been updated"
     }

@@ -41,6 +41,8 @@
       "listButton": "Список резюме",
       "headerCreate": "Создание резюме",
       "headerEdit": "Редактирование резюме",
+      "tabMain": "Основа",
+      "tabWorkExp": "Опыт работы",
       "toasterResumeCreateHeader": "Резюме создано",
       "toasterResumeUpdateHeader": "Резюме обновлено"
     },

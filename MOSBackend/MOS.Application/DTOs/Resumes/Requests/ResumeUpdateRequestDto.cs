@@ -30,5 +30,5 @@ public class ResumeUpdateRequestDto
     
     public string? About { get; set; }
 
-    public List<ResumeCompanyEntryUpdateRequestDto> CompanyEntries { get; set; } = new();
+    //public List<ResumeCompanyEntryUpdateRequestDto> CompanyEntries { get; set; } = new();
 }

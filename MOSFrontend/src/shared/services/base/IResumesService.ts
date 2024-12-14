@@ -21,7 +21,6 @@ export type TCreateResumeRequest = {
   salary: number;
   currencyType: number;
   about: string | null;
-  companyEntries: TResumeCompanyEntry[];
 };
 
 export type TUpdateResumeRequest = {
@@ -33,7 +32,6 @@ export type TUpdateResumeRequest = {
   salary: number;
   currencyType: number;
   about: string | null;
-  companyEntries: TUpdateResumeCompanyEntryRequest[];
 };
 
 export type TUpdateResumeCompanyEntryRequest = {

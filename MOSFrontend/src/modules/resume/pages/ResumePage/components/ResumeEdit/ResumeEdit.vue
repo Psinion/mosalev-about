@@ -17,90 +17,75 @@
       </PsiButton>
     </div>
 
-    <div class="content">
-      <h2>{{ createMode ? t('resume.edit.headerCreate') : t('resume.edit.headerEdit') }}</h2>
-      <div class="actions" />
-      <PsiForm
-        v-if="!loading"
-        v-slot="{ valid }"
-        @submit="onSave"
+    <h2>{{ createMode ? t('resume.edit.headerCreate') : t('resume.edit.headerEdit') }}</h2>
+
+    <div class="tabs">
+      <PsiButton
+        :flat="activeTab === 'main'"
+        class="tab-button"
+        :disabled="activeTab === 'main'"
+        @click="activeTab = 'main'"
       >
-        <h3>Профиль</h3>
-        <PsiInput
-          v-model="title"
-          label="Название"
-          required
-        />
-
-        <div class="fio-input">
-          <PsiInput
-            v-model="lastName"
-            label="Фамилия"
-            required
-          />
-          <PsiInput
-            v-model="firstName"
-            label="Имя"
-            required
-          />
-        </div>
-
-        <PsiInput
-          v-model="email"
-          label="Email"
-          required
-        />
-        <div class="salary-input">
-          <PsiInputNumeric
-            v-model="salary"
-            label="Зарплата"
-            :min="0"
-          />
-          <PsiToggle
-            v-model="currencyType"
-            inactive-label="₽"
-            active-label="$"
-          />
-        </div>
-        <PsiTextarea
-          v-model="about"
-          label="О себе"
-          :rows="7"
-          resizable="vertical"
-        />
-
-        <ResumeEditCompaniesList v-model="companyEntries" />
-
-        <div class="actions">
-          <PsiButton
-            native-type="submit"
-            :disabled="!valid"
-          >
-            Сохранить
-          </PsiButton>
-        </div>
-      </PsiForm>
+        {{ t('resume.edit.tabMain') }}
+      </PsiButton>
+      <PsiButton
+        :flat="activeTab === 'job-exp'"
+        class="tab-button"
+        :disabled="createMode || activeTab === 'job-exp'"
+        @click="activeTab = 'job-exp'"
+      >
+        {{ t('resume.edit.tabWorkExp') }}
+      </PsiButton>
     </div>
+
+    <template v-if="loading">
+      <PsiSkeleton
+        height="20px"
+        width="100%"
+      />
+      <PsiSkeleton
+        height="20px"
+        width="80%"
+      />
+      <PsiSkeleton
+        height="20px"
+        width="80%"
+      />
+      <PsiSkeleton
+        height="20px"
+        width="50%"
+      />
+    </template>
+    <template v-else>
+      <ResumeEditMainTab
+        v-if="activeTab === 'main'"
+        :resume="currentResume"
+        :create-mode="createMode"
+      />
+      <ResumeEditJobExpTab
+        v-else-if="activeTab === 'job-exp'"
+        :resume="currentResume"
+      />
+    </template>
   </article>
 </template>
 
 <script setup lang="ts">
 import ResumesServiceInstance from "@/shared/services/ResumesService.ts";
 import { computed, onMounted, ref } from "vue";
-import { TCreateResumeRequest, TUpdateResumeRequest } from "@/shared/services/base";
-import PsiInput from "@/shared/PsiUI/components/PsiInput/PsiInput.vue";
-import PsiToggle from "@/shared/PsiUI/components/PsiToggle/PsiToggle.vue";
-import PsiInputNumeric from "@/shared/PsiUI/components/PsiInputNumeric/PsiInputNumeric.vue";
 import PsiButton from "@/shared/PsiUI/components/PsiButton/PsiButton.vue";
-import PsiForm from "@/shared/PsiUI/components/PsiForm/PsiForm.vue";
-import { CurrencyType, TResume, TResumeCompanyEntry } from "@/shared/types/resume.ts";
+import { TResume } from "@/shared/types/resume.ts";
 import { ServerError } from "@/shared/utils/requests/errorHandlers.ts";
 import { useToaster } from "@/shared/PsiUI/utils/toaster.ts";
 import { useI18n } from "vue-i18n";
 import { RouteNames } from "@/router/routeNames.ts";
-import PsiTextarea from "@/shared/PsiUI/components/PsiTextarea/PsiTextarea.vue";
-import ResumeEditCompaniesList
-  from "@/modules/resume/pages/ResumePage/components/ResumeEdit/components/ResumeEditCompaniesList/ResumeEditCompaniesList.vue";
+import ResumeEditMainTab
+  from "@/modules/resume/pages/ResumePage/components/ResumeEdit/tabs/ResumeEditMainTab/ResumeEditMainTab.vue";
+import PsiSkeleton from "@/shared/PsiUI/components/PsiSkeleton/PsiSkeleton.vue";
+import ResumeEditJobExpTab
+  from "@/modules/resume/pages/ResumePage/components/ResumeEdit/tabs/ResumeEditWorkExpTab/ResumeEditWorkExpTab.vue";
+
+type TResumeTabs = "main" | "job-exp";
 
 const props = defineProps({
   resumeId: {
@@ -117,15 +102,6 @@ const loading = ref(false);
 
 const currentResume = ref<TResume | null>(null);
 
-const title = ref<string | null>();
-const firstName = ref<string | null>();
-const lastName = ref<string | null>();
-const email = ref<string | null>();
-const salary = ref<number | null>();
-const currencyType = ref<boolean>(false);
-const about = ref<string | null>();
-const companyEntries = ref<TResumeCompanyEntry[]>([]);
-
 const createMode = computed(() => props.resumeId === 0);
 
 const resumeListRoute = computed(() => {
@@ -140,6 +116,8 @@ const resumeViewRoute = computed(() => {
   };
 });
 
+const activeTab = ref<TResumeTabs>("main");
+
 onMounted(async () => refresh());
 
 async function refresh() {
@@ -150,61 +128,7 @@ async function refresh() {
   try {
     loading.value = true;
     const resume = await resumesService.getResume(props.resumeId);
-
     currentResume.value = resume;
-
-    title.value = resume.title;
-    firstName.value = resume.firstName;
-    lastName.value = resume.lastName;
-    email.value = resume.email;
-    salary.value = resume.salary;
-    currencyType.value = resume.currencyType === CurrencyType.Ruble;
-    about.value = resume.about;
-  }
-  catch (error) {
-    if (error instanceof ServerError) {
-      toaster.error(error.header, error.message);
-    }
-  }
-  finally {
-    loading.value = false;
-  }
-}
-
-async function onSave() {
-  try {
-    loading.value = true;
-    if (createMode.value) {
-      const resumeToSave: TCreateResumeRequest = {
-        title: title.value!,
-        firstName: firstName.value!,
-        lastName: lastName.value!,
-        email: email.value!,
-        salary: salary.value ?? 0,
-        currencyType: currencyType.value ? CurrencyType.Ruble : CurrencyType.Dollar,
-        about: about.value ?? null,
-        companyEntries: companyEntries.value
-      };
-
-      await resumesService.createResume(resumeToSave);
-      toaster.success(t("resume.edit.toasterResumeCreateHeader"));
-    }
-    else {
-      const resumeToSave: TUpdateResumeRequest = {
-        id: props.resumeId!,
-        title: title.value!,
-        firstName: firstName.value!,
-        lastName: lastName.value!,
-        email: email.value!,
-        salary: salary.value ?? 0,
-        currencyType: currencyType.value ? CurrencyType.Ruble : CurrencyType.Dollar,
-        about: about.value ?? null,
-        companyEntries: companyEntries.value
-      };
-
-      await resumesService.updateResume(resumeToSave);
-      toaster.success(t("resume.edit.toasterResumeUpdateHeader"));
-    }
   }
   catch (error) {
     if (error instanceof ServerError) {
