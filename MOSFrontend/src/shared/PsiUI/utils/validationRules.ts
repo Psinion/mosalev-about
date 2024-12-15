@@ -4,7 +4,7 @@ export default function useValidationRules() {
   const { t } = useI18n();
 
   function required(value?: string | number | Date | null) {
-    if (value === undefined || value === null) {
+    if (value === undefined || value === null || (typeof value == "string" && value === "")) {
       return t("psiUi.requiredErrorMessage");
     }
 

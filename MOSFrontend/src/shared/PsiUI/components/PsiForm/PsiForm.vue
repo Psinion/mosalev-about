@@ -12,7 +12,8 @@ import { useForm, useIsFormValid } from "vee-validate";
 import { ref, watch } from "vue";
 
 const emit = defineEmits({
-  submit: () => true
+  submit: () => true,
+  valid: (value: boolean) => true
 });
 
 const form = useForm();
@@ -29,7 +30,19 @@ async function onSubmit() {
   emit("submit");
 }
 
+async function validate() {
+  await form.validate();
+  console.log(isValid.value);
+  return isValid.value;
+}
+
 watch(() => form.meta.value.valid, (value) => {
   valid.value = value;
+  console.log(value);
+  emit("valid", value);
+});
+
+defineExpose({
+  validate
 });
 </script>

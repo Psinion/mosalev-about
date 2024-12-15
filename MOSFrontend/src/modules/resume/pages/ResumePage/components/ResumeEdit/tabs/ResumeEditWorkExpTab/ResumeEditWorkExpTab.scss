@@ -1,3 +1,5 @@
+@import '@scss-mixins/adaptive';
+
 .resume-edit-work-exp-tab {
   width: 100%;
 
@@ -14,6 +16,25 @@
   }
 
   .content {
+    & > h3 {
+      margin-bottom: 16px;
+    }
+
+    .companies {
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+
+      .company-block {
+        display: flex;
+        gap: 40px;
+
+        @include adaptive-mixin(s) {
+          flex-wrap: wrap;
+        }
+      }
+    }
+
     & > form {
       display: flex;
       flex-direction: column;

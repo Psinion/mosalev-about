@@ -1,0 +1,29 @@
+.resume-edit-company-entry {
+  .form {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    .company-input {
+      display: flex;
+      gap: 8px;
+
+      & > .psi-input {
+        width: 100%;
+      }
+
+      & > .psi-button {
+        margin-top: 24px;
+        height: 24px;
+      }
+    }
+
+    & > .psi-input {
+      width: 300px;
+    }
+
+    & > .psi-textarea {
+      width: 100%;
+    }
+  }
+}

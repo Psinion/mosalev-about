@@ -3,10 +3,10 @@ using MOS.Domain.Enums;
 
 namespace MOS.Application.DTOs.Resumes.Requests;
 
-public class ResumeCompanyEntryUpdateRequestDto
+public class ResumeCompanyEntryCreateRequestDto
 {
     [Required]
-    public long Id { get; set; }
+    public long ResumeId { get; set; }
     
     [Required]
     [StringLength(50)] 

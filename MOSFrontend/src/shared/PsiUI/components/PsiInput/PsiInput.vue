@@ -9,6 +9,7 @@
         :value="inputValue"
         :type="password ? 'password' : 'text'"
         autocomplete="off"
+        @blur="onBlur"
         @input="onInput($event.target as HTMLInputElement)"
       >
     </label>
@@ -52,7 +53,8 @@ const props = defineProps({
 });
 
 const emit = defineEmits({
-  "update:modelValue": (value: string | null) => true
+  "update:modelValue": (value: string | null) => true,
+  "blur": () => true
 });
 
 const componentId = useComponentId("PsiInput");
@@ -75,6 +77,10 @@ const {
   initialValue: props.modelValue,
   syncVModel: true
 });
+
+function onBlur() {
+  emit("blur");
+}
 
 function onInput(target: HTMLInputElement) {
   emit("update:modelValue", target?.value ? target.value : null);
