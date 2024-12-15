@@ -4,6 +4,8 @@ public class ResumeCompanyEntryResponseDto
 {
     public long Id { get; set; }
 
+    public long ResumeId { get; set; }
+    
     public string Company { get; set; } = "";
     
     public string? WebSiteUrl { get; set; }    

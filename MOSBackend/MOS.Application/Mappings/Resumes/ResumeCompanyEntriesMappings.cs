@@ -12,9 +12,20 @@ public static class ResumeCompanyEntriesMappings
         return new ResumeCompanyEntryResponseDto()
         {
             Id = entity.Id,
+            ResumeId = entity.ResumeId,
             Company = entity.Company,
             WebSiteUrl = entity.WebSiteUrl,
             Description = entity.Description,
         };
+    }
+    
+    public static List<ResumeCompanyEntryResponseDto> ToDtoList(this IList<ResumeCompanyEntry> entities)
+    {
+        var dtoList = new List<ResumeCompanyEntryResponseDto>(entities.Count());
+        foreach (var entity in entities)
+        {
+            dtoList.Add(entity.ToDto());
+        }
+        return dtoList;
     }
 }

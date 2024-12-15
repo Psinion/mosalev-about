@@ -24,7 +24,7 @@ public class ResumesService : IResumesService
 
     public async Task<OperationResult<ResumeResponseDto>> GetResumeAsync(long resumeId)
     {
-        var resume = await resumesRepository.GetByIdAsync(resumeId);
+        var resume = await resumesRepository.GetByIdWithRelationsAsync(resumeId);
 
         if (resume == null)
         {

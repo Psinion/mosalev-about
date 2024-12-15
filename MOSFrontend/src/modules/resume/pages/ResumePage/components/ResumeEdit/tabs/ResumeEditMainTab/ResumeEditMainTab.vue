@@ -64,7 +64,6 @@
 </template>
 
 <script setup lang="ts">
-import ResumesServiceInstance from "@/shared/services/ResumesService.ts";
 import { onMounted, PropType, ref, toRef } from "vue";
 import { TCreateResumeRequest, TUpdateResumeRequest } from "@/shared/services/base";
 import PsiInput from "@/shared/PsiUI/components/PsiInput/PsiInput.vue";
@@ -77,6 +76,7 @@ import { ServerError } from "@/shared/utils/requests/errorHandlers.ts";
 import { useToaster } from "@/shared/PsiUI/utils/toaster.ts";
 import { useI18n } from "vue-i18n";
 import PsiTextarea from "@/shared/PsiUI/components/PsiTextarea/PsiTextarea.vue";
+import { useResumeStore } from "@/modules/resume/stores/resumeStore.ts";
 
 const props = defineProps({
   resume: {
@@ -91,7 +91,7 @@ const props = defineProps({
 
 const { t } = useI18n();
 const toaster = useToaster();
-const resumesService = ResumesServiceInstance;
+const resumeStore = useResumeStore();
 
 const loading = ref(false);
 
@@ -138,7 +138,7 @@ async function onSave() {
         about: about.value ?? null
       };
 
-      await resumesService.createResume(resumeToSave);
+      await resumeStore.createResume(resumeToSave);
       toaster.success(t("resume.edit.toasterResumeCreateHeader"));
     }
     else {
@@ -153,7 +153,7 @@ async function onSave() {
         about: about.value ?? null
       };
 
-      await resumesService.updateResume(resumeToSave);
+      await resumeStore.updateResume(resumeToSave);
       toaster.success(t("resume.edit.toasterResumeUpdateHeader"));
     }
   }

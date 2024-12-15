@@ -71,7 +71,6 @@
 </template>
 
 <script setup lang="ts">
-import ResumesServiceInstance from "@/shared/services/ResumesService.ts";
 import { computed, onMounted, ref } from "vue";
 import PsiButton from "@/shared/PsiUI/components/PsiButton/PsiButton.vue";
 import { TResume } from "@/shared/types/resume.ts";
@@ -84,6 +83,7 @@ import ResumeEditMainTab
 import PsiSkeleton from "@/shared/PsiUI/components/PsiSkeleton/PsiSkeleton.vue";
 import ResumeEditJobExpTab
   from "@/modules/resume/pages/ResumePage/components/ResumeEdit/tabs/ResumeEditWorkExpTab/ResumeEditWorkExpTab.vue";
+import { useResumeStore } from "@/modules/resume/stores/resumeStore.ts";
 
 type TResumeTabs = "main" | "job-exp";
 
@@ -96,7 +96,7 @@ const props = defineProps({
 
 const { t } = useI18n();
 const toaster = useToaster();
-const resumesService = ResumesServiceInstance;
+const resumeStore = useResumeStore();
 
 const loading = ref(false);
 
@@ -127,7 +127,7 @@ async function refresh() {
 
   try {
     loading.value = true;
-    const resume = await resumesService.getResume(props.resumeId);
+    const resume = await resumeStore.getResume(props.resumeId);
     currentResume.value = resume;
   }
   catch (error) {

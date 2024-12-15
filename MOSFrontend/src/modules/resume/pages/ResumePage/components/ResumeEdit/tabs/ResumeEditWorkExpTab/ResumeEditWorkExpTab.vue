@@ -114,8 +114,8 @@ function addCompany() {
   const companies = companyEntries.value;
   companies.push({
     id: 0,
-    resumeId: 0,
-    company: "",
+    resumeId: currentResume.value!.id,
+    company: null,
     description: null,
     webSiteUrl: null,
     resumePosts: [{

@@ -17,8 +17,8 @@ public class Resume : LoggedEntity
     public string? About { get; set; }
     public Locale? PinnedToLocale { get; set; }
 
-    public List<ResumeCompanyEntry> CompanyEntries = new();
-    public List<ResumeSkill> Skills = new();
-    public List<ResumeEducation> Educations = new();
-    public List<ResumeCourse> Courses = new();
+    public List<ResumeCompanyEntry> CompanyEntries { get; set; } = new();
+    public List<ResumeSkill> Skills { get; set; } = new();
+    public List<ResumeEducation> Educations { get; set; } = new();
+    public List<ResumeCourse> Courses { get; set; } = new();
 }

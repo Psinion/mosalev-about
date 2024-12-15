@@ -9,6 +9,7 @@
         :value="inputValue"
         :type="password ? 'password' : 'text'"
         autocomplete="off"
+        @focus="onFocus"
         @blur="onBlur"
         @input="onInput($event.target as HTMLInputElement)"
       >
@@ -54,6 +55,7 @@ const props = defineProps({
 
 const emit = defineEmits({
   "update:modelValue": (value: string | null) => true,
+  "focus": () => true,
   "blur": () => true
 });
 
@@ -77,6 +79,10 @@ const {
   initialValue: props.modelValue,
   syncVModel: true
 });
+
+function onFocus() {
+  emit("focus");
+}
 
 function onBlur() {
   emit("blur");

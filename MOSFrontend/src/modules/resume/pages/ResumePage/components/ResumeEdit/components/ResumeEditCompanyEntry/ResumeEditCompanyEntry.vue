@@ -1,16 +1,19 @@
 <template>
   <article class="resume-edit-company-entry">
     <PsiForm
-      ref="psiFormRef"
+      v-model:auto-submit-timer-stop="autoSubmitStop"
       class="form"
+      :auto-submit-timer="2000"
       @valid="valid = $event"
+      @submit="submit"
     >
       <div class="company-input">
         <PsiInput
           v-model="formCompany"
           label="Организация"
           required
-          @blur="onUpdate"
+          @focus="onFormFocus"
+          @blur="onFormBlur"
         />
         <PsiButton
           flat
@@ -21,13 +24,15 @@
       <PsiInput
         v-model="formWebSiteUrl"
         label="Сайт"
-        @blur="onUpdate"
+        @focus="onFormFocus"
+        @blur="onFormBlur"
       />
       <PsiTextarea
         v-model="formDescription"
         label="Описание"
         resizable="vertical"
-        @blur="onUpdate"
+        @focus="onFormFocus"
+        @blur="onFormBlur"
       />
     </PsiForm>
   </article>
@@ -38,7 +43,7 @@ import { useToaster } from "@/shared/PsiUI/utils/toaster.ts";
 import { useI18n } from "vue-i18n";
 import PsiInput from "@/shared/PsiUI/components/PsiInput/PsiInput.vue";
 import PsiTextarea from "@/shared/PsiUI/components/PsiTextarea/PsiTextarea.vue";
-import { onMounted, PropType, ref, toRef } from "vue";
+import { computed, onMounted, PropType, ref, toRef } from "vue";
 import { TResumeCompanyEntry } from "@/shared/types/resume.ts";
 import PsiButton from "@/shared/PsiUI/components/PsiButton/PsiButton.vue";
 import PsiForm from "@/shared/PsiUI/components/PsiForm/PsiForm.vue";
@@ -62,12 +67,13 @@ const toaster = useToaster();
 
 const resumeCompanyEntriesService = ResumesCompanyEntriesServiceInstance;
 
-const psiFormRef = ref();
-
+const autoSubmitStop = ref(true);
 const valid = ref<boolean>(true);
 const formCompany = ref<string | null>(null);
 const formWebSiteUrl = ref<string | null>(null);
 const formDescription = ref<string | null>(null);
+
+const createMode = computed(() => companyEntry.value?.id === 0);
 
 onMounted(() => {
   const company = companyEntry.value!;
@@ -84,10 +90,36 @@ function removeCompany(item: TResumeCompanyEntry) {
   }
 }
 
-function onUpdate() {
-  if (psiFormRef.value?.validate()) {
-    console.log(valid.value);
+function submit() {
+  try {
+    if (createMode.value) {
+      resumeCompanyEntriesService.createResumeCompanyEntry({
+        resumeId: companyEntry.value?.resumeId,
+        company: formCompany.value!,
+        webSiteUrl: formWebSiteUrl.value,
+        description: formDescription.value
+      });
+    }
+    else {
+      resumeCompanyEntriesService.updateResumeCompanyEntry({
+        id: companyEntry.value?.id,
+        company: formCompany.value!,
+        webSiteUrl: formWebSiteUrl.value,
+        description: formDescription.value
+      });
+    }
   }
+  catch (error) {
+    toaster.error("Произошла ошибка при сохранении компании");
+  }
+}
+
+function onFormFocus() {
+  autoSubmitStop.value = true;
+}
+
+function onFormBlur() {
+  autoSubmitStop.value = false;
 }
 
 </script>

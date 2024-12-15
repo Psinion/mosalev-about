@@ -14,6 +14,13 @@ public class ResumesRepository : LoggedGenericRepository<Resume>, IResumesReposi
     {
     }
 
+    public async Task<Resume?> GetByIdWithRelationsAsync(long id, CancellationToken cancellationToken = default)
+    {
+        return await LocalContext.Resumes
+            .Include(x => x.CompanyEntries)
+            .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+    }
+
     public async Task UnpinAllByLocaleAsync(Locale locale)
     {
         await LocalSet

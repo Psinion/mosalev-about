@@ -21,6 +21,7 @@ public class ResumeCompanyEntriesService : IResumeCompanyEntriesService
     {
         var resumeCompanyEntry = new ResumeCompanyEntry()
         {
+            ResumeId = resumeCompanyEntryRequest.ResumeId,
             Company = resumeCompanyEntryRequest.Company,
             Description = resumeCompanyEntryRequest.Description,
             WebSiteUrl = resumeCompanyEntryRequest.WebSiteUrl,
