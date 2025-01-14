@@ -1,0 +1,34 @@
+.resume-edit-post {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+
+  &:not(:last-child) {
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--primary-down);
+  }
+
+  .post-input {
+    display: flex;
+    gap: 8px;
+
+    & > .psi-input {
+      width: 100%;
+    }
+
+    & > .psi-button {
+      margin-top: 24px;
+      height: 24px;
+    }
+  }
+
+  .date-period {
+    display: flex;
+    gap: 8px;
+  }
+
+  & > .psi-textarea {
+    width: 100%;
+  }
+}

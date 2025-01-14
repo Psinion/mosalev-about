@@ -117,7 +117,7 @@ export class PsiRequestor {
     }
   }
 
-  async post(
+  public async post(
     path: string,
     body: TRequestBody
   ): Promise<TRequestBody> {
@@ -134,7 +134,7 @@ export class PsiRequestor {
     }
   }
 
-  async put(
+  public async put(
     path: string,
     body?: TRequestBody
   ): Promise<TRequestBody> {
@@ -143,6 +143,23 @@ export class PsiRequestor {
         "PUT",
         path, {
           body
+        }
+      );
+    }
+    catch (error) {
+      throw error;
+    }
+  }
+
+  public async delete(
+    path: string,
+    query?: TRequestQuery
+  ): Promise<TRequestBody> {
+    try {
+      return await this.request(
+        "DELETE",
+        path, {
+          query
         }
       );
     }

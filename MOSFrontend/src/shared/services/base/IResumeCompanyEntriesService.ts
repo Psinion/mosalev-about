@@ -4,6 +4,7 @@ import { TResumeCompanyEntry } from "@/shared/types/resume.ts";
 export interface IResumeCompanyEntriesService extends IServiceBase {
   createResumeCompanyEntry(params: TCreateResumeCompanyEntryRequest): Promise<TResumeCompanyEntry>;
   updateResumeCompanyEntry(params: TUpdateResumeCompanyEntryRequest): Promise<TResumeCompanyEntry>;
+  deleteResumeCompanyEntry(companyId: number): Promise<boolean>;
 }
 
 export type TCreateResumeCompanyEntryRequest = {

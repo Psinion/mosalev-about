@@ -25,6 +25,16 @@ class ResumeCompanyEntriesService implements IResumeCompanyEntriesService {
       throw error;
     }
   }
+
+  async deleteResumeCompanyEntry(companyId: number): Promise<boolean> {
+    try {
+      await this.requestor.delete(`api/v1/ResumeCompanyEntries/${companyId}`);
+      return true;
+    }
+    catch {
+      return false;
+    }
+  }
 }
 
 const ResumesCompanyEntriesServiceInstance = new ResumeCompanyEntriesService();

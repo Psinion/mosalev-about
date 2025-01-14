@@ -4,11 +4,14 @@
       <h3>Опыт работы</h3>
       <section class="companies">
         <div
-          v-for="companyEntry in companyEntries"
+          v-for="(companyEntry, index) in companyEntries"
           :key="companyEntry.id"
           class="company-block"
         >
-          <ResumeEditCompanyEntry :company-entry="companyEntry" />
+          <ResumeEditCompanyEntry
+            v-model="companyEntries[index]"
+            @delete="deleteCompany"
+          />
           <ResumeEditPostsList
             v-model="companyEntry.resumePosts"
             class="posts-list"
@@ -35,6 +38,7 @@ import ResumeEditPostsList
   from "@/modules/resume/pages/ResumePage/components/ResumeEdit/components/ResumeEditPostsList/ResumeEditPostsList.vue";
 import ResumeEditCompanyEntry
   from "@/modules/resume/pages/ResumePage/components/ResumeEdit/components/ResumeEditCompanyEntry/ResumeEditCompanyEntry.vue";
+import ResumesCompanyEntriesServiceInstance from "@/shared/services/ResumeCompanyEntriesService.ts";
 
 const props = defineProps({
   resume: {
@@ -49,6 +53,7 @@ const props = defineProps({
 
 const { t } = useI18n();
 const toaster = useToaster();
+const resumeCompanyEntriesService = ResumesCompanyEntriesServiceInstance;
 
 const loading = ref(false);
 
@@ -65,6 +70,7 @@ async function refresh() {
   }
 
   const resume = currentResume.value;
+  companyEntries.value = resume.companyEntries;
 }
 
 async function onSave() {
@@ -107,6 +113,15 @@ async function onSave() {
   }
   finally {
     loading.value = false;
+  }
+}
+
+async function deleteCompany(item: TResumeCompanyEntry) {
+  await resumeCompanyEntriesService.deleteResumeCompanyEntry(item.id);
+  const companies = companyEntries.value;
+  const itemIndex = companies.indexOf(item);
+  if (itemIndex > -1) {
+    companies.splice(itemIndex, 1);
   }
 }
 

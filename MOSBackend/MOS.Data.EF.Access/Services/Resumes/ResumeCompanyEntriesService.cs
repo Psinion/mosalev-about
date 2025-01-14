@@ -49,6 +49,19 @@ public class ResumeCompanyEntriesService : IResumeCompanyEntriesService
         return resumeCompanyEntry.ToDto();
     }
 
+    public async Task<OperationResult<bool>> DeleteResumeCompanyEntryAsync(long companyId)
+    {
+        try
+        {
+            await resumeCompanyEntriesRepository.DeleteAsync(companyId);
+            return true;
+        }
+        catch (Exception ex)
+        {
+            return OperationError.NotFound();
+        }
+    }
+
     public void Dispose()
     {
         resumeCompanyEntriesRepository.Dispose();

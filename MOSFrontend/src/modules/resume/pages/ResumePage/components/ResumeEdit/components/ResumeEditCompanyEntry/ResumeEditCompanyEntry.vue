@@ -18,7 +18,7 @@
         <PsiButton
           flat
           icon="close"
-          @click="removeCompany(companyEntry)"
+          @click="removeCompany"
         />
       </div>
       <PsiInput
@@ -50,17 +50,18 @@ import PsiForm from "@/shared/PsiUI/components/PsiForm/PsiForm.vue";
 import ResumesCompanyEntriesServiceInstance from "@/shared/services/ResumeCompanyEntriesService.ts";
 
 const props = defineProps({
-  companyEntry: {
+  modelValue: {
     type: Object as PropType<TResumeCompanyEntry>,
     required: true
   }
 });
 
 const emit = defineEmits({
-  "update:modelValue": (value: TResumeCompanyEntry) => true
+  "update:modelValue": (value: TResumeCompanyEntry) => true,
+  "delete": (value: TResumeCompanyEntry) => true
 });
 
-const companyEntry = toRef(props, "companyEntry");
+const companyEntry = toRef(props, "modelValue");
 
 const { t } = useI18n();
 const toaster = useToaster();
@@ -82,31 +83,33 @@ onMounted(() => {
   formDescription.value = company.description;
 });
 
-function removeCompany(item: TResumeCompanyEntry) {
-  const companies = companyEntries.value;
-  const itemIndex = companies.indexOf(item);
-  if (itemIndex > -1) {
-    companies.splice(itemIndex, 1);
-  }
+function removeCompany() {
+  emit("delete", companyEntry.value);
 }
 
-function submit() {
+async function submit() {
   try {
     if (createMode.value) {
-      resumeCompanyEntriesService.createResumeCompanyEntry({
+      const savedCompany = await resumeCompanyEntriesService.createResumeCompanyEntry({
         resumeId: companyEntry.value?.resumeId,
         company: formCompany.value!,
         webSiteUrl: formWebSiteUrl.value,
         description: formDescription.value
       });
+      emit("update:modelValue", savedCompany);
     }
     else {
-      resumeCompanyEntriesService.updateResumeCompanyEntry({
+      const savedCompany = await resumeCompanyEntriesService.updateResumeCompanyEntry({
         id: companyEntry.value?.id,
         company: formCompany.value!,
         webSiteUrl: formWebSiteUrl.value,
         description: formDescription.value
       });
+
+      const company = companyEntry.value;
+      company.company = savedCompany.company;
+      company.webSiteUrl = savedCompany.webSiteUrl;
+      company.description = savedCompany.description;
     }
   }
   catch (error) {

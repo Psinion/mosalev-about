@@ -41,4 +41,19 @@ public class ResumeCompanyEntriesController : ControllerBase
         
         return Ok(response.Value);
     }
+    
+    [HttpDelete]
+    [CustomAuthorize]
+    [Route("{companyId}")]
+    public async Task<ActionResult<bool>> DeleteResumeCompanyEntry(long companyId)
+    {
+        var response = await resumeCompanyEntriesService.DeleteResumeCompanyEntryAsync(companyId);
+
+        if (response.Error.ErrorType == ErrorType.NotFound)
+        {
+            return NotFound(response.Error); 
+        }
+        
+        return Ok(response.Value);
+    }
 }

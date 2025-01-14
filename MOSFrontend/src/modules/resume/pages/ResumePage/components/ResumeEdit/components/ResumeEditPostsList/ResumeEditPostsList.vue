@@ -7,33 +7,9 @@
         :key="post.id"
         class="post"
       >
-        <div class="post-input">
-          <PsiInput
-            v-model="post.name"
-            label="Название"
-          />
-          <PsiButton
-            flat
-            icon="close"
-            :disabled="!canRemovePost"
-            @click="removePost(post)"
-          />
-        </div>
-        <div class="date-period">
-          <PsiInputDate
-            v-model="post.dateStart"
-            label="Дата начала"
-            required
-          />
-          <PsiInputDate
-            v-model="post.dateEnd"
-            label="Дата окончания"
-          />
-        </div>
-        <PsiTextarea
-          v-model="post.description"
-          label="Описание"
-          resizable="vertical"
+        <ResumeEditPost
+          :model-value="post"
+          :removable="canRemovePost"
         />
       </div>
     </section>
@@ -46,14 +22,12 @@
 </template>
 
 <script setup lang="ts">
-import { useToaster } from "@/shared/PsiUI/utils/toaster.ts";
 import { useI18n } from "vue-i18n";
-import PsiInput from "@/shared/PsiUI/components/PsiInput/PsiInput.vue";
-import PsiTextarea from "@/shared/PsiUI/components/PsiTextarea/PsiTextarea.vue";
 import { computed, PropType, toRef } from "vue";
 import { TResumeCompanyEntryPost } from "@/shared/types/resume.ts";
 import PsiButton from "@/shared/PsiUI/components/PsiButton/PsiButton.vue";
-import PsiInputDate from "@/shared/PsiUI/components/PsiInputDate/PsiInputDate.vue";
+import ResumeEditPost
+  from "@/modules/resume/pages/ResumePage/components/ResumeEdit/components/ResumeEditPost/ResumeEditPost.vue";
 
 const props = defineProps({
   modelValue: {
@@ -69,7 +43,6 @@ const emit = defineEmits({
 const postsList = toRef(props, "modelValue");
 
 const { t } = useI18n();
-const toaster = useToaster();
 
 const canRemovePost = computed(() => postsList.value.length > 1);
 
