@@ -1,9 +1,15 @@
 <template>
-  <PsiForm class="resume-edit-post">
+  <PsiForm
+    class="resume-edit-post"
+    :auto-submit-timer="2000"
+    @valid="valid = $event"
+  >
     <div class="post-input">
       <PsiInput
         v-model="postName"
         label="Название"
+        @focus="onFormFocus"
+        @blur="onFormBlur"
       />
       <PsiButton
         flat
@@ -17,10 +23,14 @@
         v-model="postDateStart"
         label="Дата начала"
         required
+        @focus="onFormFocus"
+        @blur="onFormBlur"
       />
       <PsiInputDate
         v-model="postDateEnd"
         label="Дата окончания"
+        @focus="onFormFocus"
+        @blur="onFormBlur"
       />
     </div>
     <PsiTextarea
@@ -58,6 +68,9 @@ const emit = defineEmits({
 
 const post = toRef(props, "modelValue");
 
+const autoSubmitStop = ref(true);
+const valid = ref(true);
+
 const postName = ref<string | null>(null);
 const postDateStart = ref<string | Date | null>(null);
 const postDateEnd = ref<string | Date | null>(null);
@@ -72,6 +85,14 @@ onMounted(() => {
   postDateEnd.value = p.dateEnd ?? null;
   postDescription.value = p.description ?? null;
 });
+
+function onFormFocus() {
+  autoSubmitStop.value = true;
+}
+
+function onFormBlur() {
+  autoSubmitStop.value = false;
+}
 </script>
 
 <style scoped src="./ResumeEditPost.scss" />

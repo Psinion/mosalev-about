@@ -25,15 +25,19 @@
 
 <script setup lang="ts">
 
-import { computed, PropType } from "vue";
-import { GenericValidateFunction, useField } from "vee-validate";
-import { useComponentId } from "@/shared/PsiUI/utils/componentId.ts";
+import { computed, inject, onMounted, PropType, watch } from "vue";
 import useValidationRules from "@/shared/PsiUI/utils/validationRules.ts";
+import {
+  NotifyValidityFunction,
+  PsiValidateFunction,
+  RegisterValidatorFunction,
+  usePsiValidation
+} from "@/shared/PsiUI/validate/psiValidate.ts";
 
 const props = defineProps({
   modelValue: {
-    type: String as PropType<string | null>,
-    default: null
+    type: String as PropType<string | undefined>,
+    default: undefined
   },
   label: {
     type: String,
@@ -54,15 +58,13 @@ const props = defineProps({
 });
 
 const emit = defineEmits({
-  "update:modelValue": (value: string | null) => true,
+  "update:modelValue": (value: string | undefined) => true,
   "focus": () => true,
   "blur": () => true
 });
 
-const componentId = useComponentId("PsiInput");
-
 const validateRules = computed(() => {
-  const validateFunctions: GenericValidateFunction<string | null>[] = [];
+  const validateFunctions: PsiValidateFunction<string | undefined>[] = [];
 
   const rules = useValidationRules();
 
@@ -74,10 +76,25 @@ const validateRules = computed(() => {
 });
 const {
   value: inputValue,
-  errorMessage
-} = useField(componentId, validateRules.value, {
-  initialValue: props.modelValue,
-  syncVModel: true
+  errorMessage,
+  validate
+} = usePsiValidation(validateRules.value, {
+  initialValue: props.modelValue
+});
+
+watch(
+  () => props.modelValue,
+  () => {
+    inputValue.value = props.modelValue;
+  }
+);
+
+const registerValidator = inject<RegisterValidatorFunction>("registerValidator");
+
+onMounted(() => {
+  if (registerValidator) {
+    registerValidator(validate);
+  }
 });
 
 function onFocus() {
@@ -89,7 +106,7 @@ function onBlur() {
 }
 
 function onInput(target: HTMLInputElement) {
-  emit("update:modelValue", target?.value ? target.value : null);
+  emit("update:modelValue", target?.value ? target.value : undefined);
 }
 
 </script>
