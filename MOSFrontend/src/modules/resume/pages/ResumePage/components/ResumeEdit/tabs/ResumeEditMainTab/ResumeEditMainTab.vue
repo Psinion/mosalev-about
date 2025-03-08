@@ -8,43 +8,43 @@
       >
         <h3>Профиль</h3>
         <PsiInput
-          v-model="title"
+          v-model="form.title"
           label="Название"
           required
         />
 
         <div class="fio-input">
           <PsiInput
-            v-model="lastName"
+            v-model="form.lastName"
             label="Фамилия"
             required
           />
           <PsiInput
-            v-model="firstName"
+            v-model="form.firstName"
             label="Имя"
             required
           />
         </div>
 
         <PsiInput
-          v-model="email"
+          v-model="form.email"
           label="Email"
           required
         />
         <div class="salary-input">
           <PsiInputNumeric
-            v-model="salary"
+            v-model="form.salary"
             label="Зарплата"
             :min="0"
           />
           <PsiToggle
-            v-model="currencyType"
+            v-model="form.currencyType"
             inactive-label="₽"
             active-label="$"
           />
         </div>
         <PsiTextarea
-          v-model="about"
+          v-model="form.about"
           label="О себе"
           :rows="7"
           resizable="vertical"
@@ -98,13 +98,18 @@ const loading = ref(false);
 const currentResume = toRef(props, "resume");
 const createMode = toRef(props, "createMode");
 
-const title = ref<string | null>();
-const firstName = ref<string | null>();
-const lastName = ref<string | null>();
-const email = ref<string | null>();
-const salary = ref<number | null>();
-const currencyType = ref<boolean>(false);
-const about = ref<string | null>();
+type TForm = {
+  title?: string;
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  salary?: number;
+  currencyType: boolean;
+  about?: string | null;
+};
+const form = ref<TForm>({
+  currencyType: false
+});
 
 onMounted(async () => refresh());
 
@@ -114,28 +119,31 @@ async function refresh() {
   }
 
   const resume = currentResume.value;
+  const fm = form.value;
 
-  title.value = resume.title;
-  firstName.value = resume.firstName;
-  lastName.value = resume.lastName;
-  email.value = resume.email;
-  salary.value = resume.salary;
-  currencyType.value = resume.currencyType === CurrencyType.Ruble;
-  about.value = resume.about;
+  fm.title = resume.title;
+  fm.firstName = resume.firstName;
+  fm.lastName = resume.lastName;
+  fm.email = resume.email;
+  fm.salary = resume.salary;
+  fm.currencyType = resume.currencyType === CurrencyType.Ruble;
+  fm.about = resume.about;
 }
 
 async function onSave() {
   try {
     loading.value = true;
+    const fm = form.value;
+
     if (createMode.value) {
       const resumeToSave: TCreateResumeRequest = {
-        title: title.value!,
-        firstName: firstName.value!,
-        lastName: lastName.value!,
-        email: email.value!,
-        salary: salary.value ?? 0,
-        currencyType: currencyType.value ? CurrencyType.Ruble : CurrencyType.Dollar,
-        about: about.value ?? null
+        title: fm.title!,
+        firstName: fm.firstName!,
+        lastName: fm.lastName!,
+        email: fm.email!,
+        salary: fm.salary ?? 0,
+        currencyType: fm.currencyType ? CurrencyType.Ruble : CurrencyType.Dollar,
+        about: fm.about ?? null
       };
 
       await resumeStore.createResume(resumeToSave);
@@ -144,13 +152,13 @@ async function onSave() {
     else {
       const resumeToSave: TUpdateResumeRequest = {
         id: currentResume.value!.id!,
-        title: title.value!,
-        firstName: firstName.value!,
-        lastName: lastName.value!,
-        email: email.value!,
-        salary: salary.value ?? 0,
-        currencyType: currencyType.value ? CurrencyType.Ruble : CurrencyType.Dollar,
-        about: about.value ?? null
+        title: fm.title!,
+        firstName: fm.firstName!,
+        lastName: fm.lastName!,
+        email: fm.email!,
+        salary: fm.salary ?? 0,
+        currencyType: fm.currencyType ? CurrencyType.Ruble : CurrencyType.Dollar,
+        about: fm.about ?? null
       };
 
       await resumeStore.updateResume(resumeToSave);

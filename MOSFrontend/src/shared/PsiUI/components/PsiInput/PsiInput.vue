@@ -77,7 +77,9 @@ const validateRules = computed(() => {
 const {
   value: inputValue,
   errorMessage,
-  validate
+  validate,
+  handleBlur,
+  reset
 } = usePsiValidation(validateRules.value, {
   initialValue: props.modelValue
 });
@@ -93,7 +95,7 @@ const registerValidator = inject<RegisterValidatorFunction>("registerValidator")
 
 onMounted(() => {
   if (registerValidator) {
-    registerValidator(validate);
+    registerValidator(validate, reset);
   }
 });
 
@@ -102,6 +104,7 @@ function onFocus() {
 }
 
 function onBlur() {
+  handleBlur();
   emit("blur");
 }
 

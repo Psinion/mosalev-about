@@ -12,12 +12,12 @@
         @submit="onSubmit"
       >
         <PsiInput
-          v-model.trim="userName"
+          v-model.trim="form.userName"
           :label="t('login.formLoginLabel')"
           required
         />
         <PsiInput
-          v-model="password"
+          v-model="form.password"
           :label="t('login.formPasswordLabel')"
           password
           required
@@ -48,12 +48,15 @@ const toaster = useToaster();
 const { t } = useI18n();
 const userStore = useUserStore();
 
-const userName = ref <string | null> (null);
-const password = ref <string | null> (null);
+type TForm = {
+  userName?: string;
+  password?: string;
+};
+const form = ref<TForm>({});
 
 async function onSubmit() {
   try {
-    await userStore.login(userName.value!, password.value!);
+    await userStore.login(form.value.userName!, form.value.password!);
   }
   catch (error) {
     if (error instanceof ServerError) {

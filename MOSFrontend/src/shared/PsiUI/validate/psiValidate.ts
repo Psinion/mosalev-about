@@ -4,7 +4,8 @@ export type MaybeArray<T> = T | T[];
 export type MaybePromise<T> = T | Promise<T>;
 export type PsiValidateFunction<TValue> = (value: TValue) => MaybePromise<boolean | MaybeArray<string>>;
 export type PsiValidator = () => boolean;
-export type RegisterValidatorFunction = (validator: PsiValidator) => void;
+export type PsiResetter = () => void;
+export type RegisterValidatorFunction = (validator: PsiValidator, resetter: PsiResetter) => void;
 export type NotifyValidityFunction = (validator: PsiValidator, isValid: boolean) => void;
 type TRuleExpression<TValue> = PsiValidateFunction<TValue> | PsiValidateFunction<TValue>[];
 
@@ -14,6 +15,7 @@ type PsiValidationSettings<TValue> = {
 
 export function usePsiValidation<TValue>(rules: TRuleExpression<TValue>, settings: PsiValidationSettings<TValue>) {
   const value = ref(settings.initialValue);
+  const touched = ref(false);
   const errorMessage = ref("");
 
   watch(() => value.value, () => validate());
@@ -50,5 +52,18 @@ export function usePsiValidation<TValue>(rules: TRuleExpression<TValue>, setting
     return isValid;
   }
 
-  return { value, errorMessage, validate };
+  function handleBlur() {
+    if (!touched.value) {
+      touched.value = true;
+    }
+    validate();
+  }
+
+  function reset() {
+    touched.value = false;
+    errorMessage.value = "";
+    value.value = settings.initialValue;
+  }
+
+  return { value, errorMessage, validate, handleBlur, reset };
 }

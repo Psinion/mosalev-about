@@ -9,7 +9,7 @@
 
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, provide, ref, watch } from "vue";
-import { PsiValidator } from "@/shared/PsiUI/validate/psiValidate.ts";
+import { PsiResetter, PsiValidator } from "@/shared/PsiUI/validate/psiValidate.ts";
 
 const props = defineProps({
   /**
@@ -34,10 +34,11 @@ const emit = defineEmits({
   "update:autoSubmitTimerStop": (value: boolean) => true
 });
 
-const validators = ref(new Set<PsiValidator>());
-const validities = ref(new Map<PsiValidator, boolean>());
+const validateRules = ref(new Set<PsiValidator>());
+const validateStates = ref(new Map<PsiValidator, boolean>());
+const resetters = ref(new Set<PsiResetter>());
 const isValid = computed(() => {
-  const valid = Array.from(validities.value.values()).every(v => v === true);
+  const valid = Array.from(validateStates.value.values()).every(v => v === true);
   emit("valid", valid);
   return valid;
 });
@@ -64,13 +65,14 @@ onUnmounted(async () => {
   }
 });
 
-function registerValidator(validator: PsiValidator) {
-  validators.value.add(validator);
-  validities.value.set(validator, false);
+function registerValidator(validator: PsiValidator, resetter: PsiResetter) {
+  validateRules.value.add(validator);
+  validateStates.value.set(validator, false);
+  resetters.value.add(resetter);
 }
 
 function notifyValidity(validator: PsiValidator, isValid: boolean) {
-  validities.value.set(validator, isValid);
+  validateStates.value.set(validator, isValid);
 }
 
 provide("registerValidator", registerValidator);
@@ -78,9 +80,20 @@ provide("notifyValidity", notifyValidity);
 
 async function validate(): Promise<boolean> {
   const results = await Promise.all(
-    [...validators.value].map(validate => validate())
+    [...validateRules.value].map(validate => validate())
   );
   return results.every(valid => valid);
+}
+
+/**
+ * Reset touched and invalid states
+ */
+function reset() {
+  const states = validateStates.value;
+  states.forEach((value, key) => {
+    states.set(key, false);
+  });
+  resetters.value.forEach(reset => reset());
 }
 
 async function onSubmit() {
@@ -94,7 +107,6 @@ async function onSubmit() {
 
 function setAutoSubmitTimer() {
   if (props.autoSubmitTimer) {
-    console.log("setAutoSubmitTimer");
     autoTimer = setTimeout(() => {
       if (!props.autoSubmitTimerStop && isValid.value) {
         onSubmit();
@@ -105,6 +117,7 @@ function setAutoSubmitTimer() {
 }
 
 defineExpose({
-  validate
+  validate,
+  reset
 });
 </script>
