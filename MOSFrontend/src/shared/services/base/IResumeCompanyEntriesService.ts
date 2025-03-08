@@ -10,13 +10,13 @@ export interface IResumeCompanyEntriesService extends IServiceBase {
 export type TCreateResumeCompanyEntryRequest = {
   resumeId: number;
   company: string;
-  webSiteUrl: string | null;
-  description: string | null;
+  webSiteUrl?: string | null;
+  description?: string | null;
 };
 
 export type TUpdateResumeCompanyEntryRequest = {
   id: number;
   company: string;
-  webSiteUrl: string | null;
-  description: string | null;
+  webSiteUrl?: string | null;
+  description?: string | null;
 };

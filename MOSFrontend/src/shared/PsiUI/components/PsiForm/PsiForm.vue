@@ -117,6 +117,8 @@ function setAutoSubmitTimer() {
 }
 
 defineExpose({
+  isValid,
+
   validate,
   reset
 });

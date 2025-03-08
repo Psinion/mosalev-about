@@ -18,7 +18,11 @@ export function usePsiValidation<TValue>(rules: TRuleExpression<TValue>, setting
   const touched = ref(false);
   const errorMessage = ref("");
 
-  watch(() => value.value, () => validate());
+  watch(() => value.value, () => {
+    if (touched.value) {
+      validate();
+    }
+  });
 
   const notifyValidity = inject<NotifyValidityFunction>("notifyValidity");
 

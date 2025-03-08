@@ -28,7 +28,6 @@
 import { computed, inject, onMounted, PropType, watch } from "vue";
 import useValidationRules from "@/shared/PsiUI/utils/validationRules.ts";
 import {
-  NotifyValidityFunction,
   PsiValidateFunction,
   RegisterValidatorFunction,
   usePsiValidation

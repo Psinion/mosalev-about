@@ -9,6 +9,8 @@
         :value="inputValue"
         type="text"
         autocomplete="off"
+        @focus="onFocus"
+        @blur="onBlur"
         @input="onInput($event.target as HTMLInputElement)"
       >
     </label>
@@ -23,15 +25,18 @@
 
 <script setup lang="ts">
 
-import { computed, PropType, toRef, watch } from "vue";
-import { GenericValidateFunction, useField } from "vee-validate";
-import { useComponentId } from "@/shared/PsiUI/utils/componentId.ts";
+import { computed, inject, onMounted, PropType, toRef, watch } from "vue";
 import useValidationRules from "@/shared/PsiUI/utils/validationRules.ts";
 import { PsiDictionary } from "@/shared/PsiUI/types/base.ts";
+import {
+  PsiValidateFunction,
+  RegisterValidatorFunction,
+  usePsiValidation
+} from "@/shared/PsiUI/validate/psiValidate.ts";
 
 const props = defineProps({
   modelValue: {
-    type: [String, Date] as PropType<string | Date | null>,
+    type: [String, Date] as PropType<string | Date | undefined>,
     default: null
   },
   label: {
@@ -53,17 +58,17 @@ const props = defineProps({
 });
 
 const emit = defineEmits({
-  "update:modelValue": (value: string | Date | null) => true
+  "update:modelValue": (value: string | Date | null) => true,
+  "focus": () => true,
+  "blur": () => true
 });
-
-const componentId = useComponentId("PsiInputDate");
 
 const mask = toRef(props, "mask");
 
 const maskPattern = computed(() => getRegExpPattern(mask.value));
 
 const validateRules = computed(() => {
-  const validateFunctions: GenericValidateFunction<string | Date | null>[] = [isValidDate];
+  const validateFunctions: PsiValidateFunction<string | Date | undefined>[] = [isValidDate];
   const rules = useValidationRules();
 
   if (props.required) {
@@ -74,13 +79,23 @@ const validateRules = computed(() => {
 });
 const {
   value: inputValue,
-  handleChange,
-  errorMessage
-} = useField(componentId, validateRules.value, {
-  initialValue: props.modelValue ? formatDate(props.modelValue, mask.value) : null
+  errorMessage,
+  validate,
+  handleBlur,
+  reset
+} = usePsiValidation(validateRules.value, {
+  initialValue: props.modelValue
 });
 
-watch(() => props.modelValue, value => handleChange(value ? formatDate(value, mask.value) : null));
+watch(() => props.modelValue, value => inputValue.value = value ? formatDate(value, mask.value) : undefined);
+
+const registerValidator = inject<RegisterValidatorFunction>("registerValidator");
+
+onMounted(() => {
+  if (registerValidator) {
+    registerValidator(validate, reset);
+  }
+});
 
 function formatDate(date: string | Date, format: string) {
   let formattedDate = format;
@@ -198,6 +213,15 @@ function createDate(dateString: string) {
   }
 
   return null;
+}
+
+function onFocus() {
+  emit("focus");
+}
+
+function onBlur() {
+  handleBlur();
+  emit("blur");
 }
 
 function onInput(target: HTMLInputElement) {

@@ -6,7 +6,7 @@
   >
     <div class="post-input">
       <PsiInput
-        v-model="postName"
+        v-model="form.name"
         label="Название"
         @focus="onFormFocus"
         @blur="onFormBlur"
@@ -20,21 +20,21 @@
     </div>
     <div class="date-period">
       <PsiInputDate
-        v-model="postDateStart"
+        v-model="form.dateStart"
         label="Дата начала"
         required
         @focus="onFormFocus"
         @blur="onFormBlur"
       />
       <PsiInputDate
-        v-model="postDateEnd"
+        v-model="form.dateEnd"
         label="Дата окончания"
         @focus="onFormFocus"
         @blur="onFormBlur"
       />
     </div>
     <PsiTextarea
-      v-model="postDescription"
+      v-model="form.description"
       label="Описание"
       resizable="vertical"
     />
@@ -71,19 +71,23 @@ const post = toRef(props, "modelValue");
 const autoSubmitStop = ref(true);
 const valid = ref(true);
 
-const postName = ref<string | null>(null);
-const postDateStart = ref<string | Date | null>(null);
-const postDateEnd = ref<string | Date | null>(null);
-const postDescription = ref<string | null>(null);
+type TForm = {
+  name?: string;
+  dateStart?: string | Date;
+  dateEnd?: string | Date;
+  description?: string;
+};
+const form = ref<TForm>({});
 
 const { t } = useI18n();
 
 onMounted(() => {
   const p = post.value!;
-  postName.value = p.name;
-  postDateStart.value = p.dateStart ?? null;
-  postDateEnd.value = p.dateEnd ?? null;
-  postDescription.value = p.description ?? null;
+  const fm = form.value;
+  fm.name = p.name;
+  fm.dateStart = p.dateStart ?? undefined;
+  fm.dateEnd = p.dateEnd ?? undefined;
+  fm.description = p.description ?? undefined;
 });
 
 function onFormFocus() {

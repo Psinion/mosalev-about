@@ -11,6 +11,8 @@
         step="any"
         :min="min"
         :max="max"
+        @focus="onFocus"
+        @blur="onBlur"
         @input="onInput($event.target as HTMLInputElement)"
       >
     </label>
@@ -25,15 +27,18 @@
 
 <script setup lang="ts">
 
-import { computed, PropType } from "vue";
-import { useComponentId } from "@/shared/PsiUI/utils/componentId.ts";
-import { GenericValidateFunction, useField } from "vee-validate";
+import { computed, inject, onMounted, PropType, watch } from "vue";
 import useValidationRules from "@/shared/PsiUI/utils/validationRules.ts";
+import {
+  PsiValidateFunction,
+  RegisterValidatorFunction,
+  usePsiValidation
+} from "@/shared/PsiUI/validate/psiValidate.ts";
 
 const props = defineProps({
   modelValue: {
-    type: [Number, String] as PropType<number | string | null>,
-    default: null
+    type: [Number, String] as PropType<number | string | undefined>,
+    default: undefined
   },
   min: {
     type: Number as PropType<number>,
@@ -58,13 +63,13 @@ const props = defineProps({
 });
 
 const emit = defineEmits({
-  "update:modelValue": (value: number | null) => true
+  "update:modelValue": (value: number | undefined) => true,
+  "focus": () => true,
+  "blur": () => true
 });
 
-const componentId = useComponentId("PsiInputNumeric");
-
 const validateRules = computed(() => {
-  const validateFunctions: GenericValidateFunction<string | number | null>[] = [];
+  const validateFunctions: PsiValidateFunction<string | number | undefined>[] = [];
 
   const rules = useValidationRules();
 
@@ -76,14 +81,40 @@ const validateRules = computed(() => {
 });
 const {
   value: inputValue,
-  errorMessage
-} = useField<string | number | null>(componentId, validateRules.value, {
-  initialValue: props.modelValue,
-  syncVModel: true
+  errorMessage,
+  validate,
+  handleBlur,
+  reset
+} = usePsiValidation(validateRules.value, {
+  initialValue: props.modelValue
 });
 
+watch(
+  () => props.modelValue,
+  () => {
+    inputValue.value = props.modelValue;
+  }
+);
+
+const registerValidator = inject<RegisterValidatorFunction>("registerValidator");
+
+onMounted(() => {
+  if (registerValidator) {
+    registerValidator(validate, reset);
+  }
+});
+
+function onFocus() {
+  emit("focus");
+}
+
+function onBlur() {
+  handleBlur();
+  emit("blur");
+}
+
 function onInput(target: HTMLInputElement) {
-  emit("update:modelValue", target?.value ? Number(target.value) : null);
+  emit("update:modelValue", target?.value ? Number(target.value) : undefined);
 }
 
 </script>

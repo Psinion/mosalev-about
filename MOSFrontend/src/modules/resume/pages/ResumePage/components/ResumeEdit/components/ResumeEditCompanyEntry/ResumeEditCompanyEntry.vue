@@ -9,7 +9,7 @@
     >
       <div class="company-input">
         <PsiInput
-          v-model="formCompany"
+          v-model="form.company"
           label="Организация"
           required
           @focus="onFormFocus"
@@ -22,13 +22,13 @@
         />
       </div>
       <PsiInput
-        v-model="formWebSiteUrl"
+        v-model="form.webSiteUrl"
         label="Сайт"
         @focus="onFormFocus"
         @blur="onFormBlur"
       />
       <PsiTextarea
-        v-model="formDescription"
+        v-model="form.description"
         label="Описание"
         resizable="vertical"
         @focus="onFormFocus"
@@ -70,17 +70,22 @@ const resumeCompanyEntriesService = ResumesCompanyEntriesServiceInstance;
 
 const autoSubmitStop = ref(true);
 const valid = ref<boolean>(true);
-const formCompany = ref<string | null>(null);
-const formWebSiteUrl = ref<string | null>(null);
-const formDescription = ref<string | null>(null);
+
+type TForm = {
+  company?: string;
+  webSiteUrl?: string;
+  description?: string;
+};
+const form = ref<TForm>({});
 
 const createMode = computed(() => companyEntry.value?.id === 0);
 
 onMounted(() => {
   const company = companyEntry.value!;
-  formCompany.value = company.company;
-  formWebSiteUrl.value = company.webSiteUrl;
-  formDescription.value = company.description;
+  const fm = form.value;
+  fm.company = company.company;
+  fm.webSiteUrl = company.webSiteUrl ?? undefined;
+  fm.description = company.description ?? undefined;
 });
 
 function removeCompany() {
@@ -89,21 +94,22 @@ function removeCompany() {
 
 async function submit() {
   try {
+    const fm = form.value;
     if (createMode.value) {
       const savedCompany = await resumeCompanyEntriesService.createResumeCompanyEntry({
         resumeId: companyEntry.value?.resumeId,
-        company: formCompany.value!,
-        webSiteUrl: formWebSiteUrl.value,
-        description: formDescription.value
+        company: fm.company!,
+        webSiteUrl: fm.webSiteUrl,
+        description: fm.description
       });
       emit("update:modelValue", savedCompany);
     }
     else {
       const savedCompany = await resumeCompanyEntriesService.updateResumeCompanyEntry({
         id: companyEntry.value?.id,
-        company: formCompany.value!,
-        webSiteUrl: formWebSiteUrl.value,
-        description: formDescription.value
+        company: fm.company!,
+        webSiteUrl: fm.webSiteUrl,
+        description: fm.description
       });
 
       const company = companyEntry.value;
