@@ -14,6 +14,7 @@
           />
           <ResumeEditPostsList
             v-model="companyEntry.resumePosts"
+            :company-id="companyEntry.id"
             class="posts-list"
           />
         </div>

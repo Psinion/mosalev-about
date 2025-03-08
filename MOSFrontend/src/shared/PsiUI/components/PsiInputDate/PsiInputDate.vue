@@ -99,7 +99,8 @@ onMounted(() => {
 
 function formatDate(date: string | Date, format: string) {
   let formattedDate = format;
-
+  console.log(date);
+  console.log(format);
   let dateToFormat: Date | null;
   if (!(date instanceof Date)) {
     dateToFormat = createDate(date);
@@ -228,7 +229,10 @@ function onInput(target: HTMLInputElement) {
   const value = target?.value.replace(/[^0-9-]/g, "");
   const date = createDate(value);
   if (date) {
-    const dateText = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
+    const month = (date.getMonth() + 1).toString().padStart(2, "0");
+    const day = date.getDate().toString().padStart(2, "0");
+    const dateText = `${date.getFullYear()}-${month}-${day}`;
+    console.log(dateText);
     emit("update:modelValue", dateText);
   }
   else {

@@ -38,14 +38,14 @@ export type TResumeCompanyEntry = {
   company: string;
   webSiteUrl: string | null;
   description: string | null;
-  resumePosts: TResumeCompanyEntryPost[];
+  resumePosts: ResumeCompanyEntryPost[];
 };
 
-export type TResumeCompanyEntryPost = {
+export interface ResumeCompanyEntryPost {
   id: number;
   companyId: number;
   name: string;
   description?: string | null;
   dateStart?: string | Date;
   dateEnd?: string | Date | null;
-};
+}

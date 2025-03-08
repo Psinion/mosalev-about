@@ -9,12 +9,16 @@
       >
         <ResumeEditPost
           :model-value="post"
+          :company-id="companyId"
           :removable="canRemovePost"
         />
       </div>
     </section>
     <div class="company-actions">
-      <PsiButton @click="addPost">
+      <PsiButton
+        :disabled="!companyId"
+        @click="addPost"
+      >
         Добавить должность
       </PsiButton>
     </div>
@@ -24,20 +28,24 @@
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
 import { computed, PropType, toRef } from "vue";
-import { TResumeCompanyEntryPost } from "@/shared/types/resume.ts";
+import { ResumeCompanyEntryPost } from "@/shared/types/resume.ts";
 import PsiButton from "@/shared/PsiUI/components/PsiButton/PsiButton.vue";
 import ResumeEditPost
   from "@/modules/resume/pages/ResumePage/components/ResumeEdit/components/ResumeEditPost/ResumeEditPost.vue";
 
 const props = defineProps({
   modelValue: {
-    type: Array as PropType<TResumeCompanyEntryPost[]>,
+    type: Array as PropType<ResumeCompanyEntryPost[]>,
     default: () => []
+  },
+  companyId: {
+    type: Number,
+    default: null
   }
 });
 
 const emit = defineEmits({
-  "update:modelValue": (value: TResumeCompanyEntryPost[]) => true
+  "update:modelValue": (value: ResumeCompanyEntryPost[]) => true
 });
 
 const postsList = toRef(props, "modelValue");
@@ -57,7 +65,7 @@ function addPost() {
   emit("update:modelValue", posts);
 }
 
-function removePost(item: TResumeCompanyEntryPost) {
+function removePost(item: ResumeCompanyEntryPost) {
   const posts = postsList.value;
   const itemIndex = posts.indexOf(item);
   if (itemIndex > -1) {

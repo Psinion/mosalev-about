@@ -1,8 +1,10 @@
 <template>
   <PsiForm
+    v-model:auto-submit-timer-stop="autoSubmitStop"
     class="resume-edit-post"
     :auto-submit-timer="2000"
     @valid="valid = $event"
+    @submit="submit"
   >
     <div class="post-input">
       <PsiInput
@@ -45,28 +47,39 @@
 import { useI18n } from "vue-i18n";
 import PsiInput from "@/shared/PsiUI/components/PsiInput/PsiInput.vue";
 import PsiTextarea from "@/shared/PsiUI/components/PsiTextarea/PsiTextarea.vue";
-import { onMounted, PropType, ref, toRef } from "vue";
-import { TResumeCompanyEntryPost } from "@/shared/types/resume.ts";
+import { computed, onMounted, PropType, ref, toRef } from "vue";
+import { ResumeCompanyEntryPost } from "@/shared/types/resume.ts";
 import PsiButton from "@/shared/PsiUI/components/PsiButton/PsiButton.vue";
 import PsiInputDate from "@/shared/PsiUI/components/PsiInputDate/PsiInputDate.vue";
 import PsiForm from "@/shared/PsiUI/components/PsiForm/PsiForm.vue";
+import ResumePostsServiceInstance from "@/shared/services/ResumePostsService.ts";
+import { useToaster } from "@/shared/PsiUI/utils/toaster.ts";
 
 const props = defineProps({
   modelValue: {
-    type: Object as PropType<TResumeCompanyEntryPost>,
+    type: Object as PropType<ResumeCompanyEntryPost>,
     required: true
   },
   removable: {
     type: Boolean,
     default: false
+  },
+  companyId: {
+    type: Number,
+    default: null
   }
 });
 
 const emit = defineEmits({
-  "update:modelValue": (value: TResumeCompanyEntryPost) => true
+  "update:modelValue": (value: ResumeCompanyEntryPost) => true
 });
 
+const { t } = useI18n();
+const toaster = useToaster();
+const resumePostsService = ResumePostsServiceInstance;
+
 const post = toRef(props, "modelValue");
+const companyId = toRef(props, "companyId");
 
 const autoSubmitStop = ref(true);
 const valid = ref(true);
@@ -79,7 +92,7 @@ type TForm = {
 };
 const form = ref<TForm>({});
 
-const { t } = useI18n();
+const createMode = computed(() => post.value?.id === 0);
 
 onMounted(() => {
   const p = post.value!;
@@ -89,6 +102,35 @@ onMounted(() => {
   fm.dateEnd = p.dateEnd ?? undefined;
   fm.description = p.description ?? undefined;
 });
+
+async function submit() {
+  try {
+    const fm = form.value;
+    if (createMode.value) {
+      const savedPost = await resumePostsService.createResumePost({
+        resumeCompanyEntryId: companyId.value,
+        name: fm.name!,
+        description: fm.description,
+        dateStart: fm.dateStart,
+        dateEnd: fm.dateEnd
+      });
+      emit("update:modelValue", savedPost);
+    }
+    else {
+      const savedPost = await resumePostsService.updateResumePost({
+        id: post.value!.id,
+        name: fm.name!,
+        description: fm.description,
+        dateStart: fm.dateStart,
+        dateEnd: fm.dateEnd
+      });
+      emit("update:modelValue", savedPost);
+    }
+  }
+  catch (error) {
+    toaster.error("Произошла ошибка при сохранении компании");
+  }
+}
 
 function onFormFocus() {
   autoSubmitStop.value = true;
