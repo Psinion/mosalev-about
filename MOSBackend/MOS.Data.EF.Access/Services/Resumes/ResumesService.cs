@@ -68,26 +68,6 @@ public class ResumesService : IResumesService
         resume.CurrencyType = resumeRequest.CurrencyType;
         resume.About = resumeRequest.About;
 
-        /*var companyIds = resumeRequest
-            .CompanyEntries
-            .Select(x => x.Id)
-            .ToList();
-        
-        //var companiesToDelete = resume.CompanyEntries.ExceptBy(companyIds, x => x.Id);
-        var companiesToUpdate = resume.CompanyEntries.IntersectBy(companyIds, x => x.Id);
-
-        foreach (var company in companiesToUpdate)
-        {
-            var companyRequest = resumeRequest.CompanyEntries.Find(x => x.Id == company.Id);
-            if (companyRequest != null)
-            {
-                company.Company = companyRequest.Company;
-                company.Description = companyRequest.Description;
-                company.WebSiteUrl = companyRequest.WebSiteUrl;
-                //company.ResumePosts = companyRequest.ResumePosts;
-            } 
-        }*/
-
         await resumesRepository.UpdateAsync(resume);
         
         return resume.ToDto();

@@ -22,7 +22,7 @@ public class ResumeCompanyEntriesController : ControllerBase
     
     [HttpPost]
     [CustomAuthorize]
-    public async Task<ActionResult<ResumeResponseDto>> CreateResumeCompanyEntry(ResumeCompanyEntryCreateRequestDto request)
+    public async Task<ActionResult<ResumeCompanyEntryResponseDto>> CreateResumeCompanyEntry(ResumeCompanyEntryCreateRequestDto request)
     {
         var response = await resumeCompanyEntriesService.CreateResumeCompanyEntryAsync(request);
         return Ok(response.Value);
@@ -30,7 +30,7 @@ public class ResumeCompanyEntriesController : ControllerBase
     
     [HttpPut]
     [CustomAuthorize]
-    public async Task<ActionResult<ResumeResponseDto>> UpdateResumeCompanyEntry(ResumeCompanyEntryUpdateRequestDto request)
+    public async Task<ActionResult<ResumeCompanyEntryResponseDto>> UpdateResumeCompanyEntry(ResumeCompanyEntryUpdateRequestDto request)
     {
         var response = await resumeCompanyEntriesService.UpdateResumeCompanyEntryAsync(request);
 

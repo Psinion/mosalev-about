@@ -1,10 +1,13 @@
-namespace MOS.Domain.Entities.Resumes;
+namespace MOS.Application.DTOs.Resumes.Responses;
 
-public class ResumePost : Entity
+public class ResumePostResponseDto
 {
+    public long Id { get; set; }
+
     public long ResumeCompanyEntryId { get; set; }
     
     public string Name { get; set; } = "";
+    
     public string? Description { get; set; }
     
     public DateOnly DateStart { get; set; }

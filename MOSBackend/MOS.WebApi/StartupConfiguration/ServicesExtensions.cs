@@ -27,6 +27,7 @@ public static class ServicesExtensions
         services.AddScoped<IUsersRepository, UsersRepository>();
         services.AddScoped<IResumesRepository, ResumesRepository>();
         services.AddScoped<IResumeCompanyEntriesRepository, ResumeCompanyEntriesRepository>();
+        services.AddScoped<IResumePostsRepository, ResumePostsRepository>();
         services.AddScoped<IIndexContentsRepository, IndexContentsRepository>();
 
         return services;
@@ -38,6 +39,7 @@ public static class ServicesExtensions
         services.AddScoped<IUsersService, UsersService>();
         services.AddScoped<IResumesService, ResumesService>();
         services.AddScoped<IResumeCompanyEntriesService, ResumeCompanyEntriesService>();
+        services.AddScoped<IResumePostsService, ResumePostsService>();
         services.AddScoped<IIndexService, IndexService>();
         
         return services;
