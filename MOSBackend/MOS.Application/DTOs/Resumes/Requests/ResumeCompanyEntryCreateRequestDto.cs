@@ -9,7 +9,7 @@ public class ResumeCompanyEntryCreateRequestDto
     public long ResumeId { get; set; }
     
     [Required]
-    [StringLength(50)] 
+    [StringLength(80)] 
     public string Company { get; set; } = "";
     
     [StringLength(50)] 

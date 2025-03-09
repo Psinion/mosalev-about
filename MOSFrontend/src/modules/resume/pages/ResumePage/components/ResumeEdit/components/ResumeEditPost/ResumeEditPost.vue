@@ -11,6 +11,7 @@
         v-model="form.name"
         label="Название"
         required
+        :max-length="50"
         :disabled="!companyId"
         @focus="onFormFocus"
         @blur="onFormBlur"

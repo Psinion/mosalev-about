@@ -68,6 +68,9 @@
     "noPermissionsDescription": "Обратитесь, пожалуйста, к владельцу ресурса XD"
   },
   "psiUi": {
-    "requiredErrorMessage": "Обязательное поле"
+    "incorrectDataErrorMessage": "Не верный тип данных",
+    "requiredErrorMessage": "Обязательное поле",
+    "minLengthErrorMessage": "Слишком коротко",
+    "maxLengthErrorMessage": "Слишком длинно"
   }
 }

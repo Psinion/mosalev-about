@@ -65,6 +65,9 @@
     "noPermissionsDescription": "Please, contact the owner of this resource XD"
   },
   "psiUi": {
-    "requiredErrorMessage": "Field is required"
+    "incorrectDataErrorMessage": "Incorrect data type",
+    "requiredErrorMessage": "Field is required",
+    "minLengthErrorMessage": "Too short",
+    "maxLengthErrorMessage": "Too long"
   }
 }

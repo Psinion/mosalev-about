@@ -12,6 +12,7 @@
           v-model="form.company"
           label="Организация"
           required
+          :max-length="80"
           @focus="onFormFocus"
           @blur="onFormBlur"
         />
@@ -24,6 +25,7 @@
       <PsiInput
         v-model="form.webSiteUrl"
         label="Сайт"
+        :max-length="50"
         @focus="onFormFocus"
         @blur="onFormBlur"
       />

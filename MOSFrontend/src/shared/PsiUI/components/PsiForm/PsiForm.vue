@@ -103,6 +103,8 @@ async function onSubmit() {
   }
 
   emit("submit");
+
+  reset();
 }
 
 function setAutoSubmitTimer() {

@@ -30,7 +30,7 @@
 
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
-import { computed, PropType, toRef } from "vue";
+import { computed, onMounted, PropType, toRef } from "vue";
 import { ResumeCompanyEntryPost } from "@/shared/types/resume.ts";
 import PsiButton from "@/shared/PsiUI/components/PsiButton/PsiButton.vue";
 import ResumeEditPost
@@ -58,16 +58,21 @@ const postsList = toRef(props, "modelValue");
 const { t } = useI18n();
 const resumePostsService = ResumePostsServiceInstance;
 
-const canAddPost = computed(() => props.companyId && postsList.value.find(x => x.id !== 0));
+const canAddPost = computed(() => props.companyId && !postsList.value.find(x => x.id === 0));
 const canRemovePost = computed(() => postsList.value.length > 1);
+
+onMounted(() => {
+  if (postsList.value.length === 0) {
+    addPost();
+  }
+});
 
 function addPost() {
   const posts = postsList.value;
   posts.push({
     id: 0,
     resumeCompanyEntryId: 0,
-    name: undefined,
-    dateStart: date2DateOnly(new Date())
+    name: undefined
   });
   emit("update:modelValue", posts);
 }

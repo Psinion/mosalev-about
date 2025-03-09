@@ -66,7 +66,6 @@ export function usePsiValidation<TValue>(rules: TRuleExpression<TValue>, setting
   function reset() {
     touched.value = false;
     errorMessage.value = "";
-    value.value = settings.initialValue;
   }
 
   return { value, errorMessage, validate, handleBlur, reset };

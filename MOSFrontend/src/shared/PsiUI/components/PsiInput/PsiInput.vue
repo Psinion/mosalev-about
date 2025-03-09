@@ -53,6 +53,14 @@ const props = defineProps({
   password: {
     type: Boolean,
     default: false
+  },
+  minLength: {
+    type: Number,
+    default: 0
+  },
+  maxLength: {
+    type: Number,
+    default: Number.MAX_VALUE
   }
 });
 
@@ -65,10 +73,19 @@ const emit = defineEmits({
 const validateRules = computed(() => {
   const validateFunctions: PsiValidateFunction<string | undefined>[] = [];
 
-  const rules = useValidationRules();
+  const rules = useValidationRules({
+    minLength: props.minLength,
+    maxLength: props.maxLength
+  });
 
   if (props.required) {
     validateFunctions.push(rules.required);
+  }
+  if (props.minLength) {
+    validateFunctions.push(rules.minLength);
+  }
+  if (props.maxLength) {
+    validateFunctions.push(rules.maxLength);
   }
 
   return validateFunctions;
