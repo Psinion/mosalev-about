@@ -44,8 +44,8 @@ export type TResumeCompanyEntry = {
 export interface ResumeCompanyEntryPost {
   id: number;
   companyId: number;
-  name: string;
+  name?: string;
   description?: string | null;
-  dateStart?: string | Date;
-  dateEnd?: string | Date | null;
+  dateStart?: string;
+  dateEnd?: string | null;
 }

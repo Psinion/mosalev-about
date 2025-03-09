@@ -11,14 +11,14 @@ export type TCreateResumePostRequest = {
   resumeCompanyEntryId: number;
   name: string;
   description?: string;
-  dateStart?: string | Date;
-  dateEnd?: string | Date;
+  dateStart?: string;
+  dateEnd?: string;
 };
 
 export type TUpdateResumePostRequest = {
   id: number;
   name: string;
   description?: string;
-  dateStart?: string | Date;
-  dateEnd?: string | Date;
+  dateStart?: string;
+  dateEnd?: string;
 };

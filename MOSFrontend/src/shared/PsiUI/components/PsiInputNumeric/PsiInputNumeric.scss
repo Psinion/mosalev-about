@@ -27,6 +27,17 @@
     }
   }
 
+  &.disabled {
+    pointer-events: none;
+
+    & > label {
+      & > input {
+        border: 1px solid var(--secondary-down);
+        background-color: var(--tertiary-down);
+      }
+    }
+  }
+
   .error-text {
     margin-top: 4px;
     color: var(--critical);

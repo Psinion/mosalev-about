@@ -10,13 +10,14 @@
       <PsiInput
         v-model="form.name"
         label="Название"
+        :disabled="!companyId"
         @focus="onFormFocus"
         @blur="onFormBlur"
       />
       <PsiButton
         flat
         icon="close"
-        :disabled="!removable"
+        :disabled="!removable || !companyId"
         @click="removePost(post)"
       />
     </div>
@@ -25,18 +26,21 @@
         v-model="form.dateStart"
         label="Дата начала"
         required
+        :disabled="!companyId"
         @focus="onFormFocus"
         @blur="onFormBlur"
       />
       <PsiInputDate
         v-model="form.dateEnd"
         label="Дата окончания"
+        :disabled="!companyId"
         @focus="onFormFocus"
         @blur="onFormBlur"
       />
     </div>
     <PsiTextarea
       v-model="form.description"
+      :disabled="!companyId"
       label="Описание"
       resizable="vertical"
     />
@@ -86,8 +90,8 @@ const valid = ref(true);
 
 type TForm = {
   name?: string;
-  dateStart?: string | Date;
-  dateEnd?: string | Date;
+  dateStart?: string;
+  dateEnd?: string;
   description?: string;
 };
 const form = ref<TForm>({});

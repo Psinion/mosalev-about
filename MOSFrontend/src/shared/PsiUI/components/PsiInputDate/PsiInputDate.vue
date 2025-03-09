@@ -99,8 +99,6 @@ onMounted(() => {
 
 function formatDate(date: string | Date, format: string) {
   let formattedDate = format;
-  console.log(date);
-  console.log(format);
   let dateToFormat: Date | null;
   if (!(date instanceof Date)) {
     dateToFormat = createDate(date);
@@ -144,8 +142,8 @@ function formatDate(date: string | Date, format: string) {
   return formattedDate;
 }
 
-function checkDate(value: string | Date | null) {
-  return value === null || value instanceof Date;
+function checkDate(value: string | Date | undefined) {
+  return value === undefined || value instanceof Date;
 }
 
 function getDateMatches(value: string) {
@@ -153,7 +151,7 @@ function getDateMatches(value: string) {
   return value.match(dateRegExp);
 }
 
-function isValidDate(value: string | Date | null) {
+function isValidDate(value: string | Date | undefined) {
   if (checkDate(value) || getDateMatches(value)) {
     return true;
   }
@@ -232,7 +230,6 @@ function onInput(target: HTMLInputElement) {
     const month = (date.getMonth() + 1).toString().padStart(2, "0");
     const day = date.getDate().toString().padStart(2, "0");
     const dateText = `${date.getFullYear()}-${month}-${day}`;
-    console.log(dateText);
     emit("update:modelValue", dateText);
   }
   else {

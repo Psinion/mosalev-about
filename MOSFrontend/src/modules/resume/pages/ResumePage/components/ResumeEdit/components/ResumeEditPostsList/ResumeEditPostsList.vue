@@ -32,6 +32,7 @@ import { ResumeCompanyEntryPost } from "@/shared/types/resume.ts";
 import PsiButton from "@/shared/PsiUI/components/PsiButton/PsiButton.vue";
 import ResumeEditPost
   from "@/modules/resume/pages/ResumePage/components/ResumeEdit/components/ResumeEditPost/ResumeEditPost.vue";
+import { date2DateOnly } from "@/shared/utils/helpers.ts";
 
 const props = defineProps({
   modelValue: {
@@ -59,8 +60,8 @@ function addPost() {
   posts.push({
     id: 0,
     companyId: 0,
-    name: "",
-    dateStart: new Date()
+    name: undefined,
+    dateStart: date2DateOnly(new Date())
   });
   emit("update:modelValue", posts);
 }
