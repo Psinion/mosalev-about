@@ -10,6 +10,7 @@
       <PsiInput
         v-model="form.name"
         label="Название"
+        required
         :disabled="!companyId"
         @focus="onFormFocus"
         @blur="onFormBlur"
@@ -18,7 +19,7 @@
         flat
         icon="close"
         :disabled="!removable || !companyId"
-        @click="removePost(post)"
+        @click="remove(post)"
       />
     </div>
     <div class="date-period">
@@ -43,6 +44,8 @@
       :disabled="!companyId"
       label="Описание"
       resizable="vertical"
+      @focus="onFormFocus"
+      @blur="onFormBlur"
     />
   </PsiForm>
 </template>
@@ -75,7 +78,9 @@ const props = defineProps({
 });
 
 const emit = defineEmits({
-  "update:modelValue": (value: ResumeCompanyEntryPost) => true
+  create: (value: ResumeCompanyEntryPost) => true,
+  update: (value: ResumeCompanyEntryPost) => true,
+  remove: (value: ResumeCompanyEntryPost) => true
 });
 
 const { t } = useI18n();
@@ -118,7 +123,7 @@ async function submit() {
         dateStart: fm.dateStart,
         dateEnd: fm.dateEnd
       });
-      emit("update:modelValue", savedPost);
+      emit("create", savedPost);
     }
     else {
       const savedPost = await resumePostsService.updateResumePost({
@@ -128,11 +133,21 @@ async function submit() {
         dateStart: fm.dateStart,
         dateEnd: fm.dateEnd
       });
-      emit("update:modelValue", savedPost);
+      emit("update", savedPost);
     }
   }
   catch (error) {
-    toaster.error("Произошла ошибка при сохранении компании");
+    toaster.error("Произошла ошибка при сохранении должности");
+  }
+}
+
+async function remove(post: ResumeCompanyEntryPost) {
+  try {
+    await resumePostsService.deleteResumePost(post.id);
+    emit("remove", post);
+  }
+  catch (error) {
+    toaster.error("Произошла ошибка при удалении должности");
   }
 }
 

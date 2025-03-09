@@ -38,7 +38,6 @@ const validateRules = ref(new Set<PsiValidator>());
 const validateStates = ref(new Map<PsiValidator, boolean>());
 const resetters = ref(new Set<PsiResetter>());
 const isValid = computed(() => {
-  console.log(validateStates.value);
   const valid = Array.from(validateStates.value.values()).every(v => v === true);
   emit("valid", valid);
   return valid;

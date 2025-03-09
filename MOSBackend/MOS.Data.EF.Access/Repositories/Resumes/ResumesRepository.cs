@@ -18,6 +18,7 @@ public class ResumesRepository : LoggedGenericRepository<Resume>, IResumesReposi
     {
         return await LocalContext.Resumes
             .Include(x => x.CompanyEntries)
+            .ThenInclude(x => x.ResumePosts)
             .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
     }
 

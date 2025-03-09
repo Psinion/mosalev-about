@@ -58,7 +58,7 @@ const props = defineProps({
 });
 
 const emit = defineEmits({
-  "update:modelValue": (value: string | Date | null) => true,
+  "update:modelValue": (value: string | Date | undefined) => true,
   "focus": () => true,
   "blur": () => true
 });
@@ -68,7 +68,7 @@ const mask = toRef(props, "mask");
 const maskPattern = computed(() => getRegExpPattern(mask.value));
 
 const validateRules = computed(() => {
-  const validateFunctions: PsiValidateFunction<string | Date | undefined>[] = [isValidDate];
+  const validateFunctions: PsiValidateFunction<string | Date | undefined | null>[] = [isValidDate];
   const rules = useValidationRules();
 
   if (props.required) {
@@ -142,8 +142,8 @@ function formatDate(date: string | Date, format: string) {
   return formattedDate;
 }
 
-function checkDate(value: string | Date | undefined) {
-  return value === undefined || value instanceof Date;
+function checkDate(value: string | Date | undefined | null) {
+  return value === undefined || value === null || value instanceof Date;
 }
 
 function getDateMatches(value: string) {
@@ -151,7 +151,7 @@ function getDateMatches(value: string) {
   return value.match(dateRegExp);
 }
 
-function isValidDate(value: string | Date | undefined) {
+function isValidDate(value: string | Date | undefined | null) {
   if (checkDate(value) || getDateMatches(value)) {
     return true;
   }
@@ -211,7 +211,7 @@ function createDate(dateString: string) {
     return date;
   }
 
-  return null;
+  return undefined;
 }
 
 function onFocus() {

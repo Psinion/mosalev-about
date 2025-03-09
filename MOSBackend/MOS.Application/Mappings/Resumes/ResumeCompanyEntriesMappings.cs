@@ -16,6 +16,7 @@ public static class ResumeCompanyEntriesMappings
             Company = entity.Company,
             WebSiteUrl = entity.WebSiteUrl,
             Description = entity.Description,
+            ResumePosts = entity.ResumePosts.ToDtoList()
         };
     }
     

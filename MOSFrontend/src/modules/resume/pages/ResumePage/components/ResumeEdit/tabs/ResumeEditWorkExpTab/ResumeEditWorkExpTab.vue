@@ -136,7 +136,7 @@ function addCompany() {
     webSiteUrl: null,
     resumePosts: [{
       id: 0,
-      companyId: 0,
+      resumeCompanyEntryId: 0,
       name: ""
     }]
   });

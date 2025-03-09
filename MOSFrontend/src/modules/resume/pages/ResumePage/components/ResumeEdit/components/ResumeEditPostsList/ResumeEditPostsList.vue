@@ -11,15 +11,18 @@
           :model-value="post"
           :company-id="companyId"
           :removable="canRemovePost"
+          @create="onCreatePost"
+          @update="onUpdatePost"
+          @remove="onRemovePost"
         />
       </div>
     </section>
     <div class="company-actions">
       <PsiButton
-        :disabled="!companyId"
+        :disabled="!canAddPost"
         @click="addPost"
       >
-        Добавить должность
+        Новая должность
       </PsiButton>
     </div>
   </article>
@@ -33,6 +36,7 @@ import PsiButton from "@/shared/PsiUI/components/PsiButton/PsiButton.vue";
 import ResumeEditPost
   from "@/modules/resume/pages/ResumePage/components/ResumeEdit/components/ResumeEditPost/ResumeEditPost.vue";
 import { date2DateOnly } from "@/shared/utils/helpers.ts";
+import ResumePostsServiceInstance from "@/shared/services/ResumePostsService.ts";
 
 const props = defineProps({
   modelValue: {
@@ -52,21 +56,41 @@ const emit = defineEmits({
 const postsList = toRef(props, "modelValue");
 
 const { t } = useI18n();
+const resumePostsService = ResumePostsServiceInstance;
 
+const canAddPost = computed(() => props.companyId && postsList.value.find(x => x.id !== 0));
 const canRemovePost = computed(() => postsList.value.length > 1);
 
 function addPost() {
   const posts = postsList.value;
   posts.push({
     id: 0,
-    companyId: 0,
+    resumeCompanyEntryId: 0,
     name: undefined,
     dateStart: date2DateOnly(new Date())
   });
   emit("update:modelValue", posts);
 }
 
-function removePost(item: ResumeCompanyEntryPost) {
+function onCreatePost(item: ResumeCompanyEntryPost) {
+  const posts = postsList.value;
+  const foundIndex = posts.findIndex(x => x.id === 0);
+  if (foundIndex >= 0) {
+    posts[foundIndex] = item;
+  }
+  emit("update:modelValue", posts);
+}
+
+function onUpdatePost(item: ResumeCompanyEntryPost) {
+  const posts = postsList.value;
+  const foundIndex = posts.findIndex(x => x.id === item.id);
+  if (foundIndex) {
+    posts[foundIndex] = item;
+  }
+  emit("update:modelValue", posts);
+}
+
+function onRemovePost(item: ResumeCompanyEntryPost) {
   const posts = postsList.value;
   const itemIndex = posts.indexOf(item);
   if (itemIndex > -1) {

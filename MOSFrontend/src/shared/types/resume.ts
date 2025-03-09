@@ -43,7 +43,7 @@ export type TResumeCompanyEntry = {
 
 export interface ResumeCompanyEntryPost {
   id: number;
-  companyId: number;
+  resumeCompanyEntryId: number;
   name?: string;
   description?: string | null;
   dateStart?: string;

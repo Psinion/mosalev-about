@@ -11,4 +11,6 @@ public class ResumeCompanyEntryResponseDto
     public string? WebSiteUrl { get; set; }    
     
     public string? Description { get; set; }
+    
+    public List<ResumePostResponseDto> ResumePosts { get; set; } = new();
 }
