@@ -86,6 +86,19 @@
           {{ currentResume?.about }}
         </div>
 
+        <div class="experience">
+          <h2>Опыт</h2>
+          <div class="companies">
+            <div
+              v-for="company in currentResume?.companyEntries"
+              :key="company.id"
+              class="company"
+            >
+              <h3>{{ company.company }}</h3>
+            </div>
+          </div>
+        </div>
+
         <footer class="hint-regular">
           {{ dateUpdate }}
         </footer>

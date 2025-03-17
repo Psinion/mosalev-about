@@ -17,10 +17,6 @@
         <div class="center-panel">
           <div class="map">
             <LayoutHeaderActions
-              :title="t('layoutHeader.aboutMe')"
-              :route="aboutRoute"
-            />
-            <LayoutHeaderActions
               :title="t('layoutHeader.projects')"
               disabled
             />

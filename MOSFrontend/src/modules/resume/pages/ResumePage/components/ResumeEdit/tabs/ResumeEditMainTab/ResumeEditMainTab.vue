@@ -105,7 +105,7 @@ type TForm = {
   email?: string;
   salary?: number;
   currencyType: boolean;
-  about?: string | null;
+  about?: string | undefined;
 };
 const form = ref<TForm>({
   currencyType: false
@@ -127,7 +127,7 @@ async function refresh() {
   fm.email = resume.email;
   fm.salary = resume.salary;
   fm.currencyType = resume.currencyType === CurrencyType.Ruble;
-  fm.about = resume.about;
+  fm.about = resume.about ?? undefined;
 }
 
 async function onSave() {

@@ -10,10 +10,9 @@
   "index": {
     "welcome": "Welcome!",
     "aboutWebsiteHeader": "About website",
-    "aboutWebsiteContent1": "This website was created for entertainment in order to learn containerization and deployment of the project on remote server. In addition, I wanted to build the basis of client-server monolithic architecture that I can use in future projects. Here you will find some information about me and my projects. The source code of ",
+    "aboutWebsiteContent1": "This website was created for entertainment in order to learn containerization and deployment of the project on remote server. In addition, I wanted to build the basis of client-server monolithic architecture that I can use in the future. Here you will find some information about me and my projects. The source code of ",
     "aboutWebsiteContent2": "this",
-    "aboutWebsiteContent3": " project is available on ",
-    "aboutWebsiteContent4": "My pet projects are only in gamedev and I have no desire to show them yet. Therefore, I had the idea to create this website. It's simple and its static version could easily be created in notepad, but I had a goal of demonstrating my knowledge rather than the desire to create a practical product."
+    "aboutWebsiteContent3": " project is available on "
   },
   "login": {
     "formLoginLabel": "Login",
@@ -23,11 +22,6 @@
   },
   "about": {
     "header": "About",
-    "content1": "My name is Mosalev Daniel and I am .NET developer. I started learning C# in the 2010s when I wanted to make a game in Unity. But as a result, classical development seemed more practical to me in commercial, and now I am working with ordinary client-server applications. Successfully completed the Bachelor's degree program of ",
-    "content2": "NSTU",
-    "content3": " in 2021, since the same year I have been working in it on the remote education system Dispace.",
-    "content4": "For me, remoteness is a symbol of modern IT and one of the pillars that keep my desire to be a developer. I want to develop applications that will help people solve problems remotely, without having to go to any organizations with any documents, and devote the free time to their hobbies. \"Gosuslugi\" - the standard of a service that solves boring tasks. Of course, I also want to work remotely, as it is incredibly comfortable.",
-    "content5": "It so happens that I have the most experience with web technologies, but I am interested in .NET: Microsoft has created a very successful ecosystem, which is a pleasure to be in. But this does not mean at all that I cannot solve problems using other tools. I'm good at diving into the depths of the obscurity, as it only encourage the desire for knowledge. I won't hide it, not everything works out. For example, I'm not doing well with Python, but this is just an exception.",
     "resumeButton": "Resume"
   },
   "resume": {

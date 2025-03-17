@@ -20,14 +20,6 @@
           {{ t('about.resumeButton') }}
         </PsiButton>
       </div>
-      <div class="text typography-block body-regular">
-        <div>
-          <h3>{{ t('about.header') }}</h3>
-          <p> {{ t('about.content1') }}<strong>{{ t('about.content2') }}</strong>{{ t('about.content3') }}</p>
-          <p>{{ t('about.content4') }}</p>
-          <p>{{ t('about.content5') }}</p>
-        </div>
-      </div>
     </div>
   </ContentLayout>
 </template>

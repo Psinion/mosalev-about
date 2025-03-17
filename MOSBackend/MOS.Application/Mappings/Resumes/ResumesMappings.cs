@@ -1,4 +1,3 @@
-using MOS.Application.DTOs.Resumes.Requests;
 using MOS.Application.DTOs.Resumes.Responses;
 using MOS.Domain.Entities.Resumes;
 
