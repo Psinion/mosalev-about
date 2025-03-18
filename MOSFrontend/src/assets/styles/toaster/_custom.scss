@@ -21,36 +21,3 @@ $rt-namespace: 'Toastify';
     }
   }
 }
-
-// Анимация появления/скрытия
-/*@keyframes #{$rt-namespace}__diShowIn {
-  from {
-    opacity: 0;
-    animation-timing-function: var(--di-base-transition-time);
-  }
-
-  to {
-    opacity: 1;
-    animation-timing-function: var(--di-base-transition-time);
-  }
-}
-
-@keyframes #{$rt-namespace}__diShowOut {
-  from {
-    opacity: 1;
-    animation-timing-function: var(--di-base-transition-time);
-  }
-
-  to {
-    opacity: 0;
-    animation-timing-function: var(--di-base-transition-time);
-  }
-}
-
-.#{$rt-namespace}__flip-enter {
-  animation-name: #{$rt-namespace}__diShowIn;
-}
-
-.#{$rt-namespace}__flip-exit {
-  animation-name: #{$rt-namespace}__diShowOut;
-}*/

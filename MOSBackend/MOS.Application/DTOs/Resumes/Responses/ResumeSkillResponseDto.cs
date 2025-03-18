@@ -1,10 +1,14 @@
 using MOS.Domain.Enums;
 
-namespace MOS.Domain.Entities.Resumes;
+namespace MOS.Application.DTOs.Resumes.Responses;
 
-public class ResumeSkill : Entity
+public record ResumeSkillResponseDto
 {
+    public long Id { get; set; }
+
     public long ResumeId { get; set; }
+    
     public string Name { get; set; } = "";
+    
     public SkillLevelType Level { get; set; }
 }

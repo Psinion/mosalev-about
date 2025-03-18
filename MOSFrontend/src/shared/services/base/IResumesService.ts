@@ -15,22 +15,12 @@ export interface IResumesService extends IServiceBase {
 
 export type TCreateResumeRequest = {
   title: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  salary: number;
-  currencyType: number;
   about: string | null;
 };
 
 export type TUpdateResumeRequest = {
   id: number;
   title: string;
-  firstName: string;
-  lastName: string;
-  email: string;
-  salary: number;
-  currencyType: number;
   about: string | null;
 };
 

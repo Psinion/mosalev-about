@@ -17,7 +17,7 @@ public class ResumeCompanyEntriesService : IResumeCompanyEntriesService
         this.resumeCompanyEntriesRepository = resumeCompanyEntriesRepository;
     }
 
-    public async Task<OperationResult<ResumeCompanyEntryResponseDto>> CreateResumeCompanyEntryAsync(ResumeCompanyEntryCreateRequestDto resumeCompanyEntryRequest)
+    public async Task<OperationResult<ResumeCompanyEntryResponseDto>> CreateResumeSkillAsync(ResumeCompanyEntryCreateRequestDto resumeCompanyEntryRequest)
     {
         var resumeCompanyEntry = new ResumeCompanyEntry()
         {

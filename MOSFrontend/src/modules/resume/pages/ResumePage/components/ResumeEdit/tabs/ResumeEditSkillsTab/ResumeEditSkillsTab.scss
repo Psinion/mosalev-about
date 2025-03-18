@@ -1,0 +1,41 @@
+@import '@scss-mixins/adaptive';
+
+.resume-edit-skills-tab {
+  width: 100%;
+
+  .actions {
+    margin-bottom: 16px;
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    width: 100%;
+
+    .action-button {
+      width: 140px;
+    }
+  }
+
+  .content {
+    & > h3 {
+      margin-bottom: 16px;
+    }
+
+    .skills {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+
+      .skill-block {
+        display: flex;
+
+        @include adaptive-mixin(s) {
+          flex-wrap: wrap;
+        }
+      }
+    }
+  }
+
+  .company-actions {
+    margin-top: 12px;
+  }
+}

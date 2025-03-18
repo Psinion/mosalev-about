@@ -1,6 +1,6 @@
 ﻿namespace MOS.Application.DTOs.Resumes.Responses;
 
-public class ResumeCompanyEntryResponseDto
+public record ResumeCompanyEntryResponseDto
 {
     public long Id { get; set; }
 

@@ -24,7 +24,7 @@ public class ResumeCompanyEntriesController : ControllerBase
     [CustomAuthorize]
     public async Task<ActionResult<ResumeCompanyEntryResponseDto>> CreateResumeCompanyEntry(ResumeCompanyEntryCreateRequestDto request)
     {
-        var response = await resumeCompanyEntriesService.CreateResumeCompanyEntryAsync(request);
+        var response = await resumeCompanyEntriesService.CreateResumeSkillAsync(request);
         return Ok(response.Value);
     }
     

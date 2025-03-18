@@ -10,6 +10,7 @@
       border: 1px solid var(--secondary);
       background-color: var(--secondary-down);
       color: var(--font-color);
+      transition: var(--fast-transition);
 
       &:hover {
         border-color: var(--secondary-up);
@@ -26,10 +27,5 @@
         background-color: var(--tertiary-down);
       }
     }
-  }
-
-  .error-text {
-    margin-top: 4px;
-    color: var(--critical);
   }
 }

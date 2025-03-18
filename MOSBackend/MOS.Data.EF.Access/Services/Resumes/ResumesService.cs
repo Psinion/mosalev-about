@@ -39,11 +39,6 @@ public class ResumesService : IResumesService
         var resume = new Resume()
         {
             Title = resumeRequest.Title,
-            FirstName = resumeRequest.FirstName,
-            LastName = resumeRequest.LastName,
-            Email = resumeRequest.Email,
-            Salary = resumeRequest.Salary,
-            CurrencyType = resumeRequest.CurrencyType,
             About = resumeRequest.About,
         };
 
@@ -61,11 +56,6 @@ public class ResumesService : IResumesService
         }
 
         resume.Title = resumeRequest.Title;
-        resume.FirstName = resumeRequest.FirstName;
-        resume.LastName = resumeRequest.LastName;
-        resume.Email = resumeRequest.Email;
-        resume.Salary = resumeRequest.Salary;
-        resume.CurrencyType = resumeRequest.CurrencyType;
         resume.About = resumeRequest.About;
 
         await resumesRepository.UpdateAsync(resume);

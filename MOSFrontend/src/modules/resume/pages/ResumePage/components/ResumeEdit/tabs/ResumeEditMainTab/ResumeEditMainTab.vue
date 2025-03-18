@@ -13,36 +13,6 @@
           required
         />
 
-        <div class="fio-input">
-          <PsiInput
-            v-model="form.lastName"
-            label="Фамилия"
-            required
-          />
-          <PsiInput
-            v-model="form.firstName"
-            label="Имя"
-            required
-          />
-        </div>
-
-        <PsiInput
-          v-model="form.email"
-          label="Email"
-          required
-        />
-        <div class="salary-input">
-          <PsiInputNumeric
-            v-model="form.salary"
-            label="Зарплата"
-            :min="0"
-          />
-          <PsiToggle
-            v-model="form.currencyType"
-            inactive-label="₽"
-            active-label="$"
-          />
-        </div>
         <PsiTextarea
           v-model="form.about"
           label="О себе"
@@ -67,11 +37,9 @@
 import { onMounted, PropType, ref, toRef } from "vue";
 import { TCreateResumeRequest, TUpdateResumeRequest } from "@/shared/services/base";
 import PsiInput from "@/shared/PsiUI/components/PsiInput/PsiInput.vue";
-import PsiToggle from "@/shared/PsiUI/components/PsiToggle/PsiToggle.vue";
-import PsiInputNumeric from "@/shared/PsiUI/components/PsiInputNumeric/PsiInputNumeric.vue";
 import PsiButton from "@/shared/PsiUI/components/PsiButton/PsiButton.vue";
 import PsiForm from "@/shared/PsiUI/components/PsiForm/PsiForm.vue";
-import { CurrencyType, TResume } from "@/shared/types/resume.ts";
+import { TResume } from "@/shared/types/resume.ts";
 import { ServerError } from "@/shared/utils/requests/errorHandlers.ts";
 import { useToaster } from "@/shared/PsiUI/utils/toaster.ts";
 import { useI18n } from "vue-i18n";
@@ -100,11 +68,6 @@ const createMode = toRef(props, "createMode");
 
 type TForm = {
   title?: string;
-  firstName?: string;
-  lastName?: string;
-  email?: string;
-  salary?: number;
-  currencyType: boolean;
   about?: string | undefined;
 };
 const form = ref<TForm>({
@@ -122,11 +85,6 @@ async function refresh() {
   const fm = form.value;
 
   fm.title = resume.title;
-  fm.firstName = resume.firstName;
-  fm.lastName = resume.lastName;
-  fm.email = resume.email;
-  fm.salary = resume.salary;
-  fm.currencyType = resume.currencyType === CurrencyType.Ruble;
   fm.about = resume.about ?? undefined;
 }
 
@@ -138,11 +96,6 @@ async function onSave() {
     if (createMode.value) {
       const resumeToSave: TCreateResumeRequest = {
         title: fm.title!,
-        firstName: fm.firstName!,
-        lastName: fm.lastName!,
-        email: fm.email!,
-        salary: fm.salary ?? 0,
-        currencyType: fm.currencyType ? CurrencyType.Ruble : CurrencyType.Dollar,
         about: fm.about ?? null
       };
 
@@ -153,11 +106,6 @@ async function onSave() {
       const resumeToSave: TUpdateResumeRequest = {
         id: currentResume.value!.id!,
         title: fm.title!,
-        firstName: fm.firstName!,
-        lastName: fm.lastName!,
-        email: fm.email!,
-        salary: fm.salary ?? 0,
-        currencyType: fm.currencyType ? CurrencyType.Ruble : CurrencyType.Dollar,
         about: fm.about ?? null
       };
 

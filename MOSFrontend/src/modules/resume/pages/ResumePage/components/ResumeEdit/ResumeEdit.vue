@@ -29,12 +29,12 @@
         {{ t('resume.edit.tabMain') }}
       </PsiButton>
       <PsiButton
-        :flat="activeTab === 'job-exp'"
+        :flat="activeTab === 'skills'"
         class="tab-button"
-        :disabled="createMode || activeTab === 'job-exp'"
-        @click="activeTab = 'job-exp'"
+        :disabled="createMode || activeTab === 'skills'"
+        @click="activeTab = 'skills'"
       >
-        {{ t('resume.edit.tabWorkExp') }}
+        {{ t('resume.edit.tabSkills') }}
       </PsiButton>
     </div>
 
@@ -62,8 +62,8 @@
         :resume="currentResume"
         :create-mode="createMode"
       />
-      <ResumeEditJobExpTab
-        v-else-if="activeTab === 'job-exp'"
+      <ResumeEditSkillsTab
+        v-else-if="activeTab === 'skills'"
         :resume="currentResume"
       />
     </template>
@@ -81,11 +81,11 @@ import { RouteNames } from "@/router/routeNames.ts";
 import ResumeEditMainTab
   from "@/modules/resume/pages/ResumePage/components/ResumeEdit/tabs/ResumeEditMainTab/ResumeEditMainTab.vue";
 import PsiSkeleton from "@/shared/PsiUI/components/PsiSkeleton/PsiSkeleton.vue";
-import ResumeEditJobExpTab
-  from "@/modules/resume/pages/ResumePage/components/ResumeEdit/tabs/ResumeEditWorkExpTab/ResumeEditWorkExpTab.vue";
 import { useResumeStore } from "@/modules/resume/stores/resumeStore.ts";
+import ResumeEditSkillsTab
+  from "@/modules/resume/pages/ResumePage/components/ResumeEdit/tabs/ResumeEditSkillsTab/ResumeEditSkillsTab.vue";
 
-type TResumeTabs = "main" | "job-exp";
+type TResumeTabs = "main" | "skills";
 
 const props = defineProps({
   resumeId: {

@@ -28,6 +28,7 @@ public static class ServicesExtensions
         services.AddScoped<IResumesRepository, ResumesRepository>();
         services.AddScoped<IResumeCompanyEntriesRepository, ResumeCompanyEntriesRepository>();
         services.AddScoped<IResumePostsRepository, ResumePostsRepository>();
+        services.AddScoped<IResumeSkillsRepository, ResumeSkillsRepository>();
         services.AddScoped<IIndexContentsRepository, IndexContentsRepository>();
 
         return services;
@@ -40,6 +41,7 @@ public static class ServicesExtensions
         services.AddScoped<IResumesService, ResumesService>();
         services.AddScoped<IResumeCompanyEntriesService, ResumeCompanyEntriesService>();
         services.AddScoped<IResumePostsService, ResumePostsService>();
+        services.AddScoped<IResumeSkillsService, ResumeSkillsService>();
         services.AddScoped<IIndexService, IndexService>();
         
         return services;

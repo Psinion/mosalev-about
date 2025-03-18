@@ -12,10 +12,6 @@ public static class ResumesMappings
         {
             Id = entity.Id,
             Title = entity.Title,
-            FirstName = entity.FirstName,
-            LastName = entity.LastName,
-            Email = entity.Email,
-            Salary = entity.Salary,
             About = entity.About,
             DateCreate = entity.DateCreate,
             DateUpdate = entity.DateUpdate,

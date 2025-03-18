@@ -1,0 +1,29 @@
+.resume-edit-skills {
+  .form {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    .skill-input {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+
+      & > .psi-input {
+        width: 300px;
+      }
+
+      & > .psi-button {
+        margin-top: 4px;
+      }
+    }
+
+    & > .psi-input {
+      width: 300px;
+    }
+
+    & > .psi-textarea {
+      width: 100%;
+    }
+  }
+}
