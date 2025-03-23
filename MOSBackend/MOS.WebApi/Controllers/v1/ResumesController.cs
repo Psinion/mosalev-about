@@ -32,7 +32,7 @@ public class ResumesController : ControllerBase
     [HttpGet]
     [CustomAuthorize]
     [Route("{resumeId}")]
-    public async Task<ActionResult<ResumeResponseCompactDto>> GetResume(long resumeId)
+    public async Task<ActionResult<ResumeResponseDto>> GetResume(long resumeId)
     {
         var response = await resumesService.GetResumeAsync(resumeId);
 

@@ -1,5 +1,5 @@
 import { IServiceBase } from "@/shared/services/base/IServiceBase.ts";
-import { TResumeCompanyEntry } from "@/shared/types/resume.ts";
+import { ResumeSkillLevelType, TResumeCompanyEntry } from "@/shared/types/resume.ts";
 
 export interface IResumeCompanyEntriesService extends IServiceBase {
   createResumeCompanyEntry(params: TCreateResumeCompanyEntryRequest): Promise<TResumeCompanyEntry>;

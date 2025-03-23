@@ -15,4 +15,32 @@
       text-align: justify;
     }
   }
+
+  .resume {
+    .resume-skills-block {
+      margin-top: 12px;
+
+      .resume-skills {
+        margin-top: 8px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+
+        &.high {
+          border-left: 4px solid orangered;
+          padding-left: 8px;
+        }
+
+        &.medium {
+          border-left: 4px solid dodgerblue;
+          padding-left: 8px;
+        }
+
+        &.low {
+          border-left: 4px solid white;
+          padding-left: 8px;
+        }
+      }
+    }
+  }
 }

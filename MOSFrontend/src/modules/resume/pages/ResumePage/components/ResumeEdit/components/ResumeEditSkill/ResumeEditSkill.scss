@@ -7,14 +7,17 @@
     .skill-input {
       display: flex;
       gap: 8px;
-      align-items: center;
 
       & > .psi-input {
         width: 300px;
       }
 
+      & > .level-slider {
+        margin-top: 8px;
+      }
+
       & > .psi-button {
-        margin-top: 4px;
+        margin-top: 6px;
       }
     }
 

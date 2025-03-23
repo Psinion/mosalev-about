@@ -16,6 +16,7 @@ public static class ResumesMappings
             DateCreate = entity.DateCreate,
             DateUpdate = entity.DateUpdate,
             CompanyEntries = entity.CompanyEntries.ToDtoList(),
+            Skills = entity.Skills.ToDtoList(),
         };
     }
     

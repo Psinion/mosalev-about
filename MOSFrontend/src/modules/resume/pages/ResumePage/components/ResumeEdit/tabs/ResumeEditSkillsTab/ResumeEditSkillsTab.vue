@@ -4,18 +4,18 @@
       <h3>Навыки</h3>
       <section class="skills">
         <div
-          v-for="(companyEntry, index) in companyEntries"
+          v-for="(companyEntry, index) in skillsList"
           :key="companyEntry.id"
           class="skill-block"
         >
           <ResumeEditSkill
-            v-model="companyEntries[index]"
-            @delete="deleteCompany"
+            v-model="skillsList[index]"
+            @delete="deleteSkill"
           />
         </div>
       </section>
       <div class="company-actions">
-        <PsiButton @click="addCompany">
+        <PsiButton @click="addSkill">
           Добавить компанию
         </PsiButton>
       </div>
@@ -26,11 +26,11 @@
 <script setup lang="ts">
 import { onMounted, PropType, ref, toRef } from "vue";
 import PsiButton from "@/shared/PsiUI/components/PsiButton/PsiButton.vue";
-import { TResume, TResumeCompanyEntry } from "@/shared/types/resume.ts";
+import { ResumeSkill, ResumeSkillLevelType, TResume, TResumeCompanyEntry } from "@/shared/types/resume.ts";
 import { ServerError } from "@/shared/utils/requests/errorHandlers.ts";
 import { useToaster } from "@/shared/PsiUI/utils/toaster.ts";
 import { useI18n } from "vue-i18n";
-import ResumesCompanyEntriesServiceInstance from "@/shared/services/ResumeCompanyEntriesService.ts";
+import ResumeCompanyEntriesServiceInstance from "@/shared/services/ResumeCompanyEntriesService.ts";
 import ResumeEditSkill
   from "@/modules/resume/pages/ResumePage/components/ResumeEdit/components/ResumeEditSkill/ResumeEditSkill.vue";
 
@@ -45,16 +45,9 @@ const props = defineProps({
   }
 });
 
-const { t } = useI18n();
-const toaster = useToaster();
-const resumeCompanyEntriesService = ResumesCompanyEntriesServiceInstance;
-
-const loading = ref(false);
-
 const currentResume = toRef(props, "resume");
-const createMode = toRef(props, "createMode");
 
-const companyEntries = ref<TResumeCompanyEntry[]>([]);
+const skillsList = ref<ResumeSkill[]>([]);
 
 onMounted(async () => refresh());
 
@@ -64,74 +57,24 @@ async function refresh() {
   }
 
   const resume = currentResume.value;
-  companyEntries.value = resume.companyEntries;
+  skillsList.value = resume.skills;
 }
 
-async function onSave() {
-  try {
-    loading.value = true;
-    if (createMode.value) {
-      /* const resumeToSave: TCreateResumeRequest = {
-        title: title.value!,
-        firstName: firstName.value!,
-        lastName: lastName.value!,
-        email: email.value!,
-        salary: salary.value ?? 0,
-        currencyType: currencyType.value ? CurrencyType.Ruble : CurrencyType.Dollar,
-        about: about.value ?? null
-      };
-
-      await resumesService.createResume(resumeToSave); */
-      toaster.success(t("resume.edit.toasterResumeCreateHeader"));
-    }
-    else {
-      /* const resumeToSave: TUpdateResumeRequest = {
-        id: currentResume.value!.id!,
-        title: title.value!,
-        firstName: firstName.value!,
-        lastName: lastName.value!,
-        email: email.value!,
-        salary: salary.value ?? 0,
-        currencyType: currencyType.value ? CurrencyType.Ruble : CurrencyType.Dollar,
-        about: about.value ?? null
-      };
-
-      await resumesService.updateResume(resumeToSave); */
-      toaster.success(t("resume.edit.toasterResumeUpdateHeader"));
-    }
-  }
-  catch (error) {
-    if (error instanceof ServerError) {
-      toaster.error(error.header, error.message);
-    }
-  }
-  finally {
-    loading.value = false;
-  }
-}
-
-async function deleteCompany(item: TResumeCompanyEntry) {
-  await resumeCompanyEntriesService.deleteResumeCompanyEntry(item.id);
-  const companies = companyEntries.value;
+async function deleteSkill(item: ResumeSkill) {
+  const companies = skillsList.value;
   const itemIndex = companies.indexOf(item);
   if (itemIndex > -1) {
     companies.splice(itemIndex, 1);
   }
 }
 
-function addCompany() {
-  const companies = companyEntries.value;
-  companies.push({
+function addSkill() {
+  const skills = skillsList.value;
+  skills.push({
     id: 0,
     resumeId: currentResume.value!.id,
-    company: null,
-    description: null,
-    webSiteUrl: null,
-    resumePosts: [{
-      id: 0,
-      resumeCompanyEntryId: 0,
-      name: ""
-    }]
+    name: undefined,
+    level: ResumeSkillLevelType.Low
   });
 }
 </script>

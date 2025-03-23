@@ -17,9 +17,11 @@ public class ResumesRepository : LoggedGenericRepository<Resume>, IResumesReposi
     public async Task<Resume?> GetByIdWithRelationsAsync(long id, CancellationToken cancellationToken = default)
     {
         return await LocalContext.Resumes
+            .Include(x => x.Skills)
             .Include(x => x.CompanyEntries)
-            .ThenInclude(x => x.ResumePosts)
-            .FirstOrDefaultAsync(x => x.Id == id, cancellationToken);
+                .ThenInclude(companyEntry => companyEntry.ResumePosts)
+            .FirstOrDefaultAsync(x => x.Id == id, cancellationToken)
+            ;
     }
 
     public async Task UnpinAllByLocaleAsync(Locale locale)
@@ -33,7 +35,9 @@ public class ResumesRepository : LoggedGenericRepository<Resume>, IResumesReposi
     public async Task<Resume?> GetPinnedResumeAsync(Locale locale)
     {
         return await LocalSet
-            .FirstOrDefaultAsync(x => x.PinnedToLocale == locale);
+            .Include(x => x.Skills)
+            .FirstOrDefaultAsync(x => x.PinnedToLocale == locale)
+            ;
     }
 
     public async Task PinResumeAsync(long resumeId, Locale? locale)

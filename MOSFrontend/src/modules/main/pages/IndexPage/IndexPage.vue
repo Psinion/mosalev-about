@@ -14,10 +14,50 @@
             >GitHub</a>.
           </p>
         </div>
-        <div v-if="currentResume">
+        <div
+          v-if="currentResume"
+          class="resume"
+        >
           <h3>{{ t('about.header') }}</h3>
           <div>
             <p> {{ currentResume.about }}</p>
+          </div>
+
+          <div
+            v-if="currentResume.skills.length > 0"
+            class="resume-skills-block"
+          >
+            <h4>{{ t('about.confidence') }}</h4>
+            <div
+              v-if="skillsHigh.length > 0"
+              class="resume-skills high"
+            >
+              <SkillChip
+                v-for="skill in skillsHigh"
+                :key="skill.id"
+                :name="skill.name"
+              />
+            </div>
+            <div
+              v-if="skillsMedium.length > 0"
+              class="resume-skills medium"
+            >
+              <SkillChip
+                v-for="skill in skillsMedium"
+                :key="skill.id"
+                :name="skill.name"
+              />
+            </div>
+            <div
+              v-if="skillsLow.length > 0"
+              class="resume-skills low"
+            >
+              <SkillChip
+                v-for="skill in skillsLow"
+                :key="skill.id"
+                :name="skill.name"
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -55,11 +95,12 @@ import PsiButton from "@/shared/PsiUI/components/PsiButton/PsiButton.vue";
 import { computed, onMounted, ref, watch } from "vue";
 import { RouteNames } from "@/router/routeNames.ts";
 import ResumesServiceInstance from "@/shared/services/ResumesService.ts";
-import { TResume } from "@/shared/types";
+import { ResumeSkillLevelType, TResume } from "@/shared/types";
 import { ServerError } from "@/shared/utils/requests/errorHandlers.ts";
 import { useRouter } from "vue-router";
 import { useToaster } from "@/shared/PsiUI/utils/toaster.ts";
 import { useUserStore } from "@/shared/stores/userStore.ts";
+import SkillChip from "@/shared/components/SkillChip/SkillChip.vue";
 
 const { t } = useI18n();
 const router = useRouter();
@@ -69,6 +110,10 @@ const resumesService = ResumesServiceInstance;
 
 const currentResume = ref<TResume | null>(null);
 const loading = ref(true);
+
+const skillsHigh = computed(() => currentResume.value?.skills.filter(x => x.level === ResumeSkillLevelType.High) ?? []);
+const skillsMedium = computed(() => currentResume.value?.skills.filter(x => x.level === ResumeSkillLevelType.Medium) ?? []);
+const skillsLow = computed(() => currentResume.value?.skills.filter(x => x.level === ResumeSkillLevelType.Low) ?? []);
 
 const resumeEditRoute = computed(() => {
   return {

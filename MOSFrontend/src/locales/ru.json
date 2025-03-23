@@ -22,6 +22,7 @@
   },
   "about": {
     "header": "Обо мне",
+    "confidence": "Уверенность",
     "resumeButton": "Резюме"
   },
   "resume": {

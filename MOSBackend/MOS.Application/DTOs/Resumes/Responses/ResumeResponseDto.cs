@@ -13,4 +13,5 @@ public record ResumeResponseDto
     public DateTime? DateUpdate { get; set; }
 
     public List<ResumeCompanyEntryResponseDto> CompanyEntries { get; set; } = new();
+    public List<ResumeSkillResponseDto> Skills { get; set; } = new();
 }

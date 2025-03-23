@@ -1,7 +1,7 @@
 <template>
   <div class="skill-chip">
     {{ name }}
-  </div>>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -14,4 +14,4 @@ const props = defineProps({
 });
 </script>
 
-<style scoped src="SkillChip.scss" />
+<style scoped src="./SkillChip.scss" />

@@ -14,6 +14,7 @@ export type TResume = {
   dateUpdate: string | null;
 
   companyEntries: TResumeCompanyEntry[];
+  skills: ResumeSkill[];
 };
 
 export type TResumeCompact = {
@@ -48,4 +49,17 @@ export interface ResumeCompanyEntryPost {
   description?: string | null;
   dateStart?: string;
   dateEnd?: string | null;
+}
+
+export interface ResumeSkill {
+  id: number;
+  resumeId: number;
+  name: string;
+  level: ResumeSkillLevelType;
+}
+
+export enum ResumeSkillLevelType {
+  Low = 0,
+  Medium,
+  High
 }

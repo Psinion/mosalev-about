@@ -9,19 +9,21 @@
     >
       <div class="skill-input">
         <PsiInput
-          v-model="form.company"
+          v-model="form.name"
           required
           :max-length="80"
           @focus="onFormFocus"
           @blur="onFormBlur"
         />
         <PsiSlider
+          v-model="form.level"
+          class="level-slider"
           :max="2"
         />
         <PsiButton
           flat
           icon="close"
-          @click="removeCompany"
+          @click="onRemove"
         />
       </div>
     </PsiForm>
@@ -33,83 +35,76 @@ import { useToaster } from "@/shared/PsiUI/utils/toaster.ts";
 import { useI18n } from "vue-i18n";
 import PsiInput from "@/shared/PsiUI/components/PsiInput/PsiInput.vue";
 import { computed, onMounted, PropType, ref, toRef } from "vue";
-import { TResumeCompanyEntry } from "@/shared/types/resume.ts";
+import { ResumeSkill, ResumeSkillLevelType } from "@/shared/types/resume.ts";
 import PsiButton from "@/shared/PsiUI/components/PsiButton/PsiButton.vue";
 import PsiForm from "@/shared/PsiUI/components/PsiForm/PsiForm.vue";
-import ResumesCompanyEntriesServiceInstance from "@/shared/services/ResumeCompanyEntriesService.ts";
 import PsiSlider from "@/shared/PsiUI/components/PsiSlider/PsiSlider.vue";
+import ResumeSkillsService from "@/shared/services/ResumeSkillsService.ts";
 
 const props = defineProps({
   modelValue: {
-    type: Object as PropType<TResumeCompanyEntry>,
+    type: Object as PropType<ResumeSkill>,
     required: true
   }
 });
 
 const emit = defineEmits({
-  "update:modelValue": (value: TResumeCompanyEntry) => true,
-  "delete": (value: TResumeCompanyEntry) => true
+  "update:modelValue": (value: ResumeSkill) => true,
+  "delete": (value: ResumeSkill) => true
 });
 
-const companyEntry = toRef(props, "modelValue");
+const currentSkill = toRef(props, "modelValue");
 
 const { t } = useI18n();
 const toaster = useToaster();
 
-const resumeCompanyEntriesService = ResumesCompanyEntriesServiceInstance;
+const resumeSkillsService = ResumeSkillsService;
 
 const autoSubmitStop = ref(true);
 const valid = ref<boolean>(true);
 
 type TForm = {
-  company?: string;
-  webSiteUrl?: string;
-  description?: string;
+  name?: string;
+  level: ResumeSkillLevelType;
 };
-const form = ref<TForm>({});
-
-const createMode = computed(() => companyEntry.value?.id === 0);
-
-onMounted(() => {
-  const company = companyEntry.value!;
-  const fm = form.value;
-  fm.company = company.company;
-  fm.webSiteUrl = company.webSiteUrl ?? undefined;
-  fm.description = company.description ?? undefined;
+const form = ref<TForm>({
+  level: ResumeSkillLevelType.Low
 });
 
-function removeCompany() {
-  emit("delete", companyEntry.value);
-}
+const createMode = computed(() => currentSkill.value?.id === 0);
+
+onMounted(() => {
+  const skill = currentSkill.value!;
+  const fm = form.value;
+  fm.name = skill.name;
+  fm.level = skill.level;
+});
 
 async function submit() {
   try {
     const fm = form.value;
     if (createMode.value) {
-      const savedCompany = await resumeCompanyEntriesService.createResumeCompanyEntry({
-        resumeId: companyEntry.value?.resumeId,
-        company: fm.company!,
-        webSiteUrl: fm.webSiteUrl,
-        description: fm.description
+      const savedSkill = await resumeSkillsService.createResumeSkill({
+        resumeId: currentSkill.value?.resumeId,
+        name: fm.name!,
+        level: +fm.level
       });
-      emit("update:modelValue", savedCompany);
+      emit("update:modelValue", savedSkill);
     }
     else {
-      const savedCompany = await resumeCompanyEntriesService.updateResumeCompanyEntry({
-        id: companyEntry.value?.id,
-        company: fm.company!,
-        webSiteUrl: fm.webSiteUrl,
-        description: fm.description
+      const savedSkill = await resumeSkillsService.updateResumeSkill({
+        id: currentSkill.value?.id,
+        name: fm.name!,
+        level: +fm.level
       });
 
-      const company = companyEntry.value;
-      company.company = savedCompany.company;
-      company.webSiteUrl = savedCompany.webSiteUrl;
-      company.description = savedCompany.description;
+      const company = currentSkill.value;
+      company.name = savedSkill.name;
+      company.level = savedSkill.level;
     }
   }
   catch (error) {
-    toaster.error("Произошла ошибка при сохранении компании");
+    toaster.error("Произошла ошибка при сохранении навыка");
   }
 }
 
@@ -119,6 +114,16 @@ function onFormFocus() {
 
 function onFormBlur() {
   autoSubmitStop.value = false;
+}
+
+async function onRemove() {
+  try {
+    await resumeSkillsService.deleteResumeSkill(currentSkill.value!.id);
+    emit("delete", currentSkill.value);
+  }
+  catch (error) {
+    toaster.error("Произошла ошибка при удалении навыка");
+  }
 }
 
 </script>

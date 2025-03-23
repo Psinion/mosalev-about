@@ -22,6 +22,7 @@
   },
   "about": {
     "header": "About",
+    "confidence": "Confidence",
     "resumeButton": "Resume"
   },
   "resume": {

@@ -37,6 +37,6 @@ class ResumeCompanyEntriesService implements IResumeCompanyEntriesService {
   }
 }
 
-const ResumesCompanyEntriesServiceInstance = new ResumeCompanyEntriesService();
+const ResumeCompanyEntriesServiceInstance = new ResumeCompanyEntriesService();
 
-export default ResumesCompanyEntriesServiceInstance;
+export default ResumeCompanyEntriesServiceInstance;

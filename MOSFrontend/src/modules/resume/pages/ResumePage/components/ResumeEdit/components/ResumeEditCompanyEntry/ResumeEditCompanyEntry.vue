@@ -49,7 +49,7 @@ import { computed, onMounted, PropType, ref, toRef } from "vue";
 import { TResumeCompanyEntry } from "@/shared/types/resume.ts";
 import PsiButton from "@/shared/PsiUI/components/PsiButton/PsiButton.vue";
 import PsiForm from "@/shared/PsiUI/components/PsiForm/PsiForm.vue";
-import ResumesCompanyEntriesServiceInstance from "@/shared/services/ResumeCompanyEntriesService.ts";
+import ResumeCompanyEntriesServiceInstance from "@/shared/services/ResumeCompanyEntriesService.ts";
 
 const props = defineProps({
   modelValue: {
@@ -68,7 +68,7 @@ const companyEntry = toRef(props, "modelValue");
 const { t } = useI18n();
 const toaster = useToaster();
 
-const resumeCompanyEntriesService = ResumesCompanyEntriesServiceInstance;
+const resumeCompanyEntriesService = ResumeCompanyEntriesServiceInstance;
 
 const autoSubmitStop = ref(true);
 const valid = ref<boolean>(true);

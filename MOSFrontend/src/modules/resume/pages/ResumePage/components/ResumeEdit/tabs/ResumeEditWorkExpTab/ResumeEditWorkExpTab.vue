@@ -39,7 +39,7 @@ import ResumeEditPostsList
   from "@/modules/resume/pages/ResumePage/components/ResumeEdit/components/ResumeEditPostsList/ResumeEditPostsList.vue";
 import ResumeEditCompanyEntry
   from "@/modules/resume/pages/ResumePage/components/ResumeEdit/components/ResumeEditCompanyEntry/ResumeEditCompanyEntry.vue";
-import ResumesCompanyEntriesServiceInstance from "@/shared/services/ResumeCompanyEntriesService.ts";
+import ResumeCompanyEntriesServiceInstance from "@/shared/services/ResumeCompanyEntriesService.ts";
 
 const props = defineProps({
   resume: {
@@ -54,7 +54,7 @@ const props = defineProps({
 
 const { t } = useI18n();
 const toaster = useToaster();
-const resumeCompanyEntriesService = ResumesCompanyEntriesServiceInstance;
+const resumeCompanyEntriesService = ResumeCompanyEntriesServiceInstance;
 
 const loading = ref(false);
 
