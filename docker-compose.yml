@@ -70,7 +70,6 @@ services:
       - mos-network
     depends_on:
       - mos.frontend
-      - certbot
       
   certbot:
     image: certbot/certbot:latest

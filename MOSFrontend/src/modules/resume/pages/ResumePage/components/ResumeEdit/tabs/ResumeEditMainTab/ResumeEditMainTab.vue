@@ -70,9 +70,7 @@ type TForm = {
   title?: string;
   about?: string | undefined;
 };
-const form = ref<TForm>({
-  currencyType: false
-});
+const form = ref<TForm>({});
 
 onMounted(async () => refresh());
 

@@ -11,8 +11,8 @@ import { requestMiddlewares } from "@/shared/utils/requests/middlewaresRequest.t
 import { mainConfig, MainConfigPlugin } from "@/main.config.ts";
 import Vue3Toastify from "vue3-toastify";
 import { toasterDefaultGlobalOptions } from "@/shared/PsiUI/utils/toaster.ts";
-import { responseMiddlewares } from "@/shared/utils/requests/middlewaresResponse.ts";
 import i18n from "@/shared/utils/i18n.ts";
+import { responseMiddlewares } from "@/shared/utils/requests/MiddlewaresResponse.ts";
 
 const app = createApp(App);
 

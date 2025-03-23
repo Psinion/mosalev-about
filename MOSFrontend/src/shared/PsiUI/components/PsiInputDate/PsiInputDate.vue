@@ -99,10 +99,10 @@ onMounted(() => {
 
 function formatDate(date: string | Date, format: string) {
   let formattedDate = format;
-  let dateToFormat: Date | null;
+  let dateToFormat: Date | undefined;
   if (!(date instanceof Date)) {
     dateToFormat = createDate(date);
-    if (dateToFormat === null) {
+    if (dateToFormat === undefined) {
       return date;
     }
   }
@@ -126,12 +126,12 @@ function formatDate(date: string | Date, format: string) {
     formattedDate = formattedDate.replace(match, year.toString());
   }
 
-  for (const template in templates) {
+  for (const [template, value] of Object.entries(templates)) {
     const regExp = new RegExp(`(${template})`);
     const matches = formattedDate.match(regExp);
     if (matches) {
       const match = matches[0];
-      const word = (templates[template] as number).toString();
+      const word = value.toString();
       formattedDate = formattedDate.replace(
         match,
         word.length !== 1 ? word : `0${word}`
@@ -142,17 +142,13 @@ function formatDate(date: string | Date, format: string) {
   return formattedDate;
 }
 
-function checkDate(value: string | Date | undefined | null) {
-  return value === undefined || value === null || value instanceof Date;
-}
-
 function getDateMatches(value: string) {
   const dateRegExp = new RegExp(maskPattern.value.pattern);
   return value.match(dateRegExp);
 }
 
 function isValidDate(value: string | Date | undefined | null) {
-  if (checkDate(value) || getDateMatches(value)) {
+  if (value === undefined || value === null || value instanceof Date || getDateMatches(value)) {
     return true;
   }
 
