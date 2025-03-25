@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using MOS.Data.EF.Access.Contexts;
 using MOS.Identity.Middlewares;
+using MOS.WebApi.Middlewares;
 using MOS.WebApi.StartupConfiguration.Swagger;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
@@ -79,6 +80,9 @@ public class Startup
             options.HttpsPort = 8081;
         });*/
         
+        services.AddExceptionHandler<GlobalExceptionHandler>();
+        services.AddProblemDetails();
+        
         services
             .AddConfigurations(configuration)
             .AddRepositories()
@@ -89,7 +93,7 @@ public class Startup
     {
         if (env.IsDevelopment())
         {
-            app.UseDeveloperExceptionPage();
+            //app.UseDeveloperExceptionPage();
             app.UseSwagger();
             app.UseSwaggerUI(options =>
             {
@@ -100,6 +104,8 @@ public class Startup
                 options.RoutePrefix = string.Empty;
             });
         }
+
+        app.UseExceptionHandler();
         
         app.UseRouting();
 

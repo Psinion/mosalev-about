@@ -96,15 +96,10 @@ import { computed, onMounted, ref, watch } from "vue";
 import { RouteNames } from "@/router/routeNames.ts";
 import ResumesServiceInstance from "@/shared/services/ResumesService.ts";
 import { ResumeSkillLevelType, TResume } from "@/shared/types";
-import { ServerError } from "@/shared/utils/requests/errorHandlers.ts";
-import { useRouter } from "vue-router";
-import { useToaster } from "@/shared/PsiUI/utils/toaster.ts";
 import { useUserStore } from "@/shared/stores/userStore.ts";
 import SkillChip from "@/shared/components/SkillChip/SkillChip.vue";
 
 const { t } = useI18n();
-const router = useRouter();
-const toaster = useToaster();
 const userStore = useUserStore();
 const resumesService = ResumesServiceInstance;
 
@@ -135,8 +130,7 @@ async function refresh() {
     loading.value = true;
     currentResume.value = await resumesService.getPinnedResume();
   }
-  catch {
-  }
+  catch { /* empty */ }
   finally {
     loading.value = false;
   }
