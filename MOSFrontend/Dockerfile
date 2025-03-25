@@ -13,4 +13,4 @@ FROM nginx:stable-alpine as production
 
 COPY --from=build /app/dist /app
 #EXPOSE 80
-COPY ["./nginx.conf","/etc/nginx/nginx.conf"]
+COPY ["./nginx-frontend.conf","/etc/nginx/nginx-frontend.conf"]

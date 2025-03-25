@@ -72,6 +72,7 @@ services:
       - mos.frontend
       
   certbot:
+    container_name: mos-certbot
     image: certbot/certbot:latest
     volumes:
       - cert-volume:/etc/letsencrypt
