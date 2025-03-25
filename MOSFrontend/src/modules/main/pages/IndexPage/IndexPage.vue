@@ -130,7 +130,9 @@ async function refresh() {
     loading.value = true;
     currentResume.value = await resumesService.getPinnedResume();
   }
-  catch { /* empty */ }
+  catch {
+    currentResume.value = null;
+  }
   finally {
     loading.value = false;
   }
