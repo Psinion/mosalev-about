@@ -135,14 +135,7 @@ async function refresh() {
     loading.value = true;
     currentResume.value = await resumesService.getPinnedResume();
   }
-  catch (error) {
-    if (error instanceof ServerError) {
-      if (error.statusCode === 404) {
-        await router.push({ name: RouteNames.Error404 });
-        return;
-      }
-      toaster.error(error.header, error.message);
-    }
+  catch {
   }
   finally {
     loading.value = false;
