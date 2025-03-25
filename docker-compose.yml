@@ -71,7 +71,7 @@ services:
     depends_on:
       - mos.frontend
       
-  certbot:
+  mos.certbot:
     container_name: mos-certbot
     image: certbot/certbot:latest
     volumes:
@@ -86,8 +86,7 @@ services:
              if [ ! -f /etc/letsencrypt/live/mosalev.su/fullchain.pem ]; then
                certbot certonly --non-interactive --agree-tos --email mosalev.daniel@gmail.com \
                --webroot -w /var/www/certbot \
-               -d mosalev.su -d api.mosalev.su \
-               --staging;
+               -d mosalev.su -d api.mosalev.su;
              fi;
              wait'
     depends_on:
