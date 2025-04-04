@@ -1,13 +1,9 @@
-﻿using MOS.Application.Data.Repositories.Index;
-using MOS.Application.Data.Repositories.Resumes;
+﻿using MOS.Application.Data.Repositories.Resumes;
 using MOS.Application.Data.Repositories.Users;
-using MOS.Application.Data.Services.IIndexService;
 using MOS.Application.Data.Services.Resumes;
 using MOS.Application.Data.Services.Users;
-using MOS.Data.EF.Access.Repositories.Index;
 using MOS.Data.EF.Access.Repositories.Resumes;
 using MOS.Data.EF.Access.Repositories.Users;
-using MOS.Data.EF.Access.Services.Index;
 using MOS.Data.EF.Access.Services.Resumes;
 using MOS.Identity.Helpers;
 using MOS.Identity.Services;
@@ -29,7 +25,6 @@ public static class ServicesExtensions
         services.AddScoped<IResumeCompanyEntriesRepository, ResumeCompanyEntriesRepository>();
         services.AddScoped<IResumePostsRepository, ResumePostsRepository>();
         services.AddScoped<IResumeSkillsRepository, ResumeSkillsRepository>();
-        services.AddScoped<IIndexContentsRepository, IndexContentsRepository>();
 
         return services;
     }
@@ -42,7 +37,6 @@ public static class ServicesExtensions
         services.AddScoped<IResumeCompanyEntriesService, ResumeCompanyEntriesService>();
         services.AddScoped<IResumePostsService, ResumePostsService>();
         services.AddScoped<IResumeSkillsService, ResumeSkillsService>();
-        services.AddScoped<IIndexService, IndexService>();
         
         return services;
     }
