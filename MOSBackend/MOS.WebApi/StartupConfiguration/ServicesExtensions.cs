@@ -1,9 +1,13 @@
-﻿using MOS.Application.Data.Repositories.Resumes;
+﻿using MOS.Application.Data.Repositories.Projects;
+using MOS.Application.Data.Repositories.Resumes;
 using MOS.Application.Data.Repositories.Users;
+using MOS.Application.Data.Services.Projects;
 using MOS.Application.Data.Services.Resumes;
 using MOS.Application.Data.Services.Users;
+using MOS.Data.EF.Access.Repositories.Projects;
 using MOS.Data.EF.Access.Repositories.Resumes;
 using MOS.Data.EF.Access.Repositories.Users;
+using MOS.Data.EF.Access.Services.Projects;
 using MOS.Data.EF.Access.Services.Resumes;
 using MOS.Identity.Helpers;
 using MOS.Identity.Services;
@@ -25,6 +29,8 @@ public static class ServicesExtensions
         services.AddScoped<IResumeCompanyEntriesRepository, ResumeCompanyEntriesRepository>();
         services.AddScoped<IResumePostsRepository, ResumePostsRepository>();
         services.AddScoped<IResumeSkillsRepository, ResumeSkillsRepository>();
+        services.AddScoped<IProjectsRepository, ProjectsRepository>();
+        services.AddScoped<IArticlesRepository, ArticlesRepository>();
 
         return services;
     }
@@ -37,6 +43,8 @@ public static class ServicesExtensions
         services.AddScoped<IResumeCompanyEntriesService, ResumeCompanyEntriesService>();
         services.AddScoped<IResumePostsService, ResumePostsService>();
         services.AddScoped<IResumeSkillsService, ResumeSkillsService>();
+        services.AddScoped<IProjectsService, ProjectsService>();
+        services.AddScoped<IArticlesService, ArticlesService>();
         
         return services;
     }

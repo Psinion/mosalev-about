@@ -128,6 +128,7 @@ public class ResumesService : IResumesService
 
     public void Dispose()
     {
+        credentialsService.Dispose();
         resumesRepository.Dispose();
     }
 }
