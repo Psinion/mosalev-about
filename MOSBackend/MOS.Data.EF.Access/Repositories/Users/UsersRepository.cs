@@ -15,4 +15,24 @@ public class UsersRepository : GenericRepository<User>, IUsersRepository
     {
         return await LocalSet.FirstOrDefaultAsync(user => user.UserName == userName && user.Password == password);
     }
+    public async Task<List<User>> FilterByFioAsync(string? filter)
+    {
+        var items = LocalSet.AsQueryable();
+
+        if (!string.IsNullOrEmpty(filter))
+        {
+            items = items.Where(user => (user.LastName + user.UserName + user.Patronymic).Contains(filter));
+        }
+        
+        return await items
+            .Select(x => new User()
+            {
+                Id = x.Id,
+                UserName = x.UserName,
+                FirstName = x.FirstName,
+                LastName = x.LastName,
+                Patronymic = x.Patronymic,
+            })
+            .ToListAsync();
+    }
 }

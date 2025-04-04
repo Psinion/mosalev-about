@@ -97,14 +97,12 @@ function reset() {
 }
 
 async function onSubmit() {
-  const valid = validate();
+  const valid = await validate();
   if (!valid) {
     return;
   }
 
   emit("submit");
-
-  reset();
 }
 
 function setAutoSubmitTimer() {

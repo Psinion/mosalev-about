@@ -5,4 +5,6 @@ namespace MOS.Application.Data.Repositories.Users;
 public interface IUsersRepository : IGenericRepository<User>
 {
     Task<User?> GetByCredentialsAsync(string userName, string password);
+
+    Task<List<User>> FilterByFioAsync(string? filter);
 }

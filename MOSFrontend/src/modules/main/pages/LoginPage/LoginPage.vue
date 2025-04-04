@@ -24,7 +24,7 @@
         />
         <PsiButton
           native-type="submit"
-          :disabled="!valid"
+          :disabled="!valid || loading"
         >
           {{ t('login.formSubmitButton') }}
         </PsiButton>
@@ -48,6 +48,8 @@ const toaster = useToaster();
 const { t } = useI18n();
 const userStore = useUserStore();
 
+const loading = ref(false);
+
 type TForm = {
   userName?: string;
   password?: string;
@@ -56,6 +58,7 @@ const form = ref<TForm>({});
 
 async function onSubmit() {
   try {
+    loading.value = true;
     await userStore.login(form.value.userName!, form.value.password!);
   }
   catch (error) {
@@ -67,6 +70,9 @@ async function onSubmit() {
         toaster.error(t("toaster.commonErrorHeader"), error.message);
       }
     }
+  }
+  finally {
+    loading.value = false;
   }
 }
 </script>

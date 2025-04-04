@@ -38,7 +38,6 @@ public class UsersController : ControllerBase
     
     [CustomAuthorize("users/verify")]
     [HttpGet]
-    [Route("verify")]
     public ActionResult<VerifyResponseDto> Verify()
     {
         var user = credentialsService.CurrentUser;
@@ -50,5 +49,15 @@ public class UsersController : ControllerBase
 
         var result = new VerifyResponseDto(user);
         return Ok(result);
+    }
+    
+    [CustomAuthorize("users/get")]
+    [HttpGet]
+    [Route("")]
+    public async Task<ActionResult<List<UserResponseDto>>> Users(string? fio = null)
+    {
+        var users = await usersService.FilterByFioAsync(fio);
+        
+        return Ok(users);
     }
 }
