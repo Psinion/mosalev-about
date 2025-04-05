@@ -16,6 +16,15 @@ export default [
     },
     rules: {
       // "no-unused-vars": "off"
+      "vue/html-self-closing": ["error", {
+        html: {
+          void: "always",
+          normal: "any",
+          component: "any"
+        },
+        svg: "always",
+        math: "always"
+      }]
     }
   },
   stylistic.configs["disable-legacy"],

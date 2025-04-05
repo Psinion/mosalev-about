@@ -1,7 +1,7 @@
 <template>
   <section class="layout-footer">
     <div class="content hint-regular">
-      <div>© {{ copyRightYears }} Mosalev Daniel</div>
+      <div>© {{ copyRightYears }} Daniel Mosalev</div>
       <h4 class="version">
         v{{ $mainConfig.version }}
       </h4>
@@ -34,10 +34,6 @@ import FooterLink from "@/layouts/components/LayoutFooter/components/FooterLink/
 const copyRightYears = computed(() => {
   const publicDate = 2024;
   const currentDate = new Date().getFullYear();
-  if (publicDate === currentDate) {
-    return publicDate;
-  }
-
   return `${publicDate} - ${currentDate}`;
 });
 
