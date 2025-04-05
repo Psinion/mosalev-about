@@ -48,6 +48,7 @@
     "resumeView": "Resume",
     "resumeEdit": "Edit Resume",
     "resumeList": "Resume list",
+    "projectsList": "Projects",
     "error404": "Page not found"
   },
   "errors": {

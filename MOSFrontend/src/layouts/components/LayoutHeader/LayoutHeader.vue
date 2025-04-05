@@ -18,7 +18,9 @@
           <div class="map">
             <LayoutHeaderActions
               :title="t('layoutHeader.projects')"
-              disabled
+              :route="{
+                name: RouteNames.ProjectsList,
+              }"
             />
           </div>
         </div>

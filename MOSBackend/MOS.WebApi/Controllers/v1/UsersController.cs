@@ -38,6 +38,7 @@ public class UsersController : ControllerBase
     
     [CustomAuthorize("users/verify")]
     [HttpGet]
+    [Route("verify")]
     public ActionResult<VerifyResponseDto> Verify()
     {
         var user = credentialsService.CurrentUser;

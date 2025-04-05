@@ -3,6 +3,7 @@ import { protectedMainRoutes, publicMainRoutes } from "../modules/main/routes.ts
 import { resumeRoutes } from "@/modules/resume/routes.ts";
 import { protectedPagesGuard } from "@/router/middlewares/protectedPagesGuard.ts";
 import { errorRoutes } from "@/modules/errors/routes.ts";
+import { projectsRoutes } from "@/modules/projects/routes.ts";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -15,6 +16,7 @@ const router = createRouter({
   },
   ...publicMainRoutes,
   ...resumeRoutes,
+  ...projectsRoutes,
   ...errorRoutes,
   {
     path: "/:catchAll(.*)",
