@@ -9,6 +9,7 @@ using MOS.Application.Data.Services.Users;
 using MOS.Application.DTOs.Users.Requests;
 using MOS.Application.DTOs.Users.Responses;
 using MOS.Application.Mappings.Resumes;
+using MOS.Application.Mappings.Users;
 using MOS.Application.OperationResults;
 using MOS.Domain.Entities.Users;
 using MOS.Identity.Helpers;

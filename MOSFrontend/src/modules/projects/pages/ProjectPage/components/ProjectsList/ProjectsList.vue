@@ -12,8 +12,16 @@
 
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
+import ProjectsServiceInstance from "@/shared/services/ProjectsService.ts";
+import { onMounted } from "vue";
 
 const { t } = useI18n();
+const projectsService = ProjectsServiceInstance;
+
+onMounted(async () => {
+  await projectsService.getProjectsList();
+});
+
 </script>
 
 <style scoped src="./ProjectsList.scss" />

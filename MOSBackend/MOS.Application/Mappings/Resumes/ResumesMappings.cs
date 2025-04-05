@@ -1,4 +1,5 @@
 using MOS.Application.DTOs.Resumes.Responses;
+using MOS.Application.Mappings.Users;
 using MOS.Domain.Entities.Resumes;
 
 namespace MOS.Application.Mappings.Resumes;

@@ -31,7 +31,7 @@
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
 import { computed, onMounted, PropType, toRef } from "vue";
-import { ResumeCompanyEntryPost } from "@/shared/types/resume.ts";
+import { IResumeCompanyEntryPost } from "@/shared/types/resume.ts";
 import PsiButton from "@/shared/PsiUI/components/PsiButton/PsiButton.vue";
 import ResumeEditPost
   from "@/modules/resume/pages/ResumePage/components/ResumeEdit/components/ResumeEditPost/ResumeEditPost.vue";
@@ -40,7 +40,7 @@ import ResumePostsServiceInstance from "@/shared/services/ResumePostsService.ts"
 
 const props = defineProps({
   modelValue: {
-    type: Array as PropType<ResumeCompanyEntryPost[]>,
+    type: Array as PropType<IResumeCompanyEntryPost[]>,
     default: () => []
   },
   companyId: {
@@ -50,7 +50,7 @@ const props = defineProps({
 });
 
 const emit = defineEmits({
-  "update:modelValue": (value: ResumeCompanyEntryPost[]) => true
+  "update:modelValue": (value: IResumeCompanyEntryPost[]) => true
 });
 
 const postsList = toRef(props, "modelValue");
@@ -77,7 +77,7 @@ function addPost() {
   emit("update:modelValue", posts);
 }
 
-function onCreatePost(item: ResumeCompanyEntryPost) {
+function onCreatePost(item: IResumeCompanyEntryPost) {
   const posts = postsList.value;
   const foundIndex = posts.findIndex(x => x.id === 0);
   if (foundIndex >= 0) {
@@ -86,7 +86,7 @@ function onCreatePost(item: ResumeCompanyEntryPost) {
   emit("update:modelValue", posts);
 }
 
-function onUpdatePost(item: ResumeCompanyEntryPost) {
+function onUpdatePost(item: IResumeCompanyEntryPost) {
   const posts = postsList.value;
   const foundIndex = posts.findIndex(x => x.id === item.id);
   if (foundIndex) {
@@ -95,7 +95,7 @@ function onUpdatePost(item: ResumeCompanyEntryPost) {
   emit("update:modelValue", posts);
 }
 
-function onRemovePost(item: ResumeCompanyEntryPost) {
+function onRemovePost(item: IResumeCompanyEntryPost) {
   const posts = postsList.value;
   const itemIndex = posts.indexOf(item);
   if (itemIndex > -1) {

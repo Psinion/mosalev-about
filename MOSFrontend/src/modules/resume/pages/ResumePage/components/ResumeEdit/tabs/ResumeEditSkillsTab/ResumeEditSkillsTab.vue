@@ -26,7 +26,7 @@
 <script setup lang="ts">
 import { onMounted, PropType, ref, toRef } from "vue";
 import PsiButton from "@/shared/PsiUI/components/PsiButton/PsiButton.vue";
-import { ResumeSkill, ResumeSkillLevelType, TResume, TResumeCompanyEntry } from "@/shared/types/resume.ts";
+import { IResumeSkill, ResumeSkillLevelType, TResume, TResumeCompanyEntry } from "@/shared/types/resume.ts";
 import { ServerError } from "@/shared/utils/requests/errorHandlers.ts";
 import { useToaster } from "@/shared/PsiUI/utils/toaster.ts";
 import { useI18n } from "vue-i18n";
@@ -47,7 +47,7 @@ const props = defineProps({
 
 const currentResume = toRef(props, "resume");
 
-const skillsList = ref<ResumeSkill[]>([]);
+const skillsList = ref<IResumeSkill[]>([]);
 
 onMounted(async () => refresh());
 
@@ -60,7 +60,7 @@ async function refresh() {
   skillsList.value = resume.skills;
 }
 
-async function deleteSkill(item: ResumeSkill) {
+async function deleteSkill(item: IResumeSkill) {
   const companies = skillsList.value;
   const itemIndex = companies.indexOf(item);
   if (itemIndex > -1) {

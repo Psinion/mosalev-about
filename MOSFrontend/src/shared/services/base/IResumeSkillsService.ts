@@ -1,9 +1,9 @@
 import { IServiceBase } from "@/shared/services/base/IServiceBase.ts";
-import { ResumeSkill, ResumeSkillLevelType } from "@/shared/types";
+import { IResumeSkill, ResumeSkillLevelType } from "@/shared/types";
 
 export interface IResumeSkillsService extends IServiceBase {
-  createResumeSkill(params: TCreateResumeSkillRequest): Promise<ResumeSkill>;
-  updateResumeSkill(params: TUpdateResumeSkillRequest): Promise<ResumeSkill>;
+  createResumeSkill(params: TCreateResumeSkillRequest): Promise<IResumeSkill>;
+  updateResumeSkill(params: TUpdateResumeSkillRequest): Promise<IResumeSkill>;
   deleteResumeSkill(skillId: number): Promise<boolean>;
 }
 

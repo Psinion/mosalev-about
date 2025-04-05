@@ -1,7 +1,7 @@
 using MOS.Application.DTOs.Users.Responses;
 using MOS.Domain.Entities.Users;
 
-namespace MOS.Application.Mappings.Resumes;
+namespace MOS.Application.Mappings.Users;
 
 
 public static class UsersMappings

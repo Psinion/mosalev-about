@@ -14,7 +14,7 @@ export type TResume = {
   dateUpdate: string | null;
 
   companyEntries: TResumeCompanyEntry[];
-  skills: ResumeSkill[];
+  skills: IResumeSkill[];
 };
 
 export type TResumeCompact = {
@@ -39,10 +39,10 @@ export type TResumeCompanyEntry = {
   company: string;
   webSiteUrl: string | null;
   description: string | null;
-  resumePosts: ResumeCompanyEntryPost[];
+  resumePosts: IResumeCompanyEntryPost[];
 };
 
-export interface ResumeCompanyEntryPost {
+export interface IResumeCompanyEntryPost {
   id: number;
   resumeCompanyEntryId: number;
   name?: string;
@@ -51,7 +51,7 @@ export interface ResumeCompanyEntryPost {
   dateEnd?: string | null;
 }
 
-export interface ResumeSkill {
+export interface IResumeSkill {
   id: number;
   resumeId: number;
   name: string;

@@ -1,9 +1,9 @@
-import { ResumeCompanyEntryPost } from "@/shared/types";
+import { IResumeCompanyEntryPost } from "@/shared/types";
 import { IServiceBase } from "./IServiceBase";
 
 export interface IResumePostsService extends IServiceBase {
-  createResumePost(params: TCreateResumePostRequest): Promise<ResumeCompanyEntryPost>;
-  updateResumePost(params: TUpdateResumePostRequest): Promise<ResumeCompanyEntryPost>;
+  createResumePost(params: TCreateResumePostRequest): Promise<IResumeCompanyEntryPost>;
+  updateResumePost(params: TUpdateResumePostRequest): Promise<IResumeCompanyEntryPost>;
   deleteResumePost(postId: number): Promise<boolean>;
 }
 

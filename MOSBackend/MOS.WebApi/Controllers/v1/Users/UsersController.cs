@@ -6,7 +6,7 @@ using MOS.Application.DTOs.Users.Responses;
 using MOS.Application.OperationResults.Enums;
 using MOS.Identity.Helpers;
 
-namespace MOS.WebApi.Controllers.v1;
+namespace MOS.WebApi.Controllers.v1.Users;
 
 [ApiVersion(1.0)]
 [Route("api/v{version:apiVersion}/[controller]")]

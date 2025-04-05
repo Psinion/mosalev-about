@@ -35,7 +35,7 @@ import { useToaster } from "@/shared/PsiUI/utils/toaster.ts";
 import { useI18n } from "vue-i18n";
 import PsiInput from "@/shared/PsiUI/components/PsiInput/PsiInput.vue";
 import { computed, onMounted, PropType, ref, toRef } from "vue";
-import { ResumeSkill, ResumeSkillLevelType } from "@/shared/types/resume.ts";
+import { IResumeSkill, ResumeSkillLevelType } from "@/shared/types/resume.ts";
 import PsiButton from "@/shared/PsiUI/components/PsiButton/PsiButton.vue";
 import PsiForm from "@/shared/PsiUI/components/PsiForm/PsiForm.vue";
 import PsiSlider from "@/shared/PsiUI/components/PsiSlider/PsiSlider.vue";
@@ -43,14 +43,14 @@ import ResumeSkillsService from "@/shared/services/ResumeSkillsService.ts";
 
 const props = defineProps({
   modelValue: {
-    type: Object as PropType<ResumeSkill>,
+    type: Object as PropType<IResumeSkill>,
     required: true
   }
 });
 
 const emit = defineEmits({
-  "update:modelValue": (value: ResumeSkill) => true,
-  "delete": (value: ResumeSkill) => true
+  "update:modelValue": (value: IResumeSkill) => true,
+  "delete": (value: IResumeSkill) => true
 });
 
 const currentSkill = toRef(props, "modelValue");

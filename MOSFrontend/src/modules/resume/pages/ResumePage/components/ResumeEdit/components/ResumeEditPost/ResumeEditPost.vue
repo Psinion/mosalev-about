@@ -56,7 +56,7 @@ import { useI18n } from "vue-i18n";
 import PsiInput from "@/shared/PsiUI/components/PsiInput/PsiInput.vue";
 import PsiTextarea from "@/shared/PsiUI/components/PsiTextarea/PsiTextarea.vue";
 import { computed, onMounted, PropType, ref, toRef } from "vue";
-import { ResumeCompanyEntryPost } from "@/shared/types/resume.ts";
+import { IResumeCompanyEntryPost } from "@/shared/types/resume.ts";
 import PsiButton from "@/shared/PsiUI/components/PsiButton/PsiButton.vue";
 import PsiInputDate from "@/shared/PsiUI/components/PsiInputDate/PsiInputDate.vue";
 import PsiForm from "@/shared/PsiUI/components/PsiForm/PsiForm.vue";
@@ -65,7 +65,7 @@ import { useToaster } from "@/shared/PsiUI/utils/toaster.ts";
 
 const props = defineProps({
   modelValue: {
-    type: Object as PropType<ResumeCompanyEntryPost>,
+    type: Object as PropType<IResumeCompanyEntryPost>,
     required: true
   },
   removable: {
@@ -79,9 +79,9 @@ const props = defineProps({
 });
 
 const emit = defineEmits({
-  create: (value: ResumeCompanyEntryPost) => true,
-  update: (value: ResumeCompanyEntryPost) => true,
-  remove: (value: ResumeCompanyEntryPost) => true
+  create: (value: IResumeCompanyEntryPost) => true,
+  update: (value: IResumeCompanyEntryPost) => true,
+  remove: (value: IResumeCompanyEntryPost) => true
 });
 
 const { t } = useI18n();
@@ -142,7 +142,7 @@ async function submit() {
   }
 }
 
-async function remove(post: ResumeCompanyEntryPost) {
+async function remove(post: IResumeCompanyEntryPost) {
   try {
     await resumePostsService.deleteResumePost(post.id);
     emit("remove", post);

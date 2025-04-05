@@ -1,3 +1,4 @@
+export * from "./IProjectsService.ts";
 export * from "./IResumeCompanyEntriesService.ts";
 export * from "./IResumePostsService.ts";
 export * from "./IResumeSkillsService.ts";
