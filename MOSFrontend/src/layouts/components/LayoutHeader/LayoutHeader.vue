@@ -66,11 +66,6 @@ const indexRoute = computed(() => {
     name: RouteNames.Index
   };
 });
-const aboutRoute = computed(() => {
-  return {
-    name: RouteNames.AboutView
-  };
-});
 </script>
 
 <style scoped src="./LayoutHeader.scss" />

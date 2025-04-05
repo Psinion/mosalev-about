@@ -19,14 +19,6 @@ export const publicMainRoutes: RouteRecordRaw[] = [{
   meta: {
     titleCode: "pages.index"
   }
-},
-{
-  path: "/about",
-  name: RouteNames.AboutView,
-  component: AboutPage,
-  meta: {
-    titleCode: "pages.about"
-  }
 }];
 
 export const protectedMainRoutes: RouteRecordRaw[] = [

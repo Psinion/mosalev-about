@@ -45,7 +45,6 @@
   "pages": {
     "login": "Login",
     "index": "Main",
-    "about": "About",
     "resumeView": "Resume",
     "resumeEdit": "Edit Resume",
     "resumeList": "Resume list",
