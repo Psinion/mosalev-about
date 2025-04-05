@@ -45,6 +45,9 @@
 
     }
   },
+  "projects": {
+    "emptyProjectsPlaceholder": "Проекты пока только в планах"
+  },
   "pages": {
     "login": "Авторизация",
     "index": "Главная",

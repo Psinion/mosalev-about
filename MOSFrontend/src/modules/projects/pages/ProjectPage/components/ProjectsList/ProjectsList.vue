@@ -6,6 +6,9 @@
       <div
         class="projects"
       />
+      <div class="empty-projects-placeholder caption-regular">
+        {{ t('projects.emptyProjectsPlaceholder') }}
+      </div>
     </div>
   </article>
 </template>

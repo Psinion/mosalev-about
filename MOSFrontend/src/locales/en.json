@@ -42,6 +42,9 @@
       "toasterResumeUpdateHeader": "Resume has been updated"
     }
   },
+  "projects": {
+    "emptyProjectsPlaceholder": "Projects are still only in the plans"
+  },
   "pages": {
     "login": "Login",
     "index": "Main",
