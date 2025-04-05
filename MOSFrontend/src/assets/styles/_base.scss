@@ -2,6 +2,10 @@ body {
   background: var(--background-body);
 }
 
+.no-overflow {
+  overflow-y: hidden;
+}
+
 .font-color {
   color: var(--font-color);
 }

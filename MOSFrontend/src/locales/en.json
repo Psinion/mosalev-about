@@ -43,7 +43,11 @@
     }
   },
   "projects": {
-    "emptyProjectsPlaceholder": "Projects are still only in the plans"
+    "list": {
+      "newProjectTitle": "Новый проект",
+      "newProjectDescription": "Создайте новый проект и наполните его контентом",
+      "emptyProjectsPlaceholder": "Projects are still only in the plans"
+    }
   },
   "pages": {
     "login": "Login",
@@ -63,6 +67,11 @@
     "noPermissionsDescription": "Please, contact the owner of this resource XD"
   },
   "psiUi": {
+    "psiDialog": {
+      "cancelButton": "Cancel",
+      "confirmButton": "Confirm"
+    },
+
     "incorrectDataErrorMessage": "Incorrect data type",
     "requiredErrorMessage": "Field is required",
     "minLengthErrorMessage": "Too short",

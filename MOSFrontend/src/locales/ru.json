@@ -46,7 +46,11 @@
     }
   },
   "projects": {
-    "emptyProjectsPlaceholder": "Проекты пока только в планах"
+    "list": {
+      "newProjectTitle": "Новый проект",
+      "newProjectDescription": "Создайте новый проект и наполните его контентом",
+      "emptyProjectsPlaceholder": "Проекты пока только в планах"
+    }
   },
   "pages": {
     "login": "Авторизация",
@@ -66,6 +70,11 @@
     "noPermissionsDescription": "Обратитесь, пожалуйста, к владельцу ресурса XD"
   },
   "psiUi": {
+    "psiDialog": {
+      "cancelButton": "Отменить",
+      "confirmButton": "Принять"
+    },
+
     "incorrectDataErrorMessage": "Не верный тип данных",
     "requiredErrorMessage": "Обязательное поле",
     "minLengthErrorMessage": "Слишком коротко",
