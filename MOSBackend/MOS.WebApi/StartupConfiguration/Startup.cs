@@ -1,9 +1,18 @@
-﻿using System.Text.Json.Serialization;
+﻿using System.Security.Claims;
+using System.Text;
+using System.Text.Json.Serialization;
 using Asp.Versioning;
 using Asp.Versioning.ApiExplorer;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
+using MOS.Application.Data.Repositories.Users;
+using MOS.Application.Data.Services.Users;
+using MOS.Application.OperationResults;
 using MOS.Data.EF.Access.Contexts;
+using MOS.Identity.Helpers;
 using MOS.Identity.Middlewares;
 using MOS.WebApi.Middlewares;
 using MOS.WebApi.StartupConfiguration.Swagger;
@@ -42,6 +51,29 @@ public class Startup
         services.AddSwaggerGen(options =>
         {
             options.OperationFilter<SwaggerDefaultValues>();
+            
+            options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
+            {
+                Name = "Authorization",
+                Description = "Example: \"Bearer {token}\"",
+                In = ParameterLocation.Header,
+                Type = SecuritySchemeType.ApiKey,
+                Scheme = "Bearer"
+            });
+            options.AddSecurityRequirement(new OpenApiSecurityRequirement()
+            {
+                {
+                    new OpenApiSecurityScheme()
+                    {
+                        Reference = new OpenApiReference
+                        {
+                            Type = ReferenceType.SecurityScheme,
+                            Id = "Bearer"
+                        }
+                    },
+                    Array.Empty<string>()
+                }
+            });
         });
         
         services.AddDbContext<MainDbContext>(options =>
@@ -75,10 +107,46 @@ public class Startup
             });
         });
         
-        /*services.AddHttpsRedirection(options =>
-        {
-            options.HttpsPort = 8081;
-        });*/
+        services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(configuration["AuthSettings:JwtSecretKey"]!)),
+                    ValidateIssuer = false,
+                    ValidateAudience = false,
+                    ValidateLifetime = true,
+                    ClockSkew = TimeSpan.Zero,
+                };
+                
+                options.Events = new JwtBearerEvents
+                {
+                    OnChallenge = async context =>
+                    {
+                        context.HandleResponse();
+                        context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+                        context.Response.ContentType = "application/json";
+            
+                        await context.Response.WriteAsJsonAsync(OperationError.Unauthorized());
+                    },
+                    OnTokenValidated = async context =>
+                    {
+                        var credentialsService = context.HttpContext.RequestServices
+                            .GetRequiredService<ICredentialsService>();
+                        
+                        var userId = long.Parse(context.Principal.FindFirstValue(ClaimTypes.NameIdentifier));
+                        
+                        await credentialsService.InitUserAsync(userId);
+                    }
+                };
+            });
+        services.AddAuthorizationBuilder()
+            .AddPolicy("PermissionPolicy", policy => policy.Requirements.Add(new PermissionRequirement("")));
         
         services.AddExceptionHandler<GlobalExceptionHandler>();
         services.AddProblemDetails();
@@ -110,7 +178,9 @@ public class Startup
         app.UseRouting();
 
         app.UseCors();
-
+        
+        app.UseAuthentication();
+        app.UseAuthorization();
         app.UseMiddleware<UserMiddleware>();
         
         app.UseEndpoints(endpoints =>

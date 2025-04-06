@@ -36,7 +36,7 @@ public class UsersController : ControllerBase
         return Ok(response.Value);
     }
     
-    [CustomAuthorize("users/verify")]
+    [CustomAuthorize]
     [HttpGet]
     [Route("verify")]
     public ActionResult<VerifyResponseDto> Verify()
@@ -52,7 +52,7 @@ public class UsersController : ControllerBase
         return Ok(result);
     }
     
-    [CustomAuthorize("users/get")]
+    [CustomAuthorize]
     [HttpGet]
     [Route("")]
     public async Task<ActionResult<List<UserResponseDto>>> Users(string? fio = null)

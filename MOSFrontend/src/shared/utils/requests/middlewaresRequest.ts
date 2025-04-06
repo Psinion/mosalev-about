@@ -8,7 +8,7 @@ async function authRequestMiddleware(request: IPreparedRequest): Promise<IPrepar
   headers["Locale"] = userStore.locale.toString();
 
   if (userStore.token !== null) {
-    headers["AuthToken"] = userStore.token;
+    headers["Authorization"] = "Bearer " + userStore.token;
   }
 
   return request;

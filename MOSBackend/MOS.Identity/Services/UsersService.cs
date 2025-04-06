@@ -69,10 +69,9 @@ public class UsersService : IUsersService
 
         var tokenDescriptor = new SecurityTokenDescriptor
         {
-            Subject = new ClaimsIdentity(new[]
-            {
-                new Claim(nameof(User.Id), user.Id.ToString()),
-            }),
+            Subject = new ClaimsIdentity([
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString())
+            ]),
             Expires = DateTime.UtcNow.AddMinutes(expireMinutes),
             SigningCredentials = credentials
         };

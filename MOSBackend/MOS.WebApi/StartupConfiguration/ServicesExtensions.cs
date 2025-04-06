@@ -1,4 +1,5 @@
-﻿using MOS.Application.Data.Repositories.Projects;
+﻿using Microsoft.AspNetCore.Authorization;
+using MOS.Application.Data.Repositories.Projects;
 using MOS.Application.Data.Repositories.Resumes;
 using MOS.Application.Data.Repositories.Users;
 using MOS.Application.Data.Services.Projects;
@@ -37,6 +38,8 @@ public static class ServicesExtensions
     
     public static IServiceCollection AddServices(this IServiceCollection services)
     {
+        services.AddTransient<IAuthorizationHandler, PermissionHandler>();
+        
         services.AddScoped<ICredentialsService, CredentialsService>();
         services.AddScoped<IUsersService, UsersService>();
         services.AddScoped<IResumesService, ResumesService>();

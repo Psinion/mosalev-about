@@ -1,14 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
 
 namespace MOS.Identity.Helpers;
 
 [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
-public class CustomAuthorizeAttribute : TypeFilterAttribute
+public class CustomAuthorizeAttribute : AuthorizeAttribute
 {
-    private readonly string permission;
-    
-    public CustomAuthorizeAttribute(string permission = "") : base(typeof(CustomAuthorizeFilter))
+    public CustomAuthorizeAttribute(string permission = "")
     {
-        Arguments = new object[] { permission };
+        Policy = permission;
     }
 }
