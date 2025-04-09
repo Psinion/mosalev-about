@@ -27,6 +27,12 @@ public class UsersService : IUsersService
         this.usersRepository = usersRepository;
     }
     
+    public UsersService(AuthSettings authSettings, IUsersRepository usersRepository)
+    {
+        this.authSettings = authSettings;
+        this.usersRepository = usersRepository;
+    }
+    
     public async Task<OperationResult<AuthenticateResponseDto>> AuthenticateAsync(AuthenticateRequestDto authenticateRequest)
     {
         var hashedPassword = HashPassword(authenticateRequest.Password, authSettings.AuthSalt);

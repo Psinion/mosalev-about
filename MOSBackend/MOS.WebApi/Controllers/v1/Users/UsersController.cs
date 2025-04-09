@@ -41,12 +41,12 @@ public class UsersController : ControllerBase
     [Route("verify")]
     public ActionResult<VerifyResponseDto> Verify()
     {
-        var user = credentialsService.CurrentUser;
+        var user = credentialsService.CurrentUser!;
 
-        if (user == null)
+        /*if (user == null)
         {
             return Unauthorized("incorrect_verify");
-        }
+        }*/
 
         var result = new VerifyResponseDto(user);
         return Ok(result);
