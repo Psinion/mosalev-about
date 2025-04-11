@@ -2,7 +2,7 @@ using MOS.Domain.Enums;
 
 namespace MOS.Domain.Entities.Resumes;
 
-public class Resume : LoggedEntity
+public class Resume : AuditableEntity<long>
 {
     public string Title { get; set; } = "";
     

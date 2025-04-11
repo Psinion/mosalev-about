@@ -14,8 +14,8 @@ public static class ResumesMappings
             Id = entity.Id,
             Title = entity.Title,
             About = entity.About,
-            DateCreate = entity.DateCreate,
-            DateUpdate = entity.DateUpdate,
+            DateCreate = entity.CreatedAt,
+            DateUpdate = entity.UpdatedAt,
             CompanyEntries = entity.CompanyEntries.ToDtoList(),
             Skills = entity.Skills.ToDtoList(),
         };
@@ -28,10 +28,10 @@ public static class ResumesMappings
             Id = entity.Id,
             Title = entity.Title,
             PinnedToLocale = entity.PinnedToLocale,
-            DateCreate = entity.DateCreate,
-            UserCreate = entity.UserCreate?.ToDto(),
-            DateUpdate = entity.DateUpdate,
-            UserUpdate = entity.UserUpdate?.ToDto()
+            DateCreate = entity.CreatedAt,
+            UserCreate = entity.Creator.ToDto(),
+            DateUpdate = entity.UpdatedAt,
+            UserUpdate = entity.Updater?.ToDto()
         };
     }
 

@@ -1,6 +1,6 @@
 ﻿namespace MOS.Domain.Entities;
 
-public interface IEntity
+public interface IEntity<TKey> where TKey : struct
 {
-    long Id { get; set; }
+    TKey Id { get; set; }
 }

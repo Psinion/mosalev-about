@@ -2,6 +2,6 @@ using MOS.Domain.Entities.Projects;
 
 namespace MOS.Application.Data.Repositories.Projects;
 
-public interface IArticlesRepository : IGenericRepository<Article>
+public interface IArticlesRepository : IAuditableRepository<Article, long>
 {
 }

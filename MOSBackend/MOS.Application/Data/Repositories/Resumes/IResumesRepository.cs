@@ -3,7 +3,7 @@ using MOS.Domain.Enums;
 
 namespace MOS.Application.Data.Repositories.Resumes;
 
-public interface IResumesRepository : ILoggedRepository<Resume>
+public interface IResumesRepository : IAuditableRepository<Resume, long>
 {
     Task<Resume?> GetByIdWithRelationsAsync(long id, CancellationToken cancellationToken = default);
     

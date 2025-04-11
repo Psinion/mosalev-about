@@ -5,7 +5,7 @@ using MOS.Domain.Entities.Users;
 
 namespace MOS.Data.EF.Access.Repositories.Users;
 
-public class UsersRepository : GenericRepository<User>, IUsersRepository
+public class UsersRepository : GenericRepository<User, long>, IUsersRepository
 {
     public UsersRepository(MainDbContext dbLocalContext) : base(dbLocalContext)
     {
@@ -13,11 +13,11 @@ public class UsersRepository : GenericRepository<User>, IUsersRepository
 
     public async Task<User?> GetByCredentialsAsync(string userName, string password)
     {
-        return await LocalSet.FirstOrDefaultAsync(user => user.UserName == userName && user.Password == password);
+        return await localSet.FirstOrDefaultAsync(user => user.UserName == userName && user.Password == password);
     }
     public async Task<List<User>> FilterByFioAsync(string? filter)
     {
-        var items = LocalSet.AsQueryable();
+        var items = localSet.AsQueryable();
 
         if (!string.IsNullOrEmpty(filter))
         {

@@ -7,7 +7,7 @@ using MOS.Domain.Enums;
 
 namespace MOS.Data.EF.Access.Repositories.Resumes;
 
-public class ResumesRepository : LoggedGenericRepository<Resume>, IResumesRepository
+public class ResumesRepository : AuditableRepository<Resume, long>, IResumesRepository
 {
     public ResumesRepository(MainDbContext dbLocalContext, ICredentialsService credentialsService) 
         : base(dbLocalContext, credentialsService)
@@ -16,7 +16,7 @@ public class ResumesRepository : LoggedGenericRepository<Resume>, IResumesReposi
 
     public async Task<Resume?> GetByIdWithRelationsAsync(long id, CancellationToken cancellationToken = default)
     {
-        return await LocalContext.Resumes
+        return await localContext.Resumes
             .Include(x => x.Skills)
             .Include(x => x.CompanyEntries)
                 .ThenInclude(companyEntry => companyEntry.ResumePosts)
@@ -26,7 +26,7 @@ public class ResumesRepository : LoggedGenericRepository<Resume>, IResumesReposi
 
     public async Task UnpinAllByLocaleAsync(Locale locale)
     {
-        await LocalSet
+        await localSet
             .Where(x => x.PinnedToLocale == locale)
             .ExecuteUpdateAsync(resume => 
                 resume.SetProperty(x => x.PinnedToLocale, (Locale?)null));
@@ -34,7 +34,7 @@ public class ResumesRepository : LoggedGenericRepository<Resume>, IResumesReposi
 
     public async Task<Resume?> GetPinnedResumeAsync(Locale locale)
     {
-        return await LocalSet
+        return await localSet
             .Include(x => x.Skills)
             .FirstOrDefaultAsync(x => x.PinnedToLocale == locale)
             ;
@@ -42,7 +42,7 @@ public class ResumesRepository : LoggedGenericRepository<Resume>, IResumesReposi
 
     public async Task PinResumeAsync(long resumeId, Locale? locale)
     {
-        await LocalSet
+        await localSet
             .Where(x => x.Id == resumeId)
             .ExecuteUpdateAsync(resume => 
                 resume.SetProperty(x => x.PinnedToLocale, locale));

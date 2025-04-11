@@ -2,6 +2,6 @@
 
 namespace MOS.Application.Data.Repositories.Projects;
 
-public interface IProjectsRepository : IGenericRepository<Project>
+public interface IProjectsRepository : IAuditableRepository<Project, long>
 {
 }

@@ -8,7 +8,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using MOS.Application.Data.Repositories.Users;
 using MOS.Application.Data.Services.Users;
 using MOS.Application.OperationResults;
 using MOS.Data.EF.Access.Contexts;
@@ -76,7 +75,7 @@ public class Startup
             });
         });
         
-        services.AddDbContext<MainDbContext>(options =>
+        services.AddDbContext<MainDbContext>((provider, options) =>
             options.UseNpgsql(configuration.GetConnectionString("DefaultConnection"), action =>
             {
                 action.CommandTimeout(30);

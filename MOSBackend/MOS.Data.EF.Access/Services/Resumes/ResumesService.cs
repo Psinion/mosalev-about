@@ -96,30 +96,33 @@ public class ResumesService : IResumesService
     public async Task<OperationResult<List<ResumeResponseCompactDto>>> GetCompactResumesListAsync()
     {
         var resumes = await resumesRepository.GetAll()
-            .Where(x => x.DateDelete == null)
-            .OrderByDescending(x => x.DateUpdate)
+            .Where(x => x.DeletedAt == null)
+            .OrderByDescending(x => x.CreatedAt)
+            .ThenByDescending(x => x.UpdatedAt)
             .Select(x => new Resume()
         {
             Id = x.Id,
             Title = x.Title,
             PinnedToLocale = x.PinnedToLocale,
-            DateCreate = x.DateCreate,
-            UserCreate = x.UserCreate != null ? new User()
+            CreatedAt = x.CreatedAt,
+            CreatedBy = x.CreatedBy,
+            Creator = new User()
             {
-                Id = x.UserCreate.Id,
-                FirstName = x.UserCreate.FirstName,
-                LastName = x.UserCreate.LastName,
-                Patronymic = x.UserCreate.Patronymic,
-                UserName = x.UserCreate.UserName,
-            } : null,
-            DateUpdate = x.DateUpdate,
-            UserUpdate = x.UserUpdate != null ? new User()
+                Id = x.Creator.Id,
+                FirstName = x.Creator.FirstName,
+                LastName = x.Creator.LastName,
+                Patronymic = x.Creator.Patronymic,
+                UserName = x.Creator.UserName,
+            },
+            UpdatedAt = x.UpdatedAt,
+            UpdatedBy = x.UpdatedBy,
+            Updater = x.Updater != null ? new User()
             {
-                Id = x.UserUpdate.Id,
-                FirstName = x.UserUpdate.FirstName,
-                LastName = x.UserUpdate.LastName,
-                Patronymic = x.UserUpdate.Patronymic,
-                UserName = x.UserUpdate.UserName,
+                Id = x.Updater.Id,
+                FirstName = x.Updater.FirstName,
+                LastName = x.Updater.LastName,
+                Patronymic = x.Updater.Patronymic,
+                UserName = x.Updater.UserName,
             } : null,
         }).ToListAsync();
 

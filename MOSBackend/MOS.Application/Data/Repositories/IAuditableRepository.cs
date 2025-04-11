@@ -2,8 +2,9 @@
 
 namespace MOS.Application.Data.Repositories;
 
-public interface ILoggedRepository<TEntity> : IDisposable
-    where TEntity : ILoggedEntity
+public interface IAuditableRepository<TEntity, TKey> : IDisposable
+    where TEntity : IAuditableEntity<TKey>
+    where TKey : struct
 {
     IQueryable<TEntity> GetAll();
     Task<bool> ExistsAsync(long id, CancellationToken cancellationToken = default);

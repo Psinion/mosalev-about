@@ -4,7 +4,7 @@ using MOS.Domain.Entities.Resumes;
 
 namespace MOS.Data.EF.Access.Repositories.Resumes;
 
-public class ResumePostsRepository : GenericRepository<ResumePost>, IResumePostsRepository
+public class ResumePostsRepository : GenericRepository<ResumePost, long>, IResumePostsRepository
 {
     public ResumePostsRepository(MainDbContext dbLocalContext) : base(dbLocalContext)
     {

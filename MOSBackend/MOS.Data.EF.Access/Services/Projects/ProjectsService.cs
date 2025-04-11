@@ -19,8 +19,9 @@ public class ProjectsService : IProjectsService
     public async Task<OperationResult<List<ProjectResponseCompactDto>>> GetCompactProjectsListAsync()
     {
         var resumes = await projectsRepository.GetAll()
-            .Where(x => x.DateDelete == null)
-            .OrderByDescending(x => x.DateUpdate)
+            .Where(x => !x.IsDeleted)
+            .OrderByDescending(x => x.CreatedAt)
+            .ThenByDescending(x => x.UpdatedAt)
             .ToListAsync();
 
         return resumes.ToDtoList();
