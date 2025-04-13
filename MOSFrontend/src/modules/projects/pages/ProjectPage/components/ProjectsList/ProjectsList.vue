@@ -7,14 +7,18 @@
         v-if="projectsList.length > 0 || isCreator"
         class="projects"
       >
-        <ProjectCard
-          v-for="project in projectsList"
-          :key="project.id"
-          :title="project.title"
-          :description="project.description"
-        ></ProjectCard>
+        <template v-for="project in projectsList">
+          <ProjectCard
+            v-if="projectsList.length > 0"
+            :key="project.id"
+            :project="project"
+          />
+        </template>
 
-        <ProjectCardNew @click="onProjectNewClick"></ProjectCardNew>
+        <ProjectCardNew
+          v-if="isCreator"
+          @click="onProjectNewClick"
+        ></ProjectCardNew>
       </div>
       <div
         v-else

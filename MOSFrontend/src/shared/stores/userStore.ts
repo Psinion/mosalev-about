@@ -7,7 +7,7 @@ import { AppLocale } from "@/shared/enums/common.ts";
 import { setPageTitle } from "@/shared/utils/helpers.ts";
 import { useI18n } from "vue-i18n";
 import dayjs from "dayjs";
-import UsersServiceInstance from "@/shared/services/ServiceBase.ts";
+import UsersServiceInstance from "@/shared/services/UsersService.ts";
 
 const MOS_TOKEN_STORAGE_KEY = "token";
 const MOS_LOCALE_STORAGE_KEY = "locale";
