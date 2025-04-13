@@ -5,7 +5,45 @@
       class="psi-dialog"
       @click.self="closeWhenOutsideClick"
     >
-      <div class="dialog-container">
+      <PsiForm
+        v-if="psiForm"
+        v-slot="{ valid }"
+        class="dialog-container"
+        @submit="confirm"
+      >
+        <div class="dialog-header">
+          <h2>
+            <slot name="header" />
+          </h2>
+        </div>
+
+        <div class="dialog-body">
+          <slot />
+        </div>
+
+        <div class="dialog-footer">
+          <slot name="footer">
+            <PsiButton
+              class="cancel-button"
+              @click="close"
+            >
+              {{ t("psiUi.psiDialog.cancelButton") }}
+            </PsiButton>
+            <PsiButton
+              class="confirm-button"
+              native-type="submit"
+              :disabled="!valid"
+            >
+              {{ t("psiUi.psiDialog.confirmButton") }}
+            </PsiButton>
+          </slot>
+        </div>
+      </PsiForm>
+
+      <div
+        v-else
+        class="dialog-container"
+      >
         <div class="dialog-header">
           <h2>
             <slot name="header" />
@@ -41,6 +79,7 @@
 import PsiButton from "@/shared/PsiUI/components/PsiButton/PsiButton.vue";
 import { useI18n } from "vue-i18n";
 import { watch } from "vue";
+import PsiForm from "@/shared/PsiUI/components/PsiForm/PsiForm.vue";
 
 const props = defineProps({
   visible: {
@@ -48,6 +87,10 @@ const props = defineProps({
     default: false
   },
   hideWhenClickOutside: {
+    type: Boolean,
+    default: false
+  },
+  psiForm: {
     type: Boolean,
     default: false
   }

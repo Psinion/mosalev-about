@@ -1,13 +1,24 @@
 <template>
   <section class="project-card">
-    <h3>Новый проект</h3>
+    <h3>{{ title }}</h3>
     <div>
-      Создайте новый проект и наполните его контентом
+      {{ description }}
     </div>
   </section>
 </template>
 
 <script setup lang="ts">
+
+const props = defineProps({
+  title: {
+    type: String,
+    required: true
+  },
+  description: {
+    type: String,
+    required: true
+  }
+});
 
 </script>
 

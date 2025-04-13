@@ -49,7 +49,11 @@
     "list": {
       "newProjectTitle": "Новый проект",
       "newProjectDescription": "Создайте новый проект и наполните его контентом",
-      "emptyProjectsPlaceholder": "Проекты пока только в планах"
+      "emptyProjectsPlaceholder": "Проекты пока только в планах",
+      "dialogEdit": {
+        "titleCreate": "Создание проекта",
+        "errorMessage": "Произошла ошибка при сохранении проекта"
+      }
     }
   },
   "pages": {
@@ -60,6 +64,10 @@
     "resumeList": "Список резюме",
     "projectsList": "Проекты",
     "error404": "Страница не найдена"
+  },
+  "forms": {
+    "title": "Название",
+    "description": "Описание"
   },
   "errors": {
     "error404header": "Страница не найдена"

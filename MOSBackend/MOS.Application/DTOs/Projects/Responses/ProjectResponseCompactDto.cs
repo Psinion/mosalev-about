@@ -1,4 +1,4 @@
-namespace MOS.Application.DTOs.Projects.Requests;
+namespace MOS.Application.DTOs.Projects.Responses;
 
 public class ProjectResponseCompactDto
 {

@@ -68,7 +68,7 @@ const createMode = toRef(props, "createMode");
 
 type TForm = {
   title?: string;
-  about?: string | undefined;
+  about?: string;
 };
 const form = ref<TForm>({});
 

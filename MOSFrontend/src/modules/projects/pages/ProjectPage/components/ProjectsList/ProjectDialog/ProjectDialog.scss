@@ -1,6 +1,5 @@
-.project-card-new {
-  padding: 8px;
-  border: 1px solid var(--secondary-up);
-  border-radius: 8px;
-  cursor: pointer;
+.project-dialog {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }

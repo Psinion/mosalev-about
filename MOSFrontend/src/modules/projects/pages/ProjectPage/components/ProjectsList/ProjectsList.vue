@@ -7,6 +7,13 @@
         v-if="projectsList.length > 0 || isCreator"
         class="projects"
       >
+        <ProjectCard
+          v-for="project in projectsList"
+          :key="project.id"
+          :title="project.title"
+          :description="project.description"
+        ></ProjectCard>
+
         <ProjectCardNew @click="onProjectNewClick"></ProjectCardNew>
       </div>
       <div
@@ -17,8 +24,7 @@
       </div>
     </div>
 
-    <ProjectDialog v-model:visible="projectDialogVisible">
-    </ProjectDialog>
+    <ProjectDialog v-model:visible="projectDialogVisible" />
   </article>
 </template>
 
@@ -32,6 +38,7 @@ import ProjectCardNew
   from "@/modules/projects/pages/ProjectPage/components/ProjectsList/ProjectCardNew/ProjectCardNew.vue";
 import ProjectDialog
   from "@/modules/projects/pages/ProjectPage/components/ProjectsList/ProjectDialog/ProjectDialog.vue";
+import ProjectCard from "@/modules/projects/pages/ProjectPage/components/ProjectsList/ProjectCard/ProjectCard.vue";
 
 const { t } = useI18n();
 const userStore = useUserStore();

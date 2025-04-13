@@ -1,13 +1,13 @@
 import { defineStore } from "pinia";
 import { computed, ref } from "vue";
 import { TUser } from "@/shared/types";
-import UsersServiceInstance from "@/shared/services/UsersService.ts";
 import { RouteNames } from "@/router/routeNames.ts";
 import { useRoute, useRouter } from "vue-router";
 import { AppLocale } from "@/shared/enums/common.ts";
 import { setPageTitle } from "@/shared/utils/helpers.ts";
 import { useI18n } from "vue-i18n";
 import dayjs from "dayjs";
+import UsersServiceInstance from "@/shared/services/ServiceBase.ts";
 
 const MOS_TOKEN_STORAGE_KEY = "token";
 const MOS_LOCALE_STORAGE_KEY = "locale";

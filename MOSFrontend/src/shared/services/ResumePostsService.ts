@@ -1,10 +1,8 @@
-import { useRequestor } from "@/shared/PsiUI/utils/requests/requestor.ts";
 import { IResumeCompanyEntryPost } from "@/shared/types/resume.ts";
 import { IResumePostsService, TCreateResumePostRequest, TUpdateResumePostRequest } from "@/shared/services/base";
+import ServiceBase from "@/shared/services/ServiceBase.ts";
 
-class ResumePostsService implements IResumePostsService {
-  private requestor = useRequestor();
-
+class ResumePostsService extends ServiceBase implements IResumePostsService {
   async createResumePost(params: TCreateResumePostRequest): Promise<IResumeCompanyEntryPost> {
     try {
       return await this.requestor.post("api/v1/ResumePosts", params) as IResumeCompanyEntryPost;

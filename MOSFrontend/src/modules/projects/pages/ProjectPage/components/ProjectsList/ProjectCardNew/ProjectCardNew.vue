@@ -1,13 +1,16 @@
 <template>
   <section class="project-card-new">
-    <h3>Новый проект</h3>
+    <h3>{{ t('projects.list.newProjectTitle') }}</h3>
     <div>
-      Создайте новый проект и наполните его контентом
+      {{ t('projects.list.newProjectDescription') }}
     </div>
   </section>
 </template>
 
 <script setup lang="ts">
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
 
 </script>
 

@@ -1,4 +1,5 @@
 using MOS.Application.DTOs.Projects.Requests;
+using MOS.Application.DTOs.Projects.Responses;
 using MOS.Domain.Entities.Projects;
 
 namespace MOS.Application.Mappings.Projects;
@@ -6,7 +7,7 @@ namespace MOS.Application.Mappings.Projects;
 
 public static class ProjectsMappings
 {
-    public static ProjectResponseCompactDto ToDto(this Project entity)
+    public static ProjectResponseCompactDto ToCompactDto(this Project entity)
     {
         return new ProjectResponseCompactDto()
         {
@@ -21,8 +22,18 @@ public static class ProjectsMappings
         var dtoList = new List<ProjectResponseCompactDto>(entities.Count);
         foreach (var entity in entities)
         {
-            dtoList.Add(entity.ToDto());
+            dtoList.Add(entity.ToCompactDto());
         }
         return dtoList;
+    }
+    
+    public static ProjectResponseDto ToDto(this Project entity)
+    {
+        return new ProjectResponseDto()
+        {
+            Id = entity.Id,
+            Title = entity.Title,
+            Description = entity.Description,
+        };
     }
 }

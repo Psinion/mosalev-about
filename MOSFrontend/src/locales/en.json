@@ -44,9 +44,13 @@
   },
   "projects": {
     "list": {
-      "newProjectTitle": "Новый проект",
-      "newProjectDescription": "Создайте новый проект и наполните его контентом",
-      "emptyProjectsPlaceholder": "Projects are still only in the plans"
+      "newProjectTitle": "New Project",
+      "newProjectDescription": "Create new project and fill it with content",
+      "emptyProjectsPlaceholder": "Projects are still only in the plans",
+      "dialogEdit": {
+        "titleCreate": "Project Creation",
+        "errorMessage": "Error occurred while saving project"
+      }
     }
   },
   "pages": {
@@ -57,6 +61,10 @@
     "resumeList": "Resume list",
     "projectsList": "Projects",
     "error404": "Page not found"
+  },
+  "forms": {
+    "title": "Title",
+    "description": "Description"
   },
   "errors": {
     "error404header": "Page not found"

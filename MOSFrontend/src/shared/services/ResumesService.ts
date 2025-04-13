@@ -1,11 +1,9 @@
-import { type IResumesService, TPinResumeRequest, TUpdateResumeRequest } from "@/shared/services/base";
-import { useRequestor } from "@/shared/PsiUI/utils/requests/requestor.ts";
+import { type IResumesService, TUpdateResumeRequest } from "@/shared/services/base";
 import { TResume, TResumeCompact } from "@/shared/types/resume.ts";
 import { TCreateResumeRequest } from "@/shared/services/base/IResumesService.ts";
+import ServiceBase from "@/shared/services/ServiceBase.ts";
 
-class ResumesService implements IResumesService {
-  private requestor = useRequestor();
-
+class ResumesService extends ServiceBase implements IResumesService {
   async getResumesList(): Promise<TResumeCompact[]> {
     try {
       return await this.requestor.get("api/v1/resumes/list") as TResumeCompact[];
