@@ -4,6 +4,7 @@ using System.Security.Cryptography;
 using System.Text;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using MOS.Application.Data.Repositories;
 using MOS.Application.Data.Repositories.Users;
 using MOS.Application.Data.Services.Users;
 using MOS.Application.DTOs.Users.Requests;
@@ -21,7 +22,7 @@ public class UsersService : IUsersService
     private readonly AuthSettings authSettings;
     private readonly IUsersRepository usersRepository;
     
-    public UsersService(IOptions<AuthSettings> authSettings, IUsersRepository usersRepository)
+    public UsersService(IOptions<AuthSettings> authSettings, IUnitOfWork unitOfWork, IUsersRepository usersRepository)
     {
         this.authSettings = authSettings.Value;
         this.usersRepository = usersRepository;

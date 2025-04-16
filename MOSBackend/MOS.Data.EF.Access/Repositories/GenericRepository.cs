@@ -28,27 +28,24 @@ public class GenericRepository<TEntity, TKey> : IGenericRepository<TEntity, TKey
     public virtual async Task<TEntity> CreateAsync(TEntity item, CancellationToken cancellationToken = default)
     {
         await localContext.AddAsync(item, cancellationToken);
-        await localContext.SaveChangesAsync(cancellationToken);
 
         return item;
     }
 
-    public virtual async Task<TEntity> CreateOrUpdateAsync(TEntity item, CancellationToken cancellationToken = default)
+    public virtual Task<TEntity> CreateOrUpdateAsync(TEntity item, CancellationToken cancellationToken = default)
     {
         var isNew = EqualityComparer<TKey>.Default.Equals(item.Id, default);
         
         localContext.Entry(item).State = isNew
             ? EntityState.Added : EntityState.Modified;
 
-        await localContext.SaveChangesAsync(cancellationToken);
-
-        return item;
+        return Task.FromResult(item);
     }
 
-    public virtual async Task UpdateAsync(TEntity item, CancellationToken cancellationToken = default)
+    public virtual Task UpdateAsync(TEntity item, CancellationToken cancellationToken = default)
     {
         localContext.Update(item);
-        await localContext.SaveChangesAsync(cancellationToken);
+        return Task.CompletedTask;
     }
 
     public virtual async Task DeleteAsync(TKey id, CancellationToken cancellationToken = default)
@@ -57,7 +54,6 @@ public class GenericRepository<TEntity, TKey> : IGenericRepository<TEntity, TKey
         if (entity != null)
         {
             localSet.Remove(entity);
-            await localContext.SaveChangesAsync(cancellationToken);
         }
     }
 

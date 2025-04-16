@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using MOS.Application.Data.Repositories;
 using MOS.Application.Data.Repositories.Projects;
 using MOS.Application.Data.Repositories.Resumes;
 using MOS.Application.Data.Repositories.Users;
 using MOS.Application.Data.Services.Projects;
 using MOS.Application.Data.Services.Resumes;
 using MOS.Application.Data.Services.Users;
+using MOS.Data.EF.Access.Repositories;
 using MOS.Data.EF.Access.Repositories.Projects;
 using MOS.Data.EF.Access.Repositories.Resumes;
 using MOS.Data.EF.Access.Repositories.Users;
@@ -39,6 +41,7 @@ public static class ServicesExtensions
     public static IServiceCollection AddServices(this IServiceCollection services)
     {
         services.AddTransient<IAuthorizationHandler, PermissionHandler>();
+        services.AddTransient<IUnitOfWork, UnitOfWork>();
         
         services.AddScoped<ICredentialsService, CredentialsService>();
         services.AddScoped<IUsersService, UsersService>();

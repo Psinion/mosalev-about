@@ -37,12 +37,11 @@ public class AuditableRepository<TEntity, TKey> : IAuditableRepository<TEntity, 
         }
         
         await localContext.AddAsync(item, cancellationToken);
-        await localContext.SaveChangesAsync(cancellationToken);
 
         return item;
     }
 
-    public virtual async Task<TEntity> CreateOrUpdateAsync(TEntity item, CancellationToken cancellationToken = default)
+    public virtual Task<TEntity> CreateOrUpdateAsync(TEntity item, CancellationToken cancellationToken = default)
     {
         var isNew = EqualityComparer<TKey>.Default.Equals(item.Id, default);
         
@@ -64,12 +63,10 @@ public class AuditableRepository<TEntity, TKey> : IAuditableRepository<TEntity, 
         
         localContext.Entry(item).State = state;
 
-        await localContext.SaveChangesAsync(cancellationToken);
-
-        return item;
+        return Task.FromResult(item);
     }
 
-    public virtual async Task UpdateAsync(TEntity item, CancellationToken cancellationToken = default)
+    public virtual Task UpdateAsync(TEntity item, CancellationToken cancellationToken = default)
     {
         if (credentialsService.CurrentUser != null)
         {
@@ -78,10 +75,10 @@ public class AuditableRepository<TEntity, TKey> : IAuditableRepository<TEntity, 
         }
         
         localContext.Update(item);
-        await localContext.SaveChangesAsync(cancellationToken);
+        return Task.CompletedTask;
     }
     
-    public virtual async Task DeleteAsync(TEntity item, CancellationToken cancellationToken = default)
+    public virtual Task DeleteAsync(TEntity item, CancellationToken cancellationToken = default)
     {
         if (credentialsService.CurrentUser != null)
         {
@@ -90,7 +87,7 @@ public class AuditableRepository<TEntity, TKey> : IAuditableRepository<TEntity, 
         }
         
         localContext.Update(item);
-        await localContext.SaveChangesAsync(cancellationToken);
+        return Task.CompletedTask;
     }
 
     public void Dispose()

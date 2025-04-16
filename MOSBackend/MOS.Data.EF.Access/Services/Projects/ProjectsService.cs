@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using MOS.Application.Data.Repositories;
 using MOS.Application.Data.Repositories.Projects;
 using MOS.Application.Data.Services.Projects;
 using MOS.Application.DTOs.Projects.Requests;
@@ -11,10 +12,12 @@ namespace MOS.Data.EF.Access.Services.Projects;
 
 public class ProjectsService : IProjectsService
 {
+    private readonly IUnitOfWork unitOfWork;
     private readonly IProjectsRepository projectsRepository;
     
-    public ProjectsService(IProjectsRepository projectsRepository)
+    public ProjectsService(IUnitOfWork unitOfWork, IProjectsRepository projectsRepository)
     {
+        this.unitOfWork = unitOfWork;
         this.projectsRepository = projectsRepository;
     }
 
@@ -38,6 +41,7 @@ public class ProjectsService : IProjectsService
         };
 
         var newProject = await projectsRepository.CreateAsync(project);
+        await unitOfWork.SaveChangesAsync();
 
         return newProject.ToDto();
     }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using MOS.Application.Data.Repositories;
 using MOS.Application.Data.Repositories.Resumes;
 using MOS.Application.Data.Services.Resumes;
 using MOS.Application.Data.Services.Users;
@@ -14,11 +15,13 @@ namespace MOS.Data.EF.Access.Services.Resumes;
 public class ResumesService : IResumesService
 {
     private readonly ICredentialsService credentialsService;
+    private readonly IUnitOfWork unitOfWork;
     private readonly IResumesRepository resumesRepository;
     
-    public ResumesService(ICredentialsService credentialsService, IResumesRepository resumesRepository)
+    public ResumesService(ICredentialsService credentialsService, IUnitOfWork unitOfWork, IResumesRepository resumesRepository)
     {
         this.credentialsService = credentialsService;
+        this.unitOfWork = unitOfWork;
         this.resumesRepository = resumesRepository;
     }
 
@@ -43,6 +46,7 @@ public class ResumesService : IResumesService
         };
 
         var createdEntity = await resumesRepository.CreateAsync(resume);
+        await unitOfWork.SaveChangesAsync();
 
         return createdEntity.ToDto();
     }
@@ -59,6 +63,7 @@ public class ResumesService : IResumesService
         resume.About = resumeRequest.About;
 
         await resumesRepository.UpdateAsync(resume);
+        await unitOfWork.SaveChangesAsync();
         
         return resume.ToDto();
     }

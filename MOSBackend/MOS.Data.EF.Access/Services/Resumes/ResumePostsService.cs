@@ -1,3 +1,4 @@
+using MOS.Application.Data.Repositories;
 using MOS.Application.Data.Repositories.Resumes;
 using MOS.Application.Data.Services.Resumes;
 using MOS.Application.DTOs.Resumes.Requests;
@@ -10,10 +11,12 @@ namespace MOS.Data.EF.Access.Services.Resumes;
 
 public class ResumePostsService : IResumePostsService
 {
+    private readonly IUnitOfWork unitOfWork;
     private readonly IResumePostsRepository resumePostsRepository;
     
-    public ResumePostsService(IResumePostsRepository resumePostsRepository)
+    public ResumePostsService(IUnitOfWork unitOfWork, IResumePostsRepository resumePostsRepository)
     {
+        this.unitOfWork = unitOfWork;
         this.resumePostsRepository = resumePostsRepository;
     }
 
@@ -29,6 +32,7 @@ public class ResumePostsService : IResumePostsService
         };
 
         var createdEntity = await resumePostsRepository.CreateAsync(resumeCompanyEntry);
+        await unitOfWork.SaveChangesAsync();
 
         return createdEntity.ToDto();
     }
@@ -47,6 +51,7 @@ public class ResumePostsService : IResumePostsService
         resumeCompanyEntry.DateEnd = resumePostRequest.DateEnd;
 
         await resumePostsRepository.UpdateAsync(resumeCompanyEntry);
+        await unitOfWork.SaveChangesAsync();
         
         return resumeCompanyEntry.ToDto();
     }
@@ -56,6 +61,7 @@ public class ResumePostsService : IResumePostsService
         try
         {
             await resumePostsRepository.DeleteAsync(postId);
+            await unitOfWork.SaveChangesAsync();
             return true;
         }
         catch (Exception ex)

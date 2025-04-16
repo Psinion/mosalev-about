@@ -1,3 +1,4 @@
+using MOS.Application.Data.Repositories;
 using MOS.Application.Data.Repositories.Resumes;
 using MOS.Application.Data.Services.Resumes;
 using MOS.Application.DTOs.Resumes.Requests;
@@ -10,10 +11,12 @@ namespace MOS.Data.EF.Access.Services.Resumes;
 
 public class ResumeSkillsService : IResumeSkillsService
 {
+    private readonly IUnitOfWork unitOfWork;
     private readonly IResumeSkillsRepository resumeSkillsRepository;
     
-    public ResumeSkillsService(IResumeSkillsRepository resumeSkillsRepository)
+    public ResumeSkillsService(IUnitOfWork unitOfWork, IResumeSkillsRepository resumeSkillsRepository)
     {
+        this.unitOfWork = unitOfWork;
         this.resumeSkillsRepository = resumeSkillsRepository;
     }
 
@@ -27,6 +30,7 @@ public class ResumeSkillsService : IResumeSkillsService
         };
 
         var createdEntity = await resumeSkillsRepository.CreateAsync(resumeCompanyEntry);
+        await unitOfWork.SaveChangesAsync();
 
         return createdEntity.ToDto();
     }
@@ -43,6 +47,7 @@ public class ResumeSkillsService : IResumeSkillsService
         resumeSkill.Level = request.Level;
 
         await resumeSkillsRepository.UpdateAsync(resumeSkill);
+        await unitOfWork.SaveChangesAsync();
         
         return resumeSkill.ToDto();
     }
@@ -52,6 +57,7 @@ public class ResumeSkillsService : IResumeSkillsService
         try
         {
             await resumeSkillsRepository.DeleteAsync(companyId);
+            await unitOfWork.SaveChangesAsync();
             return true;
         }
         catch (Exception ex)
