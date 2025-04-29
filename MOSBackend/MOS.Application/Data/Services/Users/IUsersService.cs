@@ -7,7 +7,5 @@ namespace MOS.Application.Data.Services.Users;
 
 public interface IUsersService : IDisposable
 {
-    Task<OperationResult<AuthenticateResponseDto>> AuthenticateAsync(AuthenticateRequestDto authenticateRequest);
-    
     Task<List<UserResponseDto>> FilterByFioAsync(string? filter);
 }

@@ -6,14 +6,21 @@ using MOS.Application.Data.Repositories.Users;
 using MOS.Application.Data.Services.Projects;
 using MOS.Application.Data.Services.Resumes;
 using MOS.Application.Data.Services.Users;
+using MOS.Application.DTOs.Users.Responses;
+using MOS.Application.OperationResults;
+using MOS.Application.SQRS;
+using MOS.Application.SQRS.Base;
 using MOS.Data.EF.Access.Repositories;
 using MOS.Data.EF.Access.Repositories.Projects;
 using MOS.Data.EF.Access.Repositories.Resumes;
 using MOS.Data.EF.Access.Repositories.Users;
 using MOS.Data.EF.Access.Services.Projects;
 using MOS.Data.EF.Access.Services.Resumes;
+using MOS.Identity.Handlers;
 using MOS.Identity.Helpers;
+using MOS.Identity.Queries;
 using MOS.Identity.Services;
+using MOS.WebApi.SQRS;
 
 namespace MOS.WebApi.StartupConfiguration;
 
@@ -42,6 +49,7 @@ public static class ServicesExtensions
     {
         services.AddTransient<IAuthorizationHandler, PermissionHandler>();
         services.AddTransient<IUnitOfWork, UnitOfWork>();
+        services.AddTransient<IHandlerFactory, HandlerFactory>();
         
         services.AddScoped<ICredentialsService, CredentialsService>();
         services.AddScoped<IUsersService, UsersService>();
@@ -51,6 +59,13 @@ public static class ServicesExtensions
         services.AddScoped<IResumeSkillsService, ResumeSkillsService>();
         services.AddScoped<IProjectsService, ProjectsService>();
         services.AddScoped<IArticlesService, ArticlesService>();
+        
+        return services;
+    }
+    
+    public static IServiceCollection AddHandlers(this IServiceCollection services)
+    {
+        services.AddScoped<IRequestHandler<AuthenticateQuery, OperationResult<AuthenticateResponseDto>>, AuthenticateHandler>();
         
         return services;
     }

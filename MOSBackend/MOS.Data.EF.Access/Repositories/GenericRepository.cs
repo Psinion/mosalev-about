@@ -17,7 +17,7 @@ public class GenericRepository<TEntity, TKey> : IGenericRepository<TEntity, TKey
         localSet = dbLocalContext.Set<TEntity>();
     }
 
-    public virtual IQueryable<TEntity> GetAll() => localSet.AsQueryable().AsNoTracking();
+    public virtual IQueryable<TEntity> GetAll() => localSet.AsNoTracking();
     
     public virtual async Task<bool> ExistsAsync(TKey id, CancellationToken cancellationToken = default) 
         => await localSet.AnyAsync(e => e.Id.Equals(id), cancellationToken);

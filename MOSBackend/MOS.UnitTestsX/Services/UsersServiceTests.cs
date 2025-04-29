@@ -5,17 +5,21 @@ using MOS.Application.DTOs.Users.Requests;
 using MOS.Application.DTOs.Users.Responses;
 using MOS.Application.OperationResults;
 using MOS.Application.OperationResults.Enums;
+using MOS.Application.SQRS.Base;
+using MOS.Data.EF.Access.Repositories.Users;
 using MOS.Domain.Entities.Users;
+using MOS.Identity.Handlers;
 using MOS.Identity.Helpers;
+using MOS.Identity.Queries;
 using MOS.Identity.Services;
+using MOS.UnitTestsX.Data;
 
 namespace MOS.UnitTestsX.Services;
 
 public class UsersServiceTests
     {
-        private readonly Mock<IUsersRepository> mockUsersRepository;
         private readonly AuthSettings authSettings;
-        private readonly UsersService usersService;
+        private readonly IRequestHandler<AuthenticateQuery, OperationResult<AuthenticateResponseDto>> authenticateHandler;
 
         public UsersServiceTests()
         {
@@ -25,30 +29,29 @@ public class UsersServiceTests
                 JwtSecretKey = "super-secret-key-with-minimum-128-bits-length-1234567890", 
                 TokenDurationMinutes = 60
             };
-            mockUsersRepository = new Mock<IUsersRepository>();
-            usersService = new UsersService(authSettings, mockUsersRepository.Object);
+            
+            var context = TestDataHelper.MainDbContext;
+            
+            var usersRepository = new UsersRepository(context);
+            authenticateHandler = new AuthenticateHandler(authSettings, usersRepository);
         }
         
         [Fact]
         public async Task AuthenticateAsync_ValidCredentials_ReturnsToken()
         {
-            var request = new AuthenticateRequestDto 
+            var request = new AuthenticateQuery
             { 
-                UserName = "test", 
+                UserName = "John Doe", 
                 Password = "password" 
             };
 
             var expectedUser = new User
             {
                 Id = 1,
-                UserName = "test",
+                UserName = "John Doe",
             };
-
-            mockUsersRepository
-                .Setup(r => r.GetByCredentialsAsync(It.IsAny<string>(), It.IsAny<string>()))
-                .ReturnsAsync(expectedUser);
             
-            var result = await usersService.AuthenticateAsync(request);
+            var result = await authenticateHandler.Handle(request);
             
             Assert.True(result.IsSuccess);
             Assert.NotNull(result.Value?.Token);
@@ -58,17 +61,13 @@ public class UsersServiceTests
         [Fact]
         public async Task AuthenticateAsync_InvalidCredentials_Returns401()
         {
-            var request = new AuthenticateRequestDto 
+            var request = new AuthenticateQuery 
             { 
                 UserName = "wrong", 
                 Password = "wrong" 
             };
-
-            mockUsersRepository
-                .Setup(r => r.GetByCredentialsAsync(It.IsAny<string>(), It.IsAny<string>()))
-                .ReturnsAsync((User?)null);
             
-            var result = await usersService.AuthenticateAsync(request);
+            var result = await authenticateHandler.Handle(request);
             
             Assert.True(!result.IsSuccess);
             Assert.Equal(ErrorType.Unauthorized, result.Error.ErrorType);

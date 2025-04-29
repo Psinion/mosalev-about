@@ -20,7 +20,7 @@ public class AuditableRepository<TEntity, TKey> : IAuditableRepository<TEntity, 
         this.credentialsService = credentialsService;
     }
     
-    public virtual IQueryable<TEntity> GetAll() => localSet.AsQueryable();
+    public virtual IQueryable<TEntity> GetAll() => localSet.AsNoTracking();
     
     public virtual async Task<bool> ExistsAsync(long id, CancellationToken cancellationToken = default) 
         => await localSet.AnyAsync(e => e.Id.Equals(id), cancellationToken);

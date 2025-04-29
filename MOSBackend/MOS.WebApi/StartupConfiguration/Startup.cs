@@ -149,11 +149,12 @@ public class Startup
         
         services.AddExceptionHandler<GlobalExceptionHandler>();
         services.AddProblemDetails();
-        
+
         services
             .AddConfigurations(configuration)
             .AddRepositories()
-            .AddServices();
+            .AddServices()
+            .AddHandlers();
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IApiVersionDescriptionProvider provider)
