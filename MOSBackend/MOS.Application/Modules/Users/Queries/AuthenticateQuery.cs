@@ -3,9 +3,9 @@ using MOS.Application.Data;
 using MOS.Application.DTOs.Users.Responses;
 using MOS.Application.OperationResults;
 
-namespace MOS.Identity.Queries;
+namespace MOS.Application.Modules.Users.Queries;
 
-public record AuthenticateQuery : IRequest<OperationResult<AuthenticateResponseDto>>
+public record AuthenticateQuery : IQuery<OperationResult<AuthenticateResponseDto>>
 {
     [Required]
     [StringLength(30)] 

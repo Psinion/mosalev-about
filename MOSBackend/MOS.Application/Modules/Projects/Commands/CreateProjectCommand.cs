@@ -1,0 +1,16 @@
+using System.ComponentModel.DataAnnotations;
+using MOS.Application.Data;
+using MOS.Application.DTOs.Projects.Responses;
+using MOS.Application.OperationResults;
+
+namespace MOS.Application.Modules.Projects.Commands;
+
+public record CreateProjectCommand : ICommand<OperationResult<ProjectResponseDto>>
+{
+    [Required]
+    [StringLength(30)] 
+    public string Title { get; set; } = "";
+    
+    [Required]
+    public string Description { get; set; }
+}

@@ -1,6 +1,6 @@
 namespace MOS.Application.DTOs.Projects.Responses;
 
-public class ProjectResponseCompactDto
+public class ProjectCompactDto
 {
     public long Id { get; set; }
     public string Title { get; set; } = "";

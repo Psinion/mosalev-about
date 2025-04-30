@@ -1,13 +1,14 @@
 ﻿using Asp.Versioning;
 using Microsoft.AspNetCore.Mvc;
 using MOS.Application.Data;
-using MOS.Application.Data.Handlers;
 using MOS.Application.Data.Services.Users;
 using MOS.Application.DTOs.Users.Responses;
+using MOS.Application.Modules.Users;
+using MOS.Application.Modules.Users.Queries;
+using MOS.Application.Modules.Users.Queries.Handlers;
 using MOS.Application.OperationResults;
 using MOS.Application.OperationResults.Enums;
 using MOS.Identity.Helpers;
-using MOS.Identity.Queries;
 
 namespace MOS.WebApi.Controllers.v1.Users;
 

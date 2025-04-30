@@ -1,13 +1,14 @@
 using MOS.Application.Data;
-using MOS.Application.Data.Handlers;
 using MOS.Application.DTOs.Users.Responses;
+using MOS.Application.Modules.Users;
+using MOS.Application.Modules.Users.Queries;
+using MOS.Application.Modules.Users.Queries.Handlers;
 using MOS.Application.OperationResults;
 using MOS.Application.OperationResults.Enums;
 using MOS.Data.EF.Access.Repositories.Users;
 using MOS.Domain.Entities.Users;
 using MOS.Identity.Handlers;
 using MOS.Identity.Helpers;
-using MOS.Identity.Queries;
 using MOS.UnitTestsX.Data;
 
 namespace MOS.UnitTestsX.Services;

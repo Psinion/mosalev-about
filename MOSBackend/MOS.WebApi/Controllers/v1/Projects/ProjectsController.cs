@@ -1,8 +1,11 @@
 ﻿using Asp.Versioning;
 using Microsoft.AspNetCore.Mvc;
-using MOS.Application.Data.Services.Projects;
-using MOS.Application.DTOs.Projects.Requests;
+using MOS.Application.Data;
 using MOS.Application.DTOs.Projects.Responses;
+using MOS.Application.Modules.Projects.Commands;
+using MOS.Application.Modules.Projects.Commands.Handlers;
+using MOS.Application.Modules.Projects.Queries;
+using MOS.Application.Modules.Projects.Queries.Handlers;
 using MOS.Identity.Helpers;
 
 namespace MOS.WebApi.Controllers.v1.Projects;
@@ -12,26 +15,32 @@ namespace MOS.WebApi.Controllers.v1.Projects;
 [ApiController]
 public class ProjectsController : ControllerBase
 {
-    private readonly IProjectsService projectsService;
+    private readonly IHandlerFactory handlerFactory;
     
-    public ProjectsController(IProjectsService projectsService)
+    public ProjectsController(IHandlerFactory handlerFactory)
     {
-        this.projectsService = projectsService;
+        this.handlerFactory = handlerFactory;
     }
     
     [HttpGet]
     [Route("list")]
-    public async Task<ActionResult<ProjectResponseCompactDto>> GetCompactProjectsList()
+    public async Task<ActionResult<ProjectCompactDto>> GetCompactProjectsList()
     {
-        var response = await projectsService.GetCompactProjectsListAsync();
+        var getCompactsProjectsHandler = handlerFactory.GetHandler<IGetCompactProjectsHandler>();
+        
+        var response = await getCompactsProjectsHandler.Handle(new GetCompactProjectsQuery());
+        
         return Ok(response.Value);
     }
     
     [HttpPost]
     [CustomAuthorize]
-    public async Task<ActionResult<ProjectResponseCompactDto>> CreateProject(ProjectCreateRequestDto request)
+    public async Task<ActionResult<ProjectCompactDto>> CreateProject(CreateProjectCommand request)
     {
-        var response = await projectsService.CreateProjectAsync(request);
+        var createProjectHandler = handlerFactory.GetHandler<ICreateProjectHandler>();
+        
+        var response = await createProjectHandler.Handle(request);
+        
         return Ok(response.Value);
     }
 }

@@ -5,14 +5,15 @@ using System.Text;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using MOS.Application.Data;
-using MOS.Application.Data.Handlers;
 using MOS.Application.Data.Repositories;
 using MOS.Application.Data.Repositories.Users;
 using MOS.Application.DTOs.Users.Responses;
+using MOS.Application.Modules.Users;
+using MOS.Application.Modules.Users.Queries;
+using MOS.Application.Modules.Users.Queries.Handlers;
 using MOS.Application.OperationResults;
 using MOS.Domain.Entities.Users;
 using MOS.Identity.Helpers;
-using MOS.Identity.Queries;
 
 namespace MOS.Identity.Handlers;
 
