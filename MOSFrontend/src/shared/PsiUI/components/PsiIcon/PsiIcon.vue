@@ -15,7 +15,6 @@
 import { OhVueIcon } from "oh-vue-icons";
 import { computed, PropType } from "vue";
 import { TPsiIcon, TPsiIconFlip } from "@/shared/PsiUI/components/PsiIcon/types.ts";
-import { MdDeleteforever } from "oh-vue-icons/icons";
 
 const props = defineProps({
   icon: {
@@ -58,7 +57,8 @@ const ICON_CODES = {
   "steam": "fa-steam",
   "github": "fa-github",
   "error": "md-reportgmailerrorred",
-  "success": "oi-check-circle"
+  "success": "oi-check-circle",
+  "edit": "md-edit"
 };
 
 const iconCode = computed(() => ICON_CODES[props.icon]);

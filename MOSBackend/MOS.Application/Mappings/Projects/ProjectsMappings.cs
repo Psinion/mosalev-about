@@ -28,9 +28,9 @@ public static class ProjectsMappings
         return dtoList;
     }
     
-    public static ProjectResponseDto ToDto(this Project entity)
+    public static ProjectDto ToDto(this Project entity)
     {
-        return new ProjectResponseDto()
+        return new ProjectDto()
         {
             Id = entity.Id,
             Title = entity.Title,

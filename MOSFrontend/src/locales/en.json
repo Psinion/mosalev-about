@@ -49,6 +49,7 @@
       "emptyProjectsPlaceholder": "Projects are still only in the plans",
       "dialogEdit": {
         "titleCreate": "Project Creation",
+        "titleEdit": "Project Edition",
         "errorMessage": "Error occurred while saving project"
       }
     }
@@ -60,6 +61,7 @@
     "resumeEdit": "Edit Resume",
     "resumeList": "Resume list",
     "projectsList": "Projects",
+    "projectView": "Project",
     "error404": "Page not found"
   },
   "forms": {

@@ -5,7 +5,7 @@ using MOS.Application.OperationResults;
 
 namespace MOS.Application.Modules.Projects.Commands;
 
-public record CreateProjectCommand : ICommand<OperationResult<ProjectResponseDto>>
+public record CreateProjectCommand : ICommand<OperationResult<ProjectDto>>
 {
     [Required]
     [StringLength(30)] 

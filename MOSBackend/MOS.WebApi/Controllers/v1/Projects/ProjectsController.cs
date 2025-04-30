@@ -1,11 +1,13 @@
 ﻿using Asp.Versioning;
 using Microsoft.AspNetCore.Mvc;
 using MOS.Application.Data;
+using MOS.Application.DTOs.Projects.Requests;
 using MOS.Application.DTOs.Projects.Responses;
 using MOS.Application.Modules.Projects.Commands;
 using MOS.Application.Modules.Projects.Commands.Handlers;
 using MOS.Application.Modules.Projects.Queries;
 using MOS.Application.Modules.Projects.Queries.Handlers;
+using MOS.Application.OperationResults.Enums;
 using MOS.Identity.Helpers;
 
 namespace MOS.WebApi.Controllers.v1.Projects;
@@ -26,9 +28,25 @@ public class ProjectsController : ControllerBase
     [Route("list")]
     public async Task<ActionResult<ProjectCompactDto>> GetCompactProjectsList()
     {
-        var getCompactsProjectsHandler = handlerFactory.GetHandler<IGetCompactProjectsHandler>();
+        var handler = handlerFactory.GetHandler<IGetCompactProjectsHandler>();
         
-        var response = await getCompactsProjectsHandler.Handle(new GetCompactProjectsQuery());
+        var response = await handler.Handle(new GetCompactProjectsQuery());
+        
+        return Ok(response.Value);
+    }
+    
+    [HttpGet]
+    [Route("{projectId}")]
+    public async Task<ActionResult<ProjectCompactDto>> GetProject(long projectId)
+    {
+        var handler = handlerFactory.GetHandler<IGetProjectHandler>();
+        
+        var response = await handler.Handle(new GetProjectQuery(projectId));
+        
+        if (response.Error.ErrorType == ErrorType.NotFound)
+        {
+            return NotFound(response.Error);
+        }
         
         return Ok(response.Value);
     }
@@ -37,9 +55,32 @@ public class ProjectsController : ControllerBase
     [CustomAuthorize]
     public async Task<ActionResult<ProjectCompactDto>> CreateProject(CreateProjectCommand request)
     {
-        var createProjectHandler = handlerFactory.GetHandler<ICreateProjectHandler>();
+        var handler = handlerFactory.GetHandler<ICreateProjectHandler>();
         
-        var response = await createProjectHandler.Handle(request);
+        var response = await handler.Handle(request);
+        
+        return Ok(response.Value);
+    }
+    
+    [HttpPut("{projectId}")]
+    [CustomAuthorize]
+    public async Task<ActionResult<ProjectCompactDto>> UpdateProject(long projectId, UpdateProjectRequest request)
+    {
+        var command = new UpdateProjectCommand()
+        {
+            Id = projectId,
+            Title = request.Title,
+            Description = request.Description,
+        };
+        
+        var handler = handlerFactory.GetHandler<IUpdateProjectHandler>();
+        
+        var response = await handler.Handle(command);
+        
+        if (response.Error.ErrorType == ErrorType.NotFound)
+        {
+            return NotFound(response.Error);
+        }
         
         return Ok(response.Value);
     }

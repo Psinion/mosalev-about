@@ -1,6 +1,6 @@
 using MOS.Application.Data;
 
-namespace MOS.WebApi.SQRS;
+namespace MOS.WebApi.Factories;
 
 public class HandlerFactory : IHandlerFactory
 {

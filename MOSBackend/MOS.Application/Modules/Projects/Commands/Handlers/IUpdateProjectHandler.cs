@@ -4,6 +4,6 @@ using MOS.Application.OperationResults;
 
 namespace MOS.Application.Modules.Projects.Commands.Handlers;
 
-public interface ICreateProjectHandler : ICommandHandler<CreateProjectCommand, OperationResult<ProjectDto>>
+public interface IUpdateProjectHandler : ICommandHandler<UpdateProjectCommand, OperationResult<ProjectDto>>
 {
 }

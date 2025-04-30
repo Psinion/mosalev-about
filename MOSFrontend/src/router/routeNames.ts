@@ -5,6 +5,7 @@ export enum RouteNames {
   ResumeList = "ResumeList",
   ResumeEdit = "ResumeEdit",
 
+  ProjectView = "ProjectView",
   ProjectsList = "ProjectsList",
 
   Login = "Login",

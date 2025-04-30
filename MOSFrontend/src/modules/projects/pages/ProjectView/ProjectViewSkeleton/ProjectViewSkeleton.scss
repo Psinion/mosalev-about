@@ -1,0 +1,12 @@
+.project-view-skeleton {
+  .header {
+    justify-self: center;
+  }
+
+  .content {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+}

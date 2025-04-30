@@ -1,6 +1,6 @@
 namespace MOS.Application.DTOs.Projects.Responses;
 
-public record ProjectResponseDto
+public record ProjectDto
 {
     public long Id { get; set; }
     

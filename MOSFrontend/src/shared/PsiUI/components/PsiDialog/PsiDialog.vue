@@ -99,7 +99,8 @@ const props = defineProps({
 const emit = defineEmits({
   "update:visible": (value: boolean) => true,
   "close": () => true,
-  "confirm": () => true
+  "confirm": () => true,
+  "open": () => true
 });
 
 const { t } = useI18n();
@@ -136,6 +137,9 @@ function setRootOverflow(value: boolean) {
 
 watch(() => props.visible, (value) => {
   setRootOverflow(!value);
+  if (value) {
+    emit("open");
+  }
 });
 </script>
 

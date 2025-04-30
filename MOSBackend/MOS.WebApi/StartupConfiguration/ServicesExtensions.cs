@@ -21,7 +21,7 @@ using MOS.Data.EF.Access.Services.Resumes;
 using MOS.Identity.Handlers;
 using MOS.Identity.Helpers;
 using MOS.Identity.Services;
-using MOS.WebApi.SQRS;
+using MOS.WebApi.Factories;
 
 namespace MOS.WebApi.StartupConfiguration;
 
@@ -67,7 +67,9 @@ public static class ServicesExtensions
     {
         services.AddScoped<IAuthenticateHandler, AuthenticateHandler>();
         services.AddScoped<IGetCompactProjectsHandler, GetCompactProjectsHandler>();
+        services.AddScoped<IGetProjectHandler, GetProjectHandler>();
         services.AddScoped<ICreateProjectHandler, CreateProjectHandler>();
+        services.AddScoped<IUpdateProjectHandler, UpdateProjectHandler>();
         
         return services;
     }

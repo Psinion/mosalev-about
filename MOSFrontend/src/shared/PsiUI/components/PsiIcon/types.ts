@@ -9,5 +9,6 @@ export type TPsiIcon =
   | "github"
   | "error"
   | "success"
+  | "edit"
   ;
 export type TPsiIconFlip = "vertical " | "horizontal " | "both";

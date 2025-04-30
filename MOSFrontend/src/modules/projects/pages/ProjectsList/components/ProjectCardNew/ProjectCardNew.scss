@@ -3,4 +3,9 @@
   border: 1px solid var(--secondary-up);
   border-radius: 8px;
   cursor: pointer;
+  transition: var(--fast-transition);
+
+  &:hover {
+    border-color: var(--primary);
+  }
 }

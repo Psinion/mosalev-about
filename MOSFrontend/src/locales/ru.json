@@ -52,6 +52,7 @@
       "emptyProjectsPlaceholder": "Проекты пока только в планах",
       "dialogEdit": {
         "titleCreate": "Создание проекта",
+        "titleEdit": "Редактирование проекта",
         "errorMessage": "Произошла ошибка при сохранении проекта"
       }
     }
@@ -63,6 +64,7 @@
     "resumeEdit": "Редактирование резюме",
     "resumeList": "Список резюме",
     "projectsList": "Проекты",
+    "projectView": "Проект",
     "error404": "Страница не найдена"
   },
   "forms": {

@@ -9,28 +9,31 @@ using MOS.Domain.Entities.Projects;
 
 namespace MOS.Data.EF.Access.Handlers.Projects;
 
-public class CreateProjectHandler : ICreateProjectHandler
+public class UpdateProjectHandler : IUpdateProjectHandler
 {
     private readonly IUnitOfWork unitOfWork;
     private readonly IProjectsRepository projectsRepository;
-    
-    public CreateProjectHandler(IUnitOfWork unitOfWork, IProjectsRepository projectsRepository)
+
+    public UpdateProjectHandler(IUnitOfWork unitOfWork, IProjectsRepository projectsRepository)
     {
         this.unitOfWork = unitOfWork;
         this.projectsRepository = projectsRepository;
     }
-
-    public async Task<OperationResult<ProjectDto>> Handle(CreateProjectCommand request, CancellationToken cancellationToken = default)
+    
+    public async Task<OperationResult<ProjectDto>> Handle(UpdateProjectCommand request, CancellationToken cancellationToken = default)
     {
-        var project = new Project()
+        var project = await projectsRepository.GetByIdAsync(request.Id, cancellationToken);
+        if (project == null)
         {
-            Title = request.Title,
-            Description = request.Description
-        };
+            return OperationError.NotFound();
+        }
 
-        var newProject = await projectsRepository.CreateAsync(project, cancellationToken);
+        project.Title = request.Title;
+        project.Description = request.Description;
+
+        await projectsRepository.UpdateAsync(project, cancellationToken);
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
-        return newProject.ToDto();
+        return project.ToDto();
     }
 }
