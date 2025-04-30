@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
+using MOS.Application.Data;
+using MOS.Application.Data.Handlers;
 using MOS.Application.Data.Repositories;
 using MOS.Application.Data.Repositories.Projects;
 using MOS.Application.Data.Repositories.Resumes;
@@ -8,8 +10,6 @@ using MOS.Application.Data.Services.Resumes;
 using MOS.Application.Data.Services.Users;
 using MOS.Application.DTOs.Users.Responses;
 using MOS.Application.OperationResults;
-using MOS.Application.SQRS;
-using MOS.Application.SQRS.Base;
 using MOS.Data.EF.Access.Repositories;
 using MOS.Data.EF.Access.Repositories.Projects;
 using MOS.Data.EF.Access.Repositories.Resumes;
@@ -65,7 +65,7 @@ public static class ServicesExtensions
     
     public static IServiceCollection AddHandlers(this IServiceCollection services)
     {
-        services.AddScoped<IRequestHandler<AuthenticateQuery, OperationResult<AuthenticateResponseDto>>, AuthenticateHandler>();
+        services.AddScoped<IAuthenticateHandler, AuthenticateHandler>();
         
         return services;
     }

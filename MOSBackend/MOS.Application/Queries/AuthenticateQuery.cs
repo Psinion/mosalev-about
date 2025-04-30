@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
+using MOS.Application.Data;
 using MOS.Application.DTOs.Users.Responses;
 using MOS.Application.OperationResults;
-using MOS.Application.SQRS.Base;
 
 namespace MOS.Identity.Queries;
 

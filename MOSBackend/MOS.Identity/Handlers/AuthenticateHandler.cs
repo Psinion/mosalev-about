@@ -4,18 +4,19 @@ using System.Security.Cryptography;
 using System.Text;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
+using MOS.Application.Data;
+using MOS.Application.Data.Handlers;
 using MOS.Application.Data.Repositories;
 using MOS.Application.Data.Repositories.Users;
 using MOS.Application.DTOs.Users.Responses;
 using MOS.Application.OperationResults;
-using MOS.Application.SQRS.Base;
 using MOS.Domain.Entities.Users;
 using MOS.Identity.Helpers;
 using MOS.Identity.Queries;
 
 namespace MOS.Identity.Handlers;
 
-public class AuthenticateHandler : IRequestHandler<AuthenticateQuery, OperationResult<AuthenticateResponseDto>>
+public class AuthenticateHandler : IAuthenticateHandler
 {
     private readonly AuthSettings authSettings;
     private readonly IUsersRepository usersRepository;

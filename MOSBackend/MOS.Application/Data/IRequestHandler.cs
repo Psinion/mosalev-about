@@ -1,4 +1,4 @@
-namespace MOS.Application.SQRS.Base;
+namespace MOS.Application.Data;
 
 public interface IRequestHandler<TCommand, TResult>
 {

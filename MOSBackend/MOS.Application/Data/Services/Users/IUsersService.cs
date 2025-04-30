@@ -1,7 +1,4 @@
-﻿using MOS.Application.DTOs.Users.Requests;
-using MOS.Application.DTOs.Users.Responses;
-using MOS.Application.OperationResults;
-using MOS.Domain.Entities.Users;
+﻿using MOS.Application.DTOs.Users.Responses;
 
 namespace MOS.Application.Data.Services.Users;
 

@@ -1,5 +1,4 @@
-using MOS.Application.SQRS;
-using MOS.Application.SQRS.Base;
+using MOS.Application.Data;
 
 namespace MOS.WebApi.SQRS;
 
@@ -12,8 +11,8 @@ public class HandlerFactory : IHandlerFactory
         this.provider = provider;
     }
 
-    public IRequestHandler<TCommand, TResult> GetHandler<TCommand, TResult>()
+    public T GetHandler<T>() where T : class
     {
-        return provider.GetRequiredService<IRequestHandler<TCommand, TResult>>();
+        return provider.GetRequiredService<T>();
     }
 }
