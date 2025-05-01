@@ -30,7 +30,7 @@ public class MainDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         foreach (var entityType in modelBuilder.Model.GetEntityTypes()
-                     .Where(e => e.ClrType.IsAssignableTo(typeof(IAuditableEntity<long>))))
+                     .Where(e => e.ClrType.IsAssignableTo(typeof(IAuditableEntity<int>))))
         {
             modelBuilder.Entity(entityType.ClrType, builder =>
             {
@@ -62,7 +62,7 @@ public class MainDbContext : DbContext
             
                 builder.HasOne("Updater")
                     .WithMany()
-                    .HasForeignKey("e.UpdatedBy")
+                    .HasForeignKey("UpdatedBy")
                     .OnDelete(DeleteBehavior.Restrict);
                 
                 builder.HasOne("Deleter")
@@ -74,7 +74,7 @@ public class MainDbContext : DbContext
                 var parameter = Expression.Parameter(entityType.ClrType, "e");
                 var methodInfo = typeof(Microsoft.EntityFrameworkCore.EF)
                     .GetMethod(nameof(Microsoft.EntityFrameworkCore.EF.Property))!.MakeGenericMethod(typeof(bool))!;
-                var efPropertyCall = Expression.Call(null, methodInfo, parameter, Expression.Constant(nameof(IAuditableEntity<long>.IsDeleted)));
+                var efPropertyCall = Expression.Call(null, methodInfo, parameter, Expression.Constant(nameof(IAuditableEntity<int>.IsDeleted)));
                 var body = Expression.MakeBinary(ExpressionType.Equal, efPropertyCall, Expression.Constant(false));
                 var expression = Expression.Lambda(body, parameter);
                 builder.HasQueryFilter(expression);

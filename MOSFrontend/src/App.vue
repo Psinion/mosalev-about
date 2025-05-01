@@ -11,7 +11,7 @@ import { onMounted, watch } from "vue";
 import { useToaster } from "@/shared/PsiUI/utils/toaster.ts";
 import { useI18n } from "vue-i18n";
 import { ServerError } from "@/shared/utils/requests/errorHandlers.ts";
-import { setPageTitle } from "@/shared/utils/helpers.ts";
+import { setPageTitle } from "@/shared/utils/helpers/helpers.ts";
 
 const toaster = useToaster();
 const route = useRoute();

@@ -39,7 +39,7 @@
 import ContentLayout from "@/layouts/ContentLayout/ContentLayout.vue";
 import ProjectsServiceInstance from "@/shared/services/ProjectsService.ts";
 import { computed, onMounted, ref } from "vue";
-import { IProject } from "@/shared/types";
+import { IProject, TRoute } from "@/shared/types";
 import { useToaster } from "@/shared/PsiUI/utils/toaster.ts";
 import ProjectViewSkeleton from "@/modules/projects/pages/ProjectView/ProjectViewSkeleton/ProjectViewSkeleton.vue";
 import { ServerError } from "@/shared/utils/requests/errorHandlers.ts";
@@ -64,9 +64,12 @@ const projectsService = ProjectsServiceInstance;
 const loading = ref(true);
 const currentProject = ref<IProject>();
 
-const articleCreateRoute = computed(() => {
+const articleCreateRoute = computed<TRoute>(() => {
   return {
-    name: RouteNames.ArticleEdit
+    name: RouteNames.ArticleEdit,
+    query: {
+      project: props.projectId
+    }
   };
 });
 

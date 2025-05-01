@@ -6,7 +6,7 @@ export interface IArticlesService extends IServiceBase {
 }
 
 export type TCreateArticleRequest = {
-  projectId: number;
+  projectId?: number;
   title: string;
   description: string;
 };

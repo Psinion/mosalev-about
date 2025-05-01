@@ -35,7 +35,7 @@ import { IResumeCompanyEntryPost } from "@/shared/types/resume.ts";
 import PsiButton from "@/shared/PsiUI/components/PsiButton/PsiButton.vue";
 import ResumeEditPost
   from "@/modules/resume/pages/ResumePage/components/ResumeEdit/components/ResumeEditPost/ResumeEditPost.vue";
-import { date2DateOnly } from "@/shared/utils/helpers.ts";
+import { date2DateOnly } from "@/shared/utils/helpers/helpers.ts";
 import ResumePostsServiceInstance from "@/shared/services/ResumePostsService.ts";
 
 const props = defineProps({

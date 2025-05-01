@@ -10,6 +10,7 @@ public static class ArticlesMappings
         return new ArticleDto()
         {
             Id = entity.Id,
+            ProjectId = entity.Project?.Id,
             Title = entity.Title,
             Description = entity.Description,
         };

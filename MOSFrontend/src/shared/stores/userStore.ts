@@ -4,7 +4,7 @@ import { TUser } from "@/shared/types";
 import { RouteNames } from "@/router/routeNames.ts";
 import { useRoute, useRouter } from "vue-router";
 import { AppLocale } from "@/shared/enums/common.ts";
-import { setPageTitle } from "@/shared/utils/helpers.ts";
+import { setPageTitle } from "@/shared/utils/helpers/helpers.ts";
 import { useI18n } from "vue-i18n";
 import dayjs from "dayjs";
 import UsersServiceInstance from "@/shared/services/UsersService.ts";

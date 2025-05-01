@@ -65,7 +65,8 @@
   },
   "articles": {
     "edit": {
-      "title": "Article edition"
+      "titleCreate": "Article creation",
+      "titleEdit": "Article edition"
     }
   },
   "pages": {
@@ -76,7 +77,7 @@
     "resumeList": "Resume list",
     "projectsList": "Projects",
     "projectView": "Project",
-    "articleEdit": "Edit article",
+    "articleEdit": "Article edition",
     "error404": "Page not found"
   },
   "forms": {

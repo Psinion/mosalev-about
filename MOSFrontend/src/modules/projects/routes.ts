@@ -22,7 +22,7 @@ export const projectsRoutes: RouteRecordRaw[] = [{
   }
 },
 {
-  path: "/articles/edit/:projectId?",
+  path: "/articles/edit/:articleId?",
   name: RouteNames.ArticleEdit,
   props: route => ({ articleId: Number(route.params.articleId ?? 0) }),
   component: ArticleEdit,
