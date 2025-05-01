@@ -5,7 +5,7 @@ using MOS.Domain.Entities.Users;
 
 namespace MOS.Data.EF.Access.Repositories.Users;
 
-public class UsersRepository : GenericRepository<User, long>, IUsersRepository
+public class UsersRepository : GenericRepository<User, int>, IUsersRepository
 {
     public UsersRepository(MainDbContext dbLocalContext) : base(dbLocalContext)
     {

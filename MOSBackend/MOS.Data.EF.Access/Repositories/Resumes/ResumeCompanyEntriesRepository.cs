@@ -7,7 +7,7 @@ using MOS.Domain.Enums;
 
 namespace MOS.Data.EF.Access.Repositories.Resumes;
 
-public class ResumeCompanyEntriesRepository : GenericRepository<ResumeCompanyEntry, long>, IResumeCompanyEntriesRepository
+public class ResumeCompanyEntriesRepository : GenericRepository<ResumeCompanyEntry, int>, IResumeCompanyEntriesRepository
 {
     public ResumeCompanyEntriesRepository(MainDbContext dbLocalContext) : base(dbLocalContext)
     {

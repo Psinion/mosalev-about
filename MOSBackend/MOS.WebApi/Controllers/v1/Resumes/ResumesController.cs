@@ -32,7 +32,7 @@ public class ResumesController : ControllerBase
     [HttpGet]
     [CustomAuthorize]
     [Route("{resumeId}")]
-    public async Task<ActionResult<ResumeResponseDto>> GetResume(long resumeId)
+    public async Task<ActionResult<ResumeResponseDto>> GetResume(int resumeId)
     {
         var response = await resumesService.GetResumeAsync(resumeId);
 
@@ -97,7 +97,7 @@ public class ResumesController : ControllerBase
     [HttpPut]
     [CustomAuthorize]
     [Route("{resumeId}/pin")]
-    public async Task<ActionResult> PinResume(long resumeId)
+    public async Task<ActionResult> PinResume(int resumeId)
     {
         var response = await resumesService.PinResumeAsync(resumeId, true);
 
@@ -112,7 +112,7 @@ public class ResumesController : ControllerBase
     [HttpPut]
     [CustomAuthorize]
     [Route("{resumeId}/unpin")]
-    public async Task<ActionResult> UnpinResume(long resumeId)
+    public async Task<ActionResult> UnpinResume(int resumeId)
     {
         var response = await resumesService.PinResumeAsync(resumeId, false);
         

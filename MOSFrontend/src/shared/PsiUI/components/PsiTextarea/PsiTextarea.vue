@@ -51,7 +51,7 @@ const props = defineProps({
   },
   resizable: {
     type: String as PropType<TPsiTextareaResizable>,
-    default: "both"
+    default: "vertical"
   },
   rows: {
     type: Number,

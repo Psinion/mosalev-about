@@ -1,33 +1,30 @@
 <template>
   <ContentLayout>
-    <div class="project-view">
+    <div class="article-edit">
       <ProjectViewSkeleton v-if="loading" />
       <template v-else>
         <div class="content">
-          <h2>{{ currentProject.title }}</h2>
+          <h2>{{ t('articles.edit.title') }}</h2>
 
-          <div class="actions">
-            <PermissionChecker>
-              <PsiButton
-                tag="RouterLink"
-                class="action-button"
-                :to="articleCreateRoute"
-              >
-                {{ t('projects.view.articleCreate') }}
-              </PsiButton>
-            </PermissionChecker>
-          </div>
-
-          <div class="description caption-regular">
-            {{ currentProject.description }}
-          </div>
-        </div>
-        <div class="articles">
-          <div
-            class="empty-articles-placeholder caption-regular"
+          <PsiForm
+            v-slot="{valid}"
+            class="article-form"
           >
-            {{ t('projects.view.emptyArticlesPlaceholder') }}
-          </div>
+            <div class="actions">
+              <PermissionChecker>
+                <PsiButton
+                  native-type="submit"
+                  class="action-button"
+                  :disabled="!valid"
+                >
+                  {{ t('forms.save') }}
+                </PsiButton>
+              </PermissionChecker>
+            </div>
+
+            <PsiInput :label="t('forms.title')" />
+            <PsiTextarea :label="t('forms.description')" />
+          </PsiForm>
         </div>
       </template>
     </div>
@@ -38,8 +35,8 @@
 
 import ContentLayout from "@/layouts/ContentLayout/ContentLayout.vue";
 import ProjectsServiceInstance from "@/shared/services/ProjectsService.ts";
-import { computed, onMounted, ref } from "vue";
-import { IProject } from "@/shared/types";
+import { onMounted, ref } from "vue";
+import { IArticle, IProject } from "@/shared/types";
 import { useToaster } from "@/shared/PsiUI/utils/toaster.ts";
 import ProjectViewSkeleton from "@/modules/projects/pages/ProjectView/ProjectViewSkeleton/ProjectViewSkeleton.vue";
 import { ServerError } from "@/shared/utils/requests/errorHandlers.ts";
@@ -48,9 +45,13 @@ import { RouteNames } from "@/router/routeNames.ts";
 import { useI18n } from "vue-i18n";
 import PsiButton from "@/shared/PsiUI/components/PsiButton/PsiButton.vue";
 import PermissionChecker from "@/shared/components/PermissionChecker/PermissionChecker.vue";
+import PsiInput from "@/shared/PsiUI/components/PsiInput/PsiInput.vue";
+import PsiTextarea from "@/shared/PsiUI/components/PsiTextarea/PsiTextarea.vue";
+import PsiForm from "@/shared/PsiUI/components/PsiForm/PsiForm.vue";
+import ArticlesServiceInstance from "@/shared/services/ArticlesService.ts";
 
 const props = defineProps({
-  projectId: {
+  articleId: {
     type: Number,
     default: null
   }
@@ -59,21 +60,17 @@ const props = defineProps({
 const router = useRouter();
 const toaster = useToaster();
 const { t } = useI18n();
-const projectsService = ProjectsServiceInstance;
+const articlesService = ArticlesServiceInstance;
 
-const loading = ref(true);
-const currentProject = ref<IProject>();
-
-const articleCreateRoute = computed(() => {
-  return {
-    name: RouteNames.ArticleEdit
-  };
-});
+const loading = ref(false);
+const currentArticle = ref<IArticle>();
 
 onMounted(async () => {
+  return;
+
   try {
     loading.value = true;
-    currentProject.value = await projectsService.getProject(props.projectId);
+    currentProject.value = await projectsService.getProject(props.articleId);
     loading.value = false;
   }
   catch (error) {
@@ -89,4 +86,4 @@ onMounted(async () => {
 
 </script>
 
-<style scoped src="./ProjectView.scss" />
+<style scoped src="./ArticleEdit.scss" />

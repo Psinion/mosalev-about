@@ -7,14 +7,14 @@ using MOS.Domain.Enums;
 
 namespace MOS.Data.EF.Access.Repositories.Resumes;
 
-public class ResumesRepository : AuditableRepository<Resume, long>, IResumesRepository
+public class ResumesRepository : AuditableRepository<Resume, int>, IResumesRepository
 {
     public ResumesRepository(MainDbContext dbLocalContext, ICredentialsService credentialsService) 
         : base(dbLocalContext, credentialsService)
     {
     }
 
-    public async Task<Resume?> GetByIdWithRelationsAsync(long id, CancellationToken cancellationToken = default)
+    public async Task<Resume?> GetByIdWithRelationsAsync(int id, CancellationToken cancellationToken = default)
     {
         return await localContext.Resumes
             .Include(x => x.Skills)
@@ -40,7 +40,7 @@ public class ResumesRepository : AuditableRepository<Resume, long>, IResumesRepo
             ;
     }
 
-    public async Task PinResumeAsync(long resumeId, Locale? locale)
+    public async Task PinResumeAsync(int resumeId, Locale? locale)
     {
         await localSet
             .Where(x => x.Id == resumeId)

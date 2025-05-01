@@ -25,7 +25,7 @@ public class ResumesService : IResumesService
         this.resumesRepository = resumesRepository;
     }
 
-    public async Task<OperationResult<ResumeResponseDto>> GetResumeAsync(long resumeId)
+    public async Task<OperationResult<ResumeResponseDto>> GetResumeAsync(int resumeId)
     {
         var resume = await resumesRepository.GetByIdWithRelationsAsync(resumeId);
 
@@ -85,7 +85,7 @@ public class ResumesService : IResumesService
         return resume.ToDto();
     }
 
-    public async Task<OperationResult<bool>> PinResumeAsync(long resumeId, bool pinning)
+    public async Task<OperationResult<bool>> PinResumeAsync(int resumeId, bool pinning)
     {
         if (!resumesRepository.ExistsAsync(resumeId).Result)
         {

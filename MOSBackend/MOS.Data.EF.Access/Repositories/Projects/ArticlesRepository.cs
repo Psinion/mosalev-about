@@ -5,7 +5,7 @@ using MOS.Domain.Entities.Projects;
 
 namespace MOS.Data.EF.Access.Repositories.Projects;
 
-public class ArticlesRepository : AuditableRepository<Article, long>, IArticlesRepository
+public class ArticlesRepository : AuditableRepository<Article, int>, IArticlesRepository
 {
     public ArticlesRepository(MainDbContext dbLocalContext, ICredentialsService credentialsService) 
         : base(dbLocalContext, credentialsService)

@@ -1,6 +1,6 @@
 ﻿namespace MOS.Domain.Entities.Users;
 
-public class User : Entity<long>
+public class User : Entity<int>
 {
     public string FirstName { get; set; } = "";
     public string LastName { get; set; } = "";

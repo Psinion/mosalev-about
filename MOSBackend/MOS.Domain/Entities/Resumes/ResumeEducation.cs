@@ -1,6 +1,6 @@
 namespace MOS.Domain.Entities.Resumes;
 
-public class ResumeEducation : Entity<long>
+public class ResumeEducation : Entity<int>
 {
     public string EducationLevel { get; set; } = "";
     public string OrganisationName { get; set; } = "";

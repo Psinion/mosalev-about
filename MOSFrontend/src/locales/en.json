@@ -44,12 +44,12 @@
   },
   "projects": {
     "list": {
-      "newProjectTitle": "New Project",
+      "newProjectTitle": "New project",
       "newProjectDescription": "Create new project and fill it with content",
       "emptyProjectsPlaceholder": "Projects are still only in the plans",
       "dialogEdit": {
-        "titleCreate": "Project Creation",
-        "titleEdit": "Project Edition",
+        "titleCreate": "Project creation",
+        "titleEdit": "Project edition",
         "errorMessage": "Error occurred while saving the project"
       },
       "dialogDelete": {
@@ -59,7 +59,13 @@
       }
     },
     "view": {
-      "emptyArticlesPlaceholder": "Articles are not finished yet"
+      "emptyArticlesPlaceholder": "Articles are not finished yet",
+      "articleCreate": "Create article"
+    }
+  },
+  "articles": {
+    "edit": {
+      "title": "Article edition"
     }
   },
   "pages": {
@@ -70,11 +76,13 @@
     "resumeList": "Resume list",
     "projectsList": "Projects",
     "projectView": "Project",
+    "articleEdit": "Edit article",
     "error404": "Page not found"
   },
   "forms": {
     "title": "Title",
-    "description": "Description"
+    "description": "Description",
+    "save": "Save"
   },
   "errors": {
     "error404header": "Page not found"

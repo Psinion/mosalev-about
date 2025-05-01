@@ -10,5 +10,5 @@ public interface IResumePostsService : IDisposable
     
     Task<OperationResult<ResumePostResponseDto>> UpdateResumePostAsync(ResumePostUpdateRequestDto resumePostRequest);
     
-    Task<OperationResult<bool>> DeleteResumePostAsync(long postId);
+    Task<OperationResult<bool>> DeleteResumePostAsync(int postId);
 }

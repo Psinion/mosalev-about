@@ -45,7 +45,7 @@ public class ResumePostsController : ControllerBase
     [HttpDelete]
     [CustomAuthorize]
     [Route("{postId}")]
-    public async Task<ActionResult<bool>> DeleteResumePost(long postId)
+    public async Task<ActionResult<bool>> DeleteResumePost(int postId)
     {
         var response = await resumePostsService.DeleteResumePostAsync(postId);
 

@@ -45,7 +45,7 @@ public class ResumeCompanyEntriesController : ControllerBase
     [HttpDelete]
     [CustomAuthorize]
     [Route("{companyId}")]
-    public async Task<ActionResult<bool>> DeleteResumeCompanyEntry(long companyId)
+    public async Task<ActionResult<bool>> DeleteResumeCompanyEntry(int companyId)
     {
         var response = await resumeCompanyEntriesService.DeleteResumeCompanyEntryAsync(companyId);
 

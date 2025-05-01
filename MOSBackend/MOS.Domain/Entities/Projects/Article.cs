@@ -2,7 +2,7 @@ using MOS.Domain.Enums;
 
 namespace MOS.Domain.Entities.Projects;
 
-public class Article : AuditableEntity<long>
+public class Article : AuditableEntity<int>
 {
     public Project? Project { get; set; }
     public string Title { get; set; } = "";

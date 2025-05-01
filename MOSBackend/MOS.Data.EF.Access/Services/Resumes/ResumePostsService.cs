@@ -56,7 +56,7 @@ public class ResumePostsService : IResumePostsService
         return resumeCompanyEntry.ToDto();
     }
 
-    public async Task<OperationResult<bool>> DeleteResumePostAsync(long postId)
+    public async Task<OperationResult<bool>> DeleteResumePostAsync(int postId)
     {
         try
         {

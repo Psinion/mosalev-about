@@ -138,7 +138,7 @@ public class Startup
                         var credentialsService = context.HttpContext.RequestServices
                             .GetRequiredService<ICredentialsService>();
                         
-                        var userId = long.Parse(context.Principal.FindFirstValue(ClaimTypes.NameIdentifier));
+                        var userId = int.Parse(context.Principal.FindFirstValue(ClaimTypes.NameIdentifier));
                         
                         await credentialsService.InitUserAsync(userId);
                     }

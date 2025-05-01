@@ -37,7 +37,7 @@ public class ProjectsController : ControllerBase
     
     [HttpGet]
     [Route("{projectId}")]
-    public async Task<ActionResult<ProjectCompactDto>> GetProject(long projectId)
+    public async Task<ActionResult<ProjectCompactDto>> GetProject(int projectId)
     {
         var handler = handlerFactory.GetHandler<IGetProjectHandler>();
         
@@ -64,7 +64,7 @@ public class ProjectsController : ControllerBase
     
     [HttpPut("{projectId}")]
     [CustomAuthorize]
-    public async Task<ActionResult<ProjectCompactDto>> UpdateProject(long projectId, UpdateProjectRequest request)
+    public async Task<ActionResult<ProjectCompactDto>> UpdateProject(int projectId, UpdateProjectRequest request)
     {
         var command = new UpdateProjectCommand()
         {
@@ -87,7 +87,7 @@ public class ProjectsController : ControllerBase
     
     [HttpDelete("{projectId}")]
     [CustomAuthorize]
-    public async Task<ActionResult<bool>> DeleteProject(long projectId)
+    public async Task<ActionResult<bool>> DeleteProject(int projectId)
     {
         var handler = handlerFactory.GetHandler<IDeleteProjectHandler>();
         
@@ -103,7 +103,7 @@ public class ProjectsController : ControllerBase
     
     [HttpPatch("{projectId}/visibility")]
     [CustomAuthorize]
-    public async Task<ActionResult<bool>> ChangeProjectVisibility(long projectId, ChangeProjectVisibilityRequest request)
+    public async Task<ActionResult<bool>> ChangeProjectVisibility(int projectId, ChangeProjectVisibilityRequest request)
     {
         var command = new ChangeProjectVisibilityCommand()
         {

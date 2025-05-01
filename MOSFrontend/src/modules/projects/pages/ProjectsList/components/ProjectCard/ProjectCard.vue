@@ -5,28 +5,30 @@
   >
     <header class="header">
       <h3>{{ project.title }}</h3>
+
       <div
-        v-if="currentUser"
         class="actions"
       >
-        <PsiButton
-          flat
-          :icon="project.visible ? 'eye' : 'eye-crossed'"
-          @click.prevent="$emit('changeVisibility', project, !project.visible)"
-        />
-        <PsiButton
-          flat
-          icon="edit"
-          @click.prevent="$emit('edit', project)"
-        />
-        <PsiButton
-          flat
-          icon="trash-box"
-          @click.prevent="$emit('delete', project)"
-        />
+        <PermissionChecker>
+          <PsiButton
+            flat
+            :icon="project.visible ? 'eye' : 'eye-crossed'"
+            @click.prevent="$emit('changeVisibility', project, !project.visible)"
+          />
+          <PsiButton
+            flat
+            icon="edit"
+            @click.prevent="$emit('edit', project)"
+          />
+          <PsiButton
+            flat
+            icon="trash-box"
+            @click.prevent="$emit('delete', project)"
+          />
+        </PermissionChecker>
       </div>
     </header>
-    <div class="description">
+    <div class="description caption-regular">
       {{ project.description }}
     </div>
     <footer>
@@ -45,6 +47,7 @@ import { formatDate } from "@/shared/utils/dateHelpers.ts";
 import { RouteNames } from "@/router/routeNames.ts";
 import PsiButton from "@/shared/PsiUI/components/PsiButton/PsiButton.vue";
 import { useUserStore } from "@/shared/stores/userStore.ts";
+import PermissionChecker from "@/shared/components/PermissionChecker/PermissionChecker.vue";
 
 const props = defineProps({
   project: {

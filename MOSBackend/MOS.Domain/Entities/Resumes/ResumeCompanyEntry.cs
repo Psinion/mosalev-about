@@ -1,6 +1,6 @@
 namespace MOS.Domain.Entities.Resumes;
 
-public class ResumeCompanyEntry : Entity<long>
+public class ResumeCompanyEntry : Entity<int>
 {
     public long ResumeId { get; set; }
     public string Company { get; set; } = "";

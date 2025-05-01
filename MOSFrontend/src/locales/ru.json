@@ -62,7 +62,13 @@
       }
     },
     "view": {
-      "emptyArticlesPlaceholder": "Статьи пока не готовы"
+      "emptyArticlesPlaceholder": "Статьи пока не готовы",
+      "articleCreate": "Создать статью"
+    }
+  },
+  "articles": {
+    "edit": {
+      "title": "Редактирование статьи"
     }
   },
   "pages": {
@@ -73,11 +79,13 @@
     "resumeList": "Список резюме",
     "projectsList": "Проекты",
     "projectView": "Проект",
+    "articleEdit": "Редактирование статьи",
     "error404": "Страница не найдена"
   },
   "forms": {
     "title": "Название",
-    "description": "Описание"
+    "description": "Описание",
+    "save": "Сохранить"
   },
   "errors": {
     "error404header": "Страница не найдена"

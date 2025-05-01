@@ -6,7 +6,7 @@ namespace MOS.Application.Data.Services.Resumes;
 
 public interface IResumesService : IDisposable
 {
-    Task<OperationResult<ResumeResponseDto>> GetResumeAsync(long resumeId);
+    Task<OperationResult<ResumeResponseDto>> GetResumeAsync(int resumeId);
     
     Task<OperationResult<ResumeResponseDto>> CreateResumeAsync(ResumeCreateRequestDto resumeRequest);
     
@@ -16,7 +16,7 @@ public interface IResumesService : IDisposable
     
     Task<OperationResult<ResumeResponseDto>> GetPinnedResumeAsync();
     
-    Task<OperationResult<bool>> PinResumeAsync(long resumeId, bool pinning);
+    Task<OperationResult<bool>> PinResumeAsync(int resumeId, bool pinning);
     
     Task<OperationResult<List<ResumeResponseCompactDto>>> GetCompactResumesListAsync();
 }

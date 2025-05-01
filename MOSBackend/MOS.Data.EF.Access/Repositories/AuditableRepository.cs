@@ -22,10 +22,10 @@ public class AuditableRepository<TEntity, TKey> : IAuditableRepository<TEntity, 
     
     public virtual IQueryable<TEntity> GetAll() => localSet.AsNoTracking();
     
-    public virtual async Task<bool> ExistsAsync(long id, CancellationToken cancellationToken = default) 
+    public virtual async Task<bool> ExistsAsync(TKey id, CancellationToken cancellationToken = default) 
         => await localSet.AnyAsync(e => e.Id.Equals(id), cancellationToken);
 
-    public virtual async Task<TEntity?> GetByIdAsync(long id, CancellationToken cancellationToken = default)
+    public virtual async Task<TEntity?> GetByIdAsync(TKey id, CancellationToken cancellationToken = default)
         => await localSet.FindAsync(new object[] { id }, cancellationToken);
 
     public virtual async Task<TEntity> CreateAsync(TEntity item, CancellationToken cancellationToken = default)

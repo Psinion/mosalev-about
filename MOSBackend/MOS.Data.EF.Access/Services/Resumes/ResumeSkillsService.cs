@@ -52,7 +52,7 @@ public class ResumeSkillsService : IResumeSkillsService
         return resumeSkill.ToDto();
     }
 
-    public async Task<OperationResult<bool>> DeleteResumeSkillAsync(long companyId)
+    public async Task<OperationResult<bool>> DeleteResumeSkillAsync(int companyId)
     {
         try
         {

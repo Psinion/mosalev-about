@@ -9,6 +9,6 @@ public interface ICredentialsService : IDisposable
     User? CurrentUser { get; }
     Locale CurrentLocale { get; set; }
     
-    Task<OperationResult<User>> GetUserByIdAsync(long userId);
-    Task<OperationResult<User>> InitUserAsync(long userId);
+    Task<OperationResult<User>> GetUserByIdAsync(int userId);
+    Task<OperationResult<User>> InitUserAsync(int userId);
 }

@@ -4,3 +4,4 @@ export * from "./IResumePostsService.ts";
 export * from "./IResumeSkillsService.ts";
 export * from "./IResumesService.ts";
 export * from "./IUsersService.ts";
+export { IArticlesService } from "@/shared/services/base/IArticlesService.ts";

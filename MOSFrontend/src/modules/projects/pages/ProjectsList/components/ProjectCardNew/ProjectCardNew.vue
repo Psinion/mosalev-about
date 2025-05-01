@@ -1,7 +1,7 @@
 <template>
   <section class="project-card-new">
     <h3>{{ t('projects.list.newProjectTitle') }}</h3>
-    <div>
+    <div class="caption-regular">
       {{ t('projects.list.newProjectDescription') }}
     </div>
   </section>

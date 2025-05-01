@@ -54,7 +54,7 @@ public class ResumeCompanyEntriesService : IResumeCompanyEntriesService
         return resumeCompanyEntry.ToDto();
     }
 
-    public async Task<OperationResult<bool>> DeleteResumeCompanyEntryAsync(long companyId)
+    public async Task<OperationResult<bool>> DeleteResumeCompanyEntryAsync(int companyId)
     {
         try
         {

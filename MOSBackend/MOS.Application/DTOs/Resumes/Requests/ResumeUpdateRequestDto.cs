@@ -5,7 +5,7 @@ namespace MOS.Application.DTOs.Resumes.Requests;
 public record ResumeUpdateRequestDto
 {
     [Required]
-    public long Id { get; set; }
+    public int Id { get; set; }
     
     [Required]
     [StringLength(30)] 

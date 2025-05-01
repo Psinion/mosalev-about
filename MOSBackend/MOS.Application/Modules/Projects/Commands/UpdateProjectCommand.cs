@@ -6,7 +6,7 @@ namespace MOS.Application.Modules.Projects.Commands;
 
 public record UpdateProjectCommand : ICommand<OperationResult<ProjectDto>>
 {
-    public long Id { get; init; }
+    public int Id { get; init; }
     public string Title { get; init; } = "";
     public string Description { get; init; } = "";
 }

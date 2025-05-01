@@ -5,9 +5,9 @@ namespace MOS.Application.Modules.Projects.Commands;
 
 public record DeleteProjectCommand : ICommand<OperationResult<bool>>
 {
-    public long Id { get; init; }
+    public int Id { get; init; }
 
-    public DeleteProjectCommand(long id)
+    public DeleteProjectCommand(int id)
     {
         Id = id;
     }

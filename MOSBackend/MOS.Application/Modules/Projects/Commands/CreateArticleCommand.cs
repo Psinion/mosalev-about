@@ -5,8 +5,14 @@ using MOS.Application.OperationResults;
 
 namespace MOS.Application.Modules.Projects.Commands;
 
-public record CreateProjectCommand : ICommand<OperationResult<ProjectDto>>
+public record CreateArticleCommand : ICommand<OperationResult<ArticleDto>>
 {
+    /**
+     * If project Id : null, then this article is free.
+     * Otherwise, the article belongs to the project.
+     */
+    public int? ProjectId { get; init; }
+    
     [Required]
     [StringLength(30)] 
     public string Title { get; init; } = "";

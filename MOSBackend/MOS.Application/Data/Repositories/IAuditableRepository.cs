@@ -7,8 +7,8 @@ public interface IAuditableRepository<TEntity, TKey> : IDisposable
     where TKey : struct
 {
     IQueryable<TEntity> GetAll();
-    Task<bool> ExistsAsync(long id, CancellationToken cancellationToken = default);
-    Task<TEntity?> GetByIdAsync(long id, CancellationToken cancellationToken = default);
+    Task<bool> ExistsAsync(TKey id, CancellationToken cancellationToken = default);
+    Task<TEntity?> GetByIdAsync(TKey id, CancellationToken cancellationToken = default);
     Task<TEntity> CreateAsync(TEntity item, CancellationToken cancellationToken = default);
     Task UpdateAsync(TEntity item, CancellationToken cancellationToken = default);
     Task<TEntity> CreateOrUpdateAsync(TEntity item, CancellationToken cancellationToken = default);

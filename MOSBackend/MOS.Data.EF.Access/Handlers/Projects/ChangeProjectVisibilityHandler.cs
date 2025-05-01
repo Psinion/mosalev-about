@@ -8,12 +8,12 @@ using MOS.Application.OperationResults;
 
 namespace MOS.Data.EF.Access.Handlers.Projects;
 
-public class ChangeProjectVisibilityHandlerHandler : IChangeProjectVisibilityHandler
+public class ChangeProjectVisibilityHandler : IChangeProjectVisibilityHandler
 {
     private readonly IUnitOfWork unitOfWork;
     private readonly IProjectsRepository projectsRepository;
 
-    public ChangeProjectVisibilityHandlerHandler(IUnitOfWork unitOfWork, IProjectsRepository projectsRepository)
+    public ChangeProjectVisibilityHandler(IUnitOfWork unitOfWork, IProjectsRepository projectsRepository)
     {
         this.unitOfWork = unitOfWork;
         this.projectsRepository = projectsRepository;

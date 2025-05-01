@@ -10,5 +10,5 @@ public interface IResumeCompanyEntriesService : IDisposable
     
     Task<OperationResult<ResumeCompanyEntryResponseDto>> UpdateResumeCompanyEntryAsync(ResumeCompanyEntryUpdateRequestDto resumeCompanyEntryRequest);
     
-    Task<OperationResult<bool>> DeleteResumeCompanyEntryAsync(long companyId);
+    Task<OperationResult<bool>> DeleteResumeCompanyEntryAsync(int companyId);
 }

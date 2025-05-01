@@ -10,5 +10,5 @@ public interface IResumeSkillsService : IDisposable
     
     Task<OperationResult<ResumeSkillResponseDto>> UpdateResumeSkillAsync(ResumeSkillUpdateRequestDto resumeSkillRequest);
     
-    Task<OperationResult<bool>> DeleteResumeSkillAsync(long postId);
+    Task<OperationResult<bool>> DeleteResumeSkillAsync(int postId);
 }

@@ -45,7 +45,7 @@ public class ResumeSkillsController : ControllerBase
     [HttpDelete]
     [CustomAuthorize]
     [Route("{skillId}")]
-    public async Task<ActionResult<bool>> DeleteResumeCompanyEntry(long skillId)
+    public async Task<ActionResult<bool>> DeleteResumeCompanyEntry(int skillId)
     {
         var response = await resumeSkillsService.DeleteResumeSkillAsync(skillId);
 

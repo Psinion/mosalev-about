@@ -2,6 +2,7 @@ import { RouteRecordRaw } from "vue-router";
 import { RouteNames } from "@/router/routeNames.ts";
 import ProjectsList from "@/modules/projects/pages/ProjectsList/ProjectsList.vue";
 import ProjectView from "@/modules/projects/pages/ProjectView/ProjectView.vue";
+import ArticleEdit from "@/modules/projects/pages/ArticleEdit/ArticleEdit.vue";
 
 export const projectsRoutes: RouteRecordRaw[] = [{
   path: "/projects",
@@ -18,5 +19,14 @@ export const projectsRoutes: RouteRecordRaw[] = [{
   component: ProjectView,
   meta: {
     titleCode: "pages.projectView"
+  }
+},
+{
+  path: "/articles/edit/:projectId?",
+  name: RouteNames.ArticleEdit,
+  props: route => ({ articleId: Number(route.params.articleId ?? 0) }),
+  component: ArticleEdit,
+  meta: {
+    titleCode: "pages.articleView"
   }
 }];

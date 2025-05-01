@@ -26,7 +26,7 @@ public class CredentialsService : ICredentialsService
         this.usersRepository = usersRepository;
     }
     
-    public async Task<OperationResult<User>> GetUserByIdAsync(long userId)
+    public async Task<OperationResult<User>> GetUserByIdAsync(int userId)
     {
         var user = await usersRepository.GetByIdAsync(userId);
         
@@ -38,7 +38,7 @@ public class CredentialsService : ICredentialsService
         return user;
     }
     
-    public async Task<OperationResult<User>> InitUserAsync(long userId)
+    public async Task<OperationResult<User>> InitUserAsync(int userId)
     {
         var user = await usersRepository.GetByIdAsync(userId);
         
