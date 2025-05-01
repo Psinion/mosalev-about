@@ -16,7 +16,10 @@
             </PermissionChecker>
           </div>
 
-          <div class="description caption-regular">
+          <div
+            v-markdown
+            class="description typography-block"
+          >
             {{ currentArticle.description }}
           </div>
         </div>

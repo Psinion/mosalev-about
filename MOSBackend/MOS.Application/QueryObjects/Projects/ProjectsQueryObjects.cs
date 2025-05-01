@@ -21,14 +21,28 @@ public static class ProjectsQueryObjects
 
 public static class ArticlesQueryObjects
 {
-    public static IQueryable<ArticleCompactDto> MapProjectToCompactDto(this IQueryable<Article> books)    
+    public static IQueryable<ArticleCompactDto> MapArticleToCompactDto(this IQueryable<Article> articles)    
     {
-        return books.Select(entity => new ArticleCompactDto()
+        return articles.Select(entity => new ArticleCompactDto()
         {
             Id = entity.Id,
             ProjectId = entity.ProjectId,
             Title = entity.Title,
             Description = entity.Description.Substring(0, 360),
+            Visible = entity.Visible,
+            CreatedAt = entity.CreatedAt,
+            UpdatedAt = entity.UpdatedAt,
+        });
+    }
+    
+    public static IQueryable<ArticleDto> MapArticleToDto(this IQueryable<Article> articles)    
+    {
+        return articles.Select(entity => new ArticleDto()
+        {
+            Id = entity.Id,
+            ProjectId = entity.ProjectId,
+            Title = entity.Title,
+            Description = entity.Description,
             Visible = entity.Visible,
             CreatedAt = entity.CreatedAt,
             UpdatedAt = entity.UpdatedAt,

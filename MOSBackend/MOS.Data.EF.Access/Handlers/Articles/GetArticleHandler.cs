@@ -7,6 +7,7 @@ using MOS.Application.Modules.Projects.Extensions;
 using MOS.Application.Modules.Projects.Queries;
 using MOS.Application.Modules.Projects.Queries.Handlers;
 using MOS.Application.OperationResults;
+using MOS.Application.QueryObjects.Projects;
 using MOS.Data.EF.Access.Contexts;
 
 namespace MOS.Data.EF.Access.Handlers.Articles;
@@ -26,6 +27,7 @@ public class GetArticleHandler : IGetArticleHandler
     {
         var article = await articleDbAccess.GetArticles()
             .GetVisible(credentialsService)
+            .MapArticleToDto()
             .FirstOrDefaultAsync(x => x.Id == request.ArticleId, cancellationToken);
         
         if (article == null)
@@ -33,6 +35,6 @@ public class GetArticleHandler : IGetArticleHandler
             return OperationError.NotFound("Not found");
         }
 
-        return article.ToDto();
+        return article;
     }
 }

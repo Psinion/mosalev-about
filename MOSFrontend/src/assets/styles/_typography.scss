@@ -76,4 +76,119 @@ a {
 
 .typography-block {
   color: var(--font-color);
+
+  h1 {
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+
+  h2 {
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+
+  h3 {
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+
+  h4 {
+    &:first-child {
+      margin-top: 0;
+    }
+  }
+
+  p {
+    @include body;
+    margin-bottom: 0.8em;
+  }
+
+  @mixin image-mixin() {
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      margin: 0 auto;
+    }
+  }
+
+  @include image-mixin();
+
+  ul {
+    display: block;
+    list-style-type: disc;
+    margin-left: 0;
+    margin-right: 0;
+    margin-bottom: 1em;
+    padding-left: 40px;
+
+    ul {
+      @include caption;
+      list-style-type: circle;
+
+      ul {
+        @include caption;
+        list-style-type: square;
+      }
+    }
+  }
+
+  ol {
+    display: block;
+    list-style-type: decimal;
+    margin-left: 0;
+    margin-right: 0;
+    margin-bottom: 1em;
+    padding-left: 40px;
+
+    ol {
+      list-style-type: lower-latin;
+
+      ol {
+        list-style-type: lower-roman;
+      }
+    }
+  }
+
+  li {
+    @include caption;
+    display: list-item;
+
+    &:not(:last-child) {
+      padding-bottom: 0.2em;
+    }
+  }
+
+  i {
+    font-style: italic;
+  }
+
+  strong {
+    font-style: inherit;
+    font-weight: bolder;
+  }
+
+  u {
+    font-style: inherit;
+    text-decoration: underline;
+  }
+
+  s {
+    font-style: inherit;
+    text-decoration: line-through;
+  }
+
+  a {
+    text-decoration: underline;
+    color: var(--accent-strong-back);
+  }
+
+  blockquote {
+    overflow: hidden;
+    padding-left: 1.5em;
+    border-left: solid 5px var(--faint-strong-down);
+  }
 }

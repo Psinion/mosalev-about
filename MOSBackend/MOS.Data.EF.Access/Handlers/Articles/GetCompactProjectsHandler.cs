@@ -35,7 +35,7 @@ public class GetCompactArticlesHandler : IGetCompactArticlesHandler
         query = query.OrderByDescending(x => x.UpdatedAt ?? x.CreatedAt);
         
         var totalCount = await query.CountAsync(cancellationToken);
-        var articles = await query.MapProjectToCompactDto().ToListAsync(cancellationToken);
+        var articles = await query.MapArticleToCompactDto().ToListAsync(cancellationToken);
         
         return new ArticlesCompactPaginationDto()
         {

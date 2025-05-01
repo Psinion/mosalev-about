@@ -28,7 +28,7 @@
               :label="t('forms.title')"
               required
             />
-            <PsiTextarea
+            <PsiMarkdownEditor
               v-model="articleForm.description"
               :label="t('forms.description')"
               required
@@ -54,10 +54,10 @@ import { useI18n } from "vue-i18n";
 import PsiButton from "@/shared/PsiUI/components/PsiButton/PsiButton.vue";
 import PermissionChecker from "@/shared/components/PermissionChecker/PermissionChecker.vue";
 import PsiInput from "@/shared/PsiUI/components/PsiInput/PsiInput.vue";
-import PsiTextarea from "@/shared/PsiUI/components/PsiTextarea/PsiTextarea.vue";
 import PsiForm from "@/shared/PsiUI/components/PsiForm/PsiForm.vue";
 import ArticlesServiceInstance from "@/shared/services/ArticlesService.ts";
 import { checkPositiveNumber } from "@/shared/utils/helpers";
+import PsiMarkdownEditor from "@/shared/PsiUI/components/PsiMarkdownEditor/PsiMarkdownEditor.vue";
 
 const props = defineProps({
   articleId: {

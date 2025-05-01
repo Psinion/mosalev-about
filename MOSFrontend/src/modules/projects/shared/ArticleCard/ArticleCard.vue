@@ -27,9 +27,10 @@
         </PermissionChecker>
       </div>
     </header>
-    <div class="description caption-regular">
-      {{ article.description }}
-    </div>
+    <div
+      v-markdown="article.description"
+      class="description caption-regular"
+    />
     <footer>
       <div class="hint-regular tertiary">
         {{ dateUpdate }}
