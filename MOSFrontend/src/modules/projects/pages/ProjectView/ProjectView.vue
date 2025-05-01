@@ -1,7 +1,7 @@
 <template>
   <ContentLayout>
     <div class="project-view">
-      <ProjectViewSkeleton v-if="loading" />
+      <ProjectViewSkeleton v-if="loadFirst" />
       <template v-else>
         <div class="content">
           <h2>{{ currentProject.title }}</h2>
@@ -23,7 +23,22 @@
           </div>
         </div>
         <div class="articles">
+          <template v-if="loadData">
+            <ArticleCardSkeleton />
+            <ArticleCardSkeleton />
+            <ArticleCardSkeleton />
+            <ArticleCardSkeleton />
+            <ArticleCardSkeleton />
+          </template>
+          <template v-else-if="articlesList?.items && articlesList.items.length">
+            <ArticleCard
+              v-for="article in articlesList.items"
+              :key="article.id"
+              :article="article"
+            />
+          </template>
           <div
+            v-else
             class="empty-articles-placeholder caption-regular"
           >
             {{ t('projects.view.emptyArticlesPlaceholder') }}
@@ -39,7 +54,7 @@
 import ContentLayout from "@/layouts/ContentLayout/ContentLayout.vue";
 import ProjectsServiceInstance from "@/shared/services/ProjectsService.ts";
 import { computed, onMounted, ref } from "vue";
-import { IProject, TRoute } from "@/shared/types";
+import { IArticlesPagination, IProject, TRoute } from "@/shared/types";
 import { useToaster } from "@/shared/PsiUI/utils/toaster.ts";
 import ProjectViewSkeleton from "@/modules/projects/pages/ProjectView/ProjectViewSkeleton/ProjectViewSkeleton.vue";
 import { ServerError } from "@/shared/utils/requests/errorHandlers.ts";
@@ -48,6 +63,9 @@ import { RouteNames } from "@/router/routeNames.ts";
 import { useI18n } from "vue-i18n";
 import PsiButton from "@/shared/PsiUI/components/PsiButton/PsiButton.vue";
 import PermissionChecker from "@/shared/components/PermissionChecker/PermissionChecker.vue";
+import ArticlesServiceInstance from "@/shared/services/ArticlesService.ts";
+import ArticleCard from "@/modules/projects/shared/ArticleCard/ArticleCard.vue";
+import ArticleCardSkeleton from "@/modules/projects/shared/ArticleCardSkeleton/ArticleCardSkeleton.vue";
 
 const props = defineProps({
   projectId: {
@@ -60,9 +78,12 @@ const router = useRouter();
 const toaster = useToaster();
 const { t } = useI18n();
 const projectsService = ProjectsServiceInstance;
+const articlesService = ArticlesServiceInstance;
 
-const loading = ref(true);
+const loadFirst = ref(true);
+const loadData = ref(true);
 const currentProject = ref<IProject>();
+const articlesList = ref<IArticlesPagination>();
 
 const articleCreateRoute = computed<TRoute>(() => {
   return {
@@ -75,9 +96,9 @@ const articleCreateRoute = computed<TRoute>(() => {
 
 onMounted(async () => {
   try {
-    loading.value = true;
+    loadFirst.value = true;
     currentProject.value = await projectsService.getProject(props.projectId);
-    loading.value = false;
+    loadFirst.value = false;
   }
   catch (error) {
     if (error instanceof ServerError) {
@@ -88,8 +109,25 @@ onMounted(async () => {
       toaster.error(error.header, error.message);
     }
   }
+
+  await refreshArticles();
 });
 
+async function refreshArticles() {
+  try {
+    loadData.value = true;
+    articlesList.value = await articlesService.getCompactArticles({
+      projectId: props.projectId
+    });
+
+    loadData.value = false;
+  }
+  catch (error) {
+    if (error instanceof ServerError) {
+      toaster.error(error.header, error.message);
+    }
+  }
+}
 </script>
 
 <style scoped src="./ProjectView.scss" />

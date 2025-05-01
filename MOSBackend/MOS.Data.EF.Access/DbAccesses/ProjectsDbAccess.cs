@@ -18,3 +18,18 @@ public class ProjectsDbAccess : IProjectsDbAccess
         return context.Projects;
     }
 }
+
+public class ArticlesDbAccess : IArticlesDbAccess
+{
+    private readonly MainDbContext context;
+
+    public ArticlesDbAccess(MainDbContext context)
+    {
+        this.context = context;
+    }
+    
+    public IQueryable<Article> GetArticles()
+    {
+        return context.Articles;
+    }
+}

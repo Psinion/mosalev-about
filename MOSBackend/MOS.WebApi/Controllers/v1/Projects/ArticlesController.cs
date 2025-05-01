@@ -24,6 +24,16 @@ public class ArticlesController : ControllerBase
         this.handlerFactory = handlerFactory;
     }
     
+    [HttpGet]
+    public async Task<ActionResult<ArticleDto>> GetArticles([FromQuery] GetCompactArticlesQuery request)
+    {
+        var handler = handlerFactory.GetHandler<IGetCompactArticlesHandler>();
+        
+        var response = await handler.Handle(request);
+        
+        return Ok(response.Value);
+    }
+    
     [HttpPost]
     [CustomAuthorize]
     public async Task<ActionResult<ArticleDto>> CreateArticle(CreateArticleCommand request)

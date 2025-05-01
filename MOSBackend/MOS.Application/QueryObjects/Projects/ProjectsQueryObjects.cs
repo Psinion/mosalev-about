@@ -18,3 +18,18 @@ public static class ProjectsQueryObjects
         });
     }
 }
+
+public static class ArticlesQueryObjects
+{
+    public static IQueryable<ArticleCompactDto> MapProjectToCompactDto(this IQueryable<Article> books)    
+    {
+        return books.Select(entity => new ArticleCompactDto()
+        {
+            ProjectId = entity.ProjectId,
+            Title = entity.Title,
+            Description = entity.Description,
+            CreatedAt = entity.CreatedAt,
+            UpdatedAt = entity.UpdatedAt,
+        });
+    }
+}

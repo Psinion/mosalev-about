@@ -1,0 +1,23 @@
+.article-card-skeleton {
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border: 1px solid var(--secondary-up);
+  border-radius: 8px;
+
+  .header {
+    display: flex;
+  }
+
+  .description {
+    margin-top: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  & > footer {
+    justify-items: flex-end;
+  }
+}

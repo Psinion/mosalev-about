@@ -6,9 +6,9 @@ namespace MOS.Application.Modules.Projects.Queries;
 
 public record GetProjectQuery : IQuery<OperationResult<ProjectDto>>
 {
-    public long ProjectId { get; init; }
+    public int ProjectId { get; init; }
     
-    public GetProjectQuery(long projectId)
+    public GetProjectQuery(int projectId)
     {
         ProjectId = projectId;
     }

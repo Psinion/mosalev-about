@@ -1,10 +1,10 @@
 <template>
   <RouterLink
-    :to="projectViewRoute"
-    class="project-card"
+    :to="articleViewRoute"
+    class="article-card"
   >
     <header class="header">
-      <h3>{{ project.title }}</h3>
+      <h3>{{ article.title }}</h3>
 
       <div
         class="actions"
@@ -12,24 +12,24 @@
         <PermissionChecker>
           <PsiButton
             flat
-            :icon="project.visible ? 'eye' : 'eye-crossed'"
-            @click.prevent="$emit('changeVisibility', project, !project.visible)"
+            :icon="article.visible ? 'eye' : 'eye-crossed'"
+            @click.prevent="$emit('changeVisibility', article, !article.visible)"
           />
           <PsiButton
             flat
             icon="edit"
-            @click.prevent="$emit('edit', project)"
+            @click.prevent="$emit('edit', article)"
           />
           <PsiButton
             flat
             icon="trash-box"
-            @click.prevent="$emit('delete', project)"
+            @click.prevent="$emit('delete', article)"
           />
         </PermissionChecker>
       </div>
     </header>
     <div class="description caption-regular">
-      {{ project.description }}
+      {{ article.description }}
     </div>
     <footer>
       <div class="hint-regular tertiary">
@@ -42,39 +42,36 @@
 <script setup lang="ts">
 
 import { computed, PropType } from "vue";
-import { IProjectCompact } from "@/shared/types";
+import { IArticleCompact } from "@/shared/types";
 import { formatDate } from "@/shared/utils/dateHelpers.ts";
 import { RouteNames } from "@/router/routeNames.ts";
 import PsiButton from "@/shared/PsiUI/components/PsiButton/PsiButton.vue";
-import { useUserStore } from "@/shared/stores/userStore.ts";
 import PermissionChecker from "@/shared/components/PermissionChecker/PermissionChecker.vue";
 
 const props = defineProps({
-  project: {
-    type: Object as PropType<IProjectCompact>,
+  article: {
+    type: Object as PropType<IArticleCompact>,
     required: true
   }
 });
 
 const emit = defineEmits({
-  changeVisibility: (project: IProjectCompact, visibility: boolean) => true,
-  edit: (value: IProjectCompact) => true,
-  delete: (value: IProjectCompact) => true
+  changeVisibility: (project: IArticleCompact, visibility: boolean) => true,
+  edit: (value: IArticleCompact) => true,
+  delete: (value: IArticleCompact) => true
 });
 
-const userStore = useUserStore();
-
 const dateUpdate = computed(() => {
-  const date = props.project.updatedAt ?? props.project.createdAt;
+  const date = props.article.updatedAt ?? props.article.createdAt;
   return `${formatDate(date, "YYYY.MM.DD HH:mm")}`;
 });
 
-const projectViewRoute = computed(() => {
+const articleViewRoute = computed(() => {
   return {
     name: RouteNames.ProjectView,
-    params: { projectId: props.project?.id }
+    params: { projectId: props.article?.id }
   };
 });
 </script>
 
-<style scoped src="./ProjectCard.scss" />
+<style scoped src="./ArticleCard.scss" />

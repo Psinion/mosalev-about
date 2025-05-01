@@ -16,6 +16,16 @@ export interface IProject {
   updatedAt?: string | Date | null;
 }
 
+export interface IArticleCompact {
+  id: number;
+  projectId: number;
+  title: string;
+  description: string;
+  visible: boolean;
+  createdAt?: string | Date;
+  updatedAt?: string | Date | null;
+}
+
 export interface IArticle {
   id: number;
   projectId: number;
@@ -24,4 +34,9 @@ export interface IArticle {
   visible: boolean;
   createdAt?: string | Date;
   updatedAt?: string | Date | null;
+}
+
+export interface IArticlesPagination {
+  items: IArticle[];
+  totalCount: number;
 }

@@ -39,6 +39,7 @@ public static class ServicesExtensions
     public static IServiceCollection AddDbAccesses(this IServiceCollection services)
     {
         services.AddScoped<IProjectsDbAccess, ProjectsDbAccess>();
+        services.AddScoped<IArticlesDbAccess, ArticlesDbAccess>();
 
         return services;
     }
@@ -84,6 +85,7 @@ public static class ServicesExtensions
         services.AddScoped<IChangeProjectVisibilityHandler, ChangeProjectVisibilityHandler>();
             
         services.AddScoped<ICreateArticleHandler, CreateArticleHandler>();
+        services.AddScoped<IGetCompactArticlesHandler, GetCompactArticlesHandler>();
         
         return services;
     }
