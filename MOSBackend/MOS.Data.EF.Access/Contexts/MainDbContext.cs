@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore;
 using MOS.Application.Data.Services.Users;
 using MOS.Domain.Entities;
 using MOS.Domain.Entities.Projects;
@@ -68,6 +69,15 @@ public class MainDbContext : DbContext
                     .WithMany()
                     .HasForeignKey("DeletedBy")
                     .OnDelete(DeleteBehavior.Restrict);
+                
+                // Auto filter by deleted entities
+                var parameter = Expression.Parameter(entityType.ClrType, "e");
+                var methodInfo = typeof(Microsoft.EntityFrameworkCore.EF)
+                    .GetMethod(nameof(Microsoft.EntityFrameworkCore.EF.Property))!.MakeGenericMethod(typeof(bool))!;
+                var efPropertyCall = Expression.Call(null, methodInfo, parameter, Expression.Constant(nameof(IAuditableEntity<long>.IsDeleted)));
+                var body = Expression.MakeBinary(ExpressionType.Equal, efPropertyCall, Expression.Constant(false));
+                var expression = Expression.Lambda(body, parameter);
+                builder.HasQueryFilter(expression);
             });
         }
     }

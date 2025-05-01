@@ -12,4 +12,14 @@
       margin-top: 20px;
     }
   }
+
+  .articles {
+    margin-top: 20px;
+
+    .empty-articles-placeholder {
+      padding: 8px;
+      border: 1px solid var(--secondary-up);
+      border-radius: 6px;
+    }
+  }
 }

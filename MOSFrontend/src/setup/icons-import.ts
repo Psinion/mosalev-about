@@ -10,7 +10,9 @@ import {
   MdEmailRound,
   MdDeleteforever,
   MdClose,
-  MdEdit
+  MdEdit,
+  HiSolidEye,
+  HiSolidEyeOff
 } from "oh-vue-icons/icons";
 
 export default function importIcons() {
@@ -25,4 +27,6 @@ export default function importIcons() {
   addIcons(MdDeleteforever);
   addIcons(MdClose);
   addIcons(MdEdit);
+  addIcons(HiSolidEye);
+  addIcons(HiSolidEyeOff);
 }

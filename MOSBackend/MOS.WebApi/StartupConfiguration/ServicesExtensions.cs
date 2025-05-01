@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using MOS.Application.Data;
+using MOS.Application.Data.DbAccesses;
 using MOS.Application.Data.Repositories;
 using MOS.Application.Data.Repositories.Projects;
 using MOS.Application.Data.Repositories.Resumes;
@@ -10,6 +11,7 @@ using MOS.Application.Data.Services.Users;
 using MOS.Application.Modules.Projects.Commands.Handlers;
 using MOS.Application.Modules.Projects.Queries.Handlers;
 using MOS.Application.Modules.Users.Queries.Handlers;
+using MOS.Data.EF.Access.DbAccesses;
 using MOS.Data.EF.Access.Handlers;
 using MOS.Data.EF.Access.Handlers.Projects;
 using MOS.Data.EF.Access.Repositories;
@@ -30,6 +32,13 @@ public static class ServicesExtensions
     public static IServiceCollection AddConfigurations(this IServiceCollection services, IConfiguration configuration)
     {
         services.Configure<AuthSettings>(configuration.GetSection(nameof(AuthSettings)));
+        return services;
+    }
+    
+    public static IServiceCollection AddDbAccesses(this IServiceCollection services)
+    {
+        services.AddScoped<IProjectsDbAccess, ProjectsDbAccess>();
+
         return services;
     }
     
@@ -71,6 +80,7 @@ public static class ServicesExtensions
         services.AddScoped<ICreateProjectHandler, CreateProjectHandler>();
         services.AddScoped<IUpdateProjectHandler, UpdateProjectHandler>();
         services.AddScoped<IDeleteProjectHandler, DeleteProjectHandler>();
+        services.AddScoped<IChangeProjectVisibilityHandler, ChangeProjectVisibilityHandlerHandler>();
         
         return services;
     }

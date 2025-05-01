@@ -99,5 +99,27 @@ public class ProjectsController : ControllerBase
         }
         
         return Ok(response.Value);
+    }    
+    
+    [HttpPatch("{projectId}/visibility")]
+    [CustomAuthorize]
+    public async Task<ActionResult<bool>> ChangeProjectVisibility(long projectId, ChangeProjectVisibilityRequest request)
+    {
+        var command = new ChangeProjectVisibilityCommand()
+        {
+            Id = projectId,
+            Visible = request.Visible,
+        };
+        
+        var handler = handlerFactory.GetHandler<IChangeProjectVisibilityHandler>();
+        
+        var response = await handler.Handle(command);
+        
+        if (response.Error.ErrorType == ErrorType.NotFound)
+        {
+            return NotFound(response.Error);
+        }
+        
+        return Ok(response.Value);
     }
 }

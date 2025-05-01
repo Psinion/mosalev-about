@@ -3,6 +3,7 @@ using MOS.Application.OperationResults;
 
 namespace MOS.Application.Modules.Projects.Commands.Handlers;
 
-public interface IDeleteProjectHandler : ICommandHandler<DeleteProjectCommand, OperationResult<bool>>
+public interface IChangeProjectVisibilityHandler : ICommandHandler<ChangeProjectVisibilityCommand, OperationResult<bool>>
 {
+    
 }

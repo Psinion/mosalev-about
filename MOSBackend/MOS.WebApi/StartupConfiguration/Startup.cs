@@ -152,6 +152,7 @@ public class Startup
 
         services
             .AddConfigurations(configuration)
+            .AddDbAccesses()
             .AddRepositories()
             .AddServices()
             .AddHandlers();

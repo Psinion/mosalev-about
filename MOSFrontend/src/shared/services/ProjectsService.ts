@@ -1,5 +1,5 @@
 import {
-  IProjectsService, TCreateProjectRequest, TUpdateProjectRequest
+  IProjectsService, TChangeProjectVisibilityRequest, TCreateProjectRequest, TUpdateProjectRequest
 } from "@/shared/services/base";
 import { IProject, IProjectCompact } from "@/shared/types";
 import ServiceBase from "@/shared/services/ServiceBase.ts";
@@ -44,6 +44,15 @@ class ProjectsService extends ServiceBase implements IProjectsService {
   async deleteProject(projectId: number): Promise<void> {
     try {
       await this.requestor.delete(`api/v1/projects/${projectId}`);
+    }
+    catch (error) {
+      throw error;
+    }
+  }
+
+  async changeProjectVisibility(projectId: number, payload: TChangeProjectVisibilityRequest): Promise<void> {
+    try {
+      await this.requestor.patch(`api/v1/projects/${projectId}/visibility`, payload);
     }
     catch (error) {
       throw error;

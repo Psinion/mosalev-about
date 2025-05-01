@@ -5,33 +5,33 @@ using MOS.Application.Mappings.Projects;
 using MOS.Application.Modules.Projects.Commands;
 using MOS.Application.Modules.Projects.Commands.Handlers;
 using MOS.Application.OperationResults;
-using MOS.Domain.Entities.Projects;
 
 namespace MOS.Data.EF.Access.Handlers.Projects;
 
-public class CreateProjectHandler : ICreateProjectHandler
+public class ChangeProjectVisibilityHandlerHandler : IChangeProjectVisibilityHandler
 {
     private readonly IUnitOfWork unitOfWork;
     private readonly IProjectsRepository projectsRepository;
-    
-    public CreateProjectHandler(IUnitOfWork unitOfWork, IProjectsRepository projectsRepository)
+
+    public ChangeProjectVisibilityHandlerHandler(IUnitOfWork unitOfWork, IProjectsRepository projectsRepository)
     {
         this.unitOfWork = unitOfWork;
         this.projectsRepository = projectsRepository;
     }
-
-    public async Task<OperationResult<ProjectDto>> Handle(CreateProjectCommand request, CancellationToken cancellationToken = default)
+    
+    public async Task<OperationResult<bool>> Handle(ChangeProjectVisibilityCommand request, CancellationToken cancellationToken = default)
     {
-        var project = new Project()
+        var project = await projectsRepository.GetByIdAsync(request.Id, cancellationToken);
+        if (project == null)
         {
-            Title = request.Title,
-            Description = request.Description,
-            Visible = true
-        };
+            return OperationError.NotFound();
+        }
 
-        var newProject = await projectsRepository.CreateAsync(project, cancellationToken);
+        project.Visible = request.Visible;
+
+        await projectsRepository.UpdateAsync(project, cancellationToken);
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
-        return newProject.ToDto();
+        return true;
     }
 }

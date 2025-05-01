@@ -13,6 +13,7 @@
               v-if="projectsList.length > 0"
               :key="project.id"
               :project="project"
+              @change-visibility="onProjectChangeVisibilityClick"
               @edit="onProjectEditClick"
               @delete="onProjectDeleteClick"
             />
@@ -59,7 +60,9 @@ import ProjectEditDialog
   from "@/modules/projects/pages/ProjectsList/components/ProjectEditDialog/ProjectEditDialog.vue";
 import ProjectDeleteDialog
   from "@/modules/projects/pages/ProjectsList/components/ProjectDeleteDialog/ProjectDeleteDialog.vue";
+import { useToaster } from "@/shared/PsiUI/utils/toaster.ts";
 
+const toaster = useToaster();
 const { t } = useI18n();
 const userStore = useUserStore();
 const projectsService = ProjectsServiceInstance;
@@ -80,6 +83,16 @@ onMounted(async () => {
 
 function onProjectNewClick() {
   projectEditDialogVisible.value = true;
+}
+
+async function onProjectChangeVisibilityClick(project: IProject, visible: boolean) {
+  try {
+    await projectsService.changeProjectVisibility(project.id, { visible: visible });
+    project.visible = visible;
+  }
+  catch (error) {
+    toaster.error("Произошла ошибка при изменении видимости проекта", error);
+  }
 }
 
 function onProjectEditClick(project: IProject) {

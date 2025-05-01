@@ -7,6 +7,7 @@ export interface IProjectsService extends IServiceBase {
   createProject(payload: TCreateProjectRequest): Promise<IProject>;
   updateProject(projectId: number, payload: TUpdateProjectRequest): Promise<IProject>;
   deleteProject(projectId: number): Promise<void>;
+  changeProjectVisibility(projectId: number, payload: TChangeProjectVisibilityRequest): Promise<void>;
 }
 
 export type TCreateProjectRequest = {
@@ -17,4 +18,8 @@ export type TCreateProjectRequest = {
 export type TUpdateProjectRequest = {
   title: string;
   description: string;
+};
+
+export type TChangeProjectVisibilityRequest = {
+  visible: boolean;
 };

@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
-using MOS.Application.Data.Repositories.Projects;
+using MOS.Application.Data.DbAccesses;
+using MOS.Application.Data.Services.Users;
 using MOS.Application.DTOs.Projects.Responses;
+using MOS.Application.Modules.Projects.Extensions;
 using MOS.Application.Modules.Projects.Queries;
 using MOS.Application.Modules.Projects.Queries.Handlers;
 using MOS.Application.OperationResults;
@@ -10,22 +12,24 @@ namespace MOS.Data.EF.Access.Handlers.Projects;
 
 public class GetCompactProjectsHandler : IGetCompactProjectsHandler
 {
-    private readonly IProjectsRepository projectsRepository;
+    private readonly ICredentialsService credentialsService;
+    private readonly IProjectsDbAccess projectsDbAccess;
     
-    public GetCompactProjectsHandler(IProjectsRepository projectsRepository)
+    public GetCompactProjectsHandler(ICredentialsService credentialsService, IProjectsDbAccess projectsDbAccess)
     {
-        this.projectsRepository = projectsRepository;
+        this.credentialsService = credentialsService;
+        this.projectsDbAccess = projectsDbAccess;
     }
     
     public async Task<OperationResult<List<ProjectCompactDto>>> Handle(GetCompactProjectsQuery request, CancellationToken cancellationToken = default)
     {
-        var resumes = await projectsRepository.GetAll()
-            .Where(x => !x.IsDeleted)
+        var projects = await projectsDbAccess.GetProjects()
+            .GetVisible(credentialsService)
             .OrderByDescending(x => x.CreatedAt)
             .ThenByDescending(x => x.UpdatedAt)
             .MapProjectToCompactDto()
             .ToListAsync(cancellationToken);
-
-        return resumes;
+        
+        return projects;
     }
 }

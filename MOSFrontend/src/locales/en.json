@@ -57,6 +57,9 @@
         "description": "Do you really want to delete the project and all articles contained inside?",
         "errorMessage": "Error occurred while deleting the project"
       }
+    },
+    "view": {
+      "emptyArticlesPlaceholder": "Articles are not finished yet"
     }
   },
   "pages": {

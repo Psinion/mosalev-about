@@ -11,6 +11,11 @@
       >
         <PsiButton
           flat
+          :icon="project.visible ? 'eye' : 'eye-crossed'"
+          @click.prevent="$emit('changeVisibility', project, !project.visible)"
+        />
+        <PsiButton
+          flat
           icon="edit"
           @click.prevent="$emit('edit', project)"
         />
@@ -40,7 +45,6 @@ import { formatDate } from "@/shared/utils/dateHelpers.ts";
 import { RouteNames } from "@/router/routeNames.ts";
 import PsiButton from "@/shared/PsiUI/components/PsiButton/PsiButton.vue";
 import { useUserStore } from "@/shared/stores/userStore.ts";
-import ProjectsServiceInstance from "@/shared/services/ProjectsService.ts";
 
 const props = defineProps({
   project: {
@@ -50,6 +54,7 @@ const props = defineProps({
 });
 
 const emit = defineEmits({
+  changeVisibility: (project: IProject, visibility: boolean) => true,
   edit: (value: IProject) => true,
   delete: (value: IProject) => true
 });

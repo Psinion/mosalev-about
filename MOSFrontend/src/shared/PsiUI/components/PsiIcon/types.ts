@@ -10,5 +10,7 @@ export type TPsiIcon =
   | "error"
   | "success"
   | "edit"
+  | "eye"
+  | "eye-crossed"
   ;
 export type TPsiIconFlip = "vertical " | "horizontal " | "both";

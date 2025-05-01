@@ -12,6 +12,7 @@ public static class ProjectsQueryObjects
             Id = entity.Id,
             Title = entity.Title,
             Description = entity.Description,
+            Visible = entity.Visible,
             CreatedAt = entity.CreatedAt,
             UpdatedAt = entity.UpdatedAt,
         });

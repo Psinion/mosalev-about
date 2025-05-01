@@ -58,7 +58,9 @@ const ICON_CODES = {
   "github": "fa-github",
   "error": "md-reportgmailerrorred",
   "success": "oi-check-circle",
-  "edit": "md-edit"
+  "edit": "md-edit",
+  "eye": "hi-solid-eye",
+  "eye-crossed": "hi-solid-eye-off"
 };
 
 const iconCode = computed(() => ICON_CODES[props.icon]);
