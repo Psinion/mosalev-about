@@ -51,7 +51,7 @@
 import ContentLayout from "@/layouts/ContentLayout/ContentLayout.vue";
 import { useI18n } from "vue-i18n";
 import ProjectsServiceInstance from "@/shared/services/ProjectsService.ts";
-import { computed, onMounted, ref } from "vue";
+import { computed, onMounted, ref, watch } from "vue";
 import { IProject, IProjectCompact } from "@/shared/types";
 import { useUserStore } from "@/shared/stores/userStore.ts";
 import ProjectCard from "@/modules/projects/pages/ProjectsList/components/ProjectCard/ProjectCard.vue";
@@ -61,6 +61,7 @@ import ProjectEditDialog
 import ProjectDeleteDialog
   from "@/modules/projects/pages/ProjectsList/components/ProjectDeleteDialog/ProjectDeleteDialog.vue";
 import { useToaster } from "@/shared/PsiUI/utils/toaster.ts";
+import { ServerError } from "@/shared/utils/requests/errorHandlers.ts";
 
 const toaster = useToaster();
 const { t } = useI18n();
@@ -69,6 +70,7 @@ const projectsService = ProjectsServiceInstance;
 
 const isCreator = computed(() => userStore.token);
 
+const loading = ref(false);
 const projectsList = ref<IProjectCompact[]>([]);
 
 const projectEditDialogVisible = ref(false);
@@ -78,14 +80,31 @@ const projectDeleteDialogVisible = ref(false);
 const projectDeleteDialogValue = ref<IProject | null>(null);
 
 onMounted(async () => {
-  projectsList.value = await projectsService.getProjectsList();
+  await refresh();
 });
+
+async function refresh() {
+  try {
+    loading.value = true;
+    projectsList.value = await projectsService.getProjectsList();
+  }
+  catch (error) {
+    if (error instanceof ServerError) {
+      toaster.error(error.header, error.message);
+    }
+  }
+  finally {
+    loading.value = false;
+  }
+}
+
+watch(() => userStore.locale, () => refresh());
 
 function onProjectNewClick() {
   projectEditDialogVisible.value = true;
 }
 
-async function onProjectChangeVisibilityClick(project: IProject, visible: boolean) {
+async function onProjectChangeVisibilityClick(project: IProjectCompact, visible: boolean) {
   try {
     await projectsService.changeProjectVisibility(project.id, { visible: visible });
     project.visible = visible;
@@ -95,21 +114,21 @@ async function onProjectChangeVisibilityClick(project: IProject, visible: boolea
   }
 }
 
-function onProjectEditClick(project: IProject) {
+function onProjectEditClick(project: IProjectCompact) {
   projectEditDialogValue.value = project;
   projectEditDialogVisible.value = true;
 }
 
-function onProjectDeleteClick(project: IProject) {
+function onProjectDeleteClick(project: IProjectCompact) {
   projectDeleteDialogValue.value = project;
   projectDeleteDialogVisible.value = true;
 }
 
-function onProjectCreate(project: IProject) {
+function onProjectCreate(project: IProjectCompact) {
   projectsList.value.unshift(project);
 }
 
-function onProjectEdit(project: IProject) {
+function onProjectEdit(project: IProjectCompact) {
   const foundProject = projectsList.value.find(x => x.id === project.id);
   if (foundProject) {
     foundProject.title = project.title;

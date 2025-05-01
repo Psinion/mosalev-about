@@ -40,7 +40,7 @@
 <script setup lang="ts">
 
 import { computed, PropType } from "vue";
-import { IProject } from "@/shared/types";
+import { IProjectCompact } from "@/shared/types";
 import { formatDate } from "@/shared/utils/dateHelpers.ts";
 import { RouteNames } from "@/router/routeNames.ts";
 import PsiButton from "@/shared/PsiUI/components/PsiButton/PsiButton.vue";
@@ -48,15 +48,15 @@ import { useUserStore } from "@/shared/stores/userStore.ts";
 
 const props = defineProps({
   project: {
-    type: Object as PropType<IProject>,
+    type: Object as PropType<IProjectCompact>,
     required: true
   }
 });
 
 const emit = defineEmits({
-  changeVisibility: (project: IProject, visibility: boolean) => true,
-  edit: (value: IProject) => true,
-  delete: (value: IProject) => true
+  changeVisibility: (project: IProjectCompact, visibility: boolean) => true,
+  edit: (value: IProjectCompact) => true,
+  delete: (value: IProjectCompact) => true
 });
 
 const userStore = useUserStore();

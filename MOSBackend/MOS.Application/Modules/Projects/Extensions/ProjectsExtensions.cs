@@ -14,6 +14,8 @@ public static class ProjectsExtensions
         {
             query = query.Where(p => p.Visible == true);
         }
+        
+        query = query.Where(p => p.Locale == credentialsService.CurrentLocale);
 
         return query;
     }

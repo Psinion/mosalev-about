@@ -25,8 +25,7 @@ public class GetCompactProjectsHandler : IGetCompactProjectsHandler
     {
         var projects = await projectsDbAccess.GetProjects()
             .GetVisible(credentialsService)
-            .OrderByDescending(x => x.CreatedAt)
-            .ThenByDescending(x => x.UpdatedAt)
+            .OrderByDescending(x => x.UpdatedAt ?? x.CreatedAt)
             .MapProjectToCompactDto()
             .ToListAsync(cancellationToken);
         
