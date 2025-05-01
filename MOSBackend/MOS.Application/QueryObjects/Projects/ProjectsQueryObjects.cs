@@ -25,9 +25,11 @@ public static class ArticlesQueryObjects
     {
         return books.Select(entity => new ArticleCompactDto()
         {
+            Id = entity.Id,
             ProjectId = entity.ProjectId,
             Title = entity.Title,
-            Description = entity.Description,
+            Description = entity.Description.Substring(0, 360),
+            Visible = entity.Visible,
             CreatedAt = entity.CreatedAt,
             UpdatedAt = entity.UpdatedAt,
         });

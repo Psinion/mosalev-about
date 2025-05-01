@@ -35,6 +35,8 @@
               v-for="article in articlesList.items"
               :key="article.id"
               :article="article"
+              @delete="onArticleDeleteClick"
+              @change-visibility="onArticleChangeVisibilityClick"
             />
           </template>
           <div
@@ -45,6 +47,13 @@
           </div>
         </div>
       </template>
+
+      <ArticleDeleteDialog
+        v-model:visible="articleDeleteDialogVisible"
+        :article-id="articleDeleteDialogValue?.id"
+        @delete="onArticleDelete"
+      >
+      </ArticleDeleteDialog>
     </div>
   </ContentLayout>
 </template>
@@ -54,7 +63,7 @@
 import ContentLayout from "@/layouts/ContentLayout/ContentLayout.vue";
 import ProjectsServiceInstance from "@/shared/services/ProjectsService.ts";
 import { computed, onMounted, ref } from "vue";
-import { IArticlesPagination, IProject, TRoute } from "@/shared/types";
+import { IArticleCompact, IArticlesPagination, IProject, IProjectCompact, TRoute } from "@/shared/types";
 import { useToaster } from "@/shared/PsiUI/utils/toaster.ts";
 import ProjectViewSkeleton from "@/modules/projects/pages/ProjectView/ProjectViewSkeleton/ProjectViewSkeleton.vue";
 import { ServerError } from "@/shared/utils/requests/errorHandlers.ts";
@@ -66,6 +75,7 @@ import PermissionChecker from "@/shared/components/PermissionChecker/PermissionC
 import ArticlesServiceInstance from "@/shared/services/ArticlesService.ts";
 import ArticleCard from "@/modules/projects/shared/ArticleCard/ArticleCard.vue";
 import ArticleCardSkeleton from "@/modules/projects/shared/ArticleCardSkeleton/ArticleCardSkeleton.vue";
+import ArticleDeleteDialog from "@/modules/projects/shared/ArticleDeleteDialog/ArticleDeleteDialog.vue";
 
 const props = defineProps({
   projectId: {
@@ -84,6 +94,9 @@ const loadFirst = ref(true);
 const loadData = ref(true);
 const currentProject = ref<IProject>();
 const articlesList = ref<IArticlesPagination>();
+
+const articleDeleteDialogVisible = ref(false);
+const articleDeleteDialogValue = ref<IArticleCompact | null>(null);
 
 const articleCreateRoute = computed<TRoute>(() => {
   return {
@@ -126,6 +139,30 @@ async function refreshArticles() {
     if (error instanceof ServerError) {
       toaster.error(error.header, error.message);
     }
+  }
+}
+
+function onArticleDeleteClick(article: IArticleCompact) {
+  articleDeleteDialogValue.value = article;
+  articleDeleteDialogVisible.value = true;
+}
+
+async function onArticleChangeVisibilityClick(article: IArticleCompact, visible: boolean) {
+  try {
+    await articlesService.changeArticleVisibility(article.id, { visible: visible });
+    article.visible = visible;
+  }
+  catch (error) {
+    if (error instanceof ServerError) {
+      toaster.error(error.header, error.message);
+    }
+  }
+}
+
+function onArticleDelete(articleId: number) {
+  const foundIndex = articlesList.value.items.findIndex(x => x.id === articleId);
+  if (foundIndex !== -1) {
+    articlesList.value.items.splice(foundIndex, 1);
   }
 }
 </script>

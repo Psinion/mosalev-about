@@ -25,11 +25,26 @@ public class ArticlesController : ControllerBase
     }
     
     [HttpGet]
-    public async Task<ActionResult<ArticleDto>> GetArticles([FromQuery] GetCompactArticlesQuery request)
+    public async Task<ActionResult<ArticlesCompactPaginationDto>> GetArticles([FromQuery] GetCompactArticlesQuery request)
     {
         var handler = handlerFactory.GetHandler<IGetCompactArticlesHandler>();
         
         var response = await handler.Handle(request);
+        
+        return Ok(response.Value);
+    }
+    
+    [HttpGet("{articleId}")]
+    public async Task<ActionResult<ArticleDto>> GetArticle(int articleId)
+    {
+        var handler = handlerFactory.GetHandler<IGetArticleHandler>();
+        
+        var response = await handler.Handle(new GetArticleQuery(articleId));
+        
+        if (response.Error.ErrorType == ErrorType.NotFound)
+        {
+            return NotFound(response.Error);
+        }
         
         return Ok(response.Value);
     }
@@ -41,6 +56,58 @@ public class ArticlesController : ControllerBase
         var handler = handlerFactory.GetHandler<ICreateArticleHandler>();
         
         var response = await handler.Handle(request);
+        
+        return Ok(response.Value);
+    }
+    
+    [HttpPut("{articleId}")]
+    [CustomAuthorize]
+    public async Task<ActionResult<ArticleDto>> UpdateArticle(int articleId, UpdateArticleRequest request)
+    {
+        var command = new UpdateArticleCommand()
+        {
+            Id = articleId,
+            ProjectId = request.ProjectId,
+            Title = request.Title,
+            Description = request.Description,
+        };
+        
+        var handler = handlerFactory.GetHandler<IUpdateArticleHandler>();
+        
+        var response = await handler.Handle(command);
+        
+        return Ok(response.Value);
+    }
+    
+    [HttpDelete("{articleId}")]
+    [CustomAuthorize]
+    public async Task<ActionResult<ArticleDto>> DeleteArticle(int articleId)
+    {
+        var handler = handlerFactory.GetHandler<IDeleteArticleHandler>();
+        
+        var response = await handler.Handle(new DeleteArticleCommand(articleId));
+        
+        return Ok(response.Value);
+    }
+    
+    [HttpPatch("{articleId}/visibility")]
+    [CustomAuthorize]
+    public async Task<ActionResult<bool>> ChangeArticleVisibility(int articleId, ChangeArticleVisibilityRequest request)
+    {
+        var command = new ChangeArticleVisibilityCommand()
+        {
+            Id = articleId,
+            Visible = request.Visible,
+        };
+        
+        var handler = handlerFactory.GetHandler<IChangeArticleVisibilityHandler>();
+        
+        var response = await handler.Handle(command);
+        
+        if (response.Error.ErrorType == ErrorType.NotFound)
+        {
+            return NotFound(response.Error);
+        }
         
         return Ok(response.Value);
     }

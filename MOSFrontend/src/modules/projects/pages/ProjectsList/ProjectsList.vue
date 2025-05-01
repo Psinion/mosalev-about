@@ -123,7 +123,9 @@ async function onProjectChangeVisibilityClick(project: IProjectCompact, visible:
     project.visible = visible;
   }
   catch (error) {
-    toaster.error("Произошла ошибка при изменении видимости проекта", error);
+    if (error instanceof ServerError) {
+      toaster.error(error.header, error.message);
+    }
   }
 }
 

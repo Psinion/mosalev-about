@@ -35,8 +35,7 @@ public class ProjectsController : ControllerBase
         return Ok(response.Value);
     }
     
-    [HttpGet]
-    [Route("{projectId}")]
+    [HttpGet("{projectId}")]
     public async Task<ActionResult<ProjectCompactDto>> GetProject(int projectId)
     {
         var handler = handlerFactory.GetHandler<IGetProjectHandler>();

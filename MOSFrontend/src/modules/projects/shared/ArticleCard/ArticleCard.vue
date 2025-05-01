@@ -6,9 +6,7 @@
     <header class="header">
       <h3>{{ article.title }}</h3>
 
-      <div
-        class="actions"
-      >
+      <div class="actions">
         <PermissionChecker>
           <PsiButton
             flat
@@ -16,9 +14,10 @@
             @click.prevent="$emit('changeVisibility', article, !article.visible)"
           />
           <PsiButton
+            tag="RouterLink"
             flat
             icon="edit"
-            @click.prevent="$emit('edit', article)"
+            :to="articleEditRoute"
           />
           <PsiButton
             flat
@@ -42,7 +41,7 @@
 <script setup lang="ts">
 
 import { computed, PropType } from "vue";
-import { IArticleCompact } from "@/shared/types";
+import { IArticleCompact, TRoute } from "@/shared/types";
 import { formatDate } from "@/shared/utils/dateHelpers.ts";
 import { RouteNames } from "@/router/routeNames.ts";
 import PsiButton from "@/shared/PsiUI/components/PsiButton/PsiButton.vue";
@@ -57,7 +56,6 @@ const props = defineProps({
 
 const emit = defineEmits({
   changeVisibility: (project: IArticleCompact, visibility: boolean) => true,
-  edit: (value: IArticleCompact) => true,
   delete: (value: IArticleCompact) => true
 });
 
@@ -68,8 +66,15 @@ const dateUpdate = computed(() => {
 
 const articleViewRoute = computed(() => {
   return {
-    name: RouteNames.ProjectView,
-    params: { projectId: props.article?.id }
+    name: RouteNames.ArticleView,
+    params: { articleId: props.article?.id }
+  };
+});
+
+const articleEditRoute = computed<TRoute>(() => {
+  return {
+    name: RouteNames.ArticleEdit,
+    params: { articleId: props.article?.id }
   };
 });
 </script>

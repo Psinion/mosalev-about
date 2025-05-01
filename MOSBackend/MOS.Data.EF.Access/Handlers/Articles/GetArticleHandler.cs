@@ -7,31 +7,32 @@ using MOS.Application.Modules.Projects.Extensions;
 using MOS.Application.Modules.Projects.Queries;
 using MOS.Application.Modules.Projects.Queries.Handlers;
 using MOS.Application.OperationResults;
+using MOS.Data.EF.Access.Contexts;
 
-namespace MOS.Data.EF.Access.Handlers.Projects;
+namespace MOS.Data.EF.Access.Handlers.Articles;
 
-public class GetProjectHandler : IGetProjectHandler
+public class GetArticleHandler : IGetArticleHandler
 {
     private readonly ICredentialsService credentialsService;
-    private readonly IProjectsDbAccess projectsDbAccess;
+    private readonly IArticlesDbAccess articleDbAccess;
     
-    public GetProjectHandler(ICredentialsService credentialsService, IProjectsDbAccess projectsDbAccess)
+    public GetArticleHandler(ICredentialsService credentialsService, IArticlesDbAccess articleDbAccess)
     {
         this.credentialsService = credentialsService;
-        this.projectsDbAccess = projectsDbAccess;
+        this.articleDbAccess = articleDbAccess;
     }
     
-    public async Task<OperationResult<ProjectDto>> Handle(GetProjectQuery request, CancellationToken cancellationToken = default)
+    public async Task<OperationResult<ArticleDto>> Handle(GetArticleQuery request, CancellationToken cancellationToken = default)
     {
-        var project = await projectsDbAccess.GetProjects()
+        var article = await articleDbAccess.GetArticles()
             .GetVisible(credentialsService)
-            .FirstOrDefaultAsync(x => x.Id == request.ProjectId, cancellationToken);
+            .FirstOrDefaultAsync(x => x.Id == request.ArticleId, cancellationToken);
         
-        if (project == null)
+        if (article == null)
         {
             return OperationError.NotFound("Not found");
         }
 
-        return project.ToDto();
+        return article.ToDto();
     }
 }

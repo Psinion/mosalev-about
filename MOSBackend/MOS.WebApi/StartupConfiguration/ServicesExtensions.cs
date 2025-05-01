@@ -12,7 +12,6 @@ using MOS.Application.Modules.Projects.Commands.Handlers;
 using MOS.Application.Modules.Projects.Queries.Handlers;
 using MOS.Application.Modules.Users.Queries.Handlers;
 using MOS.Data.EF.Access.DbAccesses;
-using MOS.Data.EF.Access.Handlers;
 using MOS.Data.EF.Access.Handlers.Articles;
 using MOS.Data.EF.Access.Handlers.Projects;
 using MOS.Data.EF.Access.Repositories;
@@ -84,8 +83,12 @@ public static class ServicesExtensions
         services.AddScoped<IDeleteProjectHandler, DeleteProjectHandler>();
         services.AddScoped<IChangeProjectVisibilityHandler, ChangeProjectVisibilityHandler>();
             
+        services.AddScoped<IGetArticleHandler, GetArticleHandler>();
         services.AddScoped<ICreateArticleHandler, CreateArticleHandler>();
+        services.AddScoped<IUpdateArticleHandler, UpdateArticleHandler>();
         services.AddScoped<IGetCompactArticlesHandler, GetCompactArticlesHandler>();
+        services.AddScoped<IDeleteArticleHandler, DeleteArticleHandler>();
+        services.AddScoped<IChangeArticleVisibilityHandler, ChangeArticleVisibilityHandler>();
         
         return services;
     }

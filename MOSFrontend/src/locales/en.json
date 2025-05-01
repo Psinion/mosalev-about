@@ -67,6 +67,10 @@
     "edit": {
       "titleCreate": "Article creation",
       "titleEdit": "Article edition"
+    },
+    "dialogDelete": {
+      "title": "Article deletion",
+      "description": "Do you really want to delete the article?"
     }
   },
   "pages": {
@@ -77,6 +81,7 @@
     "resumeList": "Resume list",
     "projectsList": "Projects",
     "projectView": "Project",
+    "articleView": "Article",
     "articleEdit": "Article edition",
     "error404": "Page not found"
   },

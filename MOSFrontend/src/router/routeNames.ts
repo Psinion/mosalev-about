@@ -8,6 +8,7 @@ export enum RouteNames {
   ProjectView = "ProjectView",
   ProjectsList = "ProjectsList",
 
+  ArticleView = "ArticleView",
   ArticleEdit = "ArticleEdit",
 
   Login = "Login",

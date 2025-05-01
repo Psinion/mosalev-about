@@ -10,14 +10,14 @@ using MOS.Domain.Entities.Projects;
 
 namespace MOS.Data.EF.Access.Handlers.Articles;
 
-public class CreateArticleHandler : ICreateArticleHandler
+public class UpdateArticleHandler : IUpdateArticleHandler
 {
     private readonly ICredentialsService credentialsService;
     private readonly IUnitOfWork unitOfWork;
     private readonly IProjectsRepository projectsRepository;
     private readonly IArticlesRepository articlesRepository;
     
-    public CreateArticleHandler(
+    public UpdateArticleHandler(
         ICredentialsService credentialsService, 
         IUnitOfWork unitOfWork, 
         IProjectsRepository projectsRepository, 
@@ -29,9 +29,15 @@ public class CreateArticleHandler : ICreateArticleHandler
         this.projectsRepository = projectsRepository;
         this.articlesRepository = articlesRepository;
     }
-
-    public async Task<OperationResult<ArticleDto>> Handle(CreateArticleCommand request, CancellationToken cancellationToken = default)
+    
+    public async Task<OperationResult<ArticleDto>> Handle(UpdateArticleCommand request, CancellationToken cancellationToken = default)
     {
+        var article = await articlesRepository.GetByIdAsync(request.Id, cancellationToken);
+        if (article == null)
+        {
+            return OperationError.NotFound("Article not found");
+        }
+        
         Project? project = null;
         
         if (request.ProjectId != null)
@@ -43,18 +49,14 @@ public class CreateArticleHandler : ICreateArticleHandler
             }
         }
         
-        var article = new Article()
-        {
-            Project = project,
-            Title = request.Title,
-            Description = request.Description,
-            Visible = true,
-            Locale = credentialsService.CurrentLocale,
-        };
+        article.ProjectId = project?.Id;
+        article.Project = project;
+        article.Title = request.Title;
+        article.Description = request.Description;
 
-        var newArticle = await articlesRepository.CreateAsync(article, cancellationToken);
+        await articlesRepository.UpdateAsync(article, cancellationToken);
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
-        return newArticle.ToDto();
+        return article.ToDto();
     }
 }

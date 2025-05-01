@@ -92,20 +92,29 @@ onMounted(async () => {
     projectId.value = +project;
   }
 
-  return;
+  if (props.articleId) {
+    try {
+      loading.value = true;
+      const article = await articlesService.getArticle(props.articleId);
 
-  try {
-    loading.value = true;
-    currentProject.value = await projectsService.getProject(props.articleId);
-    loading.value = false;
-  }
-  catch (error) {
-    if (error instanceof ServerError) {
-      if (error.statusCode === 404) {
-        await router.push({ name: RouteNames.Error404 });
-        return;
+      articleForm.value = {
+        title: article.title,
+        description: article.description
+      };
+
+      projectId.value = article.projectId;
+      currentArticle.value = article;
+
+      loading.value = false;
+    }
+    catch (error) {
+      if (error instanceof ServerError) {
+        if (error.statusCode === 404) {
+          await router.push({ name: RouteNames.Error404 });
+          return;
+        }
+        toaster.error(error.header, error.message);
       }
-      toaster.error(error.header, error.message);
     }
   }
 });
@@ -114,16 +123,25 @@ async function submit() {
   try {
     const form = articleForm.value;
 
-    currentArticle.value = await articlesService.createArticle({
-      title: form.title!,
-      description: form.description!,
-      projectId: projectId.value
-    });
+    if (!props.articleId) {
+      currentArticle.value = await articlesService.createArticle({
+        title: form.title!,
+        description: form.description!,
+        projectId: projectId.value
+      });
 
-    await router.replace({
-      name: RouteNames.ArticleEdit,
-      params: { articleId: currentArticle.value.id }
-    });
+      await router.replace({
+        name: RouteNames.ArticleEdit,
+        params: { articleId: currentArticle.value.id }
+      });
+    }
+    else {
+      currentArticle.value = await articlesService.updateArticle(currentArticle.value.id, {
+        title: form.title!,
+        description: form.description!,
+        projectId: projectId.value
+      });
+    }
   }
   catch (error) {
     if (error instanceof ServerError) {

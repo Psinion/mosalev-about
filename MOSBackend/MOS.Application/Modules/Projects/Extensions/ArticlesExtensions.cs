@@ -6,7 +6,7 @@ namespace MOS.Application.Modules.Projects.Extensions;
 public static class ArticlesExtensions
 {
     /**
-     * Get all projects for creator and visible only for common users.
+     * Get all articles for creator and visible only for common users.
      */
     public static IQueryable<Article> GetVisible(this IQueryable<Article> query, ICredentialsService credentialsService)
     {
