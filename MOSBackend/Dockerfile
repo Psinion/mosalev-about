@@ -11,6 +11,7 @@ COPY MOS.Data.EF.Access/*.csproj ./MOS.Data.EF.Access/
 COPY MOS.Identity/*.csproj ./MOS.Identity/
 COPY MOS.Domain/*.csproj ./MOS.Domain/
 COPY MOS.Application/*.csproj ./MOS.Application/
+COPY MOS.UnitTestsX/*.csproj ./MOS.UnitTestsX/
 RUN dotnet restore
 
 COPY . .

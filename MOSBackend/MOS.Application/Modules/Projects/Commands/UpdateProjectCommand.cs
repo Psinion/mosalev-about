@@ -1,5 +1,3 @@
-using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Mvc;
 using MOS.Application.Data;
 using MOS.Application.DTOs.Projects.Responses;
 using MOS.Application.OperationResults;
