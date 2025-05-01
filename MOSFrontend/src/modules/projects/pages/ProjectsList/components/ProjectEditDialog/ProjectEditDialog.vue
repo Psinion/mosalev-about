@@ -10,7 +10,7 @@
       {{ project?.id ? t('projects.list.dialogEdit.titleEdit') : t('projects.list.dialogEdit.titleCreate') }}
     </template>
 
-    <div class="project-dialog">
+    <div class="project-edit-dialog">
       <PsiInput
         v-model="projectForm.title"
         :label="t('forms.title')"
@@ -103,4 +103,4 @@ async function save() {
 }
 </script>
 
-<style scoped src="./ProjectDialog.scss" />
+<style scoped src="./ProjectEditDialog.scss" />

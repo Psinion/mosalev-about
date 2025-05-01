@@ -14,6 +14,7 @@
               :key="project.id"
               :project="project"
               @edit="onProjectEditClick"
+              @delete="onProjectDeleteClick"
             />
           </template>
 
@@ -30,11 +31,16 @@
         </div>
       </div>
 
-      <ProjectDialog
-        v-model:visible="projectDialogVisible"
-        :project="projectDialogValue"
+      <ProjectEditDialog
+        v-model:visible="projectEditDialogVisible"
+        :project="projectEditDialogValue"
         @create="onProjectCreate"
         @edit="onProjectEdit"
+      />
+      <ProjectDeleteDialog
+        v-model:visible="projectDeleteDialogVisible"
+        :project-id="projectDeleteDialogValue?.id"
+        @delete="onProjectDelete"
       />
     </div>
   </ContentLayout>
@@ -49,7 +55,10 @@ import { IProject, IProjectCompact } from "@/shared/types";
 import { useUserStore } from "@/shared/stores/userStore.ts";
 import ProjectCard from "@/modules/projects/pages/ProjectsList/components/ProjectCard/ProjectCard.vue";
 import ProjectCardNew from "@/modules/projects/pages/ProjectsList/components/ProjectCardNew/ProjectCardNew.vue";
-import ProjectDialog from "@/modules/projects/pages/ProjectsList/components/ProjectDialog/ProjectDialog.vue";
+import ProjectEditDialog
+  from "@/modules/projects/pages/ProjectsList/components/ProjectEditDialog/ProjectEditDialog.vue";
+import ProjectDeleteDialog
+  from "@/modules/projects/pages/ProjectsList/components/ProjectDeleteDialog/ProjectDeleteDialog.vue";
 
 const { t } = useI18n();
 const userStore = useUserStore();
@@ -59,20 +68,28 @@ const isCreator = computed(() => userStore.token);
 
 const projectsList = ref<IProjectCompact[]>([]);
 
-const projectDialogValue = ref<IProject | null>(null);
-const projectDialogVisible = ref(false);
+const projectEditDialogVisible = ref(false);
+const projectEditDialogValue = ref<IProject | null>(null);
+
+const projectDeleteDialogVisible = ref(false);
+const projectDeleteDialogValue = ref<IProject | null>(null);
 
 onMounted(async () => {
   projectsList.value = await projectsService.getProjectsList();
 });
 
 function onProjectNewClick() {
-  projectDialogVisible.value = true;
+  projectEditDialogVisible.value = true;
 }
 
 function onProjectEditClick(project: IProject) {
-  projectDialogValue.value = project;
-  projectDialogVisible.value = true;
+  projectEditDialogValue.value = project;
+  projectEditDialogVisible.value = true;
+}
+
+function onProjectDeleteClick(project: IProject) {
+  projectDeleteDialogValue.value = project;
+  projectDeleteDialogVisible.value = true;
 }
 
 function onProjectCreate(project: IProject) {
@@ -84,6 +101,13 @@ function onProjectEdit(project: IProject) {
   if (foundProject) {
     foundProject.title = project.title;
     foundProject.description = project.description;
+  }
+}
+
+function onProjectDelete(projectId: number) {
+  const foundIndex = projectsList.value.findIndex(x => x.id === projectId);
+  if (foundIndex !== -1) {
+    projectsList.value.splice(foundIndex, 1);
   }
 }
 </script>

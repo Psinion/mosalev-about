@@ -70,6 +70,7 @@ public static class ServicesExtensions
         services.AddScoped<IGetProjectHandler, GetProjectHandler>();
         services.AddScoped<ICreateProjectHandler, CreateProjectHandler>();
         services.AddScoped<IUpdateProjectHandler, UpdateProjectHandler>();
+        services.AddScoped<IDeleteProjectHandler, DeleteProjectHandler>();
         
         return services;
     }

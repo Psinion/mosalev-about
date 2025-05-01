@@ -50,7 +50,12 @@
       "dialogEdit": {
         "titleCreate": "Project Creation",
         "titleEdit": "Project Edition",
-        "errorMessage": "Error occurred while saving project"
+        "errorMessage": "Error occurred while saving the project"
+      },
+      "dialogDelete": {
+        "title": "Project deletion",
+        "description": "Do you really want to delete the project and all articles contained inside?",
+        "errorMessage": "Error occurred while deleting the project"
       }
     }
   },

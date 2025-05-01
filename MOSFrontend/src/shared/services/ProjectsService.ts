@@ -40,6 +40,15 @@ class ProjectsService extends ServiceBase implements IProjectsService {
       throw error;
     }
   }
+
+  async deleteProject(projectId: number): Promise<void> {
+    try {
+      await this.requestor.delete(`api/v1/projects/${projectId}`);
+    }
+    catch (error) {
+      throw error;
+    }
+  }
 }
 
 const ProjectsServiceInstance = new ProjectsService();

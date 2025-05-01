@@ -14,6 +14,11 @@
           icon="edit"
           @click.prevent="$emit('edit', project)"
         />
+        <PsiButton
+          flat
+          icon="trash-box"
+          @click.prevent="$emit('delete', project)"
+        />
       </div>
     </header>
     <div class="description">
@@ -35,6 +40,7 @@ import { formatDate } from "@/shared/utils/dateHelpers.ts";
 import { RouteNames } from "@/router/routeNames.ts";
 import PsiButton from "@/shared/PsiUI/components/PsiButton/PsiButton.vue";
 import { useUserStore } from "@/shared/stores/userStore.ts";
+import ProjectsServiceInstance from "@/shared/services/ProjectsService.ts";
 
 const props = defineProps({
   project: {
@@ -44,7 +50,8 @@ const props = defineProps({
 });
 
 const emit = defineEmits({
-  edit: (value: IProject) => true
+  edit: (value: IProject) => true,
+  delete: (value: IProject) => true
 });
 
 const userStore = useUserStore();

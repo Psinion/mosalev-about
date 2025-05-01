@@ -84,6 +84,7 @@ public class AuditableRepository<TEntity, TKey> : IAuditableRepository<TEntity, 
         {
             item.DeletedBy = credentialsService.CurrentUser.Id;
             item.DeletedAt = DateTime.UtcNow;
+            item.IsDeleted = true;
         }
         
         localContext.Update(item);

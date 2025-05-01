@@ -84,4 +84,20 @@ public class ProjectsController : ControllerBase
         
         return Ok(response.Value);
     }
+    
+    [HttpDelete("{projectId}")]
+    [CustomAuthorize]
+    public async Task<ActionResult<bool>> DeleteProject(long projectId)
+    {
+        var handler = handlerFactory.GetHandler<IDeleteProjectHandler>();
+        
+        var response = await handler.Handle(new DeleteProjectCommand(projectId));
+        
+        if (response.Error.ErrorType == ErrorType.NotFound)
+        {
+            return NotFound(response.Error);
+        }
+        
+        return Ok(response.Value);
+    }
 }
