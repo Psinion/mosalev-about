@@ -17,7 +17,7 @@
     overflow: hidden;
   }
 
-  @include adaptive-mixin(s) {
+  @include adaptive-mixin(sm) {
     & {
       width: 8em;
     }

@@ -24,7 +24,7 @@
       gap: 4px;
     }
 
-    @include adaptive-mixin(s) {
+    @include adaptive-mixin(sm) {
       .links {
         display: flex;
         flex-direction: column;

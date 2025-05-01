@@ -76,6 +76,12 @@ function onOpen() {
       description: project.description
     };
   }
+  else {
+    projectForm.value = {
+      title: undefined,
+      description: undefined
+    };
+  }
 }
 
 async function save() {

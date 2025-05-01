@@ -8,21 +8,31 @@
           v-if="projectsList.length > 0 || isCreator"
           class="projects"
         >
-          <template v-for="project in projectsList">
-            <ProjectCard
-              v-if="projectsList.length > 0"
-              :key="project.id"
-              :project="project"
-              @change-visibility="onProjectChangeVisibilityClick"
-              @edit="onProjectEditClick"
-              @delete="onProjectDeleteClick"
+          <template v-if="loading">
+            <ProjectCardSkeleton />
+            <ProjectCardSkeleton />
+            <ProjectCardSkeleton />
+            <ProjectCardSkeleton />
+            <ProjectCardSkeleton />
+            <ProjectCardSkeleton />
+          </template>
+          <template v-else>
+            <template v-for="project in projectsList">
+              <ProjectCard
+                v-if="projectsList.length > 0"
+                :key="project.id"
+                :project="project"
+                @change-visibility="onProjectChangeVisibilityClick"
+                @edit="onProjectEditClick"
+                @delete="onProjectDeleteClick"
+              />
+            </template>
+
+            <ProjectCardNew
+              v-if="isCreator"
+              @click="onProjectNewClick"
             />
           </template>
-
-          <ProjectCardNew
-            v-if="isCreator"
-            @click="onProjectNewClick"
-          />
         </div>
         <div
           v-else
@@ -62,6 +72,8 @@ import ProjectDeleteDialog
   from "@/modules/projects/pages/ProjectsList/components/ProjectDeleteDialog/ProjectDeleteDialog.vue";
 import { useToaster } from "@/shared/PsiUI/utils/toaster.ts";
 import { ServerError } from "@/shared/utils/requests/errorHandlers.ts";
+import ProjectCardSkeleton
+  from "@/modules/projects/pages/ProjectsList/components/ProjectCardSkeleton/ProjectCardSkeleton.vue";
 
 const toaster = useToaster();
 const { t } = useI18n();
@@ -101,6 +113,7 @@ async function refresh() {
 watch(() => userStore.locale, () => refresh());
 
 function onProjectNewClick() {
+  projectEditDialogValue.value = null;
   projectEditDialogVisible.value = true;
 }
 

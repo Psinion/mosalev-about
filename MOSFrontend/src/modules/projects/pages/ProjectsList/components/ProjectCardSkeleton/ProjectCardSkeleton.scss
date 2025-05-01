@@ -1,0 +1,12 @@
+.project-card-skeleton {
+  padding: 8px;
+  border: 1px solid var(--secondary-up);
+  border-radius: 8px;
+
+  .description {
+    margin-top: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+}

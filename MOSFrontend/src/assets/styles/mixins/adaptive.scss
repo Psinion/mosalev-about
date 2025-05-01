@@ -1,13 +1,16 @@
-$adaptiveMinWidth: 667px;
-$adaptiveMaxWidth: 1170px;
-
-$adaptiveMinWidthP: $adaptiveMinWidth + 1;
-$adaptiveMaxWidthP: $adaptiveMaxWidth + 1;
+$adaptive-mobile-medium: 767px;
+$adaptive-note-min: 1023px;
+$adaptive-note-medium: 1170px;
+$adaptive-desktop-min: 1280px;
+$adaptive-desktop-medium: 1400px;
 
 $media_queries : (
-        's' : unquote('screen and (max-width: #{$adaptiveMinWidth})'),
-        'm' : unquote('screen and (min-width: #{$adaptiveMinWidthP}) and (max-width: #{$adaptiveMaxWidth})'),
-        'l' : unquote('screen and (min-width: #{$adaptiveMaxWidthP})'),
+    'sm' : unquote('screen and (max-width: #{$adaptive-mobile-medium})'),
+    'ms' : unquote('screen and (min-width: #{$adaptive-mobile-medium + 1}) and (max-width: #{$adaptive-note-min})'),
+    'mm' : unquote('screen and (min-width: #{$adaptive-note-min + 1}) and (max-width: #{$adaptive-note-medium})'),
+    'ls' : unquote('screen and (min-width: #{$adaptive-note-medium + 1}) and (max-width: #{$adaptive-desktop-min})'),
+    'lm' : unquote('screen and (min-width: #{$adaptive-desktop-min + 1}) and (max-width: #{$adaptive-desktop-medium})'),
+    'll' : unquote('screen and (min-width: #{$adaptive-desktop-medium + 1})'),
 );
 
 @mixin adaptive-mixin($modes) {
@@ -21,6 +24,15 @@ $media_queries : (
   }
 
   @media #{$conditions} {
+    @content;
+  }
+}
+
+/**
+  Миксина для того, чтобы для тачпадов всегда показывать кнопки, которые на компьютере появляются при наведении.
+ */
+@mixin adaptive-hover() {
+  @media (hover: none) {
     @content;
   }
 }

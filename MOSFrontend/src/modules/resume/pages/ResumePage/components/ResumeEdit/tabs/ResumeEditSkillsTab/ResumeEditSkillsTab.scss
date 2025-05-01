@@ -28,7 +28,7 @@
       .skill-block {
         display: flex;
 
-        @include adaptive-mixin(s) {
+        @include adaptive-mixin(sm) {
           flex-wrap: wrap;
         }
       }

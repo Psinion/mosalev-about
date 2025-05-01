@@ -35,7 +35,7 @@
         opacity: 0;
         transition: var(--default-transition);
 
-        @include adaptive-mixin(s) {
+        @include adaptive-mixin(sm) {
           opacity: 0.5;
         }
       }

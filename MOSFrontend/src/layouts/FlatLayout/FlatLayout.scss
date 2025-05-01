@@ -1,7 +1,7 @@
 @import '@scss-mixins/adaptive';
 
 .flat-layout {
-  @include adaptive-mixin(m l) {
+  @include adaptive-mixin(ms mm ml ls lm ll) {
     margin-left: 16px;
   }
 
