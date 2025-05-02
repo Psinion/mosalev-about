@@ -1,0 +1,19 @@
+@import '@scss-mixins/adaptive';
+
+.articles-list {
+  .actions {
+    margin-bottom: 20px;
+  }
+
+  .articles {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .empty-articles-placeholder {
+    padding: 8px;
+    border: 1px solid var(--secondary-up);
+    border-radius: 6px;
+  }
+}

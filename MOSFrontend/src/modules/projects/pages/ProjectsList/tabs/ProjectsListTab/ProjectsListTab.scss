@@ -1,0 +1,19 @@
+@import '@scss-mixins/adaptive';
+
+.projects-list-tab {
+  .projects {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));;
+    gap: 8px;
+
+    @include adaptive-mixin(sm) {
+      grid-template-columns: repeat(1, minmax(0, 1fr));;
+    }
+  }
+
+  .empty-projects-placeholder {
+    padding: 8px;
+    border: 1px solid var(--secondary-up);
+    border-radius: 6px;
+  }
+}

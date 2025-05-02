@@ -50,6 +50,8 @@
       "newProjectTitle": "Новый проект",
       "newProjectDescription": "Создайте новый проект и наполните его контентом",
       "emptyProjectsPlaceholder": "Проекты пока только в планах",
+      "toggleArticles": "Статьи",
+      "toggleProjects": "Проекты",
       "dialogEdit": {
         "titleCreate": "Создание проекта",
         "titleEdit": "Редактирование проекта",

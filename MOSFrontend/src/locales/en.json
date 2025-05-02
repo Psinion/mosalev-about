@@ -47,6 +47,8 @@
       "newProjectTitle": "New project",
       "newProjectDescription": "Create new project and fill it with content",
       "emptyProjectsPlaceholder": "Projects are still only in the plans",
+      "toggleArticles": "Articles",
+      "toggleProjects": "Projects",
       "dialogEdit": {
         "titleCreate": "Project creation",
         "titleEdit": "Project edition",
