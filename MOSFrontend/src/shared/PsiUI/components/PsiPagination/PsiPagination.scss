@@ -1,0 +1,11 @@
+.psi-pagination {
+  display: flex;
+  gap: 4px;
+
+  .page-button {
+    &.active {
+      color: var(--primary);
+      pointer-events: none;
+    }
+  }
+}

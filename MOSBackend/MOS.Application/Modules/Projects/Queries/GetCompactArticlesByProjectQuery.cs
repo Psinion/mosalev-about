@@ -9,4 +9,7 @@ public record GetCompactArticlesByProjectQuery : IQuery<OperationResult<Articles
 {
     [Required]
     public int ProjectId { get; init; }
+    
+    public int Limit { get; init; } = 0;
+    public int Offset { get; init; } = 0;
 }

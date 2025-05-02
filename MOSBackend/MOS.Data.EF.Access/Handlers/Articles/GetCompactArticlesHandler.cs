@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using MOS.Application.Data.DbAccesses;
 using MOS.Application.Data.Services.Users;
 using MOS.Application.DTOs.Projects.Responses;
+using MOS.Application.Extensions;
 using MOS.Application.Modules.Projects.Extensions;
 using MOS.Application.Modules.Projects.Queries;
 using MOS.Application.Modules.Projects.Queries.Handlers;
@@ -35,6 +36,7 @@ public class GetCompactArticlesHandler : IGetCompactArticlesHandler
         var totalCount = await query.CountAsync(cancellationToken);
         var articles = await query
             .OrderByDescending(x => x.UpdatedAt ?? x.CreatedAt)
+            .Page(request.Limit, request.Offset)
             .MapArticleByProjectToCompactDto().ToListAsync(cancellationToken);
         
         return new ArticlesCompactPaginationDto()

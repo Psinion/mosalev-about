@@ -27,6 +27,14 @@
           @delete="onArticleDeleteClick"
           @change-visibility="onArticleChangeVisibilityClick"
         />
+
+        <PsiPagination
+          v-model:current-page="currentPage"
+          :limit="limit"
+          :total="paginationTotal"
+          class="pagination"
+          @select-page="refreshArticles($event)"
+        />
       </template>
       <div
         v-else
@@ -59,6 +67,7 @@ import ArticleCardSkeleton from "@/modules/projects/shared/ArticleCardSkeleton/A
 import ArticleCard from "@/modules/projects/shared/ArticleCard/ArticleCard.vue";
 import ArticleDeleteDialog from "@/modules/projects/shared/ArticleDeleteDialog/ArticleDeleteDialog.vue";
 import { RouteNames } from "@/router/routeNames.ts";
+import PsiPagination from "@/shared/PsiUI/components/PsiPagination/PsiPagination.vue";
 
 const props = defineProps({
   projectId: {
@@ -71,6 +80,10 @@ const toaster = useToaster();
 const { t } = useI18n();
 const userStore = useUserStore();
 const articlesService = ArticlesServiceInstance;
+
+const limit = 5;
+const currentPage = ref(1);
+const paginationTotal = ref(0);
 
 const loading = ref(false);
 const articlesList = ref<IArticlesPagination>();
@@ -91,19 +104,24 @@ onMounted(async () => {
   await refreshArticles();
 });
 
-async function refreshArticles() {
+async function refreshArticles(offset?: number) {
   try {
     loading.value = true;
 
     if (props.projectId) {
       articlesList.value = await articlesService.getCompactArticlesByProject({
-        projectId: props.projectId
+        projectId: props.projectId,
+        limit: limit,
+        offset: offset
       });
+      paginationTotal.value = articlesList.value.totalCount;
     }
     else {
       articlesList.value = await articlesService.getCompactArticles({
-
+        limit: limit,
+        offset: offset
       });
+      paginationTotal.value = articlesList.value.totalCount;
     }
 
     loading.value = false;

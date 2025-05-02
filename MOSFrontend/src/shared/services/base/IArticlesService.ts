@@ -13,10 +13,14 @@ export interface IArticlesService extends IServiceBase {
 
 export type TGetCompactArticlesRequest = {
   onlyFree?: boolean;
+  limit?: number;
+  offset?: number;
 };
 
 export type TGetCompactArticlesByProjectRequest = {
   projectId: number;
+  limit?: number;
+  offset?: number;
 };
 
 export type TCreateArticleRequest = {
