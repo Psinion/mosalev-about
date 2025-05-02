@@ -13,6 +13,14 @@
           >
             {{ currentArticle?.project.title }}
           </PsiButton>
+
+          <PsiButton
+            tag="RouterLink"
+            :to="articleEditRoute"
+            class="action-button"
+          >
+            {{ t('forms.edit') }}
+          </PsiButton>
         </div>
 
         <div class="content">
@@ -73,6 +81,13 @@ const projectRoute = computed<TRoute>(() => {
   return {
     name: RouteNames.ProjectView,
     params: { projectId: currentArticle.value?.projectId }
+  };
+});
+
+const articleEditRoute = computed<TRoute>(() => {
+  return {
+    name: RouteNames.ArticleEdit,
+    params: { articleId: props.articleId }
   };
 });
 

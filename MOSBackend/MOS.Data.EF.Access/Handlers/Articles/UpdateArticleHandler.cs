@@ -47,6 +47,9 @@ public class UpdateArticleHandler : IUpdateArticleHandler
             {
                 return OperationError.NotFound("Project not found");
             }
+            
+            project.UpdatedAt = DateTime.UtcNow;
+            project.UpdatedBy = credentialsService.CurrentUser!.Id;
         }
         
         article.ProjectId = project?.Id;

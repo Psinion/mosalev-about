@@ -41,6 +41,9 @@ public class CreateArticleHandler : ICreateArticleHandler
             {
                 return OperationError.NotFound("Project not found");
             }
+
+            project.UpdatedAt = DateTime.UtcNow;
+            project.UpdatedBy = credentialsService.CurrentUser!.Id;
         }
         
         var article = new Article()

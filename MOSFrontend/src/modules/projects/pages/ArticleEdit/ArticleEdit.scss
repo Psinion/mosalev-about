@@ -2,6 +2,12 @@
   padding-top: 60px;
   color: var(--font-color);
 
+  .actions {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+  }
+
   .content {
     & > h2 {
       text-align: center;

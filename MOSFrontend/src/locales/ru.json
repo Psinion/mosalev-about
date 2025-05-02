@@ -70,8 +70,7 @@
   },
   "articles": {
     "edit": {
-      "titleCreate": "Создание статьи",
-      "titleEdit": "Редактирование статьи"
+      "titleCreate": "Создание статьи"
     },
     "dialogDelete": {
       "title": "Удаление статьи",
@@ -94,7 +93,9 @@
   "forms": {
     "title": "Название",
     "description": "Описание",
-    "save": "Сохранить"
+    "save": "Сохранить",
+    "edit": "Редактировать",
+    "view": "Просмотр"
   },
   "errors": {
     "error404header": "Страница не найдена"
@@ -102,7 +103,8 @@
   "toaster": {
     "commonErrorHeader": "Серверная ошибка",
     "noPermissionsHeader": "У вас недостаточно прав",
-    "noPermissionsDescription": "Обратитесь, пожалуйста, к владельцу ресурса XD"
+    "noPermissionsDescription": "Обратитесь, пожалуйста, к владельцу ресурса XD",
+    "successSaveHeader": "Успешно сохранено"
   },
   "psiUi": {
     "psiDialog": {

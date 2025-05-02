@@ -67,8 +67,7 @@
   },
   "articles": {
     "edit": {
-      "titleCreate": "Article creation",
-      "titleEdit": "Article edition"
+      "titleCreate": "Article creation"
     },
     "dialogDelete": {
       "title": "Article deletion",
@@ -91,7 +90,9 @@
   "forms": {
     "title": "Title",
     "description": "Description",
-    "save": "Save"
+    "save": "Save",
+    "edit": "Edit",
+    "view": "View"
   },
   "errors": {
     "error404header": "Page not found"
@@ -99,7 +100,8 @@
   "toaster": {
     "commonErrorHeader": "Server Error",
     "noPermissionsHeader": "You don't have permissions",
-    "noPermissionsDescription": "Please, contact the owner of this resource XD"
+    "noPermissionsDescription": "Please, contact the owner of this resource XD",
+    "successSaveHeader": "Successful saving"
   },
   "psiUi": {
     "psiDialog": {
