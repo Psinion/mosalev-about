@@ -13,7 +13,7 @@ import Vue3Toastify from "vue3-toastify";
 import { toasterDefaultGlobalOptions } from "@/shared/PsiUI/utils/toaster.ts";
 import i18n from "@/shared/utils/i18n.ts";
 import { responseMiddlewares } from "@/shared/utils/requests/MiddlewaresResponse.ts";
-import { MarkdownDirective } from "@/shared/directives";
+import { markdownDirective, tooltipDirective } from "@/shared/directives";
 
 const app = createApp(App);
 
@@ -21,7 +21,8 @@ app.component("VIcon", OhVueIcon);
 
 importIcons();
 
-app.directive("markdown", MarkdownDirective);
+app.directive("tooltip", tooltipDirective);
+app.directive("markdown", markdownDirective);
 
 app.use(MainConfigPlugin);
 app.use(createPinia());

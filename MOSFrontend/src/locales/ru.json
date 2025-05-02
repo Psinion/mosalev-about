@@ -1,7 +1,7 @@
 {
   "layoutHeader": {
-    "aboutMe": "Обо мне",
-    "projects": "Проекты"
+    "projects": "Проекты",
+    "files": "Файлы"
   },
   "auth": {
     "toasterTokenExpiredHeader": "Токен авторизации просрочен",
@@ -86,6 +86,7 @@
     "projectView": "Проект",
     "articleView": "Просмотр статьи",
     "articleEdit": "Редактирование статьи",
+    "files": "Файлы",
     "error404": "Страница не найдена"
   },
   "forms": {

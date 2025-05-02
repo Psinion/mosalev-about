@@ -11,6 +11,8 @@ export enum RouteNames {
   ArticleView = "ArticleView",
   ArticleEdit = "ArticleEdit",
 
+  Files = "Files",
+
   Login = "Login",
 
   Error404 = "Error404"

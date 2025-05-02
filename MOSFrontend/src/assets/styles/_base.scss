@@ -45,3 +45,27 @@ body {
 .tertiary-down {
   color: var(--tertiary-down);
 }
+
+.psi-tooltip {
+  padding: 6px 10px 6px 10px;
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+  touch-action: none;
+  transition: opacity  var(--default-transition);
+  z-index: 10000;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+  background: var(--primary-down);
+  border-radius: 6px;
+  color: var(--font-color);
+  min-height: 36px;
+
+  &.active {
+    opacity: 1;
+  }
+}

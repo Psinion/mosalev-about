@@ -9,7 +9,7 @@
           <img
             src="@/assets/images/logo.svg"
             alt="logo"
-          >
+          />
           <h1>Mosalev</h1>
         </RouterLink>
       </div>
@@ -22,6 +22,14 @@
                 name: RouteNames.ProjectsList,
               }"
             />
+            <PermissionChecker>
+              <LayoutHeaderActions
+                :title="t('layoutHeader.files')"
+                :route="{
+                  name: RouteNames.Files,
+                }"
+              />
+            </PermissionChecker>
           </div>
         </div>
         <div class="admin-panel">
@@ -51,6 +59,7 @@ import LayoutHeaderUser from "@/layouts/components/LayoutHeader/components/Layou
 import { useI18n } from "vue-i18n";
 import PsiToggle from "@/shared/PsiUI/components/PsiToggle/PsiToggle.vue";
 import { AppLocale } from "@/shared/enums/common.ts";
+import PermissionChecker from "@/shared/components/PermissionChecker/PermissionChecker.vue";
 
 const userStore = useUserStore();
 

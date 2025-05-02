@@ -1,7 +1,7 @@
 {
   "layoutHeader": {
-    "aboutMe": "About",
-    "projects": "Projects"
+    "projects": "Projects",
+    "files": "Files"
   },
   "auth": {
     "toasterTokenExpiredHeader": "The authorization token has expired",
@@ -83,6 +83,7 @@
     "projectView": "Project",
     "articleView": "Article",
     "articleEdit": "Article edition",
+    "files": "Files",
     "error404": "Page not found"
   },
   "forms": {

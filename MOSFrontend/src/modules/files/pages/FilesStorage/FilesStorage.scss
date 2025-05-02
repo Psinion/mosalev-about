@@ -1,0 +1,51 @@
+.files-storage {
+  padding-top: 60px;
+  color: var(--font-color);
+
+  & > h2 {
+    text-align: center;
+    margin-bottom: 12px;
+  }
+
+  .content {
+    .storage-info-graphic {
+      display: flex;
+      flex-direction: column;
+      max-width: 300px;
+
+      .total-size {
+        align-self: center;
+      }
+
+      .line {
+        min-height: 12px;
+        width: 100%;
+      }
+
+      .graphic {
+        flex: 1;
+        display: flex;
+
+        .occupied {
+          display: flex;
+          flex-direction: column;
+          flex: 1;
+
+          .line {
+            background-color: var(--tertiary-down);
+          }
+        }
+
+        .free-space {
+          height: 100%;
+
+          .line {
+            background-color: var(--primary);
+          }
+        }
+      }
+
+
+    }
+  }
+}

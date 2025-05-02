@@ -4,6 +4,7 @@ import ProjectsList from "@/modules/projects/pages/ProjectsList/ProjectsList.vue
 import ProjectView from "@/modules/projects/pages/ProjectView/ProjectView.vue";
 import ArticleEdit from "@/modules/projects/pages/ArticleEdit/ArticleEdit.vue";
 import ArticleView from "@/modules/projects/pages/ArticleView/ArticleView.vue";
+import { protectedPagesGuard } from "@/router/middlewares/protectedPagesGuard.ts";
 
 export const projectsRoutes: RouteRecordRaw[] = [{
   path: "/projects",
@@ -36,6 +37,7 @@ export const projectsRoutes: RouteRecordRaw[] = [{
   name: RouteNames.ArticleEdit,
   props: route => ({ articleId: Number(route.params.articleId ?? 0) }),
   component: ArticleEdit,
+  beforeEnter: protectedPagesGuard,
   meta: {
     titleCode: "pages.articleEdit"
   }
