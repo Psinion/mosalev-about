@@ -12,9 +12,9 @@
       border: 1px solid var(--secondary);
       background-color: var(--secondary-down);
       color: var(--font-color);
-      scrollbar-width: thin;
       overflow: auto;
       overflow-x: hidden;
+      resize: none;
       transition: var(--fast-transition);
 
       &::-webkit-scrollbar {

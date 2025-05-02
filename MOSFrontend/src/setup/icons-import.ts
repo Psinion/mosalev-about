@@ -12,7 +12,9 @@ import {
   MdClose,
   MdEdit,
   HiSolidEye,
-  HiSolidEyeOff
+  HiSolidEyeOff,
+  MdChevronleft,
+  MdChevronright
 } from "oh-vue-icons/icons";
 
 export default function importIcons() {
@@ -29,4 +31,6 @@ export default function importIcons() {
   addIcons(MdEdit);
   addIcons(HiSolidEye);
   addIcons(HiSolidEyeOff);
+  addIcons(MdChevronleft);
+  addIcons(MdChevronright);
 }

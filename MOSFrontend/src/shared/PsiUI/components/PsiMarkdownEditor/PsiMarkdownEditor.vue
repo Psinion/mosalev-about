@@ -10,7 +10,6 @@
       <textarea
         :value="modelValue"
         class="caption-regular"
-        :rows="rows"
         autocomplete="off"
         @focus="onFocus"
         @blur="onBlur"
@@ -33,10 +32,6 @@ const props = defineProps({
   modelValue: {
     type: String as PropType<string | undefined>,
     default: undefined
-  },
-  rows: {
-    type: Number,
-    default: 3
   },
   height: {
     type: String,

@@ -7,9 +7,8 @@
       <span class="caption-regular">{{ label }}</span>
       <textarea
         class="caption-regular"
-        :style="{resize: resizable}"
+        :style="{height: height}"
         :value="inputValue"
-        :rows="rows"
         autocomplete="off"
         @focus="onFocus"
         @blur="onBlur"
@@ -49,13 +48,9 @@ const props = defineProps({
     type: Boolean,
     default: false
   },
-  resizable: {
-    type: String as PropType<TPsiTextareaResizable>,
-    default: "vertical"
-  },
-  rows: {
-    type: Number,
-    default: 3
+  height: {
+    type: String,
+    default: "300px"
   },
   disabled: {
     type: Boolean,

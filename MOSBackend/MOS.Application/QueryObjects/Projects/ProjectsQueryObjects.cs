@@ -1,4 +1,5 @@
 using MOS.Application.DTOs.Projects.Responses;
+using MOS.Application.Mappings.Projects;
 using MOS.Domain.Entities.Projects;
 
 namespace MOS.Application.QueryObjects.Projects;
@@ -41,6 +42,7 @@ public static class ArticlesQueryObjects
         {
             Id = entity.Id,
             ProjectId = entity.ProjectId,
+            Project = entity.Project != null ? entity.Project.ToCompactDto() : null,
             Title = entity.Title,
             Description = entity.Description,
             Visible = entity.Visible,

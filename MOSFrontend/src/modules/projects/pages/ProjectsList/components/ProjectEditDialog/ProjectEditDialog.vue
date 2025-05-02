@@ -21,7 +21,6 @@
         v-model="projectForm.description"
         :label="t('forms.description')"
         required
-        resizable="vertical"
       />
     </div>
   </PsiDialog>

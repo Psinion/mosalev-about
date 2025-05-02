@@ -3,6 +3,18 @@
     <div class="article-view">
       <ProjectViewSkeleton v-if="loading" />
       <template v-else>
+        <div class="actions">
+          <PsiButton
+            v-if="currentArticle?.project"
+            tag="RouterLink"
+            :to="projectRoute"
+            class="action-button"
+            icon="left"
+          >
+            {{ currentArticle?.project.title }}
+          </PsiButton>
+        </div>
+
         <div class="content">
           <h2> {{ currentArticle.title }}</h2>
 
@@ -30,8 +42,8 @@
 
 <script setup lang="ts">
 import ContentLayout from "@/layouts/ContentLayout/ContentLayout.vue";
-import { onMounted, ref } from "vue";
-import { IArticle } from "@/shared/types";
+import { computed, onMounted, ref } from "vue";
+import { IArticle, TRoute } from "@/shared/types";
 import { useToaster } from "@/shared/PsiUI/utils/toaster.ts";
 import ProjectViewSkeleton from "@/modules/projects/pages/ProjectView/ProjectViewSkeleton/ProjectViewSkeleton.vue";
 import { ServerError } from "@/shared/utils/requests/errorHandlers.ts";
@@ -56,6 +68,13 @@ const articlesService = ArticlesServiceInstance;
 
 const loading = ref(true);
 const currentArticle = ref<IArticle | null>(null);
+
+const projectRoute = computed<TRoute>(() => {
+  return {
+    name: RouteNames.ProjectView,
+    params: { projectId: currentArticle.value?.projectId }
+  };
+});
 
 onMounted(async () => {
   try {

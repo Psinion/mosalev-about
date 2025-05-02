@@ -60,7 +60,9 @@ const ICON_CODES = {
   "success": "oi-check-circle",
   "edit": "md-edit",
   "eye": "hi-solid-eye",
-  "eye-crossed": "hi-solid-eye-off"
+  "eye-crossed": "hi-solid-eye-off",
+  "left": "md-chevronleft",
+  "right": "md-chevronright"
 };
 
 const iconCode = computed(() => ICON_CODES[props.icon]);
