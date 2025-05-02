@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using MOS.Application.DTOs.Files.Responses;
 using MOS.Identity.Helpers;
+using MOS.WebApi.Extensions;
 
 namespace MOS.WebApi.Controllers.v1.Files;
 
@@ -21,7 +22,7 @@ public class UploadController : ControllerBase
     [CustomAuthorize]
     public ActionResult<StorageInfoDto> GetStorageInfo()
     {
-        var drive = new DriveInfo(Path.GetPathRoot(webHostEnvironment.WebRootPath));
+        var drive = new DriveInfo(Path.GetPathRoot(webHostEnvironment.GetUploadsPath()));
 
         var storage = new StorageInfoDto()
         {

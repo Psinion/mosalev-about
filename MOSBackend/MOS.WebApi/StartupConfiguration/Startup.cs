@@ -14,6 +14,7 @@ using MOS.Application.OperationResults;
 using MOS.Data.EF.Access.Contexts;
 using MOS.Identity.Helpers;
 using MOS.Identity.Middlewares;
+using MOS.WebApi.Extensions;
 using MOS.WebApi.Middlewares;
 using MOS.WebApi.StartupConfiguration.Swagger;
 using Swashbuckle.AspNetCore.SwaggerGen;
@@ -175,8 +176,7 @@ public class Startup
             });
         }
 
-        var uploadsPath = Environment.GetEnvironmentVariable("UPLOADS_PATH") 
-                          ?? Path.Combine(env.WebRootPath, "uploads");
+        var uploadsPath = env.GetUploadsPath();
         Directory.CreateDirectory(uploadsPath);
         
         app.UseStaticFiles(new StaticFileOptions
