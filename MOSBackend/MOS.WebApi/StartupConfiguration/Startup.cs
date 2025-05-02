@@ -175,9 +175,13 @@ public class Startup
             });
         }
 
+        var uploadsPath = Environment.GetEnvironmentVariable("UPLOADS_PATH") 
+                          ?? Path.Combine(env.WebRootPath, "uploads");
+        Directory.CreateDirectory(uploadsPath);
+        
         app.UseStaticFiles(new StaticFileOptions
         {
-            FileProvider = new PhysicalFileProvider(Path.Combine(env.WebRootPath, "uploads")),
+            FileProvider = new PhysicalFileProvider(uploadsPath),
             RequestPath = "/images"
         });
         

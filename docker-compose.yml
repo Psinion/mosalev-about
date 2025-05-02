@@ -32,10 +32,13 @@ services:
       - ASPNETCORE_ENVIRONMENT=Production #Development
       - ASPNETCORE_HTTP_PORTS=8080
       #- ASPNETCORE_HTTPS_PORTS=8081
+      - UPLOADS_PATH=/wwwroot/uploads
     expose:
       - "8080:8080"
     networks:
       - mos-network
+    volumes:
+      - mos-uploads-storage:/wwwroot/uploads
     depends_on: 
       - mos.db
   
@@ -95,6 +98,7 @@ services:
 
 volumes:
   mos-db-data:
+  mos-uploads-storage:
   cert-volume: {}
   cert-www: {}
 
