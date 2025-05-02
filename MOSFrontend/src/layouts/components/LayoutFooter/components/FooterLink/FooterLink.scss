@@ -17,7 +17,7 @@
     overflow: hidden;
   }
 
-  @include adaptive-mixin(sm) {
+  @include adaptive-hover() {
     & {
       width: 8em;
     }

@@ -1,3 +1,5 @@
+@import '@scss-mixins/adaptive';
+
 .project-card {
   padding: 8px;
   display: flex;
@@ -37,6 +39,11 @@
       width: 0;
       display: flex;
       gap: 4px;
+
+      @include adaptive-hover() {
+        opacity: 1;
+        width: auto;
+      }
     }
   }
 

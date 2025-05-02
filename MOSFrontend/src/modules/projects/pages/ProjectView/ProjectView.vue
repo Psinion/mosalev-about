@@ -63,7 +63,7 @@
 import ContentLayout from "@/layouts/ContentLayout/ContentLayout.vue";
 import ProjectsServiceInstance from "@/shared/services/ProjectsService.ts";
 import { computed, onMounted, ref } from "vue";
-import { IArticleCompact, IArticlesPagination, IProject, IProjectCompact, TRoute } from "@/shared/types";
+import { IArticleCompact, IArticlesPagination, IProject, TRoute } from "@/shared/types";
 import { useToaster } from "@/shared/PsiUI/utils/toaster.ts";
 import ProjectViewSkeleton from "@/modules/projects/pages/ProjectView/ProjectViewSkeleton/ProjectViewSkeleton.vue";
 import { ServerError } from "@/shared/utils/requests/errorHandlers.ts";
