@@ -24,10 +24,20 @@ public class ArticlesController : ControllerBase
         this.handlerFactory = handlerFactory;
     }
     
-    [HttpGet]
+    [HttpGet("")]
     public async Task<ActionResult<ArticlesCompactPaginationDto>> GetArticles([FromQuery] GetCompactArticlesQuery request)
     {
         var handler = handlerFactory.GetHandler<IGetCompactArticlesHandler>();
+        
+        var response = await handler.Handle(request);
+        
+        return Ok(response.Value);
+    }
+    
+    [HttpGet("by-project")]
+    public async Task<ActionResult<ArticlesCompactPaginationDto>> GetArticlesByProject([FromQuery] GetCompactArticlesByProjectQuery request)
+    {
+        var handler = handlerFactory.GetHandler<IGetCompactArticlesByProjectHandler>();
         
         var response = await handler.Handle(request);
         

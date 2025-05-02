@@ -36,6 +36,21 @@ public static class ArticlesQueryObjects
         });
     }
     
+    public static IQueryable<ArticleCompactDto> MapArticleByProjectToCompactDto(this IQueryable<Article> articles)    
+    {
+        return articles.Select(entity => new ArticleCompactDto()
+        {
+            Id = entity.Id,
+            ProjectId = entity.ProjectId,
+            Project = entity.Project != null ? entity.Project.ToCompactHeaderDto() : null,
+            Title = entity.Title,
+            Description = entity.Description.Substring(0, 360),
+            Visible = entity.Visible,
+            CreatedAt = entity.CreatedAt,
+            UpdatedAt = entity.UpdatedAt,
+        });
+    }
+    
     public static IQueryable<ArticleDto> MapArticleToDto(this IQueryable<Article> articles)    
     {
         return articles.Select(entity => new ArticleDto()

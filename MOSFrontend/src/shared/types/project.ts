@@ -18,7 +18,8 @@ export interface IProject {
 
 export interface IArticleCompact {
   id: number;
-  projectId: number;
+  projectId: number | null;
+  project: IProjectCompact | null;
   title: string;
   description: string;
   visible: boolean;

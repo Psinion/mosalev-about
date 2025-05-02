@@ -1,6 +1,6 @@
 <template>
   <article class="articles-list-tab">
-    <ArticlesList :project-id="-1" />
+    <ArticlesList />
   </article>
 </template>
 

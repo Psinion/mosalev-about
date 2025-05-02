@@ -12,7 +12,18 @@ public static class ProjectsMappings
         {
             Id = entity.Id,
             Title = entity.Title,
-            Description = entity.Description,
+            Description = entity.Description.Substring(0, Math.Min(entity.Description.Length, 150)),
+            CreatedAt = entity.CreatedAt,
+            UpdatedAt = entity.UpdatedAt,
+        };
+    }
+    
+    public static ProjectCompactDto ToCompactHeaderDto(this Project entity)
+    {
+        return new ProjectCompactDto()
+        {
+            Id = entity.Id,
+            Title = entity.Title,
             CreatedAt = entity.CreatedAt,
             UpdatedAt = entity.UpdatedAt,
         };

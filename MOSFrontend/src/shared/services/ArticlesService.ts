@@ -1,5 +1,5 @@
 import {
-  IArticlesService
+  IArticlesService, TGetCompactArticlesByProjectRequest
 } from "@/shared/services/base";
 import { IArticle, IArticlesPagination } from "@/shared/types";
 import ServiceBase from "@/shared/services/ServiceBase.ts";
@@ -14,6 +14,15 @@ class ArticlesService extends ServiceBase implements IArticlesService {
   async getCompactArticles(payload: TGetCompactArticlesRequest): Promise<IArticlesPagination> {
     try {
       return await this.requestor.get("api/v1/articles", payload) as IArticlesPagination;
+    }
+    catch (error) {
+      throw error;
+    }
+  }
+
+  async getCompactArticlesByProject(payload: TGetCompactArticlesByProjectRequest): Promise<IArticlesPagination> {
+    try {
+      return await this.requestor.get("api/v1/articles/by-project", payload) as IArticlesPagination;
     }
     catch (error) {
       throw error;

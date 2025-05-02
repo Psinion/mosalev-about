@@ -3,6 +3,7 @@ import { IArticle, IArticlesPagination } from "@/shared/types";
 
 export interface IArticlesService extends IServiceBase {
   getCompactArticles(payload: TGetCompactArticlesRequest): Promise<IArticlesPagination>;
+  getCompactArticlesByProject(payload: TGetCompactArticlesByProjectRequest): Promise<IArticlesPagination>;
   getArticle(articleId: number): Promise<IArticle>;
   createArticle(payload: TCreateArticleRequest): Promise<IArticle>;
   updateArticle(articleId: number, payload: TUpdateArticleRequest): Promise<IArticle>;
@@ -11,7 +12,11 @@ export interface IArticlesService extends IServiceBase {
 }
 
 export type TGetCompactArticlesRequest = {
-  projectId?: number;
+  onlyFree?: boolean;
+};
+
+export type TGetCompactArticlesByProjectRequest = {
+  projectId: number;
 };
 
 export type TCreateArticleRequest = {

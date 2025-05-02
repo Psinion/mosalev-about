@@ -55,7 +55,20 @@
     height: 100%;
   }
 
-  & > footer {
-    text-align: right;
+  .footer {
+    display: flex;
+    justify-content: space-between;
+
+    .project-chip {
+      padding: 2px;
+      border-radius: 6px;
+      background-color: var(--primary-down);
+      color: var(--font-color);
+      text-decoration: none;
+
+      &:hover {
+        background-color: var(--primary);
+      }
+    }
   }
 }

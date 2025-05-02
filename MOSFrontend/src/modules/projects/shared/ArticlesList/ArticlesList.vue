@@ -94,9 +94,17 @@ onMounted(async () => {
 async function refreshArticles() {
   try {
     loading.value = true;
-    articlesList.value = await articlesService.getCompactArticles({
-      projectId: props.projectId
-    });
+
+    if (props.projectId) {
+      articlesList.value = await articlesService.getCompactArticlesByProject({
+        projectId: props.projectId
+      });
+    }
+    else {
+      articlesList.value = await articlesService.getCompactArticles({
+
+      });
+    }
 
     loading.value = false;
   }

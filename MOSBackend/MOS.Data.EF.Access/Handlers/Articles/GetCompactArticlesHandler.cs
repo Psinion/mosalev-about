@@ -10,29 +10,32 @@ using MOS.Application.QueryObjects.Projects;
 
 namespace MOS.Data.EF.Access.Handlers.Articles;
 
-public class GetCompactArticlesByProjectHandler : IGetCompactArticlesByProjectHandler
+public class GetCompactArticlesHandler : IGetCompactArticlesHandler
 {
     private readonly ICredentialsService credentialsService;
     private readonly IArticlesDbAccess articlesDbAccess;
 
-    public GetCompactArticlesByProjectHandler(ICredentialsService credentialsService, IArticlesDbAccess articlesDbAccess)
+    public GetCompactArticlesHandler(ICredentialsService credentialsService, IArticlesDbAccess articlesDbAccess)
     {
         this.credentialsService = credentialsService;
         this.articlesDbAccess = articlesDbAccess;
     }
-
-    public async Task<OperationResult<ArticlesCompactPaginationDto>> Handle(GetCompactArticlesByProjectQuery request, CancellationToken cancellationToken = default)
+    
+    public async Task<OperationResult<ArticlesCompactPaginationDto>> Handle(GetCompactArticlesQuery request, CancellationToken cancellationToken = default)
     {
         var query = articlesDbAccess
             .GetArticles()
-            .GetVisible(credentialsService)
-            .Where(a => a.ProjectId == request.ProjectId)
-            ;
+            .GetVisible(credentialsService);
+
+        if (request.OnlyFree)
+        {
+            query = query.Where(a => a.ProjectId == null);
+        }
         
         var totalCount = await query.CountAsync(cancellationToken);
         var articles = await query
             .OrderByDescending(x => x.UpdatedAt ?? x.CreatedAt)
-            .MapArticleToCompactDto().ToListAsync(cancellationToken);
+            .MapArticleByProjectToCompactDto().ToListAsync(cancellationToken);
         
         return new ArticlesCompactPaginationDto()
         {

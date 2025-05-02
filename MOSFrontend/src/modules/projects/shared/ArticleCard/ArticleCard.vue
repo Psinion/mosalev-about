@@ -31,7 +31,20 @@
       v-markdown="article.description"
       class="description caption-regular"
     />
-    <footer>
+    <footer class="footer">
+      <div>
+        <RouterLink
+          v-if="article.project"
+          :to="{
+            name: RouteNames.ProjectView,
+            params: { projectId: article.project.id }
+          }"
+          class="project-chip hint-regular"
+          @click.prevent
+        >
+          {{ article.project.title }}
+        </RouterLink>
+      </div>
       <div class="hint-regular tertiary">
         {{ dateUpdate }}
       </div>
