@@ -2,28 +2,32 @@
 using MOS.Application.Data;
 using MOS.Application.Data.DbAccesses;
 using MOS.Application.Data.Repositories;
+using MOS.Application.Data.Repositories.Files;
 using MOS.Application.Data.Repositories.Projects;
 using MOS.Application.Data.Repositories.Resumes;
 using MOS.Application.Data.Repositories.Users;
-using MOS.Application.Data.Services.Projects;
+using MOS.Application.Data.Services.Files;
 using MOS.Application.Data.Services.Resumes;
 using MOS.Application.Data.Services.Users;
+using MOS.Application.Modules.Files.Commands.Handlers;
 using MOS.Application.Modules.Projects.Commands.Handlers;
 using MOS.Application.Modules.Projects.Queries.Handlers;
 using MOS.Application.Modules.Users.Queries.Handlers;
 using MOS.Data.EF.Access.DbAccesses;
 using MOS.Data.EF.Access.Handlers.Articles;
+using MOS.Data.EF.Access.Handlers.Files;
 using MOS.Data.EF.Access.Handlers.Projects;
 using MOS.Data.EF.Access.Repositories;
+using MOS.Data.EF.Access.Repositories.Files;
 using MOS.Data.EF.Access.Repositories.Projects;
 using MOS.Data.EF.Access.Repositories.Resumes;
 using MOS.Data.EF.Access.Repositories.Users;
-using MOS.Data.EF.Access.Services.Projects;
 using MOS.Data.EF.Access.Services.Resumes;
 using MOS.Identity.Handlers;
 using MOS.Identity.Helpers;
 using MOS.Identity.Services;
 using MOS.WebApi.Factories;
+using MOS.WebApi.Services.Files;
 
 namespace MOS.WebApi.StartupConfiguration;
 
@@ -58,6 +62,8 @@ public static class ServicesExtensions
     
     public static IServiceCollection AddServices(this IServiceCollection services)
     {
+        services.AddScoped<IFilesStorageService, FilesStorageService>();
+        
         services.AddTransient<IAuthorizationHandler, PermissionHandler>();
         services.AddTransient<IUnitOfWork, UnitOfWork>();
         services.AddTransient<IHandlerFactory, HandlerFactory>();
@@ -68,7 +74,7 @@ public static class ServicesExtensions
         services.AddScoped<IResumeCompanyEntriesService, ResumeCompanyEntriesService>();
         services.AddScoped<IResumePostsService, ResumePostsService>();
         services.AddScoped<IResumeSkillsService, ResumeSkillsService>();
-        services.AddScoped<IArticlesService, ArticlesService>();
+        services.AddScoped<IUploadedFilesRepository, UploadedFilesRepository>();
         
         return services;
     }
@@ -90,6 +96,8 @@ public static class ServicesExtensions
         services.AddScoped<IGetCompactArticlesByProjectHandler, GetCompactArticlesByProjectHandler>();
         services.AddScoped<IDeleteArticleHandler, DeleteArticleHandler>();
         services.AddScoped<IChangeArticleVisibilityHandler, ChangeArticleVisibilityHandler>();
+        
+        services.AddScoped<ICreateFileHandler, CreateFileHandler>();
         
         return services;
     }

@@ -6,3 +6,13 @@ public enum CurrencyType
     Dollar,
     Euro
 }
+
+public enum FileKind
+{
+    Other,
+    Text,
+    Image,
+    Audio,
+    Video,
+    Archive,
+}

@@ -55,12 +55,12 @@ import { ServerError } from "@/shared/utils/requests/errorHandlers.ts";
 import { useRouter } from "vue-router";
 import { RouteNames } from "@/router/routeNames.ts";
 import { useI18n } from "vue-i18n";
-import UploadServiceInstance from "@/shared/services/UploadService.ts";
+import FilesServiceInstance from "@/shared/services/UploadService.ts";
 
 const router = useRouter();
 const toaster = useToaster();
 const { t } = useI18n();
-const uploadService = UploadServiceInstance;
+const uploadService = FilesServiceInstance;
 
 const SIZES_TABLE = [
   { name: "Кб", size: 1024 },
