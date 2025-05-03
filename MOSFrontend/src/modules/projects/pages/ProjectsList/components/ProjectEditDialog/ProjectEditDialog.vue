@@ -17,10 +17,10 @@
         required
         :max-length="30"
       />
-      <PsiTextarea
+      <PsiMarkdownEditor
         v-model="projectForm.description"
         :label="t('forms.description')"
-        required
+        height="300px"
       />
     </div>
   </PsiDialog>
@@ -31,10 +31,10 @@ import PsiDialog from "@/shared/PsiUI/components/PsiDialog/PsiDialog.vue";
 import { useI18n } from "vue-i18n";
 import PsiInput from "@/shared/PsiUI/components/PsiInput/PsiInput.vue";
 import { PropType, ref } from "vue";
-import PsiTextarea from "@/shared/PsiUI/components/PsiTextarea/PsiTextarea.vue";
 import { useToaster } from "@/shared/PsiUI/utils/toaster.ts";
 import ProjectsServiceInstance from "@/shared/services/ProjectsService.ts";
 import { IProject } from "@/shared/types";
+import PsiMarkdownEditor from "@/shared/PsiUI/components/PsiMarkdownEditor/PsiMarkdownEditor.vue";
 
 const props = defineProps({
   visible: {

@@ -37,7 +37,7 @@
                 <PsiButton
                   native-type="submit"
                   class="action-button"
-                  :disabled="!valid"
+                  :disabled="!valid || !canSave"
                 >
                   {{ t('forms.save') }}
                 </PsiButton>
@@ -54,6 +54,7 @@
               :label="t('forms.description')"
               height="80vh"
               required
+              @update:model-value="canSave = true"
             />
           </PsiForm>
         </div>
@@ -107,6 +108,8 @@ const projectId = ref<number | null>(null);
 
 const loading = ref(true);
 const currentArticle = ref<IArticle | null>(null);
+
+const canSave = ref(false);
 
 const projectRoute = computed<TRoute>(() => {
   return {
@@ -179,6 +182,7 @@ async function submit() {
       });
     }
 
+    canSave.value = false;
     toaster.success(t("toaster.successSaveHeader"));
   }
   catch (error) {

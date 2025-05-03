@@ -34,7 +34,8 @@ public class GetCompactArticlesByProjectHandler : IGetCompactArticlesByProjectHa
         var articles = await query
             .OrderByDescending(x => x.UpdatedAt ?? x.CreatedAt)
             .Page(request.Limit, request.Offset)
-            .MapArticleToCompactDto().ToListAsync(cancellationToken);
+            .MapArticleToCompactDto()
+            .ToListAsync(cancellationToken);
         
         return new ArticlesCompactPaginationDto()
         {

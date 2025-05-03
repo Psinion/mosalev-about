@@ -92,7 +92,11 @@
     "description": "Description",
     "save": "Save",
     "edit": "Edit",
-    "view": "View"
+    "view": "View",
+    "delete": "Delete",
+    "show": "Show",
+    "hide": "Hide",
+    "editMark": "edit."
   },
   "errors": {
     "error404header": "Page not found"

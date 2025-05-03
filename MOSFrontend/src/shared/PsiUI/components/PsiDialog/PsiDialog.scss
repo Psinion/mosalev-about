@@ -1,9 +1,11 @@
+@import '@scss-mixins/adaptive';
+
 .psi-dialog {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   background-color: rgba(0, 0, 0, 0.35);
   display: flex;
   justify-content: center;
@@ -20,6 +22,12 @@
     max-height: 90vh;
     display: flex;
     flex-direction: column;
+
+    @include adaptive-mixin(sm) {
+      margin: 0;
+      width: 100%;
+      max-width: 100%;
+    }
 
     .dialog-header {
       padding: 16px;

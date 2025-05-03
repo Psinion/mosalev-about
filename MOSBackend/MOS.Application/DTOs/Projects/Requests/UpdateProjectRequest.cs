@@ -10,5 +10,5 @@ public record UpdateProjectRequest
     [StringLength(30)] 
     public string Title { get; init; } = "";
 
-    [Required] public string Description { get; init; } = "";
+    public string Description { get; init; } = "";
 }

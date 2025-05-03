@@ -78,24 +78,35 @@ a {
   color: var(--font-color);
 
   h1 {
+    margin-bottom: 18px;
+
     &:first-child {
       margin-top: 0;
     }
   }
 
   h2 {
+    margin-top: 48px;
+    margin-bottom: 16px;
+
     &:first-child {
       margin-top: 0;
     }
   }
 
   h3 {
+    margin-top: 32px;
+    margin-bottom: 16px;
+
     &:first-child {
       margin-top: 0;
     }
   }
 
   h4 {
+    margin-top: 32px;
+    margin-bottom: 16px;
+
     &:first-child {
       margin-top: 0;
     }
@@ -120,9 +131,7 @@ a {
   ul {
     display: block;
     list-style-type: disc;
-    margin-left: 0;
-    margin-right: 0;
-    margin-bottom: 1em;
+    margin: 4px 0 1em;
     padding-left: 40px;
 
     ul {
