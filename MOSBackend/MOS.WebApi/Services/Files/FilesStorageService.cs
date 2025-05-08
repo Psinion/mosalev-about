@@ -1,5 +1,6 @@
 using MOS.Application.Data.Services.Files;
 using MOS.Domain.Entities.Files;
+using MOS.Domain.Enums;
 using MOS.WebApi.Extensions;
 
 namespace MOS.WebApi.Services.Files;
@@ -21,20 +22,36 @@ public class FilesStorageService : IFilesStorageService
         var extension = Path.GetExtension(file.FileName);
         var storedFileName = $"{Guid.NewGuid()}{extension}";
         var yearMonth = DateTime.Now.ToString("yyyy.MM");
-        var fullPath = Path.Combine(UploadsPath, yearMonth, storedFileName);
+        var relativePath = Path.Combine(yearMonth, storedFileName);
+        var absolutePath = Path.Combine(UploadsPath, relativePath);
 
-        Directory.CreateDirectory(Path.GetDirectoryName(fullPath)!);
+        Directory.CreateDirectory(Path.GetDirectoryName(absolutePath)!);
 
-        using var stream = new FileStream(fullPath, FileMode.Create);
+        using var stream = new FileStream(absolutePath, FileMode.Create);
         await file.CopyToAsync(stream);
+
+        FileKind fileKind;
+        switch (file.ContentType)
+        {
+            case "image/jpeg":
+            case "image/png":
+            case "image/gif":
+                fileKind = FileKind.Image;
+                break;
+            
+            default:
+                fileKind = FileKind.Other;
+                break;
+        }
 
         var fileToUpload = new UploadedFile()
         {
             OriginalName = file.FileName,
             StoredName = storedFileName,
             Size = file.Length,
-            Type = extension,
-            Url = fullPath,
+            Kind = fileKind,
+            Type = file.ContentType,
+            Url = relativePath,
         };
         
         return fileToUpload;

@@ -1,0 +1,53 @@
+.psi-file-upload-area {
+	width: 500px;
+	display: flex;
+	align-items: center;
+	gap: 24px;
+	padding: 20px;
+	border-radius: 6px;
+	border: 1px dashed var(--tertiary);
+	transition: var(--default-transition);
+	background-color: var(--tertiary-down);
+	container: file-upload-area / inline-size;
+
+	.content {
+		width: 100%;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		gap: 24px;
+	}
+
+	@container file-upload-area (width < 450px) {
+		.content {
+			flex-wrap: wrap;
+			gap: 20px;
+			justify-content: initial;
+		}
+	}
+
+	&.drag:not(.disabled) {
+		height: 320px;
+		flex-direction: column;
+		justify-content: center;
+
+		& > .drag-placeholder {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			gap: 16px;
+			color: var(--faint-strong-up);
+
+			& > .di-icon {
+				color: var(--faint-strong);;
+				font-size: 48px;
+				width: 48px;
+				height: 48px;
+			}
+		}
+
+		&.drag-over {
+			background-color: var(--base-weak-back);
+		}
+	}
+}

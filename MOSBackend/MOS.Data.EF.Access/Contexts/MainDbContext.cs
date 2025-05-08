@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using MOS.Application.Data.Services.Users;
 using MOS.Domain.Entities;
+using MOS.Domain.Entities.Files;
 using MOS.Domain.Entities.Projects;
 using MOS.Domain.Entities.Resumes;
 using MOS.Domain.Entities.Users;
@@ -21,6 +22,8 @@ public class MainDbContext : DbContext
     
     public DbSet<Project> Projects { get; set; }
     public DbSet<Article> Articles { get; set; }
+    
+    public DbSet<UploadedFile> UploadedFiles { get; set; }
     
     public MainDbContext(DbContextOptions<MainDbContext> options)
         : base(options)

@@ -39,6 +39,16 @@
                 </div>
               </div>
             </div>
+
+            <div class="files">
+              <PsiFileUploadArea
+                class="file-upload-area"
+                :file-size-max="1024 * 1024 * 5"
+                file-possible-types=".jpg.jpeg.png"
+                @incorrect-file-type="uploadedFileIncorrectType"
+                @file-too-large="uploadedFileTooLarge"
+              />
+            </div>
           </div>
         </template>
       </div>
@@ -56,11 +66,12 @@ import { useRouter } from "vue-router";
 import { RouteNames } from "@/router/routeNames.ts";
 import { useI18n } from "vue-i18n";
 import FilesServiceInstance from "@/shared/services/UploadService.ts";
+import PsiFileUploadArea from "@/shared/PsiUI/components/PsiFileUploadArea/PsiFileUploadArea.vue";
 
 const router = useRouter();
 const toaster = useToaster();
 const { t } = useI18n();
-const uploadService = FilesServiceInstance;
+const filesService = FilesServiceInstance;
 
 const SIZES_TABLE = [
   { name: "Кб", size: 1024 },
@@ -86,7 +97,7 @@ const occupiedSizeString = computed(() =>
 onMounted(async () => {
   try {
     loading.value = true;
-    currentStorageInfo.value = await uploadService.getStorageInfo();
+    currentStorageInfo.value = await filesService.getStorageInfo();
     loading.value = false;
   }
   catch (error) {
@@ -113,6 +124,14 @@ function fileSize2Text(fileSize: number) {
   const element = SIZES_TABLE[i];
   const size = fileSize / element.size;
   return `${size.toFixed(2)} ${element.name}`;
+}
+
+function uploadedFileTooLarge() {
+  toaster.neutral("Файл слишком большой.");
+}
+
+function uploadedFileIncorrectType() {
+  toaster.neutral("Не подходящий формат файла.");
 }
 </script>
 

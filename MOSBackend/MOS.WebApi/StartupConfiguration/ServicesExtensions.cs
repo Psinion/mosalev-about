@@ -10,6 +10,7 @@ using MOS.Application.Data.Services.Files;
 using MOS.Application.Data.Services.Resumes;
 using MOS.Application.Data.Services.Users;
 using MOS.Application.Modules.Files.Commands.Handlers;
+using MOS.Application.Modules.Files.Queries.Handlers;
 using MOS.Application.Modules.Projects.Commands.Handlers;
 using MOS.Application.Modules.Projects.Queries.Handlers;
 using MOS.Application.Modules.Users.Queries.Handlers;
@@ -43,6 +44,7 @@ public static class ServicesExtensions
     {
         services.AddScoped<IProjectsDbAccess, ProjectsDbAccess>();
         services.AddScoped<IArticlesDbAccess, ArticlesDbAccess>();
+        services.AddScoped<IUploadedFilesDbAccess, UploadedFilesDbAccess>();
 
         return services;
     }
@@ -98,6 +100,7 @@ public static class ServicesExtensions
         services.AddScoped<IChangeArticleVisibilityHandler, ChangeArticleVisibilityHandler>();
         
         services.AddScoped<ICreateFileHandler, CreateFileHandler>();
+        services.AddScoped<IGetFileHandler, GetFileHandler>();
         
         return services;
     }

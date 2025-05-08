@@ -62,7 +62,7 @@ const ICON_CODES = {
   "eye": "hi-solid-eye",
   "eye-crossed": "hi-solid-eye-off",
   "left": "md-chevronleft",
-  "right": "md-chevronright"
+  "file": "bi-file-earmark"
 };
 
 const iconCode = computed(() => ICON_CODES[props.icon]);

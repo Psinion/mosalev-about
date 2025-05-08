@@ -14,5 +14,6 @@ export type TPsiIcon =
   | "eye-crossed"
   | "left"
   | "right"
+  | "file"
   ;
 export type TPsiIconFlip = "vertical " | "horizontal " | "both";

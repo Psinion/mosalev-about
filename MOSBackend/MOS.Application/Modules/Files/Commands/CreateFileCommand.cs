@@ -8,4 +8,9 @@ namespace MOS.Application.Modules.Files.Commands;
 public record CreateFileCommand : ICommand<OperationResult<UploadedFileDto>>
 {
     public UploadedFile UploadedFile { get; init; }
+
+    public CreateFileCommand(UploadedFile uploadedFile)
+    {
+        UploadedFile = uploadedFile;
+    }
 }

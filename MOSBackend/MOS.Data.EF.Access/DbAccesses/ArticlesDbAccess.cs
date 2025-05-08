@@ -4,17 +4,17 @@ using MOS.Domain.Entities.Projects;
 
 namespace MOS.Data.EF.Access.DbAccesses;
 
-public class ProjectsDbAccess : IProjectsDbAccess
+public class ArticlesDbAccess : IArticlesDbAccess
 {
     private readonly MainDbContext context;
 
-    public ProjectsDbAccess(MainDbContext context)
+    public ArticlesDbAccess(MainDbContext context)
     {
         this.context = context;
     }
     
-    public IQueryable<Project> GetProjects()
+    public IQueryable<Article> GetArticles()
     {
-        return context.Projects;
+        return context.Articles;
     }
 }
