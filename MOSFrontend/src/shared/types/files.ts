@@ -1,3 +1,5 @@
+import { IPagination } from "@/shared/types/base.ts";
+
 export interface IStorageInfo {
   freeSpace: number;
   totalSize: number;
@@ -21,4 +23,7 @@ export enum FileKind {
   Audio,
   Video,
   Archive
+}
+
+export interface IFilesPagination extends IPagination<IUploadedFile> {
 }

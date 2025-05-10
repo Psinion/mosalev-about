@@ -104,6 +104,8 @@ onMounted(async () => {
   try {
     loading.value = true;
     currentStorageInfo.value = await filesService.getStorageInfo();
+
+    await filesService.getFiles();
     loading.value = false;
   }
   catch (error) {

@@ -9,6 +9,7 @@ using MOS.Application.Modules.Files.Commands.Handlers;
 using MOS.Application.Modules.Files.Queries;
 using MOS.Application.Modules.Files.Queries.Handlers;
 using MOS.Application.OperationResults;
+using MOS.Application.OperationResults.Enums;
 using MOS.Identity.Helpers;
 using MOS.WebApi.Extensions;
 using MOS.WebApi.Services.Files;
@@ -45,7 +46,7 @@ public class FilesController : ControllerBase
     }
     
     [HttpPost]
-    //[CustomAuthorize]
+    [CustomAuthorize]
     [RequestSizeLimit(FilesStorageService.MaxFileSize)]
     public async Task<ActionResult<UploadedFileDto>> CreateFile(IFormFile file)
     {
@@ -70,14 +71,30 @@ public class FilesController : ControllerBase
         }
     }
     
+    [HttpGet("list")]
+    [CustomAuthorize]
+    public async Task<ActionResult<UploadedFilesPaginationDto>> GetFiles([FromQuery] GetFilesQuery request)
+    {
+        var handler = handlerFactory.GetHandler<IGetFilesHandler>();
+        
+        var response = await handler.Handle(request);
+        
+        return Ok(response.Value);
+    }
+    
     [HttpGet("{fileId}")]
-    public async Task<ActionResult<StorageInfoDto>> GetFile(int fileId)
+    public async Task<ActionResult<UploadedFileDto>> GetFile(int fileId)
     {
         var handler = handlerFactory.GetHandler<IGetFileHandler>();
         
-        var file = await handler.Handle(new GetFileQuery(fileId));
+        var response = await handler.Handle(new GetFileQuery(fileId));
         
-        return Ok(file);
+        if (response.Error.ErrorType == ErrorType.NotFound)
+        {
+            return NotFound(response.Error);
+        }
+        
+        return Ok(response.Value);
     }
     
     [HttpGet("image/{**imagePath}")]

@@ -1,3 +1,5 @@
+import { IPagination } from "@/shared/types/base.ts";
+
 export interface IProjectCompact {
   id: number;
   title: string;
@@ -38,7 +40,5 @@ export interface IArticle {
   updatedAt?: string | Date | null;
 }
 
-export interface IArticlesPagination {
-  items: IArticle[];
-  totalCount: number;
+export interface IArticlesPagination extends IPagination<IArticle> {
 }

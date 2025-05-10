@@ -1,10 +1,12 @@
 using Microsoft.EntityFrameworkCore;
 using MOS.Application.Data.DbAccesses;
 using MOS.Application.DTOs.Files.Responses;
+using MOS.Application.DTOs.Projects.Responses;
 using MOS.Application.Modules.Files.Queries;
 using MOS.Application.Modules.Files.Queries.Handlers;
 using MOS.Application.OperationResults;
 using MOS.Application.QueryObjects.Files;
+using MOS.Application.QueryObjects.Projects;
 
 namespace MOS.Data.EF.Access.Handlers.Files;
 
