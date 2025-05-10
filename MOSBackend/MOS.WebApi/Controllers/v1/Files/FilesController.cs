@@ -82,7 +82,7 @@ public class FilesController : ControllerBase
     
     [HttpGet("image/{**imagePath}")]
     [ResponseCache(Duration = 60 * 60 * 24 * 30)]
-    public ActionResult<StorageInfoDto> GetImage(string imagePath)
+    public ActionResult GetImage(string imagePath)
     {  
         var allowedExtensions = new[] { ".jpg", ".png", ".gif" };
         var extension = Path.GetExtension(imagePath);
@@ -108,6 +108,6 @@ public class FilesController : ControllerBase
         
         var file = PhysicalFile(fullPath, contentType);
         
-        return Ok(file);
+        return file;
     }
 }

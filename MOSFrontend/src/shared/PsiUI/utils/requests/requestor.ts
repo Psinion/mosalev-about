@@ -248,15 +248,15 @@ export class PsiRequestor {
 
   private async prepareResponse(raw: Response): Promise<IResponseData> {
     let response: IResponseData = {
-      raw,
+      raw: raw,
       data: null,
       error: null
     };
 
     if (raw.ok) {
       const contentType = raw.headers.get("Content-Type");
-      if (contentType != null && contentType.indexOf("application/json") >= 0) {
-        response.data = await raw.json();
+      if (contentType != null) {
+        response.data = await this.getDataByContentType(contentType, raw);
       }
     }
     else {
@@ -270,6 +270,15 @@ export class PsiRequestor {
     }
 
     return response;
+  }
+
+  private async getDataByContentType(contentType: string, raw: Response) {
+    if (contentType.indexOf("application/json") >= 0) {
+      return await raw.json();
+    }
+    else {
+      return await raw.blob();
+    }
   }
 
   private convertQuery(query?: TRequestQuery): string | null {
