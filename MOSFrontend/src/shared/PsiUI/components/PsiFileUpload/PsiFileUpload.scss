@@ -3,12 +3,20 @@
 	display: flex;
 	align-items: center;
 	gap: 24px;
-	padding: 20px;
-	border-radius: 6px;
-	border: 1px dashed var(--tertiary);
 	transition: var(--default-transition);
-	background-color: var(--tertiary-down);
 	container: file-upload-area / inline-size;
+
+	&.area {
+		padding: 20px;
+		border-radius: 6px;
+		border: 1px dashed var(--tertiary);
+		background-color: var(--tertiary-down);
+
+		&:hover {
+			border-color: var(--tertiary-up);
+			cursor: pointer;
+		}
+	}
 
 	.content {
 		width: 100%;

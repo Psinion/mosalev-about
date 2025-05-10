@@ -204,12 +204,13 @@ export class PsiRequestor {
       }
     };
 
+    const preparedBody = data?.body ? this.prepareBody(data.body) : undefined;
     const preparedHeaders = data?.headers ? { ...this._headers, ...data.headers } : this._headers;
-    if (preparedHeaders) {
+    if (preparedBody?.isJson && preparedHeaders) {
       preparedHeaders["Content-Type"] = "application/json";
     }
 
-    request.options.body = data?.body ? this.prepareBody(data.body) : undefined;
+    request.options.body = preparedBody?.body;
     request.options.headers = preparedHeaders;
 
     if (this._hasMiddlewaresRequest) {
@@ -237,8 +238,12 @@ export class PsiRequestor {
     return totalUrl;
   }
 
-  private prepareBody(body: TRequestBody): BodyInit {
-    return JSON.stringify(body);
+  private prepareBody(body: TRequestBody): { isJson: boolean; body: BodyInit } {
+    const isJson = !(body instanceof FormData);
+    return {
+      isJson: isJson,
+      body: isJson ? JSON.stringify(body) : body
+    };
   }
 
   private async prepareResponse(raw: Response): Promise<IResponseData> {

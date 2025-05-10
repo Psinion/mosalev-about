@@ -41,13 +41,19 @@
             </div>
 
             <div class="files">
-              <PsiFileUploadArea
+              <PsiFileUpload
                 class="file-upload-area"
                 :file-size-max="1024 * 1024 * 5"
                 file-possible-types=".jpg.jpeg.png"
+                area
+                @files-upload="onFilesUpload($event)"
                 @incorrect-file-type="uploadedFileIncorrectType"
                 @file-too-large="uploadedFileTooLarge"
-              />
+              >
+                <div class="caption-regular">
+                  Перетащите файлы для загрузки на сервер
+                </div>
+              </PsiFileUpload>
             </div>
           </div>
         </template>
@@ -65,8 +71,8 @@ import { ServerError } from "@/shared/utils/requests/errorHandlers.ts";
 import { useRouter } from "vue-router";
 import { RouteNames } from "@/router/routeNames.ts";
 import { useI18n } from "vue-i18n";
-import FilesServiceInstance from "@/shared/services/UploadService.ts";
-import PsiFileUploadArea from "@/shared/PsiUI/components/PsiFileUploadArea/PsiFileUploadArea.vue";
+import FilesServiceInstance from "@/shared/services/FilesService.ts";
+import PsiFileUpload from "@/shared/PsiUI/components/PsiFileUpload/PsiFileUpload.vue";
 
 const router = useRouter();
 const toaster = useToaster();
@@ -124,6 +130,17 @@ function fileSize2Text(fileSize: number) {
   const element = SIZES_TABLE[i];
   const size = fileSize / element.size;
   return `${size.toFixed(2)} ${element.name}`;
+}
+
+async function onFilesUpload(files: FileList) {
+  for (const file of Array.from(files)) {
+    try {
+      const uploadedFile = await filesService.createFile(file);
+    }
+    catch (error) {
+      toaster.error("Произошла ошибка при прикреплении файла", error);
+    }
+  }
 }
 
 function uploadedFileTooLarge() {

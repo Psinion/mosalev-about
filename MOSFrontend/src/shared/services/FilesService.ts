@@ -2,7 +2,7 @@ import {
   IFilesService
 } from "@/shared/services/base";
 import ServiceBase from "@/shared/services/ServiceBase.ts";
-import { IStorageInfo } from "@/shared/types";
+import { IStorageInfo, IUploadedFile } from "@/shared/types";
 
 class FilesService extends ServiceBase implements IFilesService {
   async getStorageInfo(): Promise<IStorageInfo> {
@@ -14,11 +14,11 @@ class FilesService extends ServiceBase implements IFilesService {
     }
   }
 
-  async createFile(file: File): Promise<IStorageInfo> {
+  async createFile(file: File): Promise<IUploadedFile> {
     try {
       const formData = new FormData();
       formData.append("file", file);
-      return await this.requestor.post("api/v1/files", formData) as IStorageInfo;
+      return await this.requestor.post("api/v1/files", formData) as IUploadedFile;
     }
     catch (error) {
       throw error;

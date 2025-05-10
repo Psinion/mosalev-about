@@ -4,6 +4,7 @@
     :class="diFileUploadAreaClasses"
     @dragover.prevent="dragOver"
     @drop.prevent="drop"
+    @click="onAreaClick"
   >
     <PsiTransitionFade
       :visible="!disabled && isDragging"
@@ -24,8 +25,11 @@
         @change="onFilesSelect"
       />
       <div class="content">
-        <span class="description caption-regular faint-strong-up">{{ description }}</span>
+        <template v-if="area">
+          <slot />
+        </template>
         <PsiButton
+          v-else
           icon="file"
           theme="primary"
           :disabled="disabled"
@@ -47,10 +51,6 @@ import PsiButton from "@/shared/PsiUI/components/PsiButton/PsiButton.vue";
 import PsiTransitionFade from "@/shared/PsiUI/components/PsiTransitionFade/PsiTransitionFade.vue";
 
 const props = defineProps({
-  description: {
-    type: String,
-    default: "Перетащите файлы или нажмите на кнопку"
-  },
   buttonTitle: {
     type: String,
     default: "Выбрать файлы"
@@ -64,6 +64,10 @@ const props = defineProps({
     default: null
   },
   disabled: {
+    type: Boolean,
+    default: false
+  },
+  area: {
     type: Boolean,
     default: false
   }
@@ -82,7 +86,8 @@ const isDragging = ref(false);
 
 const diFileUploadAreaClasses = computed(() => [
   { dragging: isDragging.value },
-  { disabled: props.disabled }
+  { disabled: props.disabled },
+  { area: props.area }
 ]);
 
 onMounted(() => {
@@ -97,6 +102,12 @@ onUnmounted(() => {
 
 function onAddFilesButtonClick() {
   fileUploadInputRef.value.click();
+}
+
+function onAreaClick() {
+  if (props.area) {
+    onAddFilesButtonClick();
+  }
 }
 
 function dragStart(event: Event) {
@@ -158,4 +169,4 @@ function validateFile(file: File) {
 }
 </script>
 
-<style lang="scss" scoped src="./PsiFileUploadArea.scss"></style>
+<style lang="scss" scoped src="./PsiFileUpload.scss"></style>
