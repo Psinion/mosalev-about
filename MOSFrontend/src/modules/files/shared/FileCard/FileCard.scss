@@ -1,0 +1,55 @@
+@import '@scss-mixins/adaptive';
+
+.file-card {
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border: 1px solid var(--secondary-up);
+  border-radius: 8px;
+  color: var(--font-color);
+  text-decoration: none;
+  transition: var(--fast-transition);
+
+  &:hover {
+    border-color: var(--primary);
+    transition: var(--fast-transition);
+    cursor: pointer;
+
+    .header {
+      .actions {
+        transition: var(--fast-transition);
+        opacity: 1;
+        width: auto;
+      }
+    }
+  }
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+
+    & > h4 {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    .actions {
+      opacity: 0;
+      width: 0;
+      display: flex;
+      gap: 4px;
+
+      @include adaptive-hover() {
+        opacity: 1;
+        width: auto;
+      }
+    }
+  }
+
+  .footer {
+    display: flex;
+    justify-content: space-between;
+  }
+}

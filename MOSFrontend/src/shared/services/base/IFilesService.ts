@@ -1,9 +1,9 @@
 import { IServiceBase } from "@/shared/services/base/IServiceBase.ts";
-import { IFilesPagination, IStorageInfo, IUploadedFile } from "@/shared/types";
+import { IUploadedFilesPagination, IStorageInfo, IUploadedFile } from "@/shared/types";
 
 export interface IFilesService extends IServiceBase {
   getStorageInfo(): Promise<IStorageInfo>;
-  getFiles(payload?: TGetFilesRequest): Promise<IFilesPagination>;
+  getFiles(payload?: TGetFilesRequest): Promise<IUploadedFilesPagination>;
   createFile(file: File): Promise<IUploadedFile>;
 }
 

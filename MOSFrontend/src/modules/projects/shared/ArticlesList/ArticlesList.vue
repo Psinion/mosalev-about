@@ -33,7 +33,7 @@
           :limit="limit"
           :total="paginationTotal"
           class="pagination"
-          @select-page="refreshArticles($event)"
+          @select-page="refreshArticles"
         />
       </template>
       <div
@@ -86,7 +86,7 @@ const currentPage = ref(1);
 const paginationTotal = ref(0);
 
 const loading = ref(false);
-const articlesList = ref<IArticlesPagination>();
+const articlesList = ref<IArticlesPagination | null>(null);
 
 const articleDeleteDialogVisible = ref(false);
 const articleDeleteDialogValue = ref<IArticleCompact | null>(null);

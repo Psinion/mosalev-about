@@ -39,21 +39,53 @@
                 </div>
               </div>
             </div>
+          </div>
 
-            <div class="files">
-              <PsiFileUpload
-                class="file-upload-area"
-                :file-size-max="1024 * 1024 * 5"
-                file-possible-types=".jpg.jpeg.png"
-                area
-                @files-upload="onFilesUpload($event)"
-                @incorrect-file-type="uploadedFileIncorrectType"
-                @file-too-large="uploadedFileTooLarge"
+          <div class="files">
+            <PsiFileUpload
+              class="file-upload-area"
+              :file-size-max="1024 * 1024 * 5"
+              file-possible-types=".jpg.jpeg.png"
+              area
+              @files-upload="onFilesUpload($event)"
+              @incorrect-file-type="uploadedFileIncorrectType"
+              @file-too-large="uploadedFileTooLarge"
+            >
+              <div class="caption-regular">
+                Перетащите файлы для загрузки на сервер
+              </div>
+            </PsiFileUpload>
+
+            <div class="files-list">
+              <template v-if="filesLoading">
+                <ArticleCardSkeleton />
+                <ArticleCardSkeleton />
+                <ArticleCardSkeleton />
+                <ArticleCardSkeleton />
+                <ArticleCardSkeleton />
+              </template>
+              <template v-else-if="filesList?.items && filesList.items.length">
+                <FileCard
+                  v-for="file in filesList.items"
+                  :key="file.id"
+                  :file="file"
+                  @delete="onFileDeleteClick"
+                />
+
+                <PsiPagination
+                  v-model:current-page="currentPage"
+                  :limit="limit"
+                  :total="paginationTotal"
+                  class="pagination"
+                  @select-page="refreshFiles"
+                />
+              </template>
+              <div
+                v-else
+                class="empty-files-placeholder caption-regular"
               >
-                <div class="caption-regular">
-                  Перетащите файлы для загрузки на сервер
-                </div>
-              </PsiFileUpload>
+                {{ t('projects.view.emptyArticlesPlaceholder') }}
+              </div>
             </div>
           </div>
         </template>
@@ -65,7 +97,7 @@
 <script setup lang="ts">
 import ContentLayout from "@/layouts/ContentLayout/ContentLayout.vue";
 import { computed, onMounted, ref } from "vue";
-import { IStorageInfo } from "@/shared/types";
+import { IStorageInfo, IUploadedFile, IUploadedFilesPagination } from "@/shared/types";
 import { useToaster } from "@/shared/PsiUI/utils/toaster.ts";
 import { ServerError } from "@/shared/utils/requests/errorHandlers.ts";
 import { useRouter } from "vue-router";
@@ -73,21 +105,25 @@ import { RouteNames } from "@/router/routeNames.ts";
 import { useI18n } from "vue-i18n";
 import FilesServiceInstance from "@/shared/services/FilesService.ts";
 import PsiFileUpload from "@/shared/PsiUI/components/PsiFileUpload/PsiFileUpload.vue";
+import ArticleCardSkeleton from "@/modules/projects/shared/ArticleCardSkeleton/ArticleCardSkeleton.vue";
+import PsiPagination from "@/shared/PsiUI/components/PsiPagination/PsiPagination.vue";
+import FileCard from "@/modules/files/shared/FileCard/FileCard.vue";
+import { fileSize2Text } from "@/modules/files/utils/files.ts";
 
 const router = useRouter();
 const toaster = useToaster();
 const { t } = useI18n();
 const filesService = FilesServiceInstance;
 
-const SIZES_TABLE = [
-  { name: "Кб", size: 1024 },
-  { name: "Мб", size: 1024 * 1024 },
-  { name: "Гб", size: 1024 * 1024 * 1024 },
-  { name: "Тб", size: 1024 * 1024 * 1024 * 1024 }
-];
-
 const loading = ref(true);
 const currentStorageInfo = ref<IStorageInfo | null>(null);
+
+const limit = 5;
+const currentPage = ref(1);
+const paginationTotal = ref(0);
+
+const filesLoading = ref(true);
+const filesList = ref<IUploadedFilesPagination | null>(null);
 
 const freeSpaceString = computed(() => fileSize2Text(currentStorageInfo.value.freeSpace));
 const totalSizeString = computed(() => fileSize2Text(currentStorageInfo.value.totalSize));
@@ -104,9 +140,9 @@ onMounted(async () => {
   try {
     loading.value = true;
     currentStorageInfo.value = await filesService.getStorageInfo();
-
-    await filesService.getFiles();
     loading.value = false;
+
+    await refreshFiles(0);
   }
   catch (error) {
     if (error instanceof ServerError) {
@@ -119,19 +155,23 @@ onMounted(async () => {
   }
 });
 
-function fileSize2Text(fileSize: number) {
-  let i = 0;
-  for (; i < SIZES_TABLE.length - 1; i++) {
-    const element = SIZES_TABLE[i];
-    const size = fileSize / element.size;
-    if (size < 100) {
-      return `${size.toFixed(2)} ${element.name}`;
+async function refreshFiles(offset?: number) {
+  try {
+    filesLoading.value = true;
+
+    filesList.value = await filesService.getFiles({
+      limit: limit,
+      offset: offset
+    });
+    paginationTotal.value = filesList.value.totalCount;
+
+    filesLoading.value = false;
+  }
+  catch (error) {
+    if (error instanceof ServerError) {
+      toaster.error(error.header, error.message);
     }
   }
-
-  const element = SIZES_TABLE[i];
-  const size = fileSize / element.size;
-  return `${size.toFixed(2)} ${element.name}`;
 }
 
 async function onFilesUpload(files: FileList) {
@@ -151,6 +191,10 @@ function uploadedFileTooLarge() {
 
 function uploadedFileIncorrectType() {
   toaster.neutral("Не подходящий формат файла.");
+}
+
+function onFileDeleteClick(value: IUploadedFile) {
+
 }
 </script>
 

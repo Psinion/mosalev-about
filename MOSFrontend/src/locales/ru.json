@@ -99,7 +99,8 @@
     "delete": "Удалить",
     "show": "Показать",
     "hide": "Скрыть",
-    "editMark": "ред."
+    "editMark": "ред.",
+    "copyToClipboard": "Copy to clipboard"
   },
   "errors": {
     "error404header": "Страница не найдена"

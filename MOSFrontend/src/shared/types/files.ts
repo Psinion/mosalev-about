@@ -25,5 +25,5 @@ export enum FileKind {
   Archive
 }
 
-export interface IFilesPagination extends IPagination<IUploadedFile> {
+export interface IUploadedFilesPagination extends IPagination<IUploadedFile> {
 }

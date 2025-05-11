@@ -2,7 +2,7 @@ import {
   IFilesService, TGetFilesRequest
 } from "@/shared/services/base";
 import ServiceBase from "@/shared/services/ServiceBase.ts";
-import { IFilesPagination, IStorageInfo, IUploadedFile } from "@/shared/types";
+import { IUploadedFilesPagination, IStorageInfo, IUploadedFile } from "@/shared/types";
 
 class FilesService extends ServiceBase implements IFilesService {
   async getStorageInfo(): Promise<IStorageInfo> {
@@ -14,9 +14,9 @@ class FilesService extends ServiceBase implements IFilesService {
     }
   }
 
-  async getFiles(payload?: TGetFilesRequest): Promise<IFilesPagination> {
+  async getFiles(payload?: TGetFilesRequest): Promise<IUploadedFilesPagination> {
     try {
-      return await this.requestor.get("api/v1/files/list", payload) as IFilesPagination;
+      return await this.requestor.get("api/v1/files/list", payload) as IUploadedFilesPagination;
     }
     catch (error) {
       throw error;

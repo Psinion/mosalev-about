@@ -74,6 +74,8 @@
       "description": "Do you really want to delete the article?"
     }
   },
+  "files": {
+  },
   "pages": {
     "login": "Login",
     "index": "Main",
@@ -96,7 +98,8 @@
     "delete": "Delete",
     "show": "Show",
     "hide": "Hide",
-    "editMark": "edit."
+    "editMark": "edit.",
+    "copyToClipboard": "Copy to clipboard"
   },
   "errors": {
     "error404header": "Page not found"

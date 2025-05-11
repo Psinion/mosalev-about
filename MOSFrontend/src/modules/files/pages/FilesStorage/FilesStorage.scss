@@ -1,3 +1,5 @@
+@import '@scss-mixins/adaptive';
+
 .files-storage {
   padding-top: 60px;
   color: var(--font-color);
@@ -47,8 +49,27 @@
     }
 
     .files {
+      width: 100%;
+
       .file-upload-area {
         margin-top: 20px;
+      }
+
+      .files-list {
+        margin-top: 20px;
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));;
+        gap: 8px;
+
+        @include adaptive-mixin(sm) {
+          grid-template-columns: repeat(1, minmax(0, 1fr));;
+        }
+      }
+
+      .empty-files-placeholder {
+        padding: 8px;
+        border: 1px solid var(--secondary-up);
+        border-radius: 6px;
       }
     }
   }
