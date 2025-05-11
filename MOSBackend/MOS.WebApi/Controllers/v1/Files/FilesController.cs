@@ -97,18 +97,10 @@ public class FilesController : ControllerBase
         return Ok(response.Value);
     }
     
-    [HttpGet("image/{**imagePath}")]
+    [HttpGet("upload/{**imagePath}")]
     [ResponseCache(Duration = 60 * 60 * 24 * 30)]
     public ActionResult GetImage(string imagePath)
-    {  
-        var allowedExtensions = new[] { ".jpg", ".png", ".gif" };
-        var extension = Path.GetExtension(imagePath);
-
-        if (!allowedExtensions.Contains(extension.ToLower()))
-        {
-            return BadRequest("File type not allowed");
-        }
-        
+    {
         var contentTypeProvider = new FileExtensionContentTypeProvider();
         
         var fullPath = Path.Combine(filesStorageService.UploadsPath, imagePath);

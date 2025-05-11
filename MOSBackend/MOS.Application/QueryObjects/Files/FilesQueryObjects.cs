@@ -5,9 +5,9 @@ namespace MOS.Application.QueryObjects.Files;
 
 public static class FilesQueryObjects
 {
-    public static IQueryable<UploadedFileDto> MapUploadedFileToDto(this IQueryable<UploadedFile> books)    
+    public static IQueryable<UploadedFileDto> MapUploadedFileToDto(this IQueryable<UploadedFile> files, string baseUrl)    
     {
-        return books.Select(entity => new UploadedFileDto()
+        return files.Select(entity => new UploadedFileDto()
         {
             Id = entity.Id,
             OriginalName = entity.OriginalName,
@@ -16,7 +16,7 @@ public static class FilesQueryObjects
             Size = entity.Size,
             Type = entity.Type,
             UploadDate = entity.UploadDate,
-            Url = entity.Url
+            Url = $"{baseUrl}/{entity.Url}"
         });
     }
 }

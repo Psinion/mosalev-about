@@ -19,6 +19,7 @@ using MOS.Data.EF.Access.DbAccesses;
 using MOS.Data.EF.Access.Handlers.Articles;
 using MOS.Data.EF.Access.Handlers.Files;
 using MOS.Data.EF.Access.Handlers.Projects;
+using MOS.Data.EF.Access.Helpers;
 using MOS.Data.EF.Access.Repositories;
 using MOS.Data.EF.Access.Repositories.Files;
 using MOS.Data.EF.Access.Repositories.Projects;
@@ -38,6 +39,7 @@ public static class ServicesExtensions
     public static IServiceCollection AddConfigurations(this IServiceCollection services, IConfiguration configuration)
     {
         services.Configure<AuthSettings>(configuration.GetSection(nameof(AuthSettings)));
+        services.Configure<FileStorageSettings>(configuration.GetSection(nameof(FileStorageSettings)));
         return services;
     }
     
