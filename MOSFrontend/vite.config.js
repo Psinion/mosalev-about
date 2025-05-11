@@ -1,6 +1,7 @@
 import { fileURLToPath, URL } from "node:url";
 import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
+/// <reference types="vitest/config" />
 export default defineConfig({
     plugins: [
         vue()
@@ -15,5 +16,10 @@ export default defineConfig({
         preprocessorOptions: {
             scss: { api: "modern-compiler" }
         }
+    },
+    test: {
+        globals: true,
+        environment: "jsdom",
+        setupFiles: "src/tests/vitest.setup.ts"
     }
 });

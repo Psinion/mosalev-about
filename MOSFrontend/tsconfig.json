@@ -27,9 +27,14 @@
       ],
       "@scss-mixins/*": [
         "./src/assets/styles/mixins/*"
-      ],
-    }
+      ]
+    },
+    "types": ["vitest/globals"]
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue"],
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue"
+  ],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

@@ -1,7 +1,7 @@
 import { createI18n } from "vue-i18n";
 import { en, ru } from "@/locales/locales.ts";
 
-const instance = createI18n({
+const i18nInstance = createI18n({
   legacy: false,
   locale: "ru",
   fallbackLocale: "ru",
@@ -11,6 +11,6 @@ const instance = createI18n({
   }
 });
 
-export default instance;
+export default i18nInstance;
 
-export const i18n = instance.global;
+export const i18n = i18nInstance.global;
