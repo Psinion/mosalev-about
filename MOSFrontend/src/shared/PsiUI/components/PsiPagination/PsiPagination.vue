@@ -11,7 +11,7 @@
     />
 
     <template
-      v-for="page in visiblePages"
+      v-for="page in visiblePageNumbers"
       :key="page.index"
     >
       <PsiButton
@@ -94,7 +94,7 @@ const nextDisabled = computed(() => {
   return currentPage.value === totalPages.value;
 });
 
-const visiblePages = computed(() => {
+const visiblePageNumbers = computed(() => {
   const pages: TPage[] = [];
 
   const total = totalPages.value;
