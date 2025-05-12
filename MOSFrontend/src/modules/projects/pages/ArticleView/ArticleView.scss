@@ -23,5 +23,9 @@
         margin-bottom: 20px;
       }
     }
+
+    & > footer {
+      justify-items: flex-end;
+    }
   }
 }

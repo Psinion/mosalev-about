@@ -42,6 +42,18 @@
           >
             {{ currentArticle.description }}
           </div>
+
+          <footer>
+            <div
+              v-tooltip="{
+                text: dateUpdateString,
+                width: '160px'
+              }"
+              class="hint-regular tertiary"
+            >
+              {{ dateCreateString }}
+            </div>
+          </footer>
         </div>
       </template>
     </div>
@@ -61,6 +73,7 @@ import { useI18n } from "vue-i18n";
 import PsiButton from "@/shared/PsiUI/components/PsiButton/PsiButton.vue";
 import PermissionChecker from "@/shared/components/PermissionChecker/PermissionChecker.vue";
 import ArticlesServiceInstance from "@/shared/services/ArticlesService.ts";
+import { useDateCreateEdit2String } from "@/shared/composables/date.ts";
 
 const props = defineProps({
   articleId: {
@@ -76,6 +89,11 @@ const articlesService = ArticlesServiceInstance;
 
 const loading = ref(true);
 const currentArticle = ref<IArticle | null>(null);
+
+const articleCreatedAt = computed(() => currentArticle.value?.createdAt);
+const articleUpdatedAt = computed(() => currentArticle.value?.updatedAt);
+
+const { dateCreateString, dateUpdateString } = useDateCreateEdit2String(articleCreatedAt, articleUpdatedAt);
 
 const projectRoute = computed<TRoute>(() => {
   return {

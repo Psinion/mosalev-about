@@ -24,6 +24,10 @@
     }
   }
 
+  &.hidden {
+    border-style: dashed;
+  }
+
   .header {
     display: flex;
     justify-content: space-between;

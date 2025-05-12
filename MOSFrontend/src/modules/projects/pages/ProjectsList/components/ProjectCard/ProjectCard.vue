@@ -2,6 +2,7 @@
   <RouterLink
     :to="projectViewRoute"
     class="project-card"
+    :class="[{hidden: !project.visible}]"
   >
     <header class="header">
       <h3>{{ project.title }}</h3>
@@ -40,12 +41,12 @@
     <footer>
       <div
         v-tooltip="{
-          text: dateUpdate,
+          text: dateUpdateString,
           width: '160px'
         }"
         class="hint-regular tertiary"
       >
-        {{ dateCreate }}
+        {{ dateCreateString }}
       </div>
     </footer>
   </RouterLink>
@@ -55,11 +56,11 @@
 
 import { computed, PropType } from "vue";
 import { IProjectCompact } from "@/shared/types";
-import { formatDate } from "@/shared/utils/dateHelpers.ts";
 import { RouteNames } from "@/router/routeNames.ts";
 import PsiButton from "@/shared/PsiUI/components/PsiButton/PsiButton.vue";
 import PermissionChecker from "@/shared/components/PermissionChecker/PermissionChecker.vue";
 import { useI18n } from "vue-i18n";
+import { useDateCreateEdit2String } from "@/shared/composables/date.ts";
 
 const props = defineProps({
   project: {
@@ -76,16 +77,10 @@ const emit = defineEmits({
 
 const { t } = useI18n();
 
-const dateUpdate = computed(() => {
-  const date = props.project.updatedAt;
-  return date ? formatDate(date, "YYYY.MM.DD HH:mm") : "";
-});
+const projectCreatedAt = computed(() => props.project.createdAt);
+const projectUpdatedAt = computed(() => props.project.updatedAt);
 
-const dateCreate = computed(() => {
-  const date = props.project.createdAt;
-  const formattedDate = formatDate(date, "YYYY.MM.DD HH:mm");
-  return dateUpdate.value ? `${formattedDate} (${t("forms.editMark")})` : formattedDate;
-});
+const { dateCreateString, dateUpdateString } = useDateCreateEdit2String(projectCreatedAt, projectUpdatedAt);
 
 const projectViewRoute = computed(() => {
   return {

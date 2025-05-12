@@ -2,6 +2,7 @@
   <RouterLink
     :to="articleViewRoute"
     class="article-card"
+    :class="[{hidden: !article.visible}]"
   >
     <header class="header">
       <h3>{{ article.title }}</h3>
@@ -45,8 +46,14 @@
           {{ article.project.title }}
         </RouterLink>
       </div>
-      <div class="hint-regular tertiary">
-        {{ dateUpdate }}
+      <div
+        v-tooltip="{
+          text: dateUpdateString,
+          width: '160px'
+        }"
+        class="hint-regular tertiary"
+      >
+        {{ dateCreateString }}
       </div>
     </footer>
   </RouterLink>
@@ -56,10 +63,10 @@
 
 import { computed, PropType } from "vue";
 import { IArticleCompact, TRoute } from "@/shared/types";
-import { formatDate } from "@/shared/utils/dateHelpers.ts";
 import { RouteNames } from "@/router/routeNames.ts";
 import PsiButton from "@/shared/PsiUI/components/PsiButton/PsiButton.vue";
 import PermissionChecker from "@/shared/components/PermissionChecker/PermissionChecker.vue";
+import { useDateCreateEdit2String } from "@/shared/composables/date.ts";
 
 const props = defineProps({
   article: {
@@ -73,10 +80,10 @@ const emit = defineEmits({
   delete: (value: IArticleCompact) => true
 });
 
-const dateUpdate = computed(() => {
-  const date = props.article.updatedAt ?? props.article.createdAt;
-  return `${formatDate(date, "YYYY.MM.DD HH:mm")}`;
-});
+const articleCreatedAt = computed(() => props.article.createdAt);
+const articleUpdatedAt = computed(() => props.article.updatedAt);
+
+const { dateCreateString, dateUpdateString } = useDateCreateEdit2String(articleCreatedAt, articleUpdatedAt);
 
 const articleViewRoute = computed(() => {
   return {
