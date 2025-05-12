@@ -9,8 +9,8 @@ public class AuditableEntity<TKey> : Entity<TKey>, IAuditableEntity<TKey>
     public int CreatedBy { get; set; }
     public DateTime CreatedAt { get; set; }
     [NotMapped]
-    public virtual User Creator { get; set; }
-    
+    public virtual User? Creator { get; set; }
+
     public int? UpdatedBy { get; set; }
     public DateTime? UpdatedAt { get; set; }
     [NotMapped]

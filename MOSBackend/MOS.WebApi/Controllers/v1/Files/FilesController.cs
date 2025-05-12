@@ -8,10 +8,8 @@ using MOS.Application.Modules.Files.Commands;
 using MOS.Application.Modules.Files.Commands.Handlers;
 using MOS.Application.Modules.Files.Queries;
 using MOS.Application.Modules.Files.Queries.Handlers;
-using MOS.Application.OperationResults;
 using MOS.Application.OperationResults.Enums;
 using MOS.Identity.Helpers;
-using MOS.WebApi.Extensions;
 using MOS.WebApi.Services.Files;
 
 namespace MOS.WebApi.Controllers.v1.Files;

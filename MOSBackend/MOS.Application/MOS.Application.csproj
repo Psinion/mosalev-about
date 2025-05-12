@@ -9,24 +9,9 @@
 
     <ItemGroup>
       <ProjectReference Include="..\MOS.Domain\MOS.Domain.csproj" />
-
-
     </ItemGroup>
-
 
     <ItemGroup>
-      <Reference Include="Microsoft.AspNetCore.Http.Features">
-        <HintPath>C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App\8.0.0\Microsoft.AspNetCore.Http.Features.dll</HintPath>
-      </Reference>
-      <Reference Include="Microsoft.AspNetCore.Mvc.Core">
-        <HintPath>C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App\8.0.0\Microsoft.AspNetCore.Mvc.Core.dll</HintPath>
-      </Reference>
+      <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.3.0" />
     </ItemGroup>
-
-
-
-
-
-
-
 </Project>
