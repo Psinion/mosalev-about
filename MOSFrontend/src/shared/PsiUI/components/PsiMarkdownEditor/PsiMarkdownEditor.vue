@@ -25,8 +25,8 @@
 </template>
 
 <script setup lang="ts">
-import { computed, PropType } from "vue";
-import { marked } from "marked";
+import { PropType, ref, watch } from "vue";
+import { markedInstance } from "@/setup/marked.ts";
 
 const props = defineProps({
   modelValue: {
@@ -49,8 +49,11 @@ const emit = defineEmits({
   "blur": () => true
 });
 
-const compiledMarkdown = computed(() => {
-  return marked(props.modelValue ?? "");
+const compiledMarkdown = ref("");
+watch(() => props.modelValue, async (value) => {
+  compiledMarkdown.value = await markedInstance.parse(value ?? "");
+}, {
+  immediate: true
 });
 
 function onFocus() {

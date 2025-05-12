@@ -1,23 +1,23 @@
 import { Directive } from "vue";
-import { marked } from "marked";
+import { markedInstance } from "@/setup/marked.ts";
 
 export const markdownDirective: Directive = {
-  mounted(el: HTMLElement, binding) {
-    updateContent(el, binding.value ?? el.textContent);
+  async mounted(el: HTMLElement, binding) {
+    await updateContent(el, binding.value ?? el.textContent);
   },
 
-  updated(el: HTMLElement, binding) {
-    updateContent(el, binding.value ?? el.textContent);
+  async updated(el: HTMLElement, binding) {
+    await updateContent(el, binding.value ?? el.textContent);
   }
 };
 
-function updateContent(el: HTMLElement, content: string) {
+async function updateContent(el: HTMLElement, content: string) {
   if (!content) {
     return;
   }
 
   try {
-    el.innerHTML = marked(content) as string;
+    el.innerHTML = await markedInstance.parse(content);
   }
   catch (error) {
     console.error("Markdown directive error:", error);

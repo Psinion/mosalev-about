@@ -1,5 +1,5 @@
 import { IResponseData } from "@/shared/PsiUI/utils/requests/requestor.ts";
-import { i18n } from "@/shared/utils/i18n.ts";
+import { i18n } from "@/setup/i18n.ts";
 
 type TServerError = {
   statusCode: number;

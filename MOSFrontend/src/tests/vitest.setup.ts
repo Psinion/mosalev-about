@@ -1,6 +1,6 @@
 import { config } from "@vue/test-utils";
 import PsiButton from "@/shared/PsiUI/components/PsiButton/PsiButton.vue";
-import i18nInstance from "@/shared/utils/i18n.ts";
+import i18nInstance from "@/setup/i18n.ts";
 
 config.global.plugins = [
   i18nInstance
