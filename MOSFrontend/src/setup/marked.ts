@@ -19,7 +19,7 @@ export const markedInstance = new Marked()
           tokenizeMaxLineLength: undefined,
           tokenizeTimeLimit: undefined,
           lang,
-          theme: "github-dark-dimmed",
+          theme: "slack-dark",
           meta: { __raw: props.join(" ") }, // required by `transformerMeta*`
           transformers: [
             transformerNotationDiff({
