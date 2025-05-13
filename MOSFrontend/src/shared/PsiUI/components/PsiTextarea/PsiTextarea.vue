@@ -25,10 +25,8 @@
 </template>
 
 <script setup lang="ts">
-
 import { computed, inject, onMounted, PropType, watch } from "vue";
 import useValidationRules from "@/shared/PsiUI/utils/validationRules.ts";
-import { TPsiTextareaResizable } from "@/shared/PsiUI/components/PsiTextarea/types.ts";
 import {
   PsiValidateFunction,
   RegisterValidatorFunction,

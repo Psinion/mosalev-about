@@ -1,35 +1,30 @@
 <template>
   <article class="projects-list-tab">
-    <div
-      v-if="projectsList.length > 0 || isCreator"
-      class="projects"
-    >
-      <template v-if="loading">
-        <ProjectCardSkeleton />
-        <ProjectCardSkeleton />
-        <ProjectCardSkeleton />
-        <ProjectCardSkeleton />
-        <ProjectCardSkeleton />
-        <ProjectCardSkeleton />
-      </template>
-      <template v-else>
-        <template v-for="project in projectsList">
-          <ProjectCard
-            v-if="projectsList.length > 0"
-            :key="project.id"
-            :project="project"
-            @change-visibility="onProjectChangeVisibilityClick"
-            @edit="onProjectEditClick"
-            @delete="onProjectDeleteClick"
-          />
-        </template>
-
-        <ProjectCardNew
-          v-if="isCreator"
-          @click="onProjectNewClick"
+    <template v-if="loading">
+      <ProjectCardSkeleton />
+      <ProjectCardSkeleton />
+      <ProjectCardSkeleton />
+      <ProjectCardSkeleton />
+      <ProjectCardSkeleton />
+      <ProjectCardSkeleton />
+    </template>
+    <template v-else-if="projectsList.length > 0 || isCreator">
+      <template v-for="project in projectsList">
+        <ProjectCard
+          v-if="projectsList.length > 0"
+          :key="project.id"
+          :project="project"
+          @change-visibility="onProjectChangeVisibilityClick"
+          @edit="onProjectEditClick"
+          @delete="onProjectDeleteClick"
         />
       </template>
-    </div>
+
+      <ProjectCardNew
+        v-if="isCreator"
+        @click="onProjectNewClick"
+      />
+    </template>
     <div
       v-else
       class="empty-projects-placeholder caption-regular"

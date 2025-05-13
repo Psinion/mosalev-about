@@ -8,7 +8,7 @@
       :style="{height: height}"
     >
       <textarea
-        :value="modelValue"
+        :value="inputValue"
         class="caption-regular"
         autocomplete="off"
         @focus="onFocus"
@@ -21,12 +21,24 @@
         v-html="compiledMarkdown"
       />
     </div>
+    <div
+      v-if="errorMessage"
+      class="error-text hint-regular"
+    >
+      {{ errorMessage }}
+    </div>
   </section>
 </template>
 
 <script setup lang="ts">
-import { PropType, ref, watch } from "vue";
+import { computed, inject, onMounted, PropType, ref, watch } from "vue";
 import { markedInstance } from "@/setup/marked.ts";
+import {
+  PsiValidateFunction,
+  RegisterValidatorFunction,
+  usePsiValidation
+} from "@/shared/PsiUI/validate/psiValidate.ts";
+import useValidationRules from "@/shared/PsiUI/utils/validationRules.ts";
 
 const props = defineProps({
   modelValue: {
@@ -36,6 +48,10 @@ const props = defineProps({
   height: {
     type: String,
     default: "400px"
+  },
+  required: {
+    type: Boolean,
+    default: false
   },
   disabled: {
     type: Boolean,
@@ -49,11 +65,41 @@ const emit = defineEmits({
   "blur": () => true
 });
 
+const validateRules = computed(() => {
+  const validateFunctions: PsiValidateFunction<string | undefined>[] = [];
+
+  const rules = useValidationRules();
+
+  if (props.required) {
+    validateFunctions.push(rules.required);
+  }
+
+  return validateFunctions;
+});
+const {
+  value: inputValue,
+  errorMessage,
+  validate,
+  handleBlur,
+  reset
+} = usePsiValidation(validateRules.value, {
+  initialValue: props.modelValue
+});
+
 const compiledMarkdown = ref("");
 watch(() => props.modelValue, async (value) => {
+  inputValue.value = value;
   compiledMarkdown.value = await markedInstance.parse(value ?? "");
 }, {
   immediate: true
+});
+
+const registerValidator = inject<RegisterValidatorFunction>("registerValidator");
+
+onMounted(() => {
+  if (registerValidator) {
+    registerValidator(validate, reset);
+  }
 });
 
 function onFocus() {
@@ -61,6 +107,7 @@ function onFocus() {
 }
 
 function onBlur() {
+  handleBlur();
   emit("blur");
 }
 
