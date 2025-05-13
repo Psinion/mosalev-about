@@ -14,7 +14,7 @@ public record CreateArticleCommand : ICommand<OperationResult<ArticleDto>>
     public int? ProjectId { get; init; }
     
     [Required]
-    [StringLength(30)] 
+    [StringLength(64)] 
     public string Title { get; init; } = "";
 
     [Required] public string Description { get; init; } = "";

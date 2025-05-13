@@ -8,7 +8,7 @@ namespace MOS.Application.Modules.Projects.Commands;
 public record CreateProjectCommand : ICommand<OperationResult<ProjectDto>>
 {
     [Required]
-    [StringLength(30)] 
+    [StringLength(64)] 
     public string Title { get; init; } = "";
 
     public string Description { get; init; } = "";

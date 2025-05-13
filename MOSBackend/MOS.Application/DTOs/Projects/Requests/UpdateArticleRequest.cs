@@ -11,7 +11,7 @@ public record UpdateArticleRequest
     public int? ProjectId { get; init; }
     
     [Required]
-    [StringLength(30)] 
+    [StringLength(64)] 
     public string Title { get; init; } = "";
 
     [Required] public string Description { get; init; } = "";

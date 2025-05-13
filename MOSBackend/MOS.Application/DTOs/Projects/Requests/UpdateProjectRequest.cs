@@ -7,7 +7,7 @@ public record UpdateProjectRequest
     public long Id { get; init; }
     
     [Required]
-    [StringLength(30)] 
+    [StringLength(64)] 
     public string Title { get; init; } = "";
 
     public string Description { get; init; } = "";

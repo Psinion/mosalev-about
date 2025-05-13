@@ -14,10 +14,6 @@ public record UpdateArticleCommand : ICommand<OperationResult<ArticleDto>>
      * Otherwise, the article belongs to the project.
      */
     public int? ProjectId { get; init; }
-    
-    [Required]
-    [StringLength(30)] 
-    public string Title { get; init; } = "";
-
-    [Required] public string Description { get; init; } = "";
+    public string Title { get; init; } = ""; 
+    public string Description { get; init; } = "";
 }
