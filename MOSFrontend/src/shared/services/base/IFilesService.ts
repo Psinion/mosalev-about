@@ -5,6 +5,7 @@ export interface IFilesService extends IServiceBase {
   getStorageInfo(): Promise<IStorageInfo>;
   getFiles(payload?: TGetFilesRequest): Promise<IUploadedFilesPagination>;
   createFile(file: File): Promise<IUploadedFile>;
+  deleteFile(fileId: number): Promise<void>;
 }
 
 export type TGetFilesRequest = {

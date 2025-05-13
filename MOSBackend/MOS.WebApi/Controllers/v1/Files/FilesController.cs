@@ -95,6 +95,26 @@ public class FilesController : ControllerBase
         return Ok(response.Value);
     }
     
+    [HttpDelete("{fileId}")]
+    public async Task<ActionResult<bool>> DeleteFile(int fileId)
+    {
+        var handler = handlerFactory.GetHandler<IDeleteFileHandler>();
+        
+        var response = await handler.Handle(new DeleteFileCommand(fileId));
+
+        if (response.Error.ErrorType == ErrorType.NotFound)
+        {
+            return NotFound(response.Error);
+        }
+
+        if (response.Value != null)
+        {
+            await filesStorageService.DeleteFileAsync(response.Value);
+        }
+        
+        return Ok(response.Value);
+    }
+    
     [HttpGet("upload/{**imagePath}")]
     [ResponseCache(Duration = 60 * 60 * 24 * 30)]
     public ActionResult GetImage(string imagePath)

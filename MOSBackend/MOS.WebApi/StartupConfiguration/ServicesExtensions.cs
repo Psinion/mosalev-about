@@ -10,7 +10,6 @@ using MOS.Application.Data.Services.Files;
 using MOS.Application.Data.Services.Resumes;
 using MOS.Application.Data.Services.Users;
 using MOS.Application.Modules.Files.Commands.Handlers;
-using MOS.Application.Modules.Files.Queries;
 using MOS.Application.Modules.Files.Queries.Handlers;
 using MOS.Application.Modules.Projects.Commands.Handlers;
 using MOS.Application.Modules.Projects.Queries.Handlers;
@@ -103,6 +102,7 @@ public static class ServicesExtensions
         services.AddScoped<IChangeArticleVisibilityHandler, ChangeArticleVisibilityHandler>();
         
         services.AddScoped<ICreateFileHandler, CreateFileHandler>();
+        services.AddScoped<IDeleteFileHandler, DeleteFileHandler>();
         services.AddScoped<IGetFileHandler, GetFileHandler>();
         services.AddScoped<IGetFilesHandler, GetFilesHandler>();
         

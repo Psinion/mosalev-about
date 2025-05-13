@@ -73,6 +73,7 @@
                 />
 
                 <PsiPagination
+                  ref="paginationRef"
                   v-model:current-page="currentPage"
                   :limit="limit"
                   :total="paginationTotal"
@@ -84,12 +85,18 @@
                 v-else
                 class="empty-files-placeholder caption-regular"
               >
-                {{ t('projects.view.emptyArticlesPlaceholder') }}
+                {{ t('files.storage.emptyFilesPlaceholder') }}
               </div>
             </div>
           </div>
         </template>
       </div>
+
+      <FileDeleteDialog
+        v-model:visible="fileDeleteDialogVisible"
+        :file="fileDeleteDialogValue"
+        @delete="onFileDelete"
+      />
     </div>
   </ContentLayout>
 </template>
@@ -106,14 +113,17 @@ import { useI18n } from "vue-i18n";
 import FilesServiceInstance from "@/shared/services/FilesService.ts";
 import PsiFileUpload from "@/shared/PsiUI/components/PsiFileUpload/PsiFileUpload.vue";
 import ArticleCardSkeleton from "@/modules/projects/shared/ArticleCardSkeleton/ArticleCardSkeleton.vue";
-import PsiPagination from "@/shared/PsiUI/components/PsiPagination/PsiPagination.vue";
+import PsiPagination, { TPsiPaginationExpose } from "@/shared/PsiUI/components/PsiPagination/PsiPagination.vue";
 import FileCard from "@/modules/files/shared/FileCard/FileCard.vue";
 import { fileSize2Text } from "@/modules/files/utils/files.ts";
+import FileDeleteDialog from "@/modules/files/shared/FileDeleteDialog/FileDeleteDialog.vue";
 
 const router = useRouter();
 const toaster = useToaster();
 const { t } = useI18n();
 const filesService = FilesServiceInstance;
+
+const paginationRef = ref<TPsiPaginationExpose>();
 
 const loading = ref(true);
 const currentStorageInfo = ref<IStorageInfo | null>(null);
@@ -121,9 +131,13 @@ const currentStorageInfo = ref<IStorageInfo | null>(null);
 const limit = 5;
 const currentPage = ref(1);
 const paginationTotal = ref(0);
+const paginationOffset = computed(() => paginationRef.value?.offset.value);
 
 const filesLoading = ref(true);
 const filesList = ref<IUploadedFilesPagination | null>(null);
+
+const fileDeleteDialogVisible = ref(false);
+const fileDeleteDialogValue = ref<IUploadedFile | null>(null);
 
 const freeSpaceString = computed(() => fileSize2Text(currentStorageInfo.value.freeSpace));
 const totalSizeString = computed(() => fileSize2Text(currentStorageInfo.value.totalSize));
@@ -178,9 +192,12 @@ async function onFilesUpload(files: FileList) {
   for (const file of Array.from(files)) {
     try {
       const uploadedFile = await filesService.createFile(file);
+      await refreshFiles(0);
     }
     catch (error) {
-      toaster.error("Произошла ошибка при прикреплении файла", error);
+      if (error instanceof ServerError) {
+        toaster.error(error.header, error.message);
+      }
     }
   }
 }
@@ -193,9 +210,14 @@ function uploadedFileIncorrectType() {
   toaster.neutral("Не подходящий формат файла.");
 }
 
-function onFileDeleteClick(value: IUploadedFile) {
-
+function onFileDeleteClick(file: IUploadedFile) {
+  fileDeleteDialogValue.value = file;
+  fileDeleteDialogVisible.value = true;
 }
+
+const onFileDelete = async (fileId: number) => {
+  await refreshFiles(paginationOffset.value);
+};
 </script>
 
 <style scoped src="./FilesStorage.scss" />

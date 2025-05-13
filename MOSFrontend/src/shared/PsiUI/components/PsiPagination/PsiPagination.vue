@@ -42,7 +42,7 @@
 
 <script setup lang="ts">
 import PsiButton from "@/shared/PsiUI/components/PsiButton/PsiButton.vue";
-import { computed, toRef } from "vue";
+import { computed, ComputedRef, toRef } from "vue";
 
 const props = defineProps({
   currentPage: {
@@ -85,6 +85,7 @@ type TPage = { type: "page" | "ellipsis"; index?: number };
 const currentPage = toRef(props, "currentPage");
 
 const totalPages = computed(() => Math.ceil(props.total / props.limit));
+const offset = computed(() => getOffset(currentPage.value));
 
 const previousDisabled = computed(() => {
   return currentPage.value === 1;
@@ -135,10 +136,22 @@ const visiblePageNumbers = computed(() => {
   return pages;
 });
 
-function setPage(page: number) {
+const setPage = (page: number) => {
   emit("update:currentPage", page);
-  emit("selectPage", (page - 1) * props.limit);
-}
+  emit("selectPage", getOffset(page));
+};
+
+const getOffset = (page: number) => {
+  return (page - 1) * props.limit;
+};
+
+defineExpose({
+  offset
+});
+
+export type TPsiPaginationExpose = {
+  offset: ComputedRef<number>;
+};
 </script>
 
 <style scoped src="./PsiPagination.scss" />

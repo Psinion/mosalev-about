@@ -57,9 +57,13 @@ public class FilesStorageService : IFilesStorageService
         return fileToUpload;
     }
 
-    public Task<UploadedFile> DeleteFileAsync(string filePath)
+    public async Task DeleteFileAsync(string relativePath)
     {
-        throw new NotImplementedException();
+        var absolutePath = Path.Combine(UploadsPath, relativePath);
+        if (File.Exists(absolutePath))
+        {
+            await Task.Run(() => File.Delete(absolutePath));
+        }
     }
 
     public bool ValidateFile(IFormFile file)

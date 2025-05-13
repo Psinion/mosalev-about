@@ -91,7 +91,7 @@ public class ArticlesController : ControllerBase
     
     [HttpDelete("{articleId}")]
     [CustomAuthorize]
-    public async Task<ActionResult<ArticleDto>> DeleteArticle(int articleId)
+    public async Task<ActionResult<bool>> DeleteArticle(int articleId)
     {
         var handler = handlerFactory.GetHandler<IDeleteArticleHandler>();
         

@@ -33,6 +33,15 @@ class FilesService extends ServiceBase implements IFilesService {
       throw error;
     }
   }
+
+  async deleteFile(fileId: number): Promise<void> {
+    try {
+      await this.requestor.delete(`api/v1/files/${fileId}`);
+    }
+    catch (error) {
+      throw error;
+    }
+  }
 }
 
 const FilesServiceInstance = new FilesService();

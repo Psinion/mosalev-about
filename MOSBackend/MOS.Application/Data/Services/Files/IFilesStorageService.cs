@@ -8,6 +8,6 @@ public interface IFilesStorageService
     string UploadsPath { get; init; }
     
     Task<UploadedFile> SaveFileAsync(IFormFile file);
-    Task<UploadedFile> DeleteFileAsync(string filePath);
+    Task DeleteFileAsync(string relativePath);
     bool ValidateFile(IFormFile file);
 }

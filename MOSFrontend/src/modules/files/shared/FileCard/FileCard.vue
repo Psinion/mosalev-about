@@ -18,13 +18,16 @@
           <PsiButton
             flat
             icon="trash-box"
-            @click.prevent="$emit('delete', file)"
+            @click.prevent.stop="$emit('delete', file)"
           />
         </PermissionChecker>
       </div>
     </header>
 
     <footer class="footer">
+      <div class="hint-regular tertiary-up">
+        {{ fileSize }}
+      </div>
       <div class="hint-regular tertiary">
         {{ dateUpdate }}
       </div>
@@ -40,6 +43,7 @@ import PsiButton from "@/shared/PsiUI/components/PsiButton/PsiButton.vue";
 import PermissionChecker from "@/shared/components/PermissionChecker/PermissionChecker.vue";
 import { useToaster } from "@/shared/PsiUI/utils/toaster.ts";
 import { useI18n } from "vue-i18n";
+import { fileSize2Text } from "@/modules/files/utils/files.ts";
 
 const props = defineProps({
   file: {
@@ -54,6 +58,8 @@ const emit = defineEmits({
 
 const toaster = useToaster();
 const { t } = useI18n();
+
+const fileSize = computed(() => fileSize2Text(props.file.size));
 
 const dateUpdate = computed(() => {
   const date = props.file.uploadDate;

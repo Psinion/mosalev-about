@@ -6,11 +6,11 @@
     @confirm="save"
   >
     <template #header>
-      {{ t('articles.dialogDelete.title') }}
+      {{ t('files.dialogDelete.title') }}
     </template>
 
     <div class="project-delete-dialog">
-      {{ t('articles.dialogDelete.description') }}
+      {{ t('files.dialogDelete.description', { fileName: file.originalName }) }}
     </div>
   </PsiDialog>
 </template>
@@ -20,16 +20,17 @@ import PsiDialog from "@/shared/PsiUI/components/PsiDialog/PsiDialog.vue";
 import { useI18n } from "vue-i18n";
 import { useToaster } from "@/shared/PsiUI/utils/toaster.ts";
 import { PropType, toRef } from "vue";
-import ArticlesServiceInstance from "@/shared/services/ArticlesService.ts";
 import { ServerError } from "@/shared/utils/requests/errorHandlers.ts";
+import FilesServiceInstance from "@/shared/services/FilesService.ts";
+import { IUploadedFile } from "@/shared/types";
 
 const props = defineProps({
   visible: {
     type: Boolean,
     default: false
   },
-  articleId: {
-    type: [Number, null] as PropType<number | null>,
+  file: {
+    type: [Object, null] as PropType<IUploadedFile | null>,
     default: null
   }
 });
@@ -41,25 +42,25 @@ const emit = defineEmits({
 
 const toaster = useToaster();
 const { t } = useI18n();
-const articlesService = ArticlesServiceInstance;
+const filesService = FilesServiceInstance;
 
-const articleId = toRef(props, "articleId");
+const file = toRef(props, "file");
 
-async function save() {
-  if (!articleId.value) {
+const save = async () => {
+  if (!file.value) {
     return;
   }
 
   try {
-    await articlesService.deleteArticle(articleId.value);
-    emit("delete", articleId.value);
+    await filesService.deleteFile(file.value.id);
+    emit("delete", file.value.id);
   }
   catch (error) {
     if (error instanceof ServerError) {
       toaster.error(error.header, error.message);
     }
   }
-}
+};
 </script>
 
-<style scoped src="./ArticleDeleteDialog.scss" />
+<style scoped src="./FileDeleteDialog.scss" />
