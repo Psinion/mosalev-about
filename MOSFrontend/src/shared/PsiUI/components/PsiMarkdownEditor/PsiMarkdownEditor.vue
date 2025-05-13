@@ -4,10 +4,44 @@
     :class="{'disabled': disabled}"
   >
     <div
+      v-if="!disabled"
+      class="toolbar"
+    >
+      <div class="left-part">
+        <PsiButton
+          v-tooltip="'Жирный'"
+          @click="insertSyntax('**', '**')"
+        >
+          B
+        </PsiButton>
+        <PsiButton
+          v-tooltip="'Курсив'"
+          @click="insertSyntax('*', '*')"
+        >
+          I
+        </PsiButton>
+        <PsiButton
+          v-tooltip="'Ссылка'"
+          @click="insertSyntax('[', '](https://)')"
+        >
+          L
+        </PsiButton>
+      </div>
+
+      <PsiButton
+        v-tooltip="hasPreview ? 'Скрыть превью' : 'Показать превью'"
+        @click="hasPreview = !hasPreview"
+      >
+        {{ hasPreview ? 'Hide' : 'Show' }}
+      </PsiButton>
+    </div>
+
+    <div
       class="editor"
       :style="{height: height}"
     >
       <textarea
+        ref="editorFieldRef"
         :value="inputValue"
         class="caption-regular"
         autocomplete="off"
@@ -17,6 +51,7 @@
       />
 
       <div
+        v-if="hasPreview"
         class="preview typography-block"
         v-html="compiledMarkdown"
       />
@@ -31,7 +66,7 @@
 </template>
 
 <script setup lang="ts">
-import { computed, inject, onMounted, PropType, ref, watch } from "vue";
+import { computed, inject, nextTick, onMounted, PropType, ref, watch } from "vue";
 import { markedInstance } from "@/setup/marked.ts";
 import {
   PsiValidateFunction,
@@ -39,6 +74,7 @@ import {
   usePsiValidation
 } from "@/shared/PsiUI/validate/psiValidate.ts";
 import useValidationRules from "@/shared/PsiUI/utils/validationRules.ts";
+import PsiButton from "@/shared/PsiUI/components/PsiButton/PsiButton.vue";
 
 const props = defineProps({
   modelValue: {
@@ -64,6 +100,9 @@ const emit = defineEmits({
   "focus": () => true,
   "blur": () => true
 });
+
+const editorFieldRef = ref<HTMLTextAreaElement | null>(null);
+const hasPreview = ref(false);
 
 const validateRules = computed(() => {
   const validateFunctions: PsiValidateFunction<string | undefined>[] = [];
@@ -101,6 +140,29 @@ onMounted(() => {
     registerValidator(validate, reset);
   }
 });
+
+const insertSyntax = async (before: string, after: string) => {
+  const editorField = editorFieldRef.value;
+  if (!editorField) {
+    return;
+  }
+
+  const start = editorField.selectionStart;
+  const end = editorField.selectionEnd;
+  const originalValue = editorField.value;
+
+  const newValue
+    = originalValue.slice(0, start)
+    + before + originalValue.slice(start, end) + after
+    + originalValue.slice(end);
+
+  emit("update:modelValue", newValue);
+
+  await nextTick();
+  const newPos = start + before.length;
+  editorField.setSelectionRange(newPos, newPos + (end - start));
+  editorField.focus();
+};
 
 function onFocus() {
   emit("focus");

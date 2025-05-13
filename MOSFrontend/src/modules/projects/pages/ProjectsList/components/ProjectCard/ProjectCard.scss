@@ -9,15 +9,14 @@
   border-radius: 8px;
   color: var(--font-color);
   text-decoration: none;
-  transition: var(--fast-transition);
 
   &:hover {
     border-color: var(--primary);
-    transition: var(--fast-transition);
+    transition: var(--default-transition);
 
     .header {
       .actions {
-        transition: var(--fast-transition);
+        transition: var(--default-transition);
         opacity: 1;
         width: auto;
       }

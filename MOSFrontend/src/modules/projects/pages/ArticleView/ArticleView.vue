@@ -14,27 +14,19 @@
             {{ currentArticle?.project.title }}
           </PsiButton>
 
-          <PsiButton
-            tag="RouterLink"
-            :to="articleEditRoute"
-            class="action-button"
-          >
-            {{ t('forms.edit') }}
-          </PsiButton>
+          <PermissionChecker>
+            <PsiButton
+              tag="RouterLink"
+              :to="articleEditRoute"
+              class="action-button"
+            >
+              {{ t('forms.edit') }}
+            </PsiButton>
+          </PermissionChecker>
         </div>
 
         <div class="content">
           <h2> {{ currentArticle.title }}</h2>
-
-          <div class="actions">
-            <PermissionChecker v-if="false">
-              <PsiButton
-                class="action-button"
-              >
-                {{ t('forms.save') }}
-              </PsiButton>
-            </PermissionChecker>
-          </div>
 
           <div
             v-markdown
