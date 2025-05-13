@@ -76,11 +76,22 @@
   },
   "files": {
     "storage": {
-      "emptyFilesPlaceholder": "No files"
+      "emptyFilesPlaceholder": "No files",
+      "dragFilesAreaMessage": "Drag and drop files to upload to server"
     },
     "dialogDelete": {
       "title": "File deletion",
       "description": "Do you really want to delete the \"{fileName}\"?"
+    },
+    "fileSize": {
+      "kb": "Kb",
+      "mb": "Mb",
+      "gb": "Gb",
+      "tb": "Tb"
+    },
+    "toasts": {
+      "fileIsTooBig": "File is too big.",
+      "incorrectFileType": "File has incorrect type."
     }
   },
   "pages": {

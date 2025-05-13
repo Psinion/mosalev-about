@@ -52,7 +52,7 @@
               @file-too-large="uploadedFileTooLarge"
             >
               <div class="caption-regular">
-                Перетащите файлы для загрузки на сервер
+                {{ t("files.storage.dragFilesAreaMessage") }}
               </div>
             </PsiFileUpload>
 
@@ -115,12 +115,13 @@ import PsiFileUpload from "@/shared/PsiUI/components/PsiFileUpload/PsiFileUpload
 import ArticleCardSkeleton from "@/modules/projects/shared/ArticleCardSkeleton/ArticleCardSkeleton.vue";
 import PsiPagination, { TPsiPaginationExpose } from "@/shared/PsiUI/components/PsiPagination/PsiPagination.vue";
 import FileCard from "@/modules/files/shared/FileCard/FileCard.vue";
-import { fileSize2Text } from "@/modules/files/utils/files.ts";
 import FileDeleteDialog from "@/modules/files/shared/FileDeleteDialog/FileDeleteDialog.vue";
+import { useFileFormatter } from "@/modules/files/utils/files.ts";
 
 const router = useRouter();
 const toaster = useToaster();
 const { t } = useI18n();
+const { fileSize2Text } = useFileFormatter();
 const filesService = FilesServiceInstance;
 
 const paginationRef = ref<TPsiPaginationExpose>();
@@ -203,11 +204,11 @@ async function onFilesUpload(files: FileList) {
 }
 
 function uploadedFileTooLarge() {
-  toaster.neutral("Файл слишком большой.");
+  toaster.neutral(t("files.toasts.fileIsTooBig"));
 }
 
 function uploadedFileIncorrectType() {
-  toaster.neutral("Не подходящий формат файла.");
+  toaster.neutral(t("files.toasts.incorrectFileType"));
 }
 
 function onFileDeleteClick(file: IUploadedFile) {

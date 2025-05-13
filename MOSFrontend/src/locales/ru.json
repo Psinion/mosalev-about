@@ -79,11 +79,22 @@
   },
   "files": {
     "storage": {
-      "emptyFilesPlaceholder": "Файлов нет"
+      "emptyFilesPlaceholder": "Файлов нет",
+      "dragFilesAreaMessage": "Перетащите файлы для загрузки на сервер"
     },
     "dialogDelete": {
       "title": "Удаление файла",
       "description": "Вы действительно хотите удалить файл \"{fileName}\"?"
+    },
+    "fileSize": {
+      "kb": "Кб",
+      "mb": "Мб",
+      "gb": "Гб",
+      "tb": "Тб"
+    },
+    "toasts": {
+      "fileIsTooBig": "Файл слишком большой.",
+      "incorrectFileType": "Не подходящий формат файла."
     }
   },
   "pages": {
