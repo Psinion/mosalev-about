@@ -45,7 +45,7 @@
             <PsiFileUpload
               class="file-upload-area"
               :file-size-max="1024 * 1024 * 5"
-              file-possible-types=".jpg.jpeg.png"
+              file-possible-types=".jpg.jpeg.png.pdf"
               area
               @files-upload="onFilesUpload($event)"
               @incorrect-file-type="uploadedFileIncorrectType"
@@ -70,6 +70,7 @@
                   :key="file.id"
                   :file="file"
                   @delete="onFileDeleteClick"
+                  @click="copyFileUrlToClipboard(file)"
                 />
 
                 <PsiPagination
@@ -218,6 +219,11 @@ function onFileDeleteClick(file: IUploadedFile) {
 
 const onFileDelete = async (fileId: number) => {
   await refreshFiles(paginationOffset.value);
+};
+
+const copyFileUrlToClipboard = (file: IUploadedFile) => {
+  navigator.clipboard.writeText(file.url);
+  toaster.neutral(t("forms.copyToClipboard"));
 };
 </script>
 

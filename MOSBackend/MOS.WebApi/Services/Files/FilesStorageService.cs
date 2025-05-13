@@ -7,7 +7,7 @@ namespace MOS.WebApi.Services.Files;
 
 public class FilesStorageService : IFilesStorageService
 {
-    private readonly string[] allowedMimeTypes = ["image/jpeg", "image/png", "image/gif"];
+    private readonly string[] allowedMimeTypes = ["image/jpeg", "image/png", "image/gif", "application/pdf"];
     
     public const int MaxFileSize = 10 * 1024 * 1024;
     public string UploadsPath { get; init; }

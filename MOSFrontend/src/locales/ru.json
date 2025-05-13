@@ -136,6 +136,9 @@
       "cancelButton": "Отменить",
       "confirmButton": "Принять"
     },
+    "psiMarkdownEditor": {
+      "title": "Вставка изображения"
+    },
 
     "incorrectDataErrorMessage": "Не верный тип данных",
     "requiredErrorMessage": "Обязательное поле",

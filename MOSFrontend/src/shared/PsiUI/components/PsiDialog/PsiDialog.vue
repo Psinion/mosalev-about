@@ -9,9 +9,12 @@
         v-if="psiForm"
         v-slot="{ valid }"
         class="dialog-container"
+        :class="[size]"
         @submit="confirm"
       >
-        <div class="dialog-header">
+        <div
+          class="dialog-header"
+        >
           <h2>
             <slot name="header" />
           </h2>
@@ -43,6 +46,7 @@
       <div
         v-else
         class="dialog-container"
+        :class="[size]"
       >
         <div class="dialog-header">
           <h2>
@@ -78,8 +82,9 @@
 <script setup lang="ts">
 import PsiButton from "@/shared/PsiUI/components/PsiButton/PsiButton.vue";
 import { useI18n } from "vue-i18n";
-import { watch } from "vue";
+import { PropType, watch } from "vue";
 import PsiForm from "@/shared/PsiUI/components/PsiForm/PsiForm.vue";
+import { TPsiDialogSize } from "@/shared/PsiUI/components/PsiDialog/types.ts";
 
 const props = defineProps({
   visible: {
@@ -93,6 +98,10 @@ const props = defineProps({
   psiForm: {
     type: Boolean,
     default: false
+  },
+  size: {
+    type: String as PropType<TPsiDialogSize>,
+    default: "S"
   }
 });
 

@@ -1,7 +1,6 @@
 <template>
   <section
     class="file-card"
-    @click="copyUrlToClipboard"
   >
     <header class="header">
       <h4
@@ -13,7 +12,10 @@
         {{ file.originalName }}
       </h4>
 
-      <div class="actions">
+      <div
+        v-if="!readonly"
+        class="actions"
+      >
         <PermissionChecker>
           <PsiButton
             flat
@@ -23,6 +25,11 @@
         </PermissionChecker>
       </div>
     </header>
+
+    <img
+      v-if="file.kind === FileKind.Image"
+      :src="file.url"
+    />
 
     <footer class="footer">
       <div class="hint-regular tertiary-up">
@@ -37,7 +44,7 @@
 
 <script setup lang="ts">
 import { computed, PropType } from "vue";
-import { IUploadedFile } from "@/shared/types";
+import { FileKind, IUploadedFile } from "@/shared/types";
 import { formatDate } from "@/shared/utils/dateHelpers.ts";
 import PsiButton from "@/shared/PsiUI/components/PsiButton/PsiButton.vue";
 import PermissionChecker from "@/shared/components/PermissionChecker/PermissionChecker.vue";
@@ -49,6 +56,10 @@ const props = defineProps({
   file: {
     type: Object as PropType<IUploadedFile>,
     required: true
+  },
+  readonly: {
+    type: Boolean,
+    default: false
   }
 });
 
@@ -66,11 +77,6 @@ const dateUpdate = computed(() => {
   const date = props.file.uploadDate;
   return `${formatDate(date, "YYYY.MM.DD HH:mm")}`;
 });
-
-function copyUrlToClipboard() {
-  navigator.clipboard.writeText(props.file.url);
-  toaster.neutral(t("forms.copyToClipboard"));
-}
 </script>
 
 <style scoped src="./FileCard.scss" />

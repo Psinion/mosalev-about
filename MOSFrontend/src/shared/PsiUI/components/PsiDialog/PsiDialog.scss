@@ -17,11 +17,18 @@
     border-radius: 6px;
     box-shadow: var(--base-shadow);
     width: 90%;
-    max-width: 600px;
     margin: 0 20px;
     max-height: 90vh;
     display: flex;
     flex-direction: column;
+
+    &.S {
+      max-width: 600px;
+    }
+
+    &.M {
+      max-width: 1000px;
+    }
 
     @include adaptive-mixin(sm) {
       margin: 0;

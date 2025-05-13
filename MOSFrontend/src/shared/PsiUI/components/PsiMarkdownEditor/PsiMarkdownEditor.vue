@@ -21,10 +21,16 @@
           I
         </PsiButton>
         <PsiButton
+          v-tooltip="'Вставить картинку'"
+          @click="imageDialogVisible = true"
+        >
+          IMG
+        </PsiButton>
+        <PsiButton
           v-tooltip="'Ссылка'"
           @click="insertSyntax('[', '](https://)')"
         >
-          L
+          LINK
         </PsiButton>
       </div>
 
@@ -62,6 +68,11 @@
     >
       {{ errorMessage }}
     </div>
+
+    <PsiMarkdownImageDialog
+      v-model:visible="imageDialogVisible"
+      @select="insertSyntax(`![${$event.originalName}](${$event.url})`, '')"
+    />
   </section>
 </template>
 
@@ -75,6 +86,8 @@ import {
 } from "@/shared/PsiUI/validate/psiValidate.ts";
 import useValidationRules from "@/shared/PsiUI/utils/validationRules.ts";
 import PsiButton from "@/shared/PsiUI/components/PsiButton/PsiButton.vue";
+import PsiMarkdownImageDialog
+  from "@/shared/PsiUI/components/PsiMarkdownEditor/PsiMarkdownImageDialog/PsiMarkdownImageDialog.vue";
 
 const props = defineProps({
   modelValue: {
@@ -102,6 +115,9 @@ const emit = defineEmits({
 });
 
 const editorFieldRef = ref<HTMLTextAreaElement | null>(null);
+
+const imageDialogVisible = ref(false);
+
 const hasPreview = ref(false);
 
 const validateRules = computed(() => {

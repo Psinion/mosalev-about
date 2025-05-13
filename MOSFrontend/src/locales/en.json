@@ -133,6 +133,9 @@
       "cancelButton": "Cancel",
       "confirmButton": "Confirm"
     },
+    "psiMarkdownEditor": {
+      "title": "Image insertion"
+    },
 
     "incorrectDataErrorMessage": "Incorrect data type",
     "requiredErrorMessage": "Field is required",

@@ -1,0 +1,17 @@
+@import '@scss-mixins/adaptive';
+
+.psi-markdown-image-editor {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));;
+  gap: 8px;
+
+  @include adaptive-mixin(sm) {
+    grid-template-columns: repeat(1, minmax(0, 1fr));;
+  }
+
+  .empty-files-placeholder {
+    padding: 8px;
+    border: 1px solid var(--secondary-up);
+    border-radius: 6px;
+  }
+}
