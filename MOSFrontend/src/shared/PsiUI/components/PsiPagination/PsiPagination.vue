@@ -77,7 +77,7 @@ const props = defineProps({
 
 const emit = defineEmits({
   "update:currentPage": (value: number) => true,
-  "selectPage": (offset: number) => true
+  "selectPage": (currentPage: number, offset: number) => true
 });
 
 type TPage = { type: "page" | "ellipsis"; index?: number };
@@ -138,7 +138,7 @@ const visiblePageNumbers = computed(() => {
 
 const setPage = (page: number) => {
   emit("update:currentPage", page);
-  emit("selectPage", getOffset(page));
+  emit("selectPage", page, getOffset(page));
 };
 
 const getOffset = (page: number) => {

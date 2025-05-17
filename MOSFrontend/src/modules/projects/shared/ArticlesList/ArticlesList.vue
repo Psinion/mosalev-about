@@ -29,11 +29,12 @@
         />
 
         <PsiPagination
-          v-model:current-page="currentPage"
+          :current-page="currentPage"
           :limit="limit"
           :total="paginationTotal"
           class="pagination"
           @select-page="refreshArticles"
+          @update:current-page="onPageSelect"
         />
       </template>
       <div
@@ -55,7 +56,7 @@
 
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
-import { computed, onMounted, ref, watch } from "vue";
+import { computed, onMounted, ref, toRef, watch } from "vue";
 import { IArticleCompact, IArticlesPagination, TRoute } from "@/shared/types";
 import { useUserStore } from "@/shared/stores/userStore.ts";
 import { useToaster } from "@/shared/PsiUI/utils/toaster.ts";
@@ -73,7 +74,15 @@ const props = defineProps({
   projectId: {
     type: Number,
     default: null
+  },
+  currentPage: {
+    type: Number,
+    default: 1
   }
+});
+
+const emit = defineEmits({
+  "update:currentPage": (page: number) => true
 });
 
 const toaster = useToaster();
@@ -82,7 +91,7 @@ const userStore = useUserStore();
 const articlesService = ArticlesServiceInstance;
 
 const limit = 5;
-const currentPage = ref(1);
+const currentPage = toRef(props, "currentPage");
 const paginationTotal = ref(0);
 
 const loading = ref(false);
@@ -134,6 +143,11 @@ async function refreshArticles(offset?: number) {
 }
 
 watch(() => userStore.locale, () => refreshArticles());
+
+const onPageSelect = async (currentPage: number = 1, offset?: number) => {
+  emit("update:currentPage", currentPage);
+  await refreshArticles(offset);
+};
 
 function onArticleDeleteClick(article: IArticleCompact) {
   articleDeleteDialogValue.value = article;

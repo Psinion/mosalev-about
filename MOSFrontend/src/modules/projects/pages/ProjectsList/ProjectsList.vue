@@ -7,14 +7,14 @@
         <h2>{{ t('pages.projectsList') }}</h2>
 
         <PsiToggle
-          v-model="isProjectsList"
+          v-model="isProjects"
           class="projects-list-toggle"
           :active-label="t('projects.list.toggleProjects')"
           :inactive-label="t('projects.list.toggleArticles')"
         />
       </header>
 
-      <ProjectsListTab v-if="isProjectsList" />
+      <ProjectsListTab v-if="isProjects" />
       <ArticlesListTab v-else />
     </div>
   </ContentLayout>
@@ -27,30 +27,21 @@ import { onMounted, ref, watch } from "vue";
 import PsiToggle from "@/shared/PsiUI/components/PsiToggle/PsiToggle.vue";
 import ProjectsListTab from "@/modules/projects/pages/ProjectsList/tabs/ProjectsListTab/ProjectsListTab.vue";
 import ArticlesListTab from "@/modules/projects/pages/ProjectsList/tabs/ArticlesListTab/ArticlesListTab.vue";
-import { useRoute, useRouter } from "vue-router";
-import { RouteNames } from "@/router/routeNames.ts";
+import { useProjectsListStore } from "@/modules/projects/stores/projectsListStore.ts";
 
-const route = useRoute();
-const router = useRouter();
 const { t } = useI18n();
+const projectsListStore = useProjectsListStore();
 
-const isProjectsList = ref(true);
+const isProjects = ref(true);
 
-onMounted(() => {
-  const isProjectsQuery = route.query["isProjects"];
-  if (isProjectsQuery) {
-    isProjectsList.value = +isProjectsQuery !== 0;
-  }
+onMounted(async () => {
+  const { projectsListQuery } = projectsListStore.getQueryFromUrl();
+  isProjects.value = projectsListQuery.itemsType === "projects";
 });
 
-watch(() => isProjectsList.value, (value) => {
-  router.replace({
-    name: RouteNames.ProjectsList,
-    query: {
-      isProjects: value ? 1 : 0
-    }
-  });
-}, { immediate: true });
+watch(() => isProjects.value, (value) => {
+  projectsListStore.updateQueryToUrl();
+});
 </script>
 
 <style scoped src="./ProjectsList.scss" />

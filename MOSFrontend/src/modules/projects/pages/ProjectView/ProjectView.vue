@@ -1,6 +1,17 @@
 <template>
   <ContentLayout>
     <div class="project-view">
+      <div class="actions">
+        <PsiButton
+          tag="RouterLink"
+          :to="projectsListRoute"
+          class="action-button"
+          icon="left"
+        >
+          {{ t('pages.projectsList') }}
+        </PsiButton>
+      </div>
+
       <ProjectViewSkeleton v-if="loadFirst" />
       <template v-else>
         <header class="header">
@@ -30,7 +41,7 @@
 import ContentLayout from "@/layouts/ContentLayout/ContentLayout.vue";
 import ProjectsServiceInstance from "@/shared/services/ProjectsService.ts";
 import { computed, onMounted, ref } from "vue";
-import { IProject } from "@/shared/types";
+import { IProject, TRoute } from "@/shared/types";
 import { useToaster } from "@/shared/PsiUI/utils/toaster.ts";
 import ProjectViewSkeleton from "@/modules/projects/pages/ProjectView/ProjectViewSkeleton/ProjectViewSkeleton.vue";
 import { ServerError } from "@/shared/utils/requests/errorHandlers.ts";
@@ -40,6 +51,7 @@ import { useI18n } from "vue-i18n";
 import ArticlesList from "@/modules/projects/shared/ArticlesList/ArticlesList.vue";
 import PsiIcon from "@/shared/PsiUI/components/PsiIcon/PsiIcon.vue";
 import { useDetailDateCreateUpdate2String } from "@/shared/composables/date.ts";
+import PsiButton from "@/shared/PsiUI/components/PsiButton/PsiButton.vue";
 
 const props = defineProps({
   projectId: {
@@ -60,6 +72,10 @@ const projectCreatedAt = computed(() => currentProject.value?.createdAt);
 const projectUpdatedAt = computed(() => currentProject.value?.updatedAt);
 
 const { dateString } = useDetailDateCreateUpdate2String(projectCreatedAt, projectUpdatedAt);
+
+const projectsListRoute = computed<TRoute>(() => ({
+  name: RouteNames.ProjectsList
+}));
 
 onMounted(async () => {
   try {
