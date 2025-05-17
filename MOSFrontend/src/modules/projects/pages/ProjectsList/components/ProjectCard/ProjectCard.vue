@@ -39,14 +39,9 @@
       {{ project.description }}
     </div>
     <footer>
-      <div
-        v-tooltip="{
-          text: dateUpdateString,
-          width: '160px'
-        }"
-        class="hint-regular tertiary"
-      >
-        {{ dateCreateString }}
+      <div class="date hint-regular tertiary">
+        <PsiIcon icon="calendar" />
+        <span>{{ dateCreateString }}</span>
       </div>
     </footer>
   </RouterLink>
@@ -60,7 +55,8 @@ import { RouteNames } from "@/router/routeNames.ts";
 import PsiButton from "@/shared/PsiUI/components/PsiButton/PsiButton.vue";
 import PermissionChecker from "@/shared/components/PermissionChecker/PermissionChecker.vue";
 import { useI18n } from "vue-i18n";
-import { useDateCreateEdit2String } from "@/shared/composables/date.ts";
+import { useShortDateCreateUpdate2String } from "@/shared/composables/date.ts";
+import PsiIcon from "@/shared/PsiUI/components/PsiIcon/PsiIcon.vue";
 
 const props = defineProps({
   project: {
@@ -80,7 +76,7 @@ const { t } = useI18n();
 const projectCreatedAt = computed(() => props.project.createdAt);
 const projectUpdatedAt = computed(() => props.project.updatedAt);
 
-const { dateCreateString, dateUpdateString } = useDateCreateEdit2String(projectCreatedAt, projectUpdatedAt);
+const { dateCreateString, dateUpdateString } = useShortDateCreateUpdate2String(projectCreatedAt, projectUpdatedAt);
 
 const projectViewRoute = computed(() => {
   return {

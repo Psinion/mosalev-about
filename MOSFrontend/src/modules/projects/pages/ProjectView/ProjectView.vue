@@ -7,6 +7,11 @@
           <h2>{{ currentProject.title }}</h2>
         </header>
 
+        <div class="date hint-regular tertiary">
+          <PsiIcon icon="calendar" />
+          <span>{{ dateString }}</span>
+        </div>
+
         <div class="description caption-regular">
           {{ currentProject.description }}
         </div>
@@ -24,7 +29,7 @@
 
 import ContentLayout from "@/layouts/ContentLayout/ContentLayout.vue";
 import ProjectsServiceInstance from "@/shared/services/ProjectsService.ts";
-import { onMounted, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { IProject } from "@/shared/types";
 import { useToaster } from "@/shared/PsiUI/utils/toaster.ts";
 import ProjectViewSkeleton from "@/modules/projects/pages/ProjectView/ProjectViewSkeleton/ProjectViewSkeleton.vue";
@@ -33,6 +38,8 @@ import { useRouter } from "vue-router";
 import { RouteNames } from "@/router/routeNames.ts";
 import { useI18n } from "vue-i18n";
 import ArticlesList from "@/modules/projects/shared/ArticlesList/ArticlesList.vue";
+import PsiIcon from "@/shared/PsiUI/components/PsiIcon/PsiIcon.vue";
+import { useDetailDateCreateUpdate2String } from "@/shared/composables/date.ts";
 
 const props = defineProps({
   projectId: {
@@ -48,6 +55,11 @@ const projectsService = ProjectsServiceInstance;
 
 const loadFirst = ref(true);
 const currentProject = ref<IProject>();
+
+const projectCreatedAt = computed(() => currentProject.value?.createdAt);
+const projectUpdatedAt = computed(() => currentProject.value?.updatedAt);
+
+const { dateString } = useDetailDateCreateUpdate2String(projectCreatedAt, projectUpdatedAt);
 
 onMounted(async () => {
   try {

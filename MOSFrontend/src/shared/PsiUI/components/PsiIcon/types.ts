@@ -15,5 +15,6 @@ export type TPsiIcon =
   | "left"
   | "right"
   | "file"
+  | "calendar"
   ;
 export type TPsiIconFlip = "vertical " | "horizontal " | "both";

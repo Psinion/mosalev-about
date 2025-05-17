@@ -15,7 +15,8 @@ import {
   HiSolidEyeOff,
   MdChevronleft,
   MdChevronright,
-  BiFileEarmark
+  BiFileEarmark,
+  LaCalendarAlt
 } from "oh-vue-icons/icons";
 
 export default function importIcons() {
@@ -35,4 +36,5 @@ export default function importIcons() {
   addIcons(MdChevronleft);
   addIcons(MdChevronright);
   addIcons(BiFileEarmark);
+  addIcons(LaCalendarAlt);
 }

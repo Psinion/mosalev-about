@@ -11,7 +11,13 @@
   .content {
     & > h2 {
       text-align: center;
+      margin-bottom: 6px;
+    }
+
+    .date {
       margin-bottom: 12px;
+      display: flex;
+      gap: 4px;
     }
 
     .article-form {
@@ -22,10 +28,6 @@
       .actions {
         margin-bottom: 20px;
       }
-    }
-
-    & > footer {
-      justify-items: flex-end;
     }
   }
 }

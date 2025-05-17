@@ -46,14 +46,10 @@
           {{ article.project.title }}
         </RouterLink>
       </div>
-      <div
-        v-tooltip="{
-          text: dateUpdateString,
-          width: '160px'
-        }"
-        class="hint-regular tertiary"
-      >
-        {{ dateCreateString }}
+
+      <div class="date hint-regular tertiary">
+        <PsiIcon icon="calendar" />
+        <span>{{ dateCreateString }}</span>
       </div>
     </footer>
   </RouterLink>
@@ -66,7 +62,8 @@ import { IArticleCompact, TRoute } from "@/shared/types";
 import { RouteNames } from "@/router/routeNames.ts";
 import PsiButton from "@/shared/PsiUI/components/PsiButton/PsiButton.vue";
 import PermissionChecker from "@/shared/components/PermissionChecker/PermissionChecker.vue";
-import { useDateCreateEdit2String } from "@/shared/composables/date.ts";
+import { useShortDateCreateUpdate2String } from "@/shared/composables/date.ts";
+import PsiIcon from "@/shared/PsiUI/components/PsiIcon/PsiIcon.vue";
 
 const props = defineProps({
   article: {
@@ -83,7 +80,7 @@ const emit = defineEmits({
 const articleCreatedAt = computed(() => props.article.createdAt);
 const articleUpdatedAt = computed(() => props.article.updatedAt);
 
-const { dateCreateString, dateUpdateString } = useDateCreateEdit2String(articleCreatedAt, articleUpdatedAt);
+const { dateCreateString, dateUpdateString } = useShortDateCreateUpdate2String(articleCreatedAt, articleUpdatedAt);
 
 const articleViewRoute = computed(() => {
   return {
