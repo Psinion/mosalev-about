@@ -85,14 +85,17 @@ services:
     entrypoint: |
       sh -c '
              if [ ! -f /etc/letsencrypt/live/mosalev.su/fullchain.pem ]; then
+               echo "Create new cert."
                certbot certonly --non-interactive --agree-tos --email mosalev.daniel@gmail.com \
                --webroot -w /var/www/certbot \
                -d mosalev.su -d api.mosalev.su;
              else 
-                certbot renew --non-interactive --post-hook "echo Initial renewal finished"
+               echo "Try renew cert."
+               certbot renew --non-interactive --post-hook "echo Initial renewal finished"
              fi;
              
              while true; do
+               echo "Start auto renewal loop."
                sleep 28d
                certbot renew --non-interactive --post-hook "echo Auto renewal finished"
              done
