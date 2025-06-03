@@ -33,8 +33,7 @@
           :limit="limit"
           :total="paginationTotal"
           class="pagination"
-          @select-page="refreshArticles"
-          @update:current-page="onPageSelect"
+          @select-page="onPageSelect"
         />
       </template>
       <div
