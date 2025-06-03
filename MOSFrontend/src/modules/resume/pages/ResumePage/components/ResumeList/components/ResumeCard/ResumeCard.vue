@@ -1,5 +1,6 @@
 <template>
   <RouterLink
+    draggable="false"
     class="resume-card"
     :to="resumeViewRoute"
   >

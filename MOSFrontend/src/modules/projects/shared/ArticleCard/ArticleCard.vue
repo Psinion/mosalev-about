@@ -1,5 +1,6 @@
 <template>
   <RouterLink
+    draggable="false"
     :to="articleViewRoute"
     class="article-card"
     :class="[{hidden: !article.visible}]"
@@ -36,6 +37,7 @@
       <div>
         <RouterLink
           v-if="article.project"
+          draggable="false"
           :to="{
             name: RouteNames.ProjectView,
             params: { projectId: article.project.id }

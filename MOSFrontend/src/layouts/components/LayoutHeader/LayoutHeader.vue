@@ -3,6 +3,7 @@
     <div class="content">
       <div class="left-panel">
         <RouterLink
+          draggable="false"
           class="logo"
           :to="indexRoute"
         >

@@ -3,7 +3,7 @@ import { createOnigurumaEngine } from "shiki/engine-oniguruma.mjs";
 
 export const highlighterPromise = createHighlighterCore({
   themes: [
-    () => import("@shikijs/themes/slack-dark")
+    () => import("@shikijs/themes/min-dark")
   ],
   langs: [
     () => import("@shikijs/langs/csharp")

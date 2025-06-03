@@ -4,6 +4,7 @@
     :class="{disabled: disabled}"
   >
     <RouterLink
+      draggable="false"
       class="link"
       :to="route"
     >

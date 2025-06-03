@@ -4,6 +4,7 @@
     class="psi-button caption-regular"
     :class="classes"
     :type="nativeType"
+    draggable="false"
   >
     <PsiIcon
       v-if="icon"

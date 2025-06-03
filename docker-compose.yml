@@ -83,15 +83,20 @@ services:
     networks:
       - mos-network
     entrypoint: |
-      sh -c 'echo "0 0 1 * * certbot renew --quiet" >> /etc/crontabs/root &&
-             crond -f &
-             trap "exit 0" SIGINT SIGTERM;
+      sh -c '
              if [ ! -f /etc/letsencrypt/live/mosalev.su/fullchain.pem ]; then
                certbot certonly --non-interactive --agree-tos --email mosalev.daniel@gmail.com \
                --webroot -w /var/www/certbot \
                -d mosalev.su -d api.mosalev.su;
+             else 
+                certbot renew --non-interactive --post-hook "echo Initial renewal finished"
              fi;
-             wait'
+             
+             while true; do
+               sleep 28d
+               certbot renew --non-interactive --post-hook "echo Auto renewal finished"
+             done
+             '
     depends_on:
       - mos.proxy
     restart: unless-stopped

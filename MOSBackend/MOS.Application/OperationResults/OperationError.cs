@@ -5,7 +5,7 @@ namespace MOS.Application.OperationResults;
 
 public sealed record OperationError(string Type, string Code, int CodeNumber, string Description, ErrorType ErrorType) : IOperationError
 {
-    public static readonly OperationError None = new( string.Empty, string.Empty, -1, string.Empty, ErrorType.Failure);
+    public static readonly OperationError None = new( string.Empty, string.Empty, -1, string.Empty, ErrorType.None);
     
     public static OperationError Failure(string code = "fail", string description = "") =>
         new("https://datatracker.ietf.org/doc/html/rfc7231#section-6.5.1", code, 400, description, ErrorType.Failure);

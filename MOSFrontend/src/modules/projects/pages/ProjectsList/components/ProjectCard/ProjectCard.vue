@@ -3,6 +3,7 @@
     :to="projectViewRoute"
     class="project-card"
     :class="[{hidden: !project.visible}]"
+    draggable="false"
   >
     <header class="header">
       <h3>{{ project.title }}</h3>

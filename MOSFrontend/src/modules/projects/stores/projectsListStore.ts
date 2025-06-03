@@ -46,7 +46,6 @@ export const useProjectsListStore = defineStore("projectsList", () => {
       const pageString = route.query["page"] as string;
       if (checkPositiveNumber(pageString)) {
         projectsProjectsTab.page = +pageString;
-        console.trace(pageString);
       }
     }
     else {

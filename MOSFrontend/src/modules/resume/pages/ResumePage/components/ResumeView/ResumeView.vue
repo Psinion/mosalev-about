@@ -33,6 +33,7 @@
           <div class="contacts">
             <div class="contact-item">
               <RouterLink
+                draggable="false"
                 class=" hint-regular"
                 to="/"
               >
@@ -40,7 +41,7 @@
                   class="website-logo"
                   src="@/assets/images/logo.svg"
                   alt="logo"
-                >
+                />
                 mosalev.su
               </RouterLink>
             </div>
