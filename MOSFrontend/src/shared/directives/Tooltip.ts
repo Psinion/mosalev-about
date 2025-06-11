@@ -62,8 +62,6 @@ export const tooltipDirective: Directive = {
       width: settings.width
     };
 
-    positionTooltip(el, tooltipElement, settings.offset, settings.position);
-
     el.addEventListener("mouseenter", showTooltip);
     el.addEventListener("mouseleave", hideTooltip);
     el.addEventListener("click", hideTooltip);
