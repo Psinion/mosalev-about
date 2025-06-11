@@ -39,7 +39,7 @@ import { ref } from "vue";
 import { useUserStore } from "@/shared/stores/userStore.ts";
 import { useToaster } from "@/shared/PsiUI/utils/toaster.ts";
 import { useI18n } from "vue-i18n";
-import { ServerError } from "@/shared/utils/requests/errorHandlers.ts";
+import { ServerError } from "@/shared/utils/requests/errors.ts";
 import PsiInput from "@/shared/PsiUI/components/PsiInput/PsiInput.vue";
 import PsiButton from "@/shared/PsiUI/components/PsiButton/PsiButton.vue";
 import PsiForm from "@/shared/PsiUI/components/PsiForm/PsiForm.vue";

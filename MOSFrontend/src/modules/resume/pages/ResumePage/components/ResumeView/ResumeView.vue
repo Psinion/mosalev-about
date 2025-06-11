@@ -116,7 +116,7 @@ import ResumesServiceInstance from "@/shared/services/ResumesService.ts";
 import { TResume } from "@/shared/types/resume.ts";
 import PsiButton from "@/shared/PsiUI/components/PsiButton/PsiButton.vue";
 import { useToaster } from "@/shared/PsiUI/utils/toaster.ts";
-import { ServerError } from "@/shared/utils/requests/errorHandlers.ts";
+import { ServerError } from "@/shared/utils/requests/errors.ts";
 import PermissionChecker from "@/shared/components/PermissionChecker/PermissionChecker.vue";
 import PsiIcon from "@/shared/PsiUI/components/PsiIcon/PsiIcon.vue";
 import { formatDate } from "@/shared/utils/dateHelpers.ts";

@@ -21,7 +21,7 @@ import { useI18n } from "vue-i18n";
 import { useToaster } from "@/shared/PsiUI/utils/toaster.ts";
 import { PropType, toRef } from "vue";
 import ArticlesServiceInstance from "@/shared/services/ArticlesService.ts";
-import { ServerError } from "@/shared/utils/requests/errorHandlers.ts";
+import { ServerError } from "@/shared/utils/requests/errors.ts";
 
 const props = defineProps({
   visible: {

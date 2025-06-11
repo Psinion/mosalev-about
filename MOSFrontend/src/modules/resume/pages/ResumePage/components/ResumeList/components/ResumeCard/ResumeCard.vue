@@ -42,7 +42,7 @@ import { useUserStore } from "@/shared/stores/userStore.ts";
 import LocaleBadge
   from "@/modules/resume/pages/ResumePage/components/ResumeList/components/LocaleBadge/LocaleBadge.vue";
 import { useToaster } from "@/shared/PsiUI/utils/toaster.ts";
-import { ServerError } from "@/shared/utils/requests/errorHandlers.ts";
+import { ServerError } from "@/shared/utils/requests/errors.ts";
 import { AppLocale } from "@/shared/enums/common.ts";
 import { formatDate } from "@/shared/utils/dateHelpers.ts";
 

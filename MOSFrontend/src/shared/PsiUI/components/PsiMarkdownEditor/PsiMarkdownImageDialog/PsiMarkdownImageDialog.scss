@@ -1,17 +1,34 @@
 @import '@scss-mixins/adaptive';
 
 .psi-markdown-image-editor {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));;
-  gap: 8px;
+  .foreign-image-block {
+    display: flex;
+    gap: 8px;
+    align-items: center;
 
-  @include adaptive-mixin(sm) {
-    grid-template-columns: repeat(1, minmax(0, 1fr));;
+    .foreign-image-input {
+      margin-bottom: 16px;
+      flex: 1;
+    }
+
+    .foreign-image-button {
+      height: 32px;
+    }
   }
 
-  .empty-files-placeholder {
-    padding: 8px;
-    border: 1px solid var(--secondary-up);
-    border-radius: 6px;
+  .images {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));;
+    gap: 8px;
+
+    @include adaptive-mixin(sm) {
+      grid-template-columns: repeat(1, minmax(0, 1fr));;
+    }
+
+    .empty-files-placeholder {
+      padding: 8px;
+      border: 1px solid var(--secondary-up);
+      border-radius: 6px;
+    }
   }
 }

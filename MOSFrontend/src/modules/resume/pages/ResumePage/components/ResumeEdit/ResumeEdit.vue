@@ -74,7 +74,7 @@
 import { computed, onMounted, ref } from "vue";
 import PsiButton from "@/shared/PsiUI/components/PsiButton/PsiButton.vue";
 import { TResume } from "@/shared/types/resume.ts";
-import { ServerError } from "@/shared/utils/requests/errorHandlers.ts";
+import { ServerError } from "@/shared/utils/requests/errors.ts";
 import { useToaster } from "@/shared/PsiUI/utils/toaster.ts";
 import { useI18n } from "vue-i18n";
 import { RouteNames } from "@/router/routeNames.ts";

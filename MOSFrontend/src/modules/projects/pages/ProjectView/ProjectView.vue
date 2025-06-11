@@ -44,7 +44,7 @@ import { computed, onMounted, ref } from "vue";
 import { IProject, TRoute } from "@/shared/types";
 import { useToaster } from "@/shared/PsiUI/utils/toaster.ts";
 import ProjectViewSkeleton from "@/modules/projects/pages/ProjectView/ProjectViewSkeleton/ProjectViewSkeleton.vue";
-import { ServerError } from "@/shared/utils/requests/errorHandlers.ts";
+import { ServerError } from "@/shared/utils/requests/errors.ts";
 import { useRouter } from "vue-router";
 import { RouteNames } from "@/router/routeNames.ts";
 import { useI18n } from "vue-i18n";

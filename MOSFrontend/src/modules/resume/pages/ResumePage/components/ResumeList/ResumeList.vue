@@ -29,7 +29,7 @@
 import { computed, onMounted, ref } from "vue";
 import { RouteNames } from "@/router/routeNames.ts";
 import ResumesServiceInstance from "@/shared/services/ResumesService.ts";
-import { ServerError } from "@/shared/utils/requests/errorHandlers.ts";
+import { ServerError } from "@/shared/utils/requests/errors.ts";
 import { TResumeCompact } from "@/shared/types/resume.ts";
 import { useToaster } from "@/shared/PsiUI/utils/toaster.ts";
 import PsiButton from "@/shared/PsiUI/components/PsiButton/PsiButton.vue";

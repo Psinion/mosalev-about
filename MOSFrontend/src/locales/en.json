@@ -123,7 +123,7 @@
     "error404header": "Page not found"
   },
   "toaster": {
-    "commonErrorHeader": "Server Error",
+    "commonErrorHeader": "Error occurred",
     "noPermissionsHeader": "You don't have permissions",
     "noPermissionsDescription": "Please, contact the owner of this resource XD",
     "successSaveHeader": "Successful saving"
@@ -134,7 +134,8 @@
       "confirmButton": "Confirm"
     },
     "psiMarkdownEditor": {
-      "title": "Image insertion"
+      "title": "Image insertion",
+      "foreignImageInput": "Foreign url to image"
     },
 
     "incorrectDataErrorMessage": "Incorrect data type",

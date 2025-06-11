@@ -126,7 +126,7 @@
     "error404header": "Страница не найдена"
   },
   "toaster": {
-    "commonErrorHeader": "Серверная ошибка",
+    "commonErrorHeader": "Произошла ошибка",
     "noPermissionsHeader": "У вас недостаточно прав",
     "noPermissionsDescription": "Обратитесь, пожалуйста, к владельцу ресурса XD",
     "successSaveHeader": "Успешно сохранено"
@@ -137,7 +137,8 @@
       "confirmButton": "Принять"
     },
     "psiMarkdownEditor": {
-      "title": "Вставка изображения"
+      "title": "Вставка изображения",
+      "foreignImageInput": "Сторонняя ссылка на изображение"
     },
 
     "incorrectDataErrorMessage": "Не верный тип данных",

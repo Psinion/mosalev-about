@@ -72,6 +72,7 @@
     <PsiMarkdownImageDialog
       v-model:visible="imageDialogVisible"
       @select="insertSyntax(`![${$event.originalName}](${$event.url})`, '')"
+      @insert-foreign-url="insertSyntax(`![Foreign Image](${$event})`, '')"
     />
   </section>
 </template>

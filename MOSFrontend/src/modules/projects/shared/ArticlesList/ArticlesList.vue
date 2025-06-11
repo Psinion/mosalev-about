@@ -59,7 +59,7 @@ import { computed, onMounted, ref, toRef, watch } from "vue";
 import { IArticleCompact, IArticlesPagination, TRoute } from "@/shared/types";
 import { useUserStore } from "@/shared/stores/userStore.ts";
 import { useToaster } from "@/shared/PsiUI/utils/toaster.ts";
-import { ServerError } from "@/shared/utils/requests/errorHandlers.ts";
+import { ServerError } from "@/shared/utils/requests/errors.ts";
 import ArticlesServiceInstance from "@/shared/services/ArticlesService.ts";
 import PermissionChecker from "@/shared/components/PermissionChecker/PermissionChecker.vue";
 import PsiButton from "@/shared/PsiUI/components/PsiButton/PsiButton.vue";

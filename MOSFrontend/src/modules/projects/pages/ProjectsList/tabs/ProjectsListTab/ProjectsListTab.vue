@@ -59,7 +59,7 @@ import ProjectEditDialog
 import ProjectDeleteDialog
   from "@/modules/projects/pages/ProjectsList/components/ProjectDeleteDialog/ProjectDeleteDialog.vue";
 import { useToaster } from "@/shared/PsiUI/utils/toaster.ts";
-import { ServerError } from "@/shared/utils/requests/errorHandlers.ts";
+import { ServerError } from "@/shared/utils/requests/errors.ts";
 import ProjectCardSkeleton
   from "@/modules/projects/pages/ProjectsList/components/ProjectCardSkeleton/ProjectCardSkeleton.vue";
 

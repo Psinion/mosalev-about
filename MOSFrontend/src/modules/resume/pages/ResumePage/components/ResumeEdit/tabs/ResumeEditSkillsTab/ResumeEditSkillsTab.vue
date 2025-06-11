@@ -26,11 +26,7 @@
 <script setup lang="ts">
 import { onMounted, PropType, ref, toRef } from "vue";
 import PsiButton from "@/shared/PsiUI/components/PsiButton/PsiButton.vue";
-import { IResumeSkill, ResumeSkillLevelType, TResume, TResumeCompanyEntry } from "@/shared/types/resume.ts";
-import { ServerError } from "@/shared/utils/requests/errorHandlers.ts";
-import { useToaster } from "@/shared/PsiUI/utils/toaster.ts";
-import { useI18n } from "vue-i18n";
-import ResumeCompanyEntriesServiceInstance from "@/shared/services/ResumeCompanyEntriesService.ts";
+import { IResumeSkill, ResumeSkillLevelType, TResume } from "@/shared/types/resume.ts";
 import ResumeEditSkill
   from "@/modules/resume/pages/ResumePage/components/ResumeEdit/components/ResumeEditSkill/ResumeEditSkill.vue";
 

@@ -20,7 +20,7 @@ import PsiDialog from "@/shared/PsiUI/components/PsiDialog/PsiDialog.vue";
 import { useI18n } from "vue-i18n";
 import { useToaster } from "@/shared/PsiUI/utils/toaster.ts";
 import { PropType, toRef } from "vue";
-import { ServerError } from "@/shared/utils/requests/errorHandlers.ts";
+import { ServerError } from "@/shared/utils/requests/errors.ts";
 import FilesServiceInstance from "@/shared/services/FilesService.ts";
 import { IUploadedFile } from "@/shared/types";
 

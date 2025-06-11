@@ -26,6 +26,11 @@ public class GetFilesHandler : IGetFilesHandler
         var query = uploadedFilesDbAccess
                 .GetUploadedFiles()
             ;
+
+        if (request.FileKind != null)
+        {
+            query = query.Where(x => x.Kind == request.FileKind);
+        }
         
         var totalCount = await query.CountAsync(cancellationToken);
         var files = await query

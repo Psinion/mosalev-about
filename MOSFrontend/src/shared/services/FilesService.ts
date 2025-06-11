@@ -3,6 +3,7 @@ import {
 } from "@/shared/services/base";
 import ServiceBase from "@/shared/services/ServiceBase.ts";
 import { IUploadedFilesPagination, IStorageInfo, IUploadedFile } from "@/shared/types";
+import { OperationResult, Result } from "@/shared/PsiUI/utils/operationResults.ts";
 
 class FilesService extends ServiceBase implements IFilesService {
   async getStorageInfo(): Promise<IStorageInfo> {
@@ -14,12 +15,13 @@ class FilesService extends ServiceBase implements IFilesService {
     }
   }
 
-  async getFiles(payload?: TGetFilesRequest): Promise<IUploadedFilesPagination> {
+  async getFiles(payload?: TGetFilesRequest): Promise<OperationResult<IUploadedFilesPagination>> {
     try {
-      return await this.requestor.get("api/v1/files/list", payload) as IUploadedFilesPagination;
+      const result = await this.requestor.get("api/v1/files/list", payload) as IUploadedFilesPagination;
+      return Result.success(result);
     }
     catch (error) {
-      throw error;
+      return Result.failure(error.message);
     }
   }
 
