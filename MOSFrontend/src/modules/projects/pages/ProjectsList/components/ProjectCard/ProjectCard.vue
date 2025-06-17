@@ -34,11 +34,9 @@
       </div>
     </header>
     <div
-      v-markdown
+      v-markdown="project.description"
       class="description caption-regular"
-    >
-      {{ project.description }}
-    </div>
+    />
     <footer>
       <div class="date hint-regular tertiary">
         <PsiIcon icon="calendar" />

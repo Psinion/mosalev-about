@@ -62,6 +62,7 @@ import { useToaster } from "@/shared/PsiUI/utils/toaster.ts";
 import { ServerError } from "@/shared/utils/requests/errors.ts";
 import ProjectCardSkeleton
   from "@/modules/projects/pages/ProjectsList/components/ProjectCardSkeleton/ProjectCardSkeleton.vue";
+import { Result } from "@/shared/PsiUI/utils/operationResults.ts";
 
 const toaster = useToaster();
 const { t } = useI18n();
@@ -84,18 +85,11 @@ onMounted(async () => {
 });
 
 async function refresh() {
-  try {
-    loading.value = true;
-    projectsList.value = await projectsService.getProjectsList();
-  }
-  catch (error) {
-    if (error instanceof ServerError) {
-      toaster.error(error.header, error.message);
-    }
-  }
-  finally {
-    loading.value = false;
-  }
+  await Result.withLoading(() => projectsService.getProjectsList(), loading,
+    {
+      success: value => projectsList.value = value,
+      failure: error => toaster.error(t("toaster.commonErrorHeader"), error.message)
+    });
 }
 
 watch(() => userStore.locale, () => refresh());

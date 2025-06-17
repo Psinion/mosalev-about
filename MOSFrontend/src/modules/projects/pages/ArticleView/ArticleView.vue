@@ -34,11 +34,9 @@
           </div>
 
           <div
-            v-markdown
+            v-markdown="currentArticle.description"
             class="description typography-block"
-          >
-            {{ currentArticle.description }}
-          </div>
+          />
         </div>
       </template>
     </div>

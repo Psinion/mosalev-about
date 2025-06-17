@@ -84,7 +84,6 @@ export abstract class Result {
     loading.value = true;
     try {
       const result = await action();
-
       result.match(
         value => handlers?.success?.(value),
         error => handlers?.failure?.(error)

@@ -23,9 +23,10 @@
           <span>{{ dateString }}</span>
         </div>
 
-        <div class="description caption-regular">
-          {{ currentProject.description }}
-        </div>
+        <div
+          v-markdown="currentProject.description"
+          class="description caption-regular"
+        />
 
         <ArticlesList
           class="articles-block"

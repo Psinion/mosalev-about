@@ -3,14 +3,16 @@ import {
 } from "@/shared/services/base";
 import { IProject, IProjectCompact } from "@/shared/types";
 import ServiceBase from "@/shared/services/ServiceBase.ts";
+import { OperationResult, Result } from "@/shared/PsiUI/utils/operationResults.ts";
 
 class ProjectsService extends ServiceBase implements IProjectsService {
-  async getProjectsList(): Promise<IProjectCompact[]> {
+  async getProjectsList(): Promise<OperationResult<IProjectCompact[]>> {
     try {
-      return await this.requestor.get("api/v1/projects/list") as IProjectCompact[];
+      const result = await this.requestor.get("api/v1/projects/list") as IProjectCompact[];
+      return Result.success(result);
     }
     catch (error) {
-      throw error;
+      return Result.failure(error.message);
     }
   }
 

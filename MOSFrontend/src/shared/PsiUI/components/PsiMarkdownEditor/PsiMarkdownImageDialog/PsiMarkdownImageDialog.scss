@@ -1,4 +1,4 @@
-@import '@scss-mixins/adaptive';
+@use '@scss-mixins/adaptive';
 
 .psi-markdown-image-editor {
   .foreign-image-block {
@@ -21,7 +21,7 @@
     grid-template-columns: repeat(4, minmax(0, 1fr));;
     gap: 8px;
 
-    @include adaptive-mixin(sm) {
+    @include adaptive.adaptive-mixin(sm) {
       grid-template-columns: repeat(1, minmax(0, 1fr));;
     }
 

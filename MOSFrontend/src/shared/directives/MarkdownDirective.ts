@@ -7,12 +7,17 @@ export const markdownDirective: Directive = {
   },
 
   async updated(el: HTMLElement, binding) {
+    if (binding.value === binding.oldValue) {
+      return;
+    }
+
     await updateContent(el, binding.value ?? el.textContent);
   }
 };
 
 async function updateContent(el: HTMLElement, content: string) {
   if (!content) {
+    el.innerHTML = "";
     return;
   }
 
@@ -20,6 +25,7 @@ async function updateContent(el: HTMLElement, content: string) {
     el.innerHTML = await markedInstance.parse(content);
   }
   catch (error) {
+    el.innerHTML = content;
     console.error("Markdown directive error:", error);
   }
 }
