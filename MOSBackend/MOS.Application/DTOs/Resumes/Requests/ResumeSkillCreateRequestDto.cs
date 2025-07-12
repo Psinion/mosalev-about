@@ -5,7 +5,7 @@ namespace MOS.Application.DTOs.Resumes.Requests;
 
 public record ResumeSkillCreateRequestDto
 {
-    [Required] public long ResumeId { get; set; }
+    [Required] public int ResumeId { get; set; }
 
     [Required] [StringLength(50)] public string Name { get; set; } = "";
 

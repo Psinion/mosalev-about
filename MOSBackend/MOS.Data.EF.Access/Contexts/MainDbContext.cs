@@ -36,7 +36,7 @@ public class MainDbContext : DbContext
         foreach (var entityType in modelBuilder.Model.GetEntityTypes()
                      .Where(e => e.ClrType.IsAssignableTo(typeof(IAuditableEntity<int>))))
         {
-            entityType.ApplyAuditableConfig<int>(modelBuilder);
+            //entityType.ApplyAuditableConfig<int>(modelBuilder);
         }
     }
 }
