@@ -15,6 +15,10 @@
           :key="project.id"
           class="project-card"
           :project="project"
+          :route="{
+            name: RouteNames.ProjectView,
+            params: { projectId: project?.id }
+          }"
         >
           <template #actions>
             <PermissionChecker>
@@ -86,6 +90,7 @@ import ProjectCardSkeleton
 import { Result } from "@/shared/PsiUI/utils/operationResults.ts";
 import PsiButton from "@/shared/PsiUI/components/PsiButton/PsiButton.vue";
 import PermissionChecker from "@/shared/components/PermissionChecker/PermissionChecker.vue";
+import { RouteNames } from "@/router/routeNames.ts";
 
 const toaster = useToaster();
 const { t } = useI18n();
