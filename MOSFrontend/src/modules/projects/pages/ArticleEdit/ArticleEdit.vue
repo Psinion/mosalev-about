@@ -41,6 +41,14 @@
                 >
                   {{ t('forms.save') }}
                 </PsiButton>
+
+                <PsiButton
+                  v-if="currentArticle?.id"
+                  class="action-button"
+                  @click="changeProjectDialogVisible = true"
+                >
+                  {{ t('articles.edit.projectChange') }}
+                </PsiButton>
               </PermissionChecker>
             </div>
 
@@ -59,12 +67,13 @@
           </PsiForm>
         </div>
       </template>
+
+      <ChangeArticleProjectDialog v-model:visible="changeProjectDialogVisible" />
     </div>
   </ContentLayout>
 </template>
 
 <script setup lang="ts">
-
 import ContentLayout from "@/layouts/ContentLayout/ContentLayout.vue";
 import { computed, onMounted, ref } from "vue";
 import { IArticle, TRoute } from "@/shared/types";
@@ -81,6 +90,7 @@ import PsiForm from "@/shared/PsiUI/components/PsiForm/PsiForm.vue";
 import ArticlesServiceInstance from "@/shared/services/ArticlesService.ts";
 import { checkPositiveNumber } from "@/shared/utils/helpers";
 import PsiMarkdownEditor from "@/shared/PsiUI/components/PsiMarkdownEditor/PsiMarkdownEditor.vue";
+import ChangeArticleProjectDialog from "./ChangeArticleProjectDialog/ChangeArticleProjectDialog.vue";
 
 const props = defineProps({
   articleId: {
@@ -110,6 +120,8 @@ const loading = ref(true);
 const currentArticle = ref<IArticle | null>(null);
 
 const canSave = ref(false);
+
+const changeProjectDialogVisible = ref(false);
 
 const projectRoute = computed<TRoute>(() => {
   return {

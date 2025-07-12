@@ -67,11 +67,15 @@
   },
   "articles": {
     "edit": {
-      "titleCreate": "Article creation"
+      "titleCreate": "Article creation",
+      "projectChange": "Change project"
     },
     "dialogDelete": {
       "title": "Article deletion",
       "description": "Do you really want to delete the article?"
+    },
+    "changeArticleProjectDialog": {
+      "title": "Project changing"
     }
   },
   "files": {

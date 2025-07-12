@@ -19,6 +19,11 @@
         transition: var(--default-transition);
         opacity: 1;
         width: auto;
+        gap: 4px;
+
+        .psi-button {
+          width: auto;
+        }
       }
     }
   }
@@ -31,7 +36,7 @@
     display: flex;
     justify-content: space-between;
 
-    & > h3 {
+    &-title {
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
@@ -41,7 +46,10 @@
       opacity: 0;
       width: 0;
       display: flex;
-      gap: 4px;
+
+      .psi-button {
+        width: 0;
+      }
 
       @include adaptive-hover() {
         opacity: 1;

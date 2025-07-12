@@ -70,11 +70,15 @@
   },
   "articles": {
     "edit": {
-      "titleCreate": "Создание статьи"
+      "titleCreate": "Создание статьи",
+      "projectChange": "Изменить проект"
     },
     "dialogDelete": {
       "title": "Удаление статьи",
       "description": "Вы действительно хотите удалить статью?"
+    },
+    "changeArticleProjectDialog": {
+      "title": "Изменение проекта"
     }
   },
   "files": {
@@ -120,7 +124,7 @@
     "show": "Показать",
     "hide": "Скрыть",
     "editMark": "ред.",
-    "copyToClipboard": "Copy to clipboard"
+    "copyToClipboard": "Скопировано в буфер обмена"
   },
   "errors": {
     "error404header": "Страница не найдена"

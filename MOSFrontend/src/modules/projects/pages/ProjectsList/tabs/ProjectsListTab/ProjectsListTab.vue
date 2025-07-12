@@ -9,11 +9,12 @@
       <ProjectCardSkeleton />
     </template>
     <template v-else-if="projectsList.length > 0 || isCreator">
-      <template v-for="project in projectsList">
+      <template v-if="projectsList.length > 0">
         <ProjectCard
-          v-if="projectsList.length > 0"
+          v-for="project in projectsList"
           :key="project.id"
           :project="project"
+          actions
           @change-visibility="onProjectChangeVisibilityClick"
           @edit="onProjectEditClick"
           @delete="onProjectDeleteClick"

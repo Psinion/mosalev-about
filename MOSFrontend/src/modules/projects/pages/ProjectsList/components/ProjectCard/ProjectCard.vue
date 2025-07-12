@@ -6,9 +6,12 @@
     draggable="false"
   >
     <header class="header">
-      <h3>{{ project.title }}</h3>
+      <h3 class="header-title">
+        {{ project.title }}
+      </h3>
 
       <div
+        v-if="actions"
         class="actions"
       >
         <PermissionChecker>
@@ -61,6 +64,10 @@ const props = defineProps({
   project: {
     type: Object as PropType<IProjectCompact>,
     required: true
+  },
+  actions: {
+    type: Boolean,
+    default: false
   }
 });
 
