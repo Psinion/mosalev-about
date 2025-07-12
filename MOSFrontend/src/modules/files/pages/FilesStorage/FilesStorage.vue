@@ -105,7 +105,7 @@
 <script setup lang="ts">
 import ContentLayout from "@/layouts/ContentLayout/ContentLayout.vue";
 import { computed, onMounted, ref } from "vue";
-import { IStorageInfo, IUploadedFile, IUploadedFilesPagination } from "@/shared/types";
+import { FileKind, IStorageInfo, IUploadedFile, IUploadedFilesPagination } from "@/shared/types";
 import { useToaster } from "@/shared/PsiUI/utils/toaster.ts";
 import { ServerError } from "@/shared/utils/requests/errors.ts";
 import { useRouter } from "vue-router";
@@ -118,6 +118,7 @@ import PsiPagination, { TPsiPaginationExpose } from "@/shared/PsiUI/components/P
 import FileCard from "@/modules/files/shared/FileCard/FileCard.vue";
 import FileDeleteDialog from "@/modules/files/shared/FileDeleteDialog/FileDeleteDialog.vue";
 import { useFileFormatter } from "@/modules/files/utils/files.ts";
+import { Result } from "@/shared/PsiUI/utils/operationResults.ts";
 
 const router = useRouter();
 const toaster = useToaster();
@@ -172,22 +173,20 @@ onMounted(async () => {
 });
 
 async function refreshFiles(offset?: number) {
-  try {
-    filesLoading.value = true;
-
-    filesList.value = await filesService.getFiles({
+  await Result.withLoading(() =>
+    filesService.getFiles({
       limit: limit,
       offset: offset
-    });
-    paginationTotal.value = filesList.value.totalCount;
-
-    filesLoading.value = false;
-  }
-  catch (error) {
-    if (error instanceof ServerError) {
-      toaster.error(error.header, error.message);
+    })
+  , filesLoading, {
+    success: (value) => {
+      filesList.value = value;
+      paginationTotal.value = filesList.value.totalCount;
+    },
+    failure: (error) => {
+      toaster.error("toaster.commonErrorHeader", error.message);
     }
-  }
+  });
 }
 
 async function onFilesUpload(files: FileList) {

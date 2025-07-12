@@ -28,6 +28,8 @@
 
     <img
       v-if="file.kind === FileKind.Image"
+      class="content"
+      :alt="file.originalName"
       :src="file.url"
     />
 

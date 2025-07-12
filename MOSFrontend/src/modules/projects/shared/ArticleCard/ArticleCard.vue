@@ -31,7 +31,7 @@
     </header>
     <div
       v-markdown="article.description"
-      class="description caption-regular"
+      class="description typography-block caption-regular"
     />
     <footer class="footer">
       <div>
