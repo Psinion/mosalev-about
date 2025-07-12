@@ -1,6 +1,7 @@
 ﻿using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 using MOS.Application.Data.Services.Users;
+using MOS.Data.EF.Access.Contexts.Extensions;
 using MOS.Domain.Entities;
 using MOS.Domain.Entities.Files;
 using MOS.Domain.Entities.Projects;
@@ -35,53 +36,7 @@ public class MainDbContext : DbContext
         foreach (var entityType in modelBuilder.Model.GetEntityTypes()
                      .Where(e => e.ClrType.IsAssignableTo(typeof(IAuditableEntity<int>))))
         {
-            modelBuilder.Entity(entityType.ClrType, builder =>
-            {
-                builder
-                    .Property("CreatedAt")
-                    .IsRequired()
-                    .HasDefaultValueSql("NOW()");
-                
-                builder
-                    .Property("CreatedBy")
-                    .IsRequired()
-                    .HasDefaultValue(1);
-                
-                builder
-                    .Property("UpdatedBy")
-                    .IsRequired(false)
-                    .HasDefaultValue(null);
-                
-                builder
-                    .Property("DeletedBy")
-                    .IsRequired(false)
-                    .HasDefaultValue(null);
-                
-                builder
-                    .HasOne("Creator")
-                    .WithMany()
-                    .HasForeignKey("CreatedBy")
-                    .OnDelete(DeleteBehavior.Restrict);
-            
-                builder.HasOne("Updater")
-                    .WithMany()
-                    .HasForeignKey("UpdatedBy")
-                    .OnDelete(DeleteBehavior.Restrict);
-                
-                builder.HasOne("Deleter")
-                    .WithMany()
-                    .HasForeignKey("DeletedBy")
-                    .OnDelete(DeleteBehavior.Restrict);
-                
-                // Auto filter by deleted entities
-                var parameter = Expression.Parameter(entityType.ClrType, "e");
-                var methodInfo = typeof(Microsoft.EntityFrameworkCore.EF)
-                    .GetMethod(nameof(Microsoft.EntityFrameworkCore.EF.Property))!.MakeGenericMethod(typeof(bool))!;
-                var efPropertyCall = Expression.Call(null, methodInfo, parameter, Expression.Constant(nameof(IAuditableEntity<int>.IsDeleted)));
-                var body = Expression.MakeBinary(ExpressionType.Equal, efPropertyCall, Expression.Constant(false));
-                var expression = Expression.Lambda(body, parameter);
-                builder.HasQueryFilter(expression);
-            });
+            entityType.ApplyAuditableConfig<int>(modelBuilder);
         }
     }
 }
