@@ -1,14 +1,18 @@
 import type { Ref } from "vue";
 
-export enum ErrorType {
+export enum TResultErrorType {
   None,
+  Multiple,
   Failure,
-  NotFound
+  NotFound,
+  Forbidden
 }
 
 interface IOperationError {
-  errorType: ErrorType;
+  errorType: TResultErrorType;
+  errorCode?: number | string;
   message: string;
+  errors?: IOperationError[];
 }
 
 export type OperationResult<T> = SuccessResult<T> | FailureResult<T>;
@@ -28,8 +32,7 @@ class SuccessResult<T> extends BaseResult<T> {
     super();
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  match(success: (value: T) => void, failure: (error: IOperationError) => void): this {
+  match(success: (value: T) => void, failure?: (error: IOperationError) => void): this {
     if (success !== null) {
       success(this.value);
     }
@@ -59,16 +62,26 @@ export abstract class Result {
     return new SuccessResult(value as T);
   }
 
-  public static failure(message: string): FailureResult<never> {
+  public static failure(message: string, errorCode?: number | string): FailureResult<any> {
     return new FailureResult({
-      errorType: ErrorType.Failure,
+      errorType: TResultErrorType.Failure,
+      errorCode: errorCode,
       message: message
     });
   }
 
-  public static notFound(message: string): FailureResult<never> {
+  public static forbidden(message: string, errorCode?: number | string): FailureResult<any> {
     return new FailureResult({
-      errorType: ErrorType.NotFound,
+      errorType: TResultErrorType.Forbidden,
+      errorCode: errorCode,
+      message: message
+    });
+  }
+
+  public static notFound(message: string, errorCode?: number | string): FailureResult<any> {
+    return new FailureResult({
+      errorType: TResultErrorType.NotFound,
+      errorCode: errorCode,
       message: message
     });
   }
@@ -84,6 +97,7 @@ export abstract class Result {
     loading.value = true;
     try {
       const result = await action();
+
       result.match(
         value => handlers?.success?.(value),
         error => handlers?.failure?.(error)
@@ -91,7 +105,7 @@ export abstract class Result {
 
       return result;
     }
-    catch (e) {
+    catch (e: any) {
       const error = Result.unexpectedError(e);
       handlers?.failure?.(error);
       return new FailureResult(error);
@@ -101,9 +115,34 @@ export abstract class Result {
     }
   }
 
+  public static async all<T extends any[]>(
+    promises: [...{ [K in keyof T]: Promise<OperationResult<T[K]>> }]
+  ): Promise<OperationResult<T>> {
+    try {
+      const results = await Promise.all(promises);
+
+      const errors = results.filter(r => !r.success).map(r => r.error);
+
+      if (errors.length > 0) {
+        return new FailureResult({
+          errorType: TResultErrorType.Multiple,
+          message: "Multiple errors occurred",
+          errors: errors
+        }) as OperationResult<T>;
+      }
+
+      const values = results.map(r => (r as SuccessResult<any>).value) as T;
+
+      return Result.success(values) as OperationResult<T>;
+    }
+    catch (e) {
+      return Result.failure(e instanceof Error ? e.message : e);
+    }
+  }
+
   private static unexpectedError(e: unknown): IOperationError {
     return {
-      errorType: ErrorType.Failure,
+      errorType: TResultErrorType.Failure,
       message: e instanceof Error ? e.message : "Unknown error"
     };
   }
