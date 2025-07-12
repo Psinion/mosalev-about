@@ -121,4 +121,26 @@ public class ArticlesController : ControllerBase
         
         return Ok(response.Value);
     }
+    
+    [HttpPatch("{articleId}/project")]
+    [CustomAuthorize]
+    public async Task<ActionResult<bool>> ChangeArticleProject(int articleId, ChangeArticleProjectRequest request)
+    {
+        var command = new ChangeArticleProjectCommand()
+        {
+            Id = articleId,
+            ProjectId = request.ProjectId,
+        };
+        
+        var handler = handlerFactory.GetHandler<IChangeArticleProjectHandler>();
+        
+        var response = await handler.Handle(command);
+        
+        if (response.Error.ErrorType == ErrorType.NotFound)
+        {
+            return NotFound(response.Error);
+        }
+        
+        return Ok(response.Value);
+    }
 }

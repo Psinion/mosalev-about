@@ -4,7 +4,7 @@
     size="M"
     hide-when-click-outside
     @update:visible="$emit('update:visible', $event)"
-    @open="refreshFiles"
+    @open="refreshProjects"
   >
     <template #header>
       {{ t('articles.changeArticleProjectDialog.title') }}
@@ -30,7 +30,18 @@
           v-for="project in projectsList"
           :key="project.id"
           :project="project"
-        />
+          :disabled="project.id === projectId"
+          @click.prevent="changeProject(project)"
+        >
+          <template #actions>
+            <PsiButton
+              v-if="project.id === projectId"
+              v-tooltip="t('articles.changeArticleProjectDialog.unpinButton')"
+              flat
+              icon="pin-filled"
+            />
+          </template>
+        </ProjectCard>
       </div>
       <div
         v-else
@@ -50,49 +61,45 @@
 import PsiDialog from "@/shared/PsiUI/components/PsiDialog/PsiDialog.vue";
 import { useI18n } from "vue-i18n";
 import { useToaster } from "@/shared/PsiUI/utils/toaster.ts";
-import FilesServiceInstance from "@/shared/services/FilesService.ts";
-import { computed, ref } from "vue";
-import { FileKind, IProjectCompact, IUploadedFile, IUploadedFilesPagination } from "@/shared/types";
-import PsiPagination from "@/shared/PsiUI/components/PsiPagination/PsiPagination.vue";
-import ArticleCardSkeleton from "@/modules/projects/shared/ArticleCardSkeleton/ArticleCardSkeleton.vue";
-import FileCard from "@/modules/files/shared/FileCard/FileCard.vue";
-import PsiInput from "@/shared/PsiUI/components/PsiInput/PsiInput.vue";
-import PsiButton from "@/shared/PsiUI/components/PsiButton/PsiButton.vue";
+import { ref } from "vue";
+import { IProjectCompact } from "@/shared/types";
 import { Result } from "@/shared/PsiUI/utils/operationResults.ts";
 import ProjectsServiceInstance from "@/shared/services/ProjectsService.ts";
 import ProjectCardSkeleton
   from "@/modules/projects/pages/ProjectsList/components/ProjectCardSkeleton/ProjectCardSkeleton.vue";
 import ProjectCard from "@/modules/projects/pages/ProjectsList/components/ProjectCard/ProjectCard.vue";
+import PsiButton from "@/shared/PsiUI/components/PsiButton/PsiButton.vue";
+import ArticlesServiceInstance from "@/shared/services/ArticlesService.ts";
 
 const props = defineProps({
   visible: {
     type: Boolean,
     default: false
+  },
+  articleId: {
+    type: Number,
+    default: 0
+  },
+  projectId: {
+    type: Number,
+    default: 0
   }
 });
 
 const emit = defineEmits({
   "update:visible": (value: boolean) => true,
-  "select": (file: IUploadedFile) => true,
-  "insertForeignUrl": (url: string) => true
+  "select": (project: IProjectCompact | null) => true
 });
 
 const toaster = useToaster();
 const { t } = useI18n();
 const projectsService = ProjectsServiceInstance;
-
-const foreignUrlInput = ref<string | undefined>(undefined);
-
-const limit = 5;
-const currentPage = ref(1);
-const paginationTotal = ref(0);
+const articlesService = ArticlesServiceInstance;
 
 const projectsLoading = ref(true);
 const projectsList = ref<IProjectCompact[]>([]);
 
-const canInsertForeignUrl = computed(() => foreignUrlInput.value && foreignUrlInput.value.length > 0);
-
-const refreshFiles = async () => {
+const refreshProjects = async () => {
   await Result.withLoading(() => projectsService.getProjectsList(), projectsLoading,
     {
       success: value => projectsList.value = value,
@@ -100,14 +107,15 @@ const refreshFiles = async () => {
     });
 };
 
-const onImageClick = (file: IUploadedFile) => {
-  emit("select", file);
-  emit("update:visible", false);
-};
+const changeProject = async (project: IProjectCompact) => {
+  const isChanged = props.projectId !== project.id;
 
-const onForeignUrlClick = () => {
-  emit("insertForeignUrl", foreignUrlInput.value);
-  emit("update:visible", false);
+  (await articlesService.changeArticleProject(props.articleId, {
+    projectId: isChanged ? project.id : null
+  }))
+    .match(() => {
+      emit("select", isChanged ? project : null);
+    });
 };
 </script>
 

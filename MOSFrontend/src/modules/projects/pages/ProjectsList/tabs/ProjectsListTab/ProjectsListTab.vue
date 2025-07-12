@@ -13,12 +13,32 @@
         <ProjectCard
           v-for="project in projectsList"
           :key="project.id"
+          class="project-card"
           :project="project"
-          actions
-          @change-visibility="onProjectChangeVisibilityClick"
-          @edit="onProjectEditClick"
-          @delete="onProjectDeleteClick"
-        />
+        >
+          <template #actions>
+            <PermissionChecker>
+              <PsiButton
+                v-tooltip="project.visible ? t('forms.hide') : t('forms.show')"
+                flat
+                :icon="project.visible ? 'eye' : 'eye-crossed'"
+                @click.prevent="onProjectChangeVisibilityClick(project, !project.visible)"
+              />
+              <PsiButton
+                v-tooltip="t('forms.edit')"
+                flat
+                icon="edit"
+                @click.prevent="onProjectEditClick(project)"
+              />
+              <PsiButton
+                v-tooltip="t('forms.delete')"
+                flat
+                icon="trash-box"
+                @click.prevent="onProjectDeleteClick(project)"
+              />
+            </PermissionChecker>
+          </template>
+        </ProjectCard>
       </template>
 
       <ProjectCardNew
@@ -64,6 +84,8 @@ import { ServerError } from "@/shared/utils/requests/errors.ts";
 import ProjectCardSkeleton
   from "@/modules/projects/pages/ProjectsList/components/ProjectCardSkeleton/ProjectCardSkeleton.vue";
 import { Result } from "@/shared/PsiUI/utils/operationResults.ts";
+import PsiButton from "@/shared/PsiUI/components/PsiButton/PsiButton.vue";
+import PermissionChecker from "@/shared/components/PermissionChecker/PermissionChecker.vue";
 
 const toaster = useToaster();
 const { t } = useI18n();

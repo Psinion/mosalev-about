@@ -1,5 +1,6 @@
 import { IServiceBase } from "@/shared/services/base/IServiceBase.ts";
 import { IArticle, IArticlesPagination } from "@/shared/types";
+import { OperationResult } from "@/shared/PsiUI/utils/operationResults.ts";
 
 export interface IArticlesService extends IServiceBase {
   getCompactArticles(payload: TGetCompactArticlesRequest): Promise<IArticlesPagination>;
@@ -9,6 +10,7 @@ export interface IArticlesService extends IServiceBase {
   updateArticle(articleId: number, payload: TUpdateArticleRequest): Promise<IArticle>;
   deleteArticle(articleId: number): Promise<void>;
   changeArticleVisibility(articleId: number, payload: TChangeArticleVisibilityRequest): Promise<void>;
+  changeArticleProject(articleId: number, payload: TChangeArticleProjectRequest): Promise<OperationResult<void>>;
 }
 
 export type TGetCompactArticlesRequest = {
@@ -37,4 +39,8 @@ export type TUpdateArticleRequest = {
 
 export type TChangeArticleVisibilityRequest = {
   visible: boolean;
+};
+
+export type TChangeArticleProjectRequest = {
+  projectId?: number | null;
 };

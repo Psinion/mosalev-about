@@ -68,14 +68,16 @@
   "articles": {
     "edit": {
       "titleCreate": "Article creation",
-      "projectChange": "Change project"
+      "pinProject": "Pin to project",
+      "changeProject": "Change project"
     },
     "dialogDelete": {
       "title": "Article deletion",
       "description": "Do you really want to delete the article?"
     },
     "changeArticleProjectDialog": {
-      "title": "Project changing"
+      "title": "Pin article to project",
+      "unpinButton": "Unpin from project"
     }
   },
   "files": {

@@ -1,5 +1,3 @@
-@import '@scss-mixins/adaptive';
-
 .project-card {
   padding: 8px;
   display: flex;
@@ -13,19 +11,9 @@
   &:hover {
     border-color: var(--primary);
     transition: var(--default-transition);
+    cursor: pointer;
 
-    .header {
-      .actions {
-        transition: var(--default-transition);
-        opacity: 1;
-        width: auto;
-        gap: 4px;
-
-        .psi-button {
-          width: auto;
-        }
-      }
-    }
+    .header {}
   }
 
   &.hidden {
@@ -42,20 +30,7 @@
       text-overflow: ellipsis;
     }
 
-    .actions {
-      opacity: 0;
-      width: 0;
-      display: flex;
-
-      .psi-button {
-        width: 0;
-      }
-
-      @include adaptive-hover() {
-        opacity: 1;
-        width: auto;
-      }
-    }
+    .actions {}
   }
 
   .description {

@@ -1,7 +1,7 @@
 import {
-  IArticlesService, TGetCompactArticlesByProjectRequest
+  IArticlesService, TChangeArticleProjectRequest, TGetCompactArticlesByProjectRequest
 } from "@/shared/services/base";
-import { IArticle, IArticlesPagination } from "@/shared/types";
+import { IArticle, IArticlesPagination, IProjectCompact } from "@/shared/types";
 import ServiceBase from "@/shared/services/ServiceBase.ts";
 import {
   TChangeArticleVisibilityRequest,
@@ -9,6 +9,7 @@ import {
   TGetCompactArticlesRequest,
   TUpdateArticleRequest
 } from "@/shared/services/base/IArticlesService.ts";
+import { OperationResult, Result } from "@/shared/PsiUI/utils/operationResults.ts";
 
 class ArticlesService extends ServiceBase implements IArticlesService {
   async getCompactArticles(payload: TGetCompactArticlesRequest): Promise<IArticlesPagination> {
@@ -71,6 +72,16 @@ class ArticlesService extends ServiceBase implements IArticlesService {
     }
     catch (error) {
       throw error;
+    }
+  }
+
+  async changeArticleProject(articleId: number, payload: TChangeArticleProjectRequest): Promise<OperationResult<void>> {
+    try {
+      await this.requestor.patch(`api/v1/articles/${articleId}/project`, payload);
+      return Result.success();
+    }
+    catch (error) {
+      return Result.failure(error.message);
     }
   }
 }

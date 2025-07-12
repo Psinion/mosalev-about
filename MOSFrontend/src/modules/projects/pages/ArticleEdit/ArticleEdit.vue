@@ -47,7 +47,7 @@
                   class="action-button"
                   @click="changeProjectDialogVisible = true"
                 >
-                  {{ t('articles.edit.projectChange') }}
+                  {{ currentArticle.projectId ? t('articles.edit.changeProject') : t('articles.edit.pinProject') }}
                 </PsiButton>
               </PermissionChecker>
             </div>
@@ -68,7 +68,12 @@
         </div>
       </template>
 
-      <ChangeArticleProjectDialog v-model:visible="changeProjectDialogVisible" />
+      <ChangeArticleProjectDialog
+        v-model:visible="changeProjectDialogVisible"
+        :article-id="currentArticle?.id"
+        :project-id="currentArticle?.projectId"
+        @select="onProjectPin"
+      />
     </div>
   </ContentLayout>
 </template>
@@ -76,7 +81,7 @@
 <script setup lang="ts">
 import ContentLayout from "@/layouts/ContentLayout/ContentLayout.vue";
 import { computed, onMounted, ref } from "vue";
-import { IArticle, TRoute } from "@/shared/types";
+import { IArticle, IProjectCompact, TRoute } from "@/shared/types";
 import { useToaster } from "@/shared/PsiUI/utils/toaster.ts";
 import ProjectViewSkeleton from "@/modules/projects/pages/ProjectView/ProjectViewSkeleton/ProjectViewSkeleton.vue";
 import { ServerError } from "@/shared/utils/requests/errors.ts";
@@ -203,6 +208,11 @@ async function submit() {
     }
   }
 }
+
+const onProjectPin = (project: IProjectCompact | null) => {
+  currentArticle.value.projectId = project?.id;
+  currentArticle.value.project = project;
+};
 
 </script>
 

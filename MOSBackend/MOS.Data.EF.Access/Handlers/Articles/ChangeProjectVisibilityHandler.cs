@@ -19,15 +19,15 @@ public class ChangeArticleVisibilityHandler : IChangeArticleVisibilityHandler
 
     public async Task<OperationResult<bool>> Handle(ChangeArticleVisibilityCommand request, CancellationToken cancellationToken = default)
     {
-        var project = await articlesRepository.GetByIdAsync(request.Id, cancellationToken);
-        if (project == null)
+        var article = await articlesRepository.GetByIdAsync(request.Id, cancellationToken);
+        if (article == null)
         {
             return OperationError.NotFound();
         }
 
-        project.Visible = request.Visible;
+        article.Visible = request.Visible;
 
-        await articlesRepository.UpdateAsync(project, cancellationToken);
+        await articlesRepository.UpdateAsync(article, cancellationToken);
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
         return true;

@@ -92,6 +92,7 @@ public static class ServicesExtensions
         services.AddScoped<IUpdateProjectHandler, UpdateProjectHandler>();
         services.AddScoped<IDeleteProjectHandler, DeleteProjectHandler>();
         services.AddScoped<IChangeProjectVisibilityHandler, ChangeProjectVisibilityHandler>();
+        services.AddScoped<IChangeArticleProjectHandler, ChangeArticleProjectHandler>();
             
         services.AddScoped<IGetArticleHandler, GetArticleHandler>();
         services.AddScoped<ICreateArticleHandler, CreateArticleHandler>();

@@ -9,6 +9,36 @@
     grid-template-columns: repeat(1, minmax(0, 1fr));;
   }
 
+  .project-card {
+    &:hover {
+      :deep(.actions) {
+        transition: var(--default-transition);
+        opacity: 1;
+        width: auto;
+        gap: 4px;
+
+        .psi-button {
+          width: auto;
+        }
+      }
+    }
+
+    :deep(.actions) {
+      opacity: 0;
+      width: 0;
+      display: flex;
+
+      .psi-button {
+        width: 0;
+      }
+
+      @include adaptive.adaptive-hover() {
+        opacity: 1;
+        width: auto;
+      }
+    }
+  }
+
   .empty-projects-placeholder {
     padding: 8px;
     border: 1px solid var(--secondary-up);

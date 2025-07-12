@@ -1,8 +1,9 @@
 <template>
-  <RouterLink
+  <component
+    :is="route ? 'RouterLink' : 'span'"
     :to="projectViewRoute"
     class="project-card"
-    :class="[{hidden: !project.visible}]"
+    :class="[{hidden: !project.visible, disabled: disabled}]"
     draggable="false"
   >
     <header class="header">
@@ -11,29 +12,9 @@
       </h3>
 
       <div
-        v-if="actions"
         class="actions"
       >
-        <PermissionChecker>
-          <PsiButton
-            v-tooltip="project.visible ? t('forms.hide') : t('forms.show')"
-            flat
-            :icon="project.visible ? 'eye' : 'eye-crossed'"
-            @click.prevent="$emit('changeVisibility', project, !project.visible)"
-          />
-          <PsiButton
-            v-tooltip="t('forms.edit')"
-            flat
-            icon="edit"
-            @click.prevent="$emit('edit', project)"
-          />
-          <PsiButton
-            v-tooltip="t('forms.delete')"
-            flat
-            icon="trash-box"
-            @click.prevent="$emit('delete', project)"
-          />
-        </PermissionChecker>
+        <slot name="actions" />
       </div>
     </header>
     <div
@@ -46,17 +27,14 @@
         <span>{{ dateCreateString }}</span>
       </div>
     </footer>
-  </RouterLink>
+  </component>
 </template>
 
 <script setup lang="ts">
 
 import { computed, PropType } from "vue";
-import { IProjectCompact } from "@/shared/types";
+import { IProjectCompact, TRoute } from "@/shared/types";
 import { RouteNames } from "@/router/routeNames.ts";
-import PsiButton from "@/shared/PsiUI/components/PsiButton/PsiButton.vue";
-import PermissionChecker from "@/shared/components/PermissionChecker/PermissionChecker.vue";
-import { useI18n } from "vue-i18n";
 import { useShortDateCreateUpdate2String } from "@/shared/composables/date.ts";
 import PsiIcon from "@/shared/PsiUI/components/PsiIcon/PsiIcon.vue";
 
@@ -65,19 +43,15 @@ const props = defineProps({
     type: Object as PropType<IProjectCompact>,
     required: true
   },
-  actions: {
+  disabled: {
     type: Boolean,
     default: false
+  },
+  route: {
+    type: Object as PropType<TRoute>,
+    default: null
   }
 });
-
-const emit = defineEmits({
-  changeVisibility: (project: IProjectCompact, visibility: boolean) => true,
-  edit: (value: IProjectCompact) => true,
-  delete: (value: IProjectCompact) => true
-});
-
-const { t } = useI18n();
 
 const projectCreatedAt = computed(() => props.project.createdAt);
 const projectUpdatedAt = computed(() => props.project.updatedAt);

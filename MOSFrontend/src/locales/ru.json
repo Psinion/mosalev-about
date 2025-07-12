@@ -71,14 +71,16 @@
   "articles": {
     "edit": {
       "titleCreate": "Создание статьи",
-      "projectChange": "Изменить проект"
+      "pinProject": "Прикрепить к проекту",
+      "changeProject": "Изменить проект"
     },
     "dialogDelete": {
       "title": "Удаление статьи",
       "description": "Вы действительно хотите удалить статью?"
     },
     "changeArticleProjectDialog": {
-      "title": "Изменение проекта"
+      "title": "Прикрепление статьи к проекту",
+      "unpinButton": "Открепить от проекта"
     }
   },
   "files": {
